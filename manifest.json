@@ -9,6 +9,6 @@
     }
   ],
   "background": {
-    "js": ["background.js"]
+    "scripts": ["background.js"]
   }
 }

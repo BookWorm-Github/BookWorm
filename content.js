@@ -1,0 +1,26 @@
+console.log("Hello World!");
+
+//BELOW ARE TWO DIFFERENT WAYS TO CHANGE THE THINGS WITHIN A PARAGRAPH TEXT
+function change_fontcolor() {
+  let elts = document.getElementsByTagName('p');
+  for (let i = 0; i < elts.length; i++) {
+    elts[i].style['background-color'] = '#F0C';
+  }
+}
+
+
+
+(function () {//turns paragraphs into kittens
+  console.log(" calling kittens");
+  let paragraphs = document.getElementsByTagName('p');
+  for (let i = 0; i < paragraphs.length; ++i){
+    paragraphs[i].innerHTML = 'kittens!';
+  }
+})();
+
+// (function () {
+//     let paragraphs = document.getElementsByTagName('p');
+//     for (let i = 0; i < paragraphs.length; ++i){
+//         paragraphs[i].style['background-color'] = '63#COC';
+//     }
+// })();

@@ -4,10 +4,10 @@ console.log("Hello World!");
 function change_fontcolor() {
   let elts = document.getElementsByTagName('p');
   for (let i = 0; i < elts.length; i++) {
-    elts[i].style['background-color'] = '#F0C';
+    elts[i].style['background-color'] = '#000000';
   }
 }
-
+change_fontcolor();
 
 
 (function () {//turns paragraphs into kittens

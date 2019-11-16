@@ -24,3 +24,11 @@ change_fontcolor();
 //         paragraphs[i].style['background-color'] = '63#COC';
 //     }
 // })();
+
+
+chrome.runtime.onMessage.addListener(gotMessage);
+
+// Callback for when a message is received
+function gotMessage(message, sender, sendResponse) {
+  console.log(message.txt);
+}

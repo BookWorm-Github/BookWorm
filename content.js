@@ -1,5 +1,7 @@
 console.log("Hello World!");
 
+let stages = 0;
+
 //BELOW ARE TWO DIFFERENT WAYS TO CHANGE THE THINGS WITHIN A PARAGRAPH TEXT
 function censor_paragraph() {
   let elts = document.getElementsByTagName('p');
@@ -9,20 +11,13 @@ function censor_paragraph() {
   }
 }
 
-// (function () {//example of another way to change font size
-//     let paragraphs = document.getElementsByTagName('p');
-//     for (let i = 0; i < paragraphs.length; ++i){
-//         paragraphs[i].style['background-color'] = '63#COC';
-//     }
+// (function () {//turns paragraphs into kittens
+//   console.log("calling kittens");
+//   let paragraphs = document.getElementsByTagName('p');
+//   for (let i = 0; i < paragraphs.length; ++i){
+//     paragraphs[i].innerHTML = 'kittens!';
+//   }
 // })();
-
-(function () {//turns paragraphs into kittens
-  console.log(" calling kittens");
-  let paragraphs = document.getElementsByTagName('p');
-  for (let i = 0; i < paragraphs.length; ++i){
-    paragraphs[i].innerHTML = 'kittens!';
-  }
-})();
 
 function uncensor_paragraph(){
   let elts = document.getElementsByTagName('p');
@@ -34,10 +29,15 @@ function uncensor_paragraph(){
 chrome.runtime.onMessage.addListener(gotMessage);
 
 // Callback for when a message is received from background script
-function gotMessage(message, sender, sendResponse) {
-  console.log(message.txt);
-  if (message.txt === 'button pressed'){
+function gotMessage(request, sender, sendResponse) {
+  console.log(stages === 0);
+  console.log(stages);
+  if (stages === 0){
     censor_paragraph();
+  }
+  if (stages === 1){
+    uncensor_paragraph();
+    stages --;
   }
 }
 

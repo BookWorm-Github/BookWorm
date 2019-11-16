@@ -13,7 +13,8 @@
     "persistent": false
   },
   "browser_action": {
-    "default_icon": "bookworm.png"
+    "default_icon": "bookworm.png",
+    "default_popup": "popup.html"
   },
   "permissions": [
     "storage"

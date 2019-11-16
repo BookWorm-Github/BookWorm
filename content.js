@@ -1,6 +1,8 @@
-console.log("Hello World!");
-
-let stages = 0;
+function set_phase(int) {
+  chrome.storage.local.set({'phase': int}, function () {
+    console.log('phase is set to ' + int);
+  });
+}
 
 //BELOW ARE TWO DIFFERENT WAYS TO CHANGE THE THINGS WITHIN A PARAGRAPH TEXT
 function censor_paragraph() {
@@ -30,14 +32,17 @@ chrome.runtime.onMessage.addListener(gotMessage);
 
 // Callback for when a message is received from background script
 function gotMessage(request, sender, sendResponse) {
-  console.log(stages === 0);
-  console.log(stages);
-  if (stages === 0){
-    censor_paragraph();
-  }
-  if (stages === 1){
-    uncensor_paragraph();
-    stages --;
-  }
+  chrome.storage.local.get(['phase'], function(result){
+    console.log(result.phase);
+    if (result.phase === 0){
+      censor_paragraph();
+      set_phase(result.phase + 1);
+    }
+    else{
+      uncensor_paragraph();
+      set_phase(0);
+    }
+  })
 }
 
+set_phase(0);

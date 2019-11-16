@@ -13,18 +13,22 @@ function summarize(text){
 }
 
 function set_phase(int) {
-  chrome.storage.local.set({'phase': int}, function () {
-    console.log('phase is set to ' + int);
-  });
+    chrome.storage.local.set({'phase': int}, function () {
+        console.log('phase is set to ' + int);
+    });
 }
 
 //BELOW ARE TWO DIFFERENT WAYS TO CHANGE THE THINGS WITHIN A PARAGRAPH TEXT
 function censor_paragraph() {
-  let elts = document.getElementsByTagName('p');
-  for (let i = 0; i < elts.length; i++) {
-    elts[i].style.backgroundColor = 'black';
+    let elts = document.getElementsByTagName('p');
+    for (let i = 0; i < elts.length; i++) {
+        elts[i].style.backgroundColor = 'black';
+    }
 
-  }
+    let subheaders = document.getElementsByTagName('strong');
+    for (let i = 0; i < subheaders.length; i++) {
+        subheaders[i].style.backgroundColor = 'white';
+    }
 }
 
 // (function () {//turns paragraphs into kittens
@@ -35,28 +39,44 @@ function censor_paragraph() {
 //   }
 // })();
 
-function uncensor_paragraph(){
-  let elts = document.getElementsByTagName('p');
-  for (let i = 0; i < elts.length; i++) {
-    elts[i].style.backgroundColor = 'white';
-  }
+function uncensor_paragraph() {
+    let elts = document.getElementsByTagName('p');
+    for (let i = 0; i < elts.length; i++) {
+        elts[i].style.backgroundColor = 'white';
+    }
+}
+
+// Callback for when a message is received from background script
+function gotMessage(request, sender, sendResponse) {
+    chrome.storage.local.get(['phase'], function (result) {
+        if (result.phase === 0) {
+            censor_paragraph();
+            set_phase(result.phase + 1);
+        }
+        if (result.phase === 1) {
+            uncensor_paragraph();
+            set_phase(0);
+        }
+    })
+    console.log('because of asynchronous method, this comes up first');
+}
+
+var coll = document.getElementsByTagName('h1');
+var i;
+
+for (i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.display !== "none") {
+            content.style.display = "none";
+        } else {
+            content.style.display = "block";
+        }
+    });
 }
 
 chrome.runtime.onMessage.addListener(gotMessage);
 
-// Callback for when a message is received from background script
-function gotMessage(request, sender, sendResponse) {
-  chrome.storage.local.get(['phase'], function(result){
-    console.log(result.phase);
-    if (result.phase === 0){
-      censor_paragraph();
-      set_phase(result.phase + 1);
-    }
-    else{
-      uncensor_paragraph();
-      set_phase(0);
-    }
-  })
-}
-
 set_phase(0);
+

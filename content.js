@@ -1,15 +1,15 @@
-deepai.setApiKey('ae158c0c-821b-4319-934e-b8556ee36e39');
-
-function summarize(text){
-  return deepai.callStandardApi("summarization", {
-      text: text
-  }).then(function (result){
-      return result.output;
-  }).catch(function (error){
-      console.log(error);
-      return error;
-  }); 
-}
+// deepai.setApiKey('ae158c0c-821b-4319-934e-b8556ee36e39');
+//
+// function summarize(text){
+//   return deepai.callStandardApi("summarization", {
+//       text: text
+//   }).then(function (result){
+//       return result.output;
+//   }).catch(function (error){
+//       console.log(error);
+//       return error;
+//   });
+// }
 
 function set_phase(int) {
     chrome.storage.local.set({'phase': int}, function () {
@@ -47,16 +47,18 @@ function uncensor_paragraph() {
 
 // Callback for when a message is received from background script
 function gotMessage(request, sender, sendResponse) {
-    chrome.storage.local.get(['phase'], function (result) {
-        if (result.phase === 0) {
-            censor_paragraph();
-            set_phase(result.phase + 1);
-        }
-        if (result.phase === 1) {
-            uncensor_paragraph();
-            set_phase(0);
-        }
-    })
+    if (request === "next-phase") {
+        chrome.storage.local.get(['phase'], function (result) {
+            if (result.phase === 0) {
+                censor_paragraph();
+                set_phase(result.phase + 1);
+            }
+            if (result.phase === 1) {
+                uncensor_paragraph();
+                set_phase(0);
+            }
+        })
+    }
     console.log('because of asynchronous method, this comes up first');
 }
 

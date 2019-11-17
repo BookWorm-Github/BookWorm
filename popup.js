@@ -1,8 +1,5 @@
-function hello() {
-  console.log("hi");
-  chrome.tabs.executeScript({
-    file: 'alert.js'
+document.getElementById('clickme').addEventListener('click', function(tabs) {
+  chrome.tabs.query({active: true, currentWindow: true}, function (current) {
+    chrome.tabs.sendMessage(current[0].id, "next-phase");
   });
-}
-
-document.getElementById('clickme').addEventListener('click', hello);
+});

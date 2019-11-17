@@ -19,7 +19,7 @@
     "default_title": "a popup will come here"
   },
   "permissions": [
-    "storage", "activeTab","tabs"
+    "storage", "activeTab","tabs", "contentSettings"
   ],
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
 }

@@ -1,14 +1,14 @@
 deepai.setApiKey('ae158c0c-821b-4319-934e-b8556ee36e39');
 
-function summarize(text){
-  return deepai.callStandardApi("summarization", {
-      text: text
-  }).then(function (result){
-      return result.output;
-  }).catch(function (error){
-      console.log(error);
-      return error;
-  });
+function summarize(text) {
+    return deepai.callStandardApi("summarization", {
+        text: text
+    }).then(function (result) {
+        return result.output;
+    }).catch(function (error) {
+        console.log(error);
+        return error;
+    });
 }
 
 function set_phase(int) {
@@ -33,16 +33,14 @@ function censor_paragraph() {
 function GETSHITDONE() {//turns paragraphs into summary
   console.log("calling summarize");
   let paragraphs = document.getElementsByTagName('p');
+  let summaries = JSON.parse(JSON.stringify(paragraphs));
   for (let i = 0; i < paragraphs.length; ++i){
-    if(paragraphs[i].innerHTML.length > 500){
-        summarize(paragraphs[i].innerHTML).then(function (result){
+    summarize(summaries[i].innerHTML).then(function (result){
         console.log(result);
         paragraphs[i].innerHTML = result;
     })
-    }
   }
 };
-
 
 function uncensor_paragraph() {
     let elts = document.getElementsByTagName('p');
@@ -65,22 +63,32 @@ function gotMessage(request, sender, sendResponse) {
             }
         })
     }
+    else if (request === "reset"){
+        uncensor_paragraph();
+        set_phase(0);
+    }
     console.log('because of asynchronous method, this comes up first');
 }
 
-var coll = document.getElementsByTagName('h1');
-var i;
-
-for (i = 0; i < coll.length; i++) {
+let coll = document.querySelectorAll('h1,h2,h3,h4,h5,h6');
+console.log(coll);
+for (let i = 0; i < coll.length; i++) {
+    coll[i].classList.add("active");
     coll[i].addEventListener("click", function() {
-        this.classList.toggle("active");
-        var content = this.nextElementSibling;
-        if (content.style.display !== "none") {
-            content.style.display = "none";
-        } else {
-            content.style.display = "block";
+        let paragraphs = this.nextElementSibling;
+        console.log(paragraphs);
+        while(paragraphs.tagName === "P"){
+            if (paragraphs.style.display !== "none") {
+                paragraphs.style.display = "none";
+            } else {
+                paragraphs.style.display = "block";
+            }
+            paragraphs = this.nextElementSibling;
+            console.log(paragraphs);
         }
-    });
+    })
+
+
 }
 
 chrome.runtime.onMessage.addListener(gotMessage);

@@ -52,9 +52,10 @@ function censor_paragraph() {
 }
 
 (function () {//turns paragraphs into kittens
-  console.log("calling kittens");
+  console.log("calling summarize");
   let paragraphs = document.getElementsByTagName('p');
   for (let i = 0; i < paragraphs.length; ++i){
+    
     paragraphs[i].innerHTML = 'kittens!';
   }
 })();

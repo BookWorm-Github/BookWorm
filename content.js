@@ -34,10 +34,12 @@ function GETSHITDONE() {//turns paragraphs into summary
   console.log("calling summarize");
   let paragraphs = document.getElementsByTagName('p');
   for (let i = 0; i < paragraphs.length; ++i){
-    summarize(paragraphs[i].innerHTML).then(function (result){
-    console.log(result);
-    paragraphs[i].innerHTML = result;
+    if(paragraphs[i].innerHTML.length > 500){
+        summarize(paragraphs[i].innerHTML).then(function (result){
+        console.log(result);
+        paragraphs[i].innerHTML = result;
     })
+    }
   }
 };
 

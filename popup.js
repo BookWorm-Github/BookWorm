@@ -1,13 +1,13 @@
-document.getElementById('next-phase').addEventListener('click', function(tabs) {
+document.getElementById('active').addEventListener('click', function(tabs) {
   chrome.tabs.query({active: true, currentWindow: true}, function (current) {
-    chrome.tabs.sendMessage(current[0].id, "next-phase");
+    chrome.tabs.sendMessage(current[0].id, "active");
     window.close();
   });
 });
 
-document.getElementById('reset').addEventListener('click',function(tabs){
+document.getElementById('original').addEventListener('click',function(tabs){
   chrome.tabs.query({active:true, currentWindow:true}, function(current){
-    chrome.tabs.sendMessage(current[0].id, "reset");
+    chrome.tabs.sendMessage(current[0].id, "original");
     window.close();
   });
 });

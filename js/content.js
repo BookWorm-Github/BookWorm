@@ -4,6 +4,7 @@ function summarize(text) {
     return deepai.callStandardApi("summarization", {
         text: text
     }).then(function (result) {
+        console.log(result.output);
         return result.output;
     }).catch(function (error) {
         console.log(error);
@@ -29,26 +30,6 @@ function set_phase(string) {
     });
 }
 
-//BELOW ARE TWO DIFFERENT WAYS TO CHANGE THE THINGS WITHIN A PARAGRAPH TEXT
-function censor_paragraph() {
-    let elts = document.getElementsByTagName('p');
-    for (let i = 0; i < elts.length; i++) {
-        elts[i].style.backgroundColor = 'black';
-    }
-
-    let subheaders = document.getElementsByTagName('strong');
-    for (let i = 0; i < subheaders.length; i++) {
-        subheaders[i].style.backgroundColor = 'white';
-    }
-}
-
-function uncensor_paragraph() {
-    let elts = document.getElementsByTagName('p');
-    for (let i = 0; i < elts.length; i++) {
-        elts[i].style.backgroundColor = 'white';
-    }
-}
-
 // Callback for when a message is received from background script
 function gotMessage(request, sender, sendResponse) {
     if (request === "active") {
@@ -60,7 +41,6 @@ function gotMessage(request, sender, sendResponse) {
         set_phase("original");
         unloadCSS("css/collapsible.css");
     }
-    console.log('because of asynchronous method, this comes up first');
 }
 
 function loadCSS(file) {
@@ -71,7 +51,6 @@ function loadCSS(file) {
     link.rel = "stylesheet";
     document.getElementsByTagName("html")[0].appendChild(link);
 }
-
 
 function unloadCSS(file) {
     let cssNode = document.getElementById(file);

@@ -77,18 +77,15 @@ for (let i = 0; i < coll.length; i++) {
     coll[i].addEventListener("click", function() {
         let paragraphs = this.nextElementSibling;
         console.log(paragraphs);
+        console.log(this);
         while(paragraphs.tagName === "P"){
             if (paragraphs.style.display !== "none") {
                 paragraphs.style.display = "none";
             } else {
                 paragraphs.style.display = "block";
             }
-            paragraphs = this.nextElementSibling;
-            console.log(paragraphs);
         }
     })
-
-
 }
 
 chrome.runtime.onMessage.addListener(gotMessage);

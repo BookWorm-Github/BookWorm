@@ -4,7 +4,7 @@ function summarize(text){
   return deepai.callStandardApi("summarization", {
       text: text
   }).then(function (result){
-      return result;
+      return result.output;
   }).catch(function (error){
       console.log(error);
       return error;

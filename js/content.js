@@ -17,7 +17,7 @@ function summarier() {//turns paragraphs into summary
     let paragraphs = document.getElementsByTagName('p');
     let summaries = JSON.parse(JSON.stringify(paragraphs));
     for (let i = 0; i < paragraphs.length; ++i){
-        summarize(summaries[i].innerHTML).then(function (result){
+        summarize(paragraphs[i].innerHTML).then(function (result){
             console.log(result);
             paragraphs[i].innerHTML = result;
         })

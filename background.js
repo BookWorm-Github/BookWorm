@@ -7,4 +7,15 @@ function buttonClicked(tabs) {// 'tab' is an object with information about the c
     chrome.tabs.sendMessage(tabs.id, 'hello');//send message from background script to content script
 }
 
-
+chrome.extension.onMessage.addListener(function (message, sender, sendResponse) { 
+    if (message.title === 'showResponse'){
+     $.ajax({ 
+        type: POST, 
+        url: "https://api.deepai.org/summerizer"
+    }).done(function (success) {
+    sendResponse(success);
+    }).fail(function () {
+    sendMessage(error);
+    });
+    }
+});

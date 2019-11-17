@@ -33,14 +33,14 @@ function censor_paragraph() {
 function GETSHITDONE() {//turns paragraphs into summary
   console.log("calling summarize");
   let paragraphs = document.getElementsByTagName('p');
-  let summaries = JSON.parse(JSON.stringify(paragraphs));
   for (let i = 0; i < paragraphs.length; ++i){
-    summarize(summaries[i].innerHTML).then(function (result){
-        console.log(result);
-        paragraphs[i].innerHTML = result;
+    summarize(paragraphs[i].innerHTML).then(function (result){
+    console.log(result);
+    paragraphs[i].innerHTML = result;
     })
   }
 };
+
 
 function uncensor_paragraph() {
     let elts = document.getElementsByTagName('p');

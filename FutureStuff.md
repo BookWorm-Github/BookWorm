@@ -49,6 +49,8 @@ Rants:
 
 - SWITCHING SESSIONS WITH SAVED PROJECTS/ALBUM!!! A functionatlity that can DEFINITELY be part of the web extension
 
+- Undo option
+
 - MUST MAKE IT SUPER DUPER SIMPLE FOR THE USER... Looking at Session Buddy.... simple easy to use and has the desired functionality for the large target audience BUT needs to be saved in the cloud, it is da way (look at SB's review)
 
 Unlooked benefits of a portfolio homepage:

@@ -40,7 +40,7 @@ When opening a browser:
 
 homepage pops up to suggest search queries based on the most recently created tags or web pages visited.
 
-Rants:
+Rants/Food for thought:
 - A schedule/calendar?
 
 - Record the session you are on silently??
@@ -52,6 +52,10 @@ Rants:
 - Undo option
 
 - MUST MAKE IT SUPER DUPER SIMPLE FOR THE USER... Looking at Session Buddy.... simple easy to use and has the desired functionality for the large target audience BUT needs to be saved in the cloud, it is da way (look at SB's review)
+
+- Text to speech. MAYBE even try to read productivity books/ read its summary (saves people time by reading it at our pace not theirs... ie some books take up to 17 minutes to listen to but reading it yourself takes forever.) but this is likea long term thing.
+
+- 
 
 Unlooked benefits of a portfolio homepage:
 - Saves tabs that are open and restores them later, frees up memory and avoids tab cluttering

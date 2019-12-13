@@ -55,7 +55,7 @@ Rants/Food for thought:
 
 - Text to speech. MAYBE even try to read productivity books/ read its summary (saves people time by reading it at our pace not theirs... ie some books take up to 17 minutes to listen to but reading it yourself takes forever.) but this is likea long term thing.
 
-- 
+- If you make a search query, the search engine will match your search terms with web page content that is in someone else's words. It would be nice if YOU could write your own words and thoughts about the text and have the search engine match YOUR search terms with YOUR own words because YOU are more familiar with words that YOU write yourself than with the web page content that is written by someone else. This can be implemented by letting users take notes on the web page and matching search terms with those notes.
 
 Unlooked benefits of a portfolio homepage:
 - Saves tabs that are open and restores them later, frees up memory and avoids tab cluttering

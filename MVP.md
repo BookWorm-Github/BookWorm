@@ -1,5 +1,5 @@
 
-### Chrome extension
+### Chrome extension (FOR THE WINTER)
 
 - Change the font type of the text.
 - Can select and delete html element like the element picker of uBlock
@@ -13,7 +13,7 @@
   - It will count the least frequent words and create its own sentences to form a summary.
   - It will hide the text of the summary.
 
-### Portfolio homepage
+### Portfolio homepage (MAIN FOCUS)
 
 - It has its own url that people can type into the top
 - Maybe focus on this less because we're essentially making our own website from scratch

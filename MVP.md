@@ -11,6 +11,7 @@
     - ??? How do we add this with the drag highlighted phrase to sidebar functionality and add sidebar html element functionality?
 - Summarizer does: ...
   - It will count the least frequent words and create its own sentences to form a summary.
+  - It will hide the text of the summary.
 
 ### Portfolio homepage
 

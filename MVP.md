@@ -1,6 +1,7 @@
 
 ### Chrome extension
 
+- Change the font type of the text.
 - Can select and delete html element like the element picker of uBlock
   - Possibly using CSS visibility: hidden
 - Add the keyword section in the side bar

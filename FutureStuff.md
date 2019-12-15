@@ -43,6 +43,7 @@ When opening a browser:
 homepage pops up to suggest search queries based on the most recently created tags or web pages visited.
 
 Rants/Food for thought:
+
 - A schedule/calendar?
 
 - Record the session you are on silently??
@@ -58,6 +59,8 @@ Rants/Food for thought:
 - Text to speech. MAYBE even try to read productivity books/ read its summary (saves people time by reading it at our pace not theirs... ie some books take up to 17 minutes to listen to but reading it yourself takes forever.) but this is likea long term thing.
 
 - See Grammarly functionalities. BUT if under quotation, don't highlight the errors/grammar mistakes.
+   - - Highlighting automatically defines word? Like grammarly
+
 
 - If you make a search query, the search engine will match your search terms with web page content that is in someone else's words. It would be nice if YOU could write your own words and thoughts about the text and have the search engine match YOUR search terms with YOUR own words because YOU are more familiar with words that YOU write yourself than with the web page content that is written by someone else. This can be implemented by letting users take notes on the web page and matching search terms with those notes.
 

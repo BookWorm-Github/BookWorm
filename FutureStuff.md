@@ -58,7 +58,7 @@ Rants/Food for thought:
 
 - Text to speech. MAYBE even try to read productivity books/ read its summary (saves people time by reading it at our pace not theirs... ie some books take up to 17 minutes to listen to but reading it yourself takes forever.) but this is like a long term thing.
 
-- *Automatic tab organizer, using AI and NLP? to match the relevant tabs in a session based on their similarity. Group them together and suggest groupings...
+- **Automatic tab organizer, using AI and NLP? to match the relevant tabs in a session based on their similarity. Group them together and suggest groupings based on key words and tags
 
 - See Grammarly functionalities. BUT if under quotation, don't highlight the errors/grammar mistakes.
    - - Highlighting automatically defines word? Like grammarly

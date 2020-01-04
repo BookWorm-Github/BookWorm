@@ -6,3 +6,6 @@ BookWorm is a Chrome Extension, written using Javascript, CSS, and HTML, that is
 <br>
 In order to run this extension, all the files of code that are included in this repository can be downloaded into the same repository on your machine. Then, by accessing chrome://extensions on the browser (making sure "Developer Mode" in the top right is toggled on),
 they can be used in the Chrome extensions menu by pressing "Load unpacked" and selecting the directory that the files are located in (on your machine). Finally, the extension will be executeable in your browser to be used on webpages that are accessed thereafter. <br>
+
+More on Devpost:
+https://devpost.com/software/bookworm-t0586n

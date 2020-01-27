@@ -25,6 +25,14 @@
 
 - Comment/Note sections (like Google Docs comment) that can note down highlighted sections and allow you to make comments on them. Comments and highlighted text will remain when the user returns to the webpages.
 
+- Each window should be color coded depending on if the window is for productivity, entertainment or Urgent 
+   - TYPE Urgent: such as private documents need to be done.... this way if a window is urgent and is stays open for more than a customized time limit, we can do some sort of desktop notification to tell them? 
+   - TYPE productivity: Should also tell the user to stay on task if user is opening tabs for a window meant for studying.
+   - TYPE recreational: Try to put a timer on the amount of time spent on that window. 
+   QUESTION: How to encourage users to open different TYPES of windows/album to follow suit to that window? ie not opening instagram or watching youtube content for entertainment in a produtivity window? 
+   - Notification is key, a pop up window? We could even censor it out, create a DANGER tab making the user aware its distracting but can click on a link to proceed.
+   - each color corresponds to a different TYPE, user can customize their own fav themes with it as well(not necessary this part).
+
 - **portfolio homepage** that is customizable, holds albums of webpages that users would like to save. The homepage also displays the most recent user-designated keywords and highlighted notes so that when the user returns to it, they can refresh their memory with the key terms they highlighted as well as the notes and websites that they last went to (along with clickable link to the webpage). The homepage contains also a todo list of the key things the user needs to do or questions the user seeks an answer to.
 
 In portfolio homepage there will be:
@@ -62,13 +70,18 @@ Rants/Food for thought:
 
 - See Grammarly functionalities. BUT if under quotation, don't highlight the errors/grammar mistakes.
    - - Highlighting automatically defines word? Like grammarly
-   
 
 - If you make a search query, the search engine will match your search terms with web page content that is in someone else's words. It would be nice if YOU could write your own words and thoughts about the text and have the search engine match YOUR search terms with YOUR own words because YOU are more familiar with words that YOU write yourself than with the web page content that is written by someone else. This can be implemented by letting users take notes on the web page and matching search terms with those notes.
+
+- Can also have automation like Trello's Butler feature, but BookWorm.
+
+- Reliability score???? IDK how this will work but its there... create our own scoring systems based on authors and whatnot...
 
 Unlooked benefits of a portfolio homepage:
 - Saves tabs that are open and restores them later, frees up memory and avoids tab cluttering
 - Can be created as a todo list, for work that needs to continue research on/ or a form that u need submitted can be added to this album
+
+
 
 
 

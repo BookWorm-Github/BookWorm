@@ -75,7 +75,8 @@ Rants/Food for thought:
 
 - Can also have automation like Trello's Butler feature, but BookWorm.
 
-- Reliability score???? IDK how this will work but its there... create our own scoring systems based on authors and whatnot...
+- Reliability score???? ~~IDK how this will work but its there... create our own scoring systems based on authors and whatnot...~~ 
+>Look into a spam score metric. -Rahul
 
 Unlooked benefits of a portfolio homepage:
 - Saves tabs that are open and restores them later, frees up memory and avoids tab cluttering

@@ -1,7 +1,7 @@
 # BookWorm
 
 Mission Statement:
-BookWorm helps student study more effectively by turning webpages to become distraction free and interactive with a portfolio homepage organizer to allow student manage their research data and open tabs.
+BookWorm helps productivity hackers increase efficiency by making webpages distraction free and interactive with a portfolio homepage organizer to allow for better research history and tab management.
 
 ![Thumbnail for BookWorm](https://github.com/ltann/BookWorm/blob/master/bookworm.png?raw=true)
 

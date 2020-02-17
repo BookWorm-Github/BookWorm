@@ -2,7 +2,7 @@
 
 - BookWorm streamlines the research and studying process for students and scholars by improving users' browsing experience and remodeling bookmark management.
 
-## Objective: BookWorm helps student study more effectively by turning webpages to become distraction free and interactive with a portfolio homepage organizer to allow student manage their research data and open tabs.
+## Objective: BookWorm helps productivity hackers study more effectively by making webpages distraction free and interactive with a portfolio homepage organizer to allow for better research history and open tab management.
 
 ### Features:
 - Google Translate

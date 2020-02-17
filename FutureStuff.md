@@ -42,15 +42,21 @@ In portfolio homepage there will be:
    - User clicks on album and it has options to open up the webpages in the album. 
    - Albums can be merged together
    - Albums can be organized and reordered around including the tabs itself.
+   - Access to the Albums detailed information ie how long has this album been up for, what sort of data was stored, how long were each tabs used etc.)
+   - Can search by the annotation we made on website or search through the webpages.
 
 - Sessions: when a new tab is created on a separate window, the user can create a new project folder or select an existing project folder and any search queries and pages visited will automatically go to the album of that project in the portfolio homepage. The user can undo this with a hotkey/button.
    - The new session can be a part of a created project
    
 When opening a browser:
+- BookWorm homepage (different from portfolio homepage) pops up to suggest search queries based on the most recently created tags or web pages visited.
 
-homepage pops up to suggest search queries based on the most recently created tags or web pages visited.
+- Power Saver mode: automatically close unused windows session.
+
 
 Rants/Food for thought:
+
+- Browser engine w/ the look of mobile google chrome?
 
 - A schedule/calendar?
 

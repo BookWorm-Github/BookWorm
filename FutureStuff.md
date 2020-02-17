@@ -53,6 +53,8 @@ When opening a browser:
 
 - Power Saver mode: automatically close unused windows session.
 
+- Automatic header titler for each tab?
+
 
 Rants/Food for thought:
 

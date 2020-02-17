@@ -88,8 +88,7 @@ Unlooked benefits of a portfolio homepage:
 - Saves tabs that are open and restores them later, frees up memory and avoids tab cluttering
 - Can be created as a todo list, for work that needs to continue research on/ or a form that u need submitted can be added to this album
 
-
-
+- Integration with other services
 
 
 ### Implementation Details:

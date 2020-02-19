@@ -55,6 +55,7 @@ When opening a browser:
 
 - Automatic header titler for each tab?
 
+- Staying on task, auto email sender: A good way for keeping users on task is to send an email to the users daily regards to items on their todo list and what they need to do.
 
 Rants/Food for thought:
 

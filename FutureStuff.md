@@ -59,6 +59,8 @@ When opening a browser:
 
 Rants/Food for thought:
 
+- auto complete every sentence?
+
 - Browser engine w/ the look of mobile google chrome?
 
 - A schedule/calendar?

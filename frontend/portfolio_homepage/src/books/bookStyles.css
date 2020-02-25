@@ -11,9 +11,9 @@
   }
 .book {
 
-	resize: false;
     background-color: #3391AF;
   	border-radius: 15px;
+    padding:10px 10px 10px 10px;
   	height: 200px;
   	text-align: center;
   	cursor: pointer;
@@ -24,17 +24,17 @@
 	width: 100%;
 	height: 100%;
 }
-.title:hover {
-	border-radius: 15px;
-	font-size: 0; 
-	background-color: #285A6B
+
+/*The hover menu which contains the launcher and wormhole*/
+.hover-menu{
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+  background-color: #285A6B 
 }
-.title:hover:after {
-  content:attr(data-hover);
-  font-size:18px;
-  line-height: 20px;
-}
+
 
 .whatColor{
 	color: orange;
 }
+

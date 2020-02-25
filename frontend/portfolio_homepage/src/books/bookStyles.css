@@ -1,0 +1,40 @@
+.container {
+    flexGrow: 1;
+     max-width: 100%;
+  margin: auto 20px;
+   overflow: 'hidden'
+  }
+.paper {
+    padding: theme.spacing(1);
+    margin: auto;
+    maxWidth: 500;
+  }
+.book {
+
+	resize: false;
+    background-color: #3391AF;
+  	border-radius: 15px;
+  	height: 200px;
+  	text-align: center;
+  	cursor: pointer;
+  }
+
+/*The title of the user's book*/
+.title{
+	width: 100%;
+	height: 100%;
+}
+.title:hover {
+	border-radius: 15px;
+	font-size: 0; 
+	background-color: #285A6B
+}
+.title:hover:after {
+  content:attr(data-hover);
+  font-size:18px;
+  line-height: 20px;
+}
+
+.whatColor{
+	color: orange;
+}

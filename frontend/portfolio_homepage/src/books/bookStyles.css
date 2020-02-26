@@ -1,3 +1,6 @@
+/*TODO later combine all css files into one file in App.css 
+for optimization*/
+
 .container {
     flexGrow: 1;
      max-width: 100%;
@@ -15,26 +18,56 @@
   	border-radius: 15px;
     padding:10px 10px 10px 10px;
   	height: 200px;
-  	text-align: center;
   	cursor: pointer;
+
   }
 
 /*The title of the user's book*/
 .title{
+
+  text-align: center;
 	width: 100%;
 	height: 100%;
 }
 
 /*The hover menu which contains the launcher and wormhole*/
 .hover-menu{
-  width: 100%;
-  height: 100%;
+   width: 100%;
+   height:100%;
   border-radius: 15px;
-  background-color: #285A6B 
+
+  display: flex;  
+  justify-content: center;
+  align-items: left;
+    position: relative;
 }
 
+.launcher{
+  width: 50%;
+  height: 100%;
 
-.whatColor{
-	color: orange;
+  display: flex;  
+}
+
+.launcher a{
+  position: relative;
+  border-radius: 1px;
+  width: 100%;
+  height:100%;
+  background-color: #52FFE9 
+}
+
+.wormhole{
+
+  width: 50%;
+  height: 100%;
+  display: flex;  
+}
+.wormhole a{
+  position: relative;
+  border-radius: 1px;
+  
+   background-color: #285A6B ;
+  height:100%;
 }
 

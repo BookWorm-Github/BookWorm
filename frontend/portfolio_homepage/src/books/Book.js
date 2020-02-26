@@ -4,6 +4,7 @@ import React, {Component, useState} from 'react'
 // import { withStyles } from '@material-ui/core/styles';
 //npm i react-simple-flex-grid
 import './bookStyles.css'
+import Launcher from '../launcher/Launcher'
 class Book extends Component{
 
   constructor(){
@@ -25,16 +26,17 @@ class Book extends Component{
 
 					{
 						this.state.isHovered? 
+						<div className ='hover-menu'>
+							<Launcher />
 
-						<div className = 'hover-menu' >
-							<a href = "https://www.google.com">Launch</a>
-
+							<div className = 'wormhole' >
+								<a href = "https://www.google.com">Placeholder for Worm Hole. Insert Wormhole launch button here when Wormhole is completed</a>
+							</div>
 						</div>
-
 						: 
 
 
-						<div className = 'title' >Book</div>
+						<div className = 'title' ><h1>Book</h1></div>
 						
 					}
 

@@ -14,10 +14,10 @@ class BookShelf extends Component {
     };
   }
   render(){
-
+    const space = 10;
     return (
         <div className='container'> 
-           <Grid container spacing={3}>
+           <Grid container spacing={space}>
                   <Grid item xs zeroMinWidth>
                     <Book />
                   </Grid>
@@ -29,7 +29,7 @@ class BookShelf extends Component {
                   </Grid>
                 </Grid>
 
-              <Grid container spacing={3}>
+              <Grid container spacing={space}>
                 <Grid item xs zeroMinWidth>
                   <Book ></Book>
                 </Grid>

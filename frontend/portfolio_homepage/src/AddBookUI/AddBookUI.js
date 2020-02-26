@@ -3,8 +3,8 @@ import React, {Component, useState} from 'react'
 
 // import { withStyles } from '@material-ui/core/styles';
 //npm i react-simple-flex-grid
-import './bookStyles.css'
-import Launcher from '../launcher/Launcher'
+ // import '../books/bookStyles.css'
+ import './pop-up.css'
 class AddBookUI extends Component{
 
   constructor(){
@@ -17,16 +17,19 @@ class AddBookUI extends Component{
 //if user is hovering over album, show launch
 //else show title
 
-	render(){
+  render() {  
+    return (  
+    <div className='popup'>  
+      <div className='popup\_inner'>  
+        <h1>Add Book</h1>  
 
-		return (
-			<form onSubmit={this.addItem}>
-	            <input placeholder="Enter Book Title">
-	            </input>
-            <button type="submit">add</button>
-          </form>
-		);
-	}
+        <button onClick={this.props.closePopup}>close me</button>  
+      </div>  
+    </div>  
+    );  
+  } 
+
+
 
 
 }

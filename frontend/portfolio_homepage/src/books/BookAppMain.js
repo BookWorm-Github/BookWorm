@@ -3,7 +3,7 @@ import React, {Component} from 'react'
 import Grid from '@material-ui/core/Grid';
 import BookShelf from './BookShelf'
 
-import AddBookUI from './AddBookUI'
+import AddBookUI from '../AddBookUI/AddBookUI'
 import './bookStyles.css'
 
 class BookAppMain extends Component {
@@ -19,29 +19,39 @@ class BookAppMain extends Component {
   render(){
 
     return (
-      <div className = 'book-shelf'>
-        <BookShelf />
-
+      <div className = 'center'>
+      
+        <div className = 'book-shelf'>
+          <BookShelf />
+        </div>
+      
           {
             this.state.addingBook? 
-            <AddBookUI />
+            <div>
+              <AddBookUI 
+                submitBook = {this.submitBook}
+                closePopup={this.toggleAddBook} 
+              />
+            </div>
             : 
-            <div></div>            
+            <div>
+
+            </div>            
           }
 
-          <button className = 'add-bk-btn' onClick={this.addBook}><h2>+</h2></button>
+          <button className = 'add-bk-btn' onClick={this.toggleAddBook}><h2>+</h2></button>
     
       </div>
     );
   }
 
-  addBook = () =>{
+  toggleAddBook = () =>{
     console.log("Adding book");
-    this.setState({addingBook:true});
+    this.setState({addingBook:!this.state.addingBook});
   }
 
-  submitBook = ()=>{
-    console.log("Todo later need to update backend etc in this method (replace this console log msg)");
+  submitBook = (title)=>{
+    console.log("Todo later need to update backend etc in this method (replace this console log msg). Book :"+title);
     this.setState({addingBook:false});
   }
 

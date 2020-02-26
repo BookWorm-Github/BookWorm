@@ -1,12 +1,20 @@
 /*TODO later combine all css files into one file in App.css 
 for optimization*/
 
-.book-shelf{
-background: #fffff0; /*for allowing users to customzize background color later*/
+.center{
 
-  display: flex;  
   justify-content: center;
   align-items: center;
+
+  display: flex;
+
+  background: #ffffff; /*for allowing users to customzize background color later*/
+}
+.book-shelf{
+
+  width: 100%;
+  background: #fffff0; /*for debugging*/
+
 
 }
 /*Circular add-book-button*/
@@ -20,7 +28,7 @@ background: #fffff0; /*for allowing users to customzize background color later*/
 }
 .container {
   width: 100%;
-  margin: auto 20px;
+  margin: auto;
    overflow: 'hidden'
 
   }
@@ -68,7 +76,7 @@ background: #fffff0; /*for allowing users to customzize background color later*/
 }
 
 .launcher a{
-  border-radius: 1px;
+  border-radius: 5px;
   width: 100%;
   height:100%;
   background-color: #52FFE9 
@@ -81,7 +89,7 @@ background: #fffff0; /*for allowing users to customzize background color later*/
   display: flex;  
 }
 .wormhole a{
-  border-radius: 1px;
+  border-radius: 5px;
 
    background-color: #285A6B ;
   height:100%;

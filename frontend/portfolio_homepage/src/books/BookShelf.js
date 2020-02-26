@@ -10,45 +10,42 @@ class BookShelf extends Component {
   constructor(){
     super();
     this.state = {
-      addingBook: false,
-      title: null
+      books:[],
     };
   }
-
   render(){
 
     return (
+        <div className='container'> 
+           <Grid container spacing={3}>
+                  <Grid item xs zeroMinWidth>
+                    <Book />
+                  </Grid>
+                  <Grid item xs>
+                    <Book />
+                  </Grid>
+                  <Grid item xs>
+                    <Book />
+                  </Grid>
+                </Grid>
 
-    <div className='container'> 
+              <Grid container spacing={3}>
+                <Grid item xs zeroMinWidth>
+                  <Book ></Book>
+                </Grid>
+                <Grid item xs zeroMinWidth>
+                  <Book ></Book>
+                </Grid>
+                <Grid item xs zeroMinWidth>
+                  
+                </Grid>
+              </Grid>
 
- <Grid container spacing={3}>
-        <Grid item xs zeroMinWidth>
-          <Book />
-        </Grid>
-        <Grid item xs>
-          <Book />
-        </Grid>
-        <Grid item xs>
-          <Book />
-        </Grid>
-      </Grid>
+          </div>
 
-
-
-
-      <Grid container spacing={3}>
-        <Grid item xs zeroMinWidth>
-          <Book >xs</Book>
-        </Grid>
-        <Grid item xs zeroMinWidth>
-          <Book >xs</Book>
-        </Grid>
-        <Grid item xs zeroMinWidth>
-          
-        </Grid>
-      </Grid>
-      </div>
     );
   }
+
+ 
 }
 export default (BookShelf);

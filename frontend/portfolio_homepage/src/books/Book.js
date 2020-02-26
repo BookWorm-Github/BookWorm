@@ -30,7 +30,7 @@ class Book extends Component{
 							<Launcher />
 
 							<div className = 'wormhole' >
-								<a href = "https://www.google.com">Placeholder for Worm Hole. Insert Wormhole launch button here when Wormhole is completed</a>
+								<a href = "https://www.google.com" target = "_blank">Placeholder for Worm Hole. Insert Wormhole launch button here when Wormhole is completed</a>
 							</div>
 						</div>
 						: 

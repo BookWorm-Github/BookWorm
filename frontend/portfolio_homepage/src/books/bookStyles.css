@@ -1,11 +1,28 @@
 /*TODO later combine all css files into one file in App.css 
 for optimization*/
 
+.book-shelf{
+background: #fffff0; /*for allowing users to customzize background color later*/
+
+  display: flex;  
+  justify-content: center;
+  align-items: center;
+
+}
+/*Circular add-book-button*/
+.add-bk-btn{
+    padding: 5px;
+    height: 50px;
+    width: 50px;  /*The Width must be the same as the height*/
+    border-radius:100px; /*borderRadius must b 2*width*/   
+    background-color:#405B9B;
+    
+}
 .container {
-    flexGrow: 1;
-     max-width: 100%;
+  width: 100%;
   margin: auto 20px;
    overflow: 'hidden'
+
   }
 .paper {
     padding: theme.spacing(1);
@@ -42,6 +59,7 @@ for optimization*/
     position: relative;
 }
 
+/*The launcher button*/
 .launcher{
   width: 50%;
   height: 100%;
@@ -50,13 +68,12 @@ for optimization*/
 }
 
 .launcher a{
-  position: relative;
   border-radius: 1px;
   width: 100%;
   height:100%;
   background-color: #52FFE9 
 }
-
+/*The wormhole button*/
 .wormhole{
 
   width: 50%;
@@ -64,9 +81,8 @@ for optimization*/
   display: flex;  
 }
 .wormhole a{
-  position: relative;
   border-radius: 1px;
-  
+
    background-color: #285A6B ;
   height:100%;
 }

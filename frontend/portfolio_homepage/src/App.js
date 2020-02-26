@@ -1,14 +1,14 @@
 import React from 'react';
 import './App.css';
 
-import BookShelf from './books/BookShelf'
+import BookAppMain from './books/BookAppMain'
 
 function App() {
   return (
     <div className="App">
 
   		<h1>BookWorm</h1>
-      <BookShelf />
+      <BookAppMain />
     </div>
   );
 }

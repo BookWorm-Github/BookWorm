@@ -19,13 +19,14 @@ class AddBookUI extends Component{
 
   render() {  
     return (  
-    <div className='popup'>  
-      <div className='popup\_inner'>  
-        <h1>Add Book</h1>  
+      
+        <div className='popup'>  
+          <div className='popup\_inner'>  
+            <h1>Add Book</h1>  
 
-        <button onClick={this.props.closePopup}>close me</button>  
-      </div>  
-    </div>  
+            <button onClick={this.props.closePopup}>close me</button>  
+          </div>  
+        </div>  
     );  
   } 
 

@@ -19,10 +19,12 @@ class BookAppMain extends Component {
   render(){
 
     return (
-      <div className = 'center'>
+      <div className = 'main-container-center'>
       
-        <div className = 'book-shelf'>
+        <div id = 'blurrable' className = 'book-shelf'>
+          <div className = {this.state.addingBook?'blur-bg':'clear-bg'}>
           <BookShelf />
+          </div>
         </div>
       
           {

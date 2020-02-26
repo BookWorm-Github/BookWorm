@@ -1,8 +1,8 @@
 /*TODO later combine all css files into one file in App.css 
 for optimization*/
 
-.center{
-
+.main-container-center{
+  margin: 10px;
   justify-content: center;
   align-items: center;
 
@@ -11,15 +11,14 @@ for optimization*/
   background: #ffffff; /*for allowing users to customzize background color later*/
 }
 .book-shelf{
-
   width: 100%;
-  background: #fffff0; /*for debugging*/
-
-
+  /*background: #fffff0; for debugging*/
 }
+
 /*Circular add-book-button*/
 .add-bk-btn{
-    padding: 5px;
+
+    margin: 0px 10px;
     height: 50px;
     width: 50px;  /*The Width must be the same as the height*/
     border-radius:100px; /*borderRadius must b 2*width*/   
@@ -92,6 +91,19 @@ for optimization*/
   border-radius: 5px;
 
    background-color: #285A6B ;
+
+  overflow: hidden;
   height:100%;
+}
+
+/*The blur effect of background when popup occurs*/
+.blur-bg {
+
+  /* Add the blur effect */
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
+}
+.clear-bg{
+  filter:none;
 }
 

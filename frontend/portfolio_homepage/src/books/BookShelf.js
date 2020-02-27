@@ -62,6 +62,26 @@ class BookShelf extends Component {
       return shelves.map(this.createShelf)
   }
 
+  printBkList(booklist){
+     console.log("Printing Book List");
+    for(var x = 0; x<booklist.length; x++){
+      var jsonObj = booklist[x];
+      this.printBook(x,jsonObj);
+    }
+  }
+  printBook(x,jsonObj){
+       var strBuilder = [];
+       strBuilder.push("Item "+x+": ");
+        for(var key in jsonObj){
+            if (jsonObj.hasOwnProperty(key)) {
+                 strBuilder.push(""+jsonObj[key]+",");
+            }
+            else{strBuilder.push("Null")}
+        }
+      console.log(strBuilder.join(""));
+  }
+
+
   render(){
     var booklist = this.props.bks;//array of all books
 
@@ -89,32 +109,10 @@ class BookShelf extends Component {
                 </Grid>
               </Grid>*/
             }
-            
             {books}
           </div>
 
     );
-  }
-
-
-  //print methods for debug
-  printBkList(booklist){
-     console.log("Printing Book List");
-    for(var x = 0; x<booklist.length; x++){
-      var jsonObj = booklist[x];
-      this.printBook(x,jsonObj);
-    }
-  }
-  printBook(x,jsonObj){
-       var strBuilder = [];
-       strBuilder.push("Item "+x+": ");
-        for(var key in jsonObj){
-            if (jsonObj.hasOwnProperty(key)) {
-                 strBuilder.push(""+jsonObj[key]+",");
-            }
-            else{strBuilder.push("Null")}
-        }
-      console.log(strBuilder.join(""));
   }
 
 

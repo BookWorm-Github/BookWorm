@@ -22,7 +22,6 @@ class AddBookUI extends Component{
 
         <div className='popup'>    
 
-          <div className='popup-inner'>  
             <div className = 'book' style = {{height:'100%'}} >
               <h2>Name of the book: </h2>  
               <div>
@@ -39,7 +38,7 @@ class AddBookUI extends Component{
               </div>
             </div>
             <button onClick={this.props.closePopup}>close me</button>  
-          </div>  
+           
         </div>  
     );  
   } 

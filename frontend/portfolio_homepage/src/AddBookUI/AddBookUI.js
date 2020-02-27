@@ -3,7 +3,7 @@ import React, {Component, useState} from 'react'
 
 // import { withStyles } from '@material-ui/core/styles';
 //npm i react-simple-flex-grid
- // import '../books/bookStyles.css'
+ import '../books/bookStyles.css'
  import './pop-up.css'
 class AddBookUI extends Component{
 
@@ -19,11 +19,17 @@ class AddBookUI extends Component{
 
   render() {  
     return (  
-      
-        <div className='popup'>  
-          <div className='popup\_inner'>  
-            <h1>Add Book</h1>  
 
+        <div className='popup'>    
+
+          <div className='popup-inner'>  
+            <div className = 'book' style = {{height:'100%'}} >
+              <h2>Name of the book: </h2>  
+              <div>
+              <h1 contenteditable="true">Title</h1>
+              
+              </div>
+            </div>
             <button onClick={this.props.closePopup}>close me</button>  
           </div>  
         </div>  

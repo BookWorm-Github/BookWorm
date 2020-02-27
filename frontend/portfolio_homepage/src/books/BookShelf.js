@@ -31,22 +31,20 @@ class BookShelf extends Component {
             if(n<booklist.length)
               shelves[i][j] = booklist[n];
             else
-              shelves[i][j] = null   
+              shelves[i][j] = null;   
         } 
     } 
-    console.log("Printingshelf");
-    for(var x = 0; x<shelves.length; x++){
-      console.log(shelves[x].toString());
-    }
-
+    // this.printShelf(shelves);
     return shelves;
 
   }
 
   createBook =(_book,_index) => {
 
+    this.printBook(_index,_book);
+
     return <Grid key = {_index} item xs zeroMinWidth>
-              {_book===null? null:
+              {_book===null?<div>Someone fix this bug</div>:
                     <Book book ={_book}  />
               }
             </Grid>
@@ -64,18 +62,17 @@ class BookShelf extends Component {
       return shelves.map(this.createShelf)
   }
 
-
-
   render(){
     var booklist = this.props.bks;//array of all books
 
     var shelves = this.parseShelves(booklist);
+    this.printBkList(booklist);
     // var books = booklist.map(this.createBook);
     var books = this.separateBooksIntoShelves(shelves,booklist.length);
 
 
     return (
-        <div className='container'> 
+        <div className='book-shelf'> 
            {/*<Grid container spacing={space}>
                   {books}
                 </Grid>
@@ -92,11 +89,34 @@ class BookShelf extends Component {
                 </Grid>
               </Grid>*/
             }
+            
             {books}
           </div>
 
     );
   }
+
+
+  //print methods for debug
+  printBkList(booklist){
+     console.log("Printing Book List");
+    for(var x = 0; x<booklist.length; x++){
+      var jsonObj = booklist[x];
+      this.printBook(x,jsonObj);
+    }
+  }
+  printBook(x,jsonObj){
+       var strBuilder = [];
+       strBuilder.push("Item "+x+": ");
+        for(var key in jsonObj){
+            if (jsonObj.hasOwnProperty(key)) {
+                 strBuilder.push(""+jsonObj[key]+",");
+            }
+            else{strBuilder.push("Null")}
+        }
+      console.log(strBuilder.join(""));
+  }
+
 
  
 }

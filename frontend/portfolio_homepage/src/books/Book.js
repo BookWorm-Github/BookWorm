@@ -10,10 +10,15 @@ class Book extends Component{
   constructor(){
     super();
     this.state = {
-      title:'Book',
+      title:'',
       isHovered: false
     };
   }
+  componentDidMount=() =>{
+		this.setState({
+			title: this.props.book.title
+		});
+	}
 
 	  createHoverMenu() {
 	    return <div className ='hover-menu'>

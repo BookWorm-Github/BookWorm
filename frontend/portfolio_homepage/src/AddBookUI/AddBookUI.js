@@ -47,16 +47,16 @@ class AddBookUI extends Component{
   submitBook = (e) =>{
       var newBook = {
         key: Date.now(),
-        text: this._inputTitle.value
+        title: this._inputTitle.value
       };
       
       this.setState((prevState) => {
         return { 
-          title: newBook.text 
+          title: newBook.title
         };
       });
      
-     /* console.log("Input Title at submitBook is: "+newBook.text);*/
+     /* console.log("Input Title at submitBook is: "+newBook.title);*/
     
       this.props.addBook(newBook);
 

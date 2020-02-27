@@ -19,6 +19,7 @@ class BookAppMain extends Component {
   render(){
 
     return (
+      
       <div className = 'main-container-center'>
       
         <div id = 'blurrable' className = 'book-shelf'>
@@ -38,6 +39,7 @@ class BookAppMain extends Component {
             : 
             <div>
 
+
             </div>            
           }
 
@@ -48,13 +50,13 @@ class BookAppMain extends Component {
   }
 
   toggleAddBook = () =>{
-    console.log("Adding book");
+    //console.log("Adding book");
     this.setState({addingBook:!this.state.addingBook});
   }
 
   addBook = (newBook)=>{
     /*Every book has title and key, which is the date*/
-    console.log("Todo later need to update backend etc in this method (replace this console log msg). Book :"+newBook.text);
+    //console.log("Todo later need to update backend etc in this method (replace this console log msg). Book :"+newBook.title);
     this.setState(
       {
         bookshelf: [...this.state.bookshelf, newBook],
@@ -63,15 +65,15 @@ class BookAppMain extends Component {
     );
 
 
-    this.debug()
+    // this.debugBkShelf()
   }
 
-  debug = () => {
+  debugBkShelf = () => {
 
     console.log("BookAppMain State is now "+this.state.bookshelf);
       this.state.bookshelf.map((_book, _key) => {
             return(
-              console.log("Book ("+_book.text+","+_book.key+")")
+              console.log("Book ("+_book.title+","+_book.key+")")
             );
           })
   }

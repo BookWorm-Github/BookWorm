@@ -17,7 +17,7 @@ class BookShelf extends Component {
 
 
   parseShelves(booklist){
-    const numShelves = Math.ceil(booklist.length/3+1);
+    const numShelves = Math.ceil(booklist.length/this.state.numBksPerShelf);
 
     var shelves = new Array(numShelves);
     for (var k = 0; k < shelves.length; k++) { 
@@ -46,7 +46,9 @@ class BookShelf extends Component {
   createBook =(_book,_index) => {
 
     return <Grid key = {_index} item xs zeroMinWidth>
+              {_book===null? null:
                     <Book book ={_book}  />
+              }
             </Grid>
   }
 
@@ -58,14 +60,19 @@ class BookShelf extends Component {
                 </Grid>
   }
 
+  separateBooksIntoShelves = (shelves,numBooks) =>{
+      return shelves.map(this.createShelf)
+  }
+
 
 
   render(){
     var booklist = this.props.bks;//array of all books
-    
+
     var shelves = this.parseShelves(booklist);
     // var books = booklist.map(this.createBook);
-    var books = shelves.map(this.createShelf)
+    var books = this.separateBooksIntoShelves(shelves,booklist.length);
+
 
     return (
         <div className='container'> 

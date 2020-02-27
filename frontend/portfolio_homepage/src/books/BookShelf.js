@@ -11,22 +11,66 @@ class BookShelf extends Component {
     super();
     this.state = {
       books:[],
+      numBksPerShelf:3
     };
   }
-  render(){
+
+
+  parseShelves(booklist){
+    const numShelves = Math.ceil(booklist.length/3+1);
+
+    var shelves = new Array(numShelves);
+    for (var k = 0; k < shelves.length; k++) { 
+        shelves[k] = new Array(this.state.numBksPerShelf); 
+    } 
+
+    // Loop to initilize 2D array elements (books). 
+    for (var i = 0; i < numShelves; i++) { 
+        for (var j = 0; j < this.state.numBksPerShelf; j++) { 
+            var n = j*numShelves+i;
+            if(n<booklist.length)
+              shelves[i][j] = booklist[n];
+            else
+              shelves[i][j] = null   
+        } 
+    } 
+    console.log("Printingshelf");
+    for(var x = 0; x<shelves.length; x++){
+      console.log(shelves[x].toString());
+    }
+
+    return shelves;
+
+  }
+
+  createBook =(_book,_index) => {
+
+    return <Grid key = {_index} item xs zeroMinWidth>
+                    <Book book ={_book}  />
+            </Grid>
+  }
+
+  createShelf =(_bookshelf,_index) => {
+
     const space = 5;
+    return <Grid key = {_index} container spacing={5}>
+                  {_bookshelf.map(this.createBook)}
+                </Grid>
+  }
+
+
+
+  render(){
+    var booklist = this.props.bks;//array of all books
+    
+    var shelves = this.parseShelves(booklist);
+    // var books = booklist.map(this.createBook);
+    var books = shelves.map(this.createShelf)
+
     return (
         <div className='container'> 
-           <Grid container spacing={space}>
-                  <Grid item xs zeroMinWidth>
-                    <Book />
-                  </Grid>
-                  <Grid item xs zeroMinWidth>
-                    <Book />
-                  </Grid>
-                  <Grid item xs zeroMinWidth>
-                    <Book />
-                  </Grid>
+           {/*<Grid container spacing={space}>
+                  {books}
                 </Grid>
 
               <Grid container spacing={space}>
@@ -39,8 +83,9 @@ class BookShelf extends Component {
                 <Grid item xs zeroMinWidth>
                   
                 </Grid>
-              </Grid>
-
+              </Grid>*/
+            }
+            {books}
           </div>
 
     );

@@ -1,6 +1,5 @@
 
 import React, {Component} from 'react'
-import Grid from '@material-ui/core/Grid';
 import BookShelf from './BookShelf'
 
 import AddBookUI from '../AddBookUI/AddBookUI'
@@ -11,8 +10,9 @@ class BookAppMain extends Component {
   constructor(){
     super();
     this.state = {
+      bookshelf: [],
       addingBook: false,
-      title: null
+
     };
   }
 
@@ -23,7 +23,7 @@ class BookAppMain extends Component {
       
         <div id = 'blurrable' className = 'book-shelf'>
           <div className = {this.state.addingBook?'blur-bg':'clear-bg'}>
-          <BookShelf />
+          <BookShelf bks = {this.state.bookshelf}/>
           </div>
         </div>
       
@@ -31,7 +31,7 @@ class BookAppMain extends Component {
             this.state.addingBook? 
             <div>
               <AddBookUI 
-                submitBook = {this.submitBook}
+                addBook = {this.addBook}
                 closePopup={this.toggleAddBook} 
               />
             </div>
@@ -52,9 +52,28 @@ class BookAppMain extends Component {
     this.setState({addingBook:!this.state.addingBook});
   }
 
-  submitBook = (title)=>{
-    console.log("Todo later need to update backend etc in this method (replace this console log msg). Book :"+title);
-    this.setState({addingBook:false});
+  addBook = (newBook)=>{
+    /*Every book has title and key, which is the date*/
+    console.log("Todo later need to update backend etc in this method (replace this console log msg). Book :"+newBook.text);
+    this.setState(
+      {
+        bookshelf: [...this.state.bookshelf, newBook],
+        addingBook:false
+      }
+    );
+
+
+    this.debug()
+  }
+
+  debug = () => {
+
+    console.log("BookAppMain State is now "+this.state.bookshelf);
+      this.state.bookshelf.map((_book, _key) => {
+            return(
+              console.log("Book ("+_book.text+","+_book.key+")")
+            );
+          })
   }
 
 }

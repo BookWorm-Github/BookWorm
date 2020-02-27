@@ -1,5 +1,5 @@
 //The container that holds the books
-import React, {Component, useState} from 'react'
+import React, {Component} from 'react'
 
 // import { withStyles } from '@material-ui/core/styles';
 //npm i react-simple-flex-grid
@@ -7,10 +7,10 @@ import React, {Component, useState} from 'react'
  import './pop-up.css'
 class AddBookUI extends Component{
 
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
     this.state = {
-      isHovered: false
+      title: '',
     };
   }
 
@@ -26,8 +26,16 @@ class AddBookUI extends Component{
             <div className = 'book' style = {{height:'100%'}} >
               <h2>Name of the book: </h2>  
               <div>
-              <h1 contenteditable="true">Title</h1>
-              
+
+
+               <form onSubmit={this.submitBook}>
+                  <input ref={(t) => this._inputTitle = t}
+                    placeholder="Enter Title Here" defaultValue="Title">
+                  </input>
+                  <button type="submit">add</button>
+                </form>
+
+
               </div>
             </div>
             <button onClick={this.props.closePopup}>close me</button>  
@@ -35,6 +43,29 @@ class AddBookUI extends Component{
         </div>  
     );  
   } 
+
+  submitBook = (e) =>{
+      var newBook = {
+        key: Date.now(),
+        text: this._inputTitle.value
+      };
+      
+      this.setState((prevState) => {
+        return { 
+          title: newBook.text 
+        };
+      });
+     
+     /* console.log("Input Title at submitBook is: "+newBook.text);*/
+    
+      this.props.addBook(newBook);
+
+      this._inputTitle.value = "";
+
+      e.preventDefault();
+  }
+
+  
 
 
 

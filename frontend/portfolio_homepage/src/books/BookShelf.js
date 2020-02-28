@@ -16,35 +16,40 @@ class BookShelf extends Component {
   }
 
 
-  parseShelves(booklist){
-    const numShelves = Math.ceil(booklist.length/this.state.numBksPerShelf);
+  create2DArrayOfBooks(booklist){
+    const numshelfOfBooks = Math.ceil(booklist.length/this.state.numBksPerShelf);
 
-    var shelves = new Array(numShelves);
-    for (var k = 0; k < shelves.length; k++) { 
-        shelves[k] = new Array(this.state.numBksPerShelf); 
+    var shelfOfBooks = new Array(numshelfOfBooks);
+    for (var k = 0; k < shelfOfBooks.length; k++) { 
+        shelfOfBooks[k] = new Array(this.state.numBksPerShelf); 
     } 
 
     // Loop to initilize 2D array elements (books). 
-    for (var i = 0; i < numShelves; i++) { 
+    var debugString = "";
+    for (var i = 0; i < numshelfOfBooks; i++) { 
         for (var j = 0; j < this.state.numBksPerShelf; j++) { 
-            var n = j*numShelves+i;
-            if(n<booklist.length)
-              shelves[i][j] = booklist[n];
-            else
-              shelves[i][j] = null;   
-        } 
+            var n = i*this.state.numBksPerShelf+j;
+            if(n<booklist.length){
+              shelfOfBooks[i][j] = booklist[n];
+            }
+            else{
+              shelfOfBooks[i][j] = null;   
+            }
+            debugString+=("Shelf ("+i+","+j+") is "+shelfOfBooks[i][j]+"\n");
+        }
     } 
-    // this.printShelf(shelves);
-    return shelves;
+    console.log("DEBUG SHELF PARSE of booklist len: "+booklist.length+": "+debugString);
+    // this.printShelf(shelfOfBooks);
+    return shelfOfBooks;
 
   }
 
   createBook =(_book,_index) => {
 
-    this.printBook(_index,_book);
+    // this.printBook(_index,_book);
 
     return <Grid key = {_index} item xs zeroMinWidth>
-              {_book===null?<div>Someone fix this bug</div>:
+              {_book===null?null:
                     <Book book ={_book}  />
               }
             </Grid>
@@ -58,37 +63,20 @@ class BookShelf extends Component {
                 </Grid>
   }
 
-  separateBooksIntoShelves = (shelves,numBooks) =>{
-      return shelves.map(this.createShelf)
+  separateBooksIntoshelfOfBooks = (shelfOfBooks,numBooks) =>{
+      return <div>{shelfOfBooks.map(this.createShelf)}</div>
   }
 
-  printBkList(booklist){
-     console.log("Printing Book List");
-    for(var x = 0; x<booklist.length; x++){
-      var jsonObj = booklist[x];
-      this.printBook(x,jsonObj);
-    }
-  }
-  printBook(x,jsonObj){
-       var strBuilder = [];
-       strBuilder.push("Item "+x+": ");
-        for(var key in jsonObj){
-            if (jsonObj.hasOwnProperty(key)) {
-                 strBuilder.push(""+jsonObj[key]+",");
-            }
-            else{strBuilder.push("Null")}
-        }
-      console.log(strBuilder.join(""));
-  }
 
 
   render(){
     var booklist = this.props.bks;//array of all books
 
-    var shelves = this.parseShelves(booklist);
-    this.printBkList(booklist);
+    var shelfOfBooks = this.create2DArrayOfBooks(booklist);
+    // this.printBkList(booklist);
     // var books = booklist.map(this.createBook);
-    var books = this.separateBooksIntoShelves(shelves,booklist.length);
+    var books = this.separateBooksIntoshelfOfBooks(shelfOfBooks,booklist.length);
+    // var books = this.divideBooksIntoRows(booklist,booklist.length);
 
 
     return (
@@ -113,6 +101,27 @@ class BookShelf extends Component {
           </div>
 
     );
+  }
+
+
+  //print methods for debug
+  printBkList(booklist){
+     console.log("Printing Book List");
+    for(var x = 0; x<booklist.length; x++){
+      var jsonObj = booklist[x];
+      this.printBook(x,jsonObj);
+    }
+  }
+  printBook(x,jsonObj){
+       var strBuilder = [];
+       strBuilder.push("Item "+x+": ");
+        for(var key in jsonObj){
+            if (jsonObj.hasOwnProperty(key)) {
+                 strBuilder.push(""+jsonObj[key]+",");
+            }
+            else{strBuilder.push("Null")}
+        }
+      console.log(strBuilder.join(""));
   }
 
 

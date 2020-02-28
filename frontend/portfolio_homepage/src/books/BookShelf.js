@@ -50,8 +50,8 @@ class BookShelf extends Component {
 
     return <Grid key = {_index} item xs zeroMinWidth>
               {_book===null?null:
-                    <div>
-                    <button onClick = {()=>this.props.deleteBook(_book.key)}>...</button>
+                    <div key={_book.key}>
+                    <button onClick = {()=>this.deleteBook(_book)}>...</button>
                     <Book book ={_book} deleteBook = {this.props.deleteBook}  />
                     </div>
               }
@@ -70,6 +70,9 @@ class BookShelf extends Component {
       return <div>{shelfOfBooks.map(this.createShelf)}</div>
   }
 
+  deleteBook = (_book) =>{
+    console.log(_book.title+" Key is "+_book.key); this.props.deleteBook(_book.key)
+  }
 
 
   render(){

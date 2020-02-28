@@ -32,7 +32,7 @@ class Book extends Component{
 
 
 	render(){
-
+		
 		var hoverMenu = this.createHoverMenu();
 		return (
 			<div className = 'book'

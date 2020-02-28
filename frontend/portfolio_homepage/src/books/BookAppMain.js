@@ -69,6 +69,7 @@ class BookAppMain extends Component {
   }
 
   deleteBook =(key) => {
+    console.log("Deleting key "+key)
     var filteredBooks = this.state.bookshelf.filter(function (bk) {
       return (bk.key !== key);
     });

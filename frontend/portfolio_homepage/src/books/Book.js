@@ -11,7 +11,9 @@ class Book extends Component{
     super();
     this.state = {
       title:'',
-      isHovered: false
+      isHovered: false,
+
+      newURL:'',
     };
   }
   componentDidMount=() =>{
@@ -19,20 +21,20 @@ class Book extends Component{
 			title: this.props.book.title
 		});
 	}
-
 	  createHoverMenu() {
 	    return <div className ='hover-menu'>
-								<Launcher />
-
+								<Launcher newURL = {this.state.newURL}/>
+								
 								<div className = 'wormhole' >
 									<a href = "https://www.google.com">Placeholder for Worm Hole. Insert Wormhole launch button here when Wormhole is completed</a>
 								</div>
+
 							</div>
 	  }
 
 
 	render(){
-		
+
 		var hoverMenu = this.createHoverMenu();
 		return (
 			<div className = 'book'
@@ -49,10 +51,40 @@ class Book extends Component{
 						<div className = 'title' ><h1>{this.state.title}</h1></div>
 						
 					}
+						{/*Temporarily allowing users to input URL for frontend testing*/}
+						<div>
+						 <form onSubmit={this.manuallyAddURL}>
+			                  <input ref={(t) => this._inputURL = t}
+			                    defaultValue="https://www.google.com">
+			                  </input>
+			                  <button type="submit">add</button>
+			                </form>
+			                </div>
+						}
 
 			</div>
 		);
 	}
+
+		/*Temporary function*/
+
+	  manuallyAddURL = (e) =>{
+	      var _newURL = {
+	        key: Date.now(),
+	        url: this._inputTitle.value
+	      };
+	      
+	      this.setState((prevState) => {
+	        return { 
+	          newURL: _newURL.url
+	        };
+	      });
+	     
+
+	      e.preventDefault();
+	      this._inputTitle.value = "";
+
+	  }
 
 
 }

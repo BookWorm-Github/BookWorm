@@ -65,21 +65,6 @@ for optimization*/
     position: relative;
 }
 
-/*The launcher button*/
-.launcher{
-  width: 50%;
-  height: 100%;
-
-    cursor: pointer;
-  display: flex;  
-}
-
-.launcher a{
-  border-radius: 5px;
-  width: 100%;
-  height:100%;
-  background-color: #52FFE9 
-}
 /*The wormhole button*/
 .wormhole{
 
@@ -89,7 +74,7 @@ for optimization*/
   display: flex;  
 }
 .wormhole a{
-  border-radius: 5px;
+  border-radius: 2px;
 
    background-color: #285A6B ;
 

@@ -17,16 +17,16 @@ class BookShelf extends Component {
 
 
   create2DArrayOfBooks(booklist){
-    const numshelfOfBooks = Math.ceil(booklist.length/this.state.numBksPerShelf);
+    const numShelves = Math.ceil(booklist.length/this.state.numBksPerShelf);
 
-    var shelfOfBooks = new Array(numshelfOfBooks);
+    var shelfOfBooks = new Array(numShelves);
     for (var k = 0; k < shelfOfBooks.length; k++) { 
         shelfOfBooks[k] = new Array(this.state.numBksPerShelf); 
     } 
 
     // Loop to initilize 2D array elements (books). 
     var debugString = "";
-    for (var i = 0; i < numshelfOfBooks; i++) { 
+    for (var i = 0; i < numShelves; i++) { 
         for (var j = 0; j < this.state.numBksPerShelf; j++) { 
             var n = i*this.state.numBksPerShelf+j;
             if(n<booklist.length){
@@ -50,7 +50,10 @@ class BookShelf extends Component {
 
     return <Grid key = {_index} item xs zeroMinWidth>
               {_book===null?null:
-                    <Book book ={_book}  />
+                    <div>
+                    <button onClick = {()=>this.props.deleteBook(_book.key)}>...</button>
+                    <Book book ={_book} deleteBook = {this.props.deleteBook}  />
+                    </div>
               }
             </Grid>
   }
@@ -63,7 +66,7 @@ class BookShelf extends Component {
                 </Grid>
   }
 
-  separateBooksIntoshelfOfBooks = (shelfOfBooks,numBooks) =>{
+  separateBooksIntoShelves = (shelfOfBooks,numBooks) =>{
       return <div>{shelfOfBooks.map(this.createShelf)}</div>
   }
 
@@ -75,7 +78,7 @@ class BookShelf extends Component {
     var shelfOfBooks = this.create2DArrayOfBooks(booklist);
     // this.printBkList(booklist);
     // var books = booklist.map(this.createBook);
-    var books = this.separateBooksIntoshelfOfBooks(shelfOfBooks,booklist.length);
+    var books = this.separateBooksIntoShelves(shelfOfBooks,booklist.length);
     // var books = this.divideBooksIntoRows(booklist,booklist.length);
 
 
@@ -96,6 +99,7 @@ class BookShelf extends Component {
                   
                 </Grid>
               </Grid>*/
+
             }
             {books}
           </div>

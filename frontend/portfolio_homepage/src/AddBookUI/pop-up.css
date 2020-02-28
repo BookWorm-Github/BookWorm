@@ -1,0 +1,29 @@
+
+
+
+.popup {  
+
+  position: fixed;  
+  width: 60%;  
+  height: 60%;  
+  border-radius: 15px;
+  top: 0;  
+  left: 0;  
+  right: 0;  
+  bottom: 0;  
+  margin: auto;  
+  border-color: #000000;
+  background-color: #ffffff;  
+  justify-content: center;
+}  
+
+
+.title-input h1{
+  position: absolute; 
+  left: 25%;   
+  top: 35%;   
+  margin: auto;  
+  width: 50%;
+  height: 50%;
+}
+

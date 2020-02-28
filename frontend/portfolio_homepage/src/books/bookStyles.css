@@ -1,8 +1,35 @@
+/*TODO later combine all css files into one file in App.css 
+for optimization*/
+
+.main-container-center{
+  justify-content: center;
+  align-items: center;
+
+  display: flex;
+
+  background: #ffffff; /*for allowing users to customzize background color later*/
+}
+.book-shelf{
+
+  width: 95%;
+  padding: 10px;
+  background: #ffffe0;
+}
+
+/*Circular add-book-button*/
+.add-bk-btn{
+  float: left;
+    margin: 10px 10px;
+    height: 50px;
+    width: 50px;  /*The Width must be the same as the height*/
+    border-radius:100px; /*borderRadius must b 2*width*/   
+    background-color:#405B9B;
+    
+}
 .container {
-    flexGrow: 1;
-     max-width: 100%;
-  margin: auto 20px;
+  margin: auto;
    overflow: 'hidden'
+
   }
 .paper {
     padding: theme.spacing(1);
@@ -10,31 +37,74 @@
     maxWidth: 500;
   }
 .book {
-
-    background-color: #3391AF;
+    border: 10px solid black;
+    background-color: #ffffff;/*#3391AF;*/
   	border-radius: 15px;
-    padding:10px 10px 10px 10px;
   	height: 200px;
-  	text-align: center;
-  	cursor: pointer;
+    width: 100%;
   }
 
 /*The title of the user's book*/
 .title{
+
+  text-align: center;
 	width: 100%;
 	height: 100%;
+  overflow: hidden;
 }
 
 /*The hover menu which contains the launcher and wormhole*/
 .hover-menu{
-  width: 100%;
-  height: 100%;
+   width: 100%;
+   height:100%;
   border-radius: 15px;
-  background-color: #285A6B 
+
+  display: flex;  
+  justify-content: center;
+  align-items: left;
+    position: relative;
 }
 
+/*The launcher button*/
+.launcher{
+  width: 50%;
+  height: 100%;
 
-.whatColor{
-	color: orange;
+    cursor: pointer;
+  display: flex;  
+}
+
+.launcher a{
+  border-radius: 5px;
+  width: 100%;
+  height:100%;
+  background-color: #52FFE9 
+}
+/*The wormhole button*/
+.wormhole{
+
+    cursor: pointer;
+  width: 50%;
+  height: 100%;
+  display: flex;  
+}
+.wormhole a{
+  border-radius: 5px;
+
+   background-color: #285A6B ;
+
+  overflow: hidden;
+  height:100%;
+}
+
+/*The blur effect of background when popup occurs*/
+.blur-bg {
+
+  /* Add the blur effect */
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
+}
+.clear-bg{
+  filter:none;
 }
 

@@ -43,6 +43,20 @@ for optimization*/
   	height: 200px;
     width: 100%;
   }
+.book input {
+  width: 80%;
+  height: 100%;
+  padding: 12px 10px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 6px solid black;
+  border-radius: 10px;
+  font-size:24px;
+}  
+/*for future if want to style box input*/
+.book input:focus {
+  background-color: #add8e6;
+}
 
 /*The title of the user's book*/
 .title{

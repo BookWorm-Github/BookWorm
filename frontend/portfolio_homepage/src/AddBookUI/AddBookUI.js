@@ -6,7 +6,7 @@ import React, {Component} from 'react'
  import '../books/bookStyles.css'
  import './pop-up.css'
 class AddBookUI extends Component{
-
+handleFocus = (event) => event.target.select();
   constructor(props){
     super(props);
     this.state = {
@@ -19,7 +19,7 @@ class AddBookUI extends Component{
 
   render() {  
     return (  
-
+      
         <div className='popup'>    
 
             <div className = 'book' style = {{height:'100%'}} >
@@ -29,7 +29,7 @@ class AddBookUI extends Component{
 
                <form onSubmit={this.submitBook}>
                   <input ref={(t) => this._inputTitle = t}
-                    placeholder="Enter Title Here" defaultValue="Title">
+                    placeholder="Enter Title Here" defaultValue="Title" autoFocus onFocus={this.handleFocus}>
                   </input>
                   <button type="submit">add</button>
                 </form>

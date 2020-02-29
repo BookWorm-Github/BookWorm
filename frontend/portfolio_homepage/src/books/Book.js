@@ -57,37 +57,38 @@ class Book extends Component{
 		);
 	}
 
-		/*Temporary functions allowing user to input url*/
-		manualEntry = () =>{
-			return <div>
-				 <form onSubmit={this.manuallyAddURL}>
-	                  <input ref={(t) => this._inputURL = t}
-	                    defaultValue="https://www.google.com">
-	                  </input>
-	                  <button type="submit">add</button>
-	                </form>
-	            </div>
-		}
 
-	  manuallyAddURL = (e) =>{
+	/*Temporary functions allowing user to input url*/
+	manualEntry = () =>{
+		return <div>
+			 <form onSubmit={this.manuallyAddURL}>
+                  <input ref={(t) => this._inputURL = t}
+                    defaultValue="https://www.google.com">
+                  </input>
+                  <button type="submit">add</button>
+                </form>
+            </div>
+	}
 
-	      e.preventDefault();
-	      //TODO in future put date label on URLs
-	      // var _newURL = {
-	      //   key: Date.now(),
-	      //   url: this._inputURL.value
-	      // };
-	      
-	   
-         this.setState(
-	      {
-	        urls: [...this.state.urls,this._inputURL.value],
-	      }
-	    );
-	     
-	      this._inputURL.value = "";
+  manuallyAddURL = (e) =>{
 
-	  }
+      e.preventDefault();
+      //TODO in future put date label on URLs
+      // var _newURL = {
+      //   key: Date.now(),
+      //   url: this._inputURL.value
+      // };
+      
+   
+     this.setState(
+      {
+        urls: [...this.state.urls,this._inputURL.value],
+      }
+    );
+     
+      this._inputURL.value = "";
+
+  }
 	
 
 

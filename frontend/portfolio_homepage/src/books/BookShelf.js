@@ -61,7 +61,7 @@ class BookShelf extends Component {
   createShelf =(_bookshelf,_index) => {
 
     const space = 5;
-    return <Grid key = {_index} container spacing={5}>
+    return <Grid key = {_index} container spacing={space}>
                   {_bookshelf.map(this.createBook)}
                 </Grid>
   }

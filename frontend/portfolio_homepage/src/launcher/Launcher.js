@@ -17,16 +17,25 @@ class Launcher extends Component{
     	urls: ['https://www.github.com/','http://www.bu.edu/']
     };
   }
-  /*For adding URL*/
+ //  /*For adding URL*/
 	// componentDidUpdate(prevProps) {
-	//   // Typical usage (don't forget to compare props):
-	//   if (!(this.state.urls.contains(this.props.newURL))) { //
-	//       this.setState(
-	// 	      {
-	// 	        urls: [...this.state.urls, this.props.newURL]
-	// 	      }
-	// 	    );
+	// 	function contains(list,item) {  
+	// 			console.log("Called contains in launcher update");
+	//             return false; 
+	//         }
+
+	//   if (!(contains(this.state.urls,this.props.newURL))) { //
+	//       this.addURL(this.props.newURL);
 	//   }
+	// }
+	// addURL = (_newURL) =>{
+		
+	// 	this.setState(state => {
+	//       const list = this.state.urls.push(_newURL);
+	//       return {
+	//         urls: list
+	//       };
+	//     });
 	// }
 
 	render(){

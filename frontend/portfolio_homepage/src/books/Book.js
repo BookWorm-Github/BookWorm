@@ -51,27 +51,31 @@ class Book extends Component{
 						<div className = 'title' ><h1>{this.state.title}</h1></div>
 						
 					}
-						{/*Temporarily allowing users to input URL for frontend testing*/}
-						<div>
-						 <form onSubmit={this.manuallyAddURL}>
-			                  <input ref={(t) => this._inputURL = t}
-			                    defaultValue="https://www.google.com">
-			                  </input>
-			                  <button type="submit">add</button>
-			                </form>
-			                </div>
-						}
+						{this.manualEntry()}
+						
 
 			</div>
 		);
 	}
 
-		/*Temporary function*/
+		/*Temporary functions allowing user to input url*/
+		manualEntry = () =>{
+			return <div>
+				 <form onSubmit={this.manuallyAddURL}>
+	                  <input ref={(t) => this._inputURL = t}
+	                    defaultValue="https://www.google.com">
+	                  </input>
+	                  <button type="submit">add</button>
+	                </form>
+	            </div>
+		}
 
 	  manuallyAddURL = (e) =>{
+
+	      e.preventDefault();
 	      var _newURL = {
 	        key: Date.now(),
-	        url: this._inputTitle.value
+	        url: this._inputURL.value
 	      };
 	      
 	      this.setState((prevState) => {
@@ -80,9 +84,7 @@ class Book extends Component{
 	        };
 	      });
 	     
-
-	      e.preventDefault();
-	      this._inputTitle.value = "";
+	      this._inputURL.value = "";
 
 	  }
 

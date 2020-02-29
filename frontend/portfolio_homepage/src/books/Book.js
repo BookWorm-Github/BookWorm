@@ -12,8 +12,7 @@ class Book extends Component{
     this.state = {
       title:'',
       isHovered: false,
-
-      newURL:'',
+      urls: ['https://www.github.com/']
     };
   }
   componentDidMount=() =>{
@@ -23,7 +22,7 @@ class Book extends Component{
 	}
 	  createHoverMenu() {
 	    return <div className ='hover-menu'>
-								<Launcher newURL = {this.state.newURL}/>
+								<Launcher urls = {this.state.urls}/>
 								
 								<div className = 'wormhole' >
 									<a href = "https://www.google.com">Placeholder for Worm Hole. Insert Wormhole launch button here when Wormhole is completed</a>
@@ -73,20 +72,24 @@ class Book extends Component{
 	  manuallyAddURL = (e) =>{
 
 	      e.preventDefault();
-	      var _newURL = {
-	        key: Date.now(),
-	        url: this._inputURL.value
-	      };
+	      //TODO in future put date label on URLs
+	      // var _newURL = {
+	      //   key: Date.now(),
+	      //   url: this._inputURL.value
+	      // };
 	      
-	      this.setState((prevState) => {
-	        return { 
-	          newURL: _newURL.url
-	        };
-	      });
+	   
+         this.setState(
+	      {
+	        urls: [...this.state.urls,this._inputURL.value],
+	      }
+	    );
 	     
 	      this._inputURL.value = "";
 
 	  }
+	
+
 
 
 }

@@ -11,12 +11,12 @@ import './launcher.css'
 //npm i react-simple-flex-grid
 class Launcher extends Component{
 
-  constructor(){
-    super();
-    this.state = {
-    	urls: ['https://www.github.com/','http://www.bu.edu/']
-    };
-  }
+  // constructor(){
+  //   super();
+  //   this.state = {
+  //   	urls: ['https://www.github.com/','http://www.bu.edu/']
+  //   };
+  // }
  //  /*For adding URL*/
 	// componentDidUpdate(prevProps) {
 	// 	function contains(list,item) {  
@@ -50,8 +50,9 @@ class Launcher extends Component{
 
 	openURLs = (e) =>{
 		e.preventDefault();
-		for(var i = 0; i<this.state.urls.length; i++)
-	    window.open(this.state.urls[i]);
+		for(var i = 0; i<this.props.urls.length; i++){
+	    	window.open(this.props.urls[i]);
+		}
 	}
 
 

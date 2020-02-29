@@ -14,13 +14,19 @@
   },
   "browser_action": {
     "default_icon": "bookworm.png",
-    "default_popup": "html/popup.html",
-    "default_title": "a popup will come here"
+    "default_popup": "html/login.html",
+    "default_title": "Bookworm Login"
   },
   "permissions": [
-    "storage", "activeTab","tabs", "contentSettings",
-    "https://*/", "http://*/"
+    "storage", "activeTab","tabs", "contentSettings", "identity"
   ],
-  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
-  "web_accessible_resources": ["css/collapsible.css"]
+  "content_security_policy":"script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://www.googleapis.com; object-src 'self'",
+  "oauth2": {
+    "client_id": "<YOUR_CLIENT_ID>",
+    "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email",
+      "https://www.googleapis.com/auth/userinfo.profile"
+    ]
+  },
+  "key": "<YOUR_EXTENSION_PUBLIC_KEY>"
 }

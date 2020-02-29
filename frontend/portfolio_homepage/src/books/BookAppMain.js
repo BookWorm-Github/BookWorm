@@ -24,7 +24,7 @@ class BookAppMain extends Component {
       
         <div id = 'blurrable' className = 'book-shelf'>
           <div className = {this.state.addingBook?'blur-bg':'clear-bg'}>
-          <BookShelf bks = {this.state.bookshelf}/>
+            <BookShelf bks = {this.state.bookshelf} deleteBook = {this.deleteBook}/>
           </div>
         </div>
       
@@ -67,6 +67,19 @@ class BookAppMain extends Component {
 
     // this.debugBkShelf()
   }
+
+  deleteBook =(key) => {
+    console.log("Deleting key "+key)
+    var filteredBooks = this.state.bookshelf.filter(function (bk) {
+      return (bk.key !== key);
+    });
+   
+    this.setState({
+      bookshelf: filteredBooks
+    });
+  }
+
+
 
   debugBkShelf = () => {
 

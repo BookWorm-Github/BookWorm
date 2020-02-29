@@ -16,36 +16,44 @@ class BookShelf extends Component {
   }
 
 
-  parseShelves(booklist){
+  create2DArrayOfBooks(booklist){
     const numShelves = Math.ceil(booklist.length/this.state.numBksPerShelf);
 
-    var shelves = new Array(numShelves);
-    for (var k = 0; k < shelves.length; k++) { 
-        shelves[k] = new Array(this.state.numBksPerShelf); 
+    var shelfOfBooks = new Array(numShelves);
+    for (var k = 0; k < shelfOfBooks.length; k++) { 
+        shelfOfBooks[k] = new Array(this.state.numBksPerShelf); 
     } 
 
     // Loop to initilize 2D array elements (books). 
+    var debugString = "";
     for (var i = 0; i < numShelves; i++) { 
         for (var j = 0; j < this.state.numBksPerShelf; j++) { 
-            var n = j*numShelves+i;
-            if(n<booklist.length)
-              shelves[i][j] = booklist[n];
-            else
-              shelves[i][j] = null;   
-        } 
+            var n = i*this.state.numBksPerShelf+j;
+            if(n<booklist.length){
+              shelfOfBooks[i][j] = booklist[n];
+            }
+            else{
+              shelfOfBooks[i][j] = null;   
+            }
+            debugString+=("Shelf ("+i+","+j+") is "+shelfOfBooks[i][j]+"\n");
+        }
     } 
-    // this.printShelf(shelves);
-    return shelves;
+    console.log("DEBUG SHELF PARSE of booklist len: "+booklist.length+": "+debugString);
+    // this.printShelf(shelfOfBooks);
+    return shelfOfBooks;
 
   }
 
   createBook =(_book,_index) => {
 
-    this.printBook(_index,_book);
+    // this.printBook(_index,_book);
 
     return <Grid key = {_index} item xs zeroMinWidth>
-              {_book===null?<div>Someone fix this bug</div>:
-                    <Book book ={_book}  />
+              {_book===null?null:
+                    <div key={_book.key}>
+                    <button onClick = {()=>this.deleteBook(_book)}>...</button>
+                    <Book book ={_book} deleteBook = {this.props.deleteBook}  />
+                    </div>
               }
             </Grid>
   }
@@ -58,17 +66,23 @@ class BookShelf extends Component {
                 </Grid>
   }
 
-  separateBooksIntoShelves = (shelves,numBooks) =>{
-      return shelves.map(this.createShelf)
+  separateBooksIntoShelves = (shelfOfBooks,numBooks) =>{
+      return <div>{shelfOfBooks.map(this.createShelf)}</div>
   }
+
+  deleteBook = (_book) =>{
+    console.log(_book.title+" Key is "+_book.key); this.props.deleteBook(_book.key)
+  }
+
 
   render(){
     var booklist = this.props.bks;//array of all books
 
-    var shelves = this.parseShelves(booklist);
-    this.printBkList(booklist);
+    var shelfOfBooks = this.create2DArrayOfBooks(booklist);
+    // this.printBkList(booklist);
     // var books = booklist.map(this.createBook);
-    var books = this.separateBooksIntoShelves(shelves,booklist.length);
+    var books = this.separateBooksIntoShelves(shelfOfBooks,booklist.length);
+    // var books = this.divideBooksIntoRows(booklist,booklist.length);
 
 
     return (
@@ -88,8 +102,8 @@ class BookShelf extends Component {
                   
                 </Grid>
               </Grid>*/
+
             }
-            
             {books}
           </div>
 

@@ -72,7 +72,7 @@ class BookShelf extends Component {
   }
 
   deleteBook = (_book) =>{
-    console.log(_book.title+" Key is "+_book.key); this.props.deleteBookKey(_book.key)
+    console.log(_book.title+" Key is "+_book.key); this.props.deleteBook(_book.key)
   }
 
 

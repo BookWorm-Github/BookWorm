@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+  import React, { Component } from 'react';
 import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBCollapse, MDBContainer,
 MDBHamburgerToggler } from 'mdbreact';
 import { BrowserRouter as Router } from 'react-router-dom';
@@ -24,22 +24,19 @@ render() {
   return (
     <Router>
       <MDBContainer>
-        <MDBNavbar color="amber lighten-4" style={{ marginTop: '20px' }} light>
+        <MDBNavbar color="amber lighten-4" style={{float: 'fixed-top'}} light>
           <MDBContainer>
-            <MDBNavbarBrand>
-              MDBNavbar
-            </MDBNavbarBrand>
             <MDBHamburgerToggler color="#d3531a" id="hamburger1" onClick={()=> this.toggleSingleCollapse('collapse1')} />
               <MDBCollapse isOpen={this.state.collapse1} navbar>
                 <MDBNavbarNav left>
                   <MDBNavItem active>
-                    <MDBNavLink to="#!">Home</MDBNavLink>
+                    <MDBNavLink to="#!" onClick={() => this.props.deleteBook(this.props.book)}>Delete</MDBNavLink>
                   </MDBNavItem>
                   <MDBNavItem>
-                    <MDBNavLink to="#!">Link</MDBNavLink>
+                    {/*<MDBNavLink to="#!">Link</MDBNavLink>*/}
                   </MDBNavItem>
                   <MDBNavItem>
-                    <MDBNavLink to="#!">Profile</MDBNavLink>
+                    {/*<MDBNavLink to="#!">Profile</MDBNavLink>*/}
                   </MDBNavItem>
                 </MDBNavbarNav>
               </MDBCollapse>

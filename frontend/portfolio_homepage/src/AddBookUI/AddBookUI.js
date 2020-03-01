@@ -22,7 +22,7 @@ handleFocus = (event) => event.target.select();
       
         <div className='popup'>    
 
-            <div className = 'book' style = {{height:'100%'}} >
+            <div className = 'book'>
               <h2>Name of the book: </h2>  
               <div>
 
@@ -36,8 +36,9 @@ handleFocus = (event) => event.target.select();
 
 
               </div>
+
+              <button onClick={this.props.closePopup}>Cancel</button>  
             </div>
-            <button onClick={this.props.closePopup}>close me</button>  
            
         </div>  
     );  

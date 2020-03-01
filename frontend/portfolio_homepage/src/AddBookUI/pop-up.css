@@ -14,14 +14,28 @@
   margin: auto;  
   border-color: #000000;
   background-color: #ffffff;  
-  justify-content: center;
+
 }  
 
 .popup .book {
   height: 100%;
 }
+.popup .book form {
+  display: flex;
+  /*border: solid red;*//*For debug*/
 
+  align-items: center;
+  flex-direction: column;
+
+}
+.popup .book form button{
+  background: #ffffff;
+  border: 3px solid black;
+  border-radius: 15px;
+  margin: 5px;
+} 
 .popup .book input {
+
   width: 80%;
   height: 100%;
   padding: 12px 10px;

@@ -19,7 +19,7 @@ handleFocus = (event) => event.target.select();
 
   render() {  
     return (  
-      
+        <div>
         <div className='popup'>    
 
             <div className = 'book'>
@@ -31,15 +31,20 @@ handleFocus = (event) => event.target.select();
                   <input ref={(t) => this._inputTitle = t}
                     placeholder="Enter Title Here" defaultValue="Title" autoFocus onFocus={this.handleFocus}>
                   </input>
-                  <button type="submit">add</button>
+                  <span>
+
+                  <button onClick={this.props.closePopup}>Cancel</button> 
+                  <button type="submit">Add</button> 
+                  </span>
                 </form>
 
 
               </div>
 
-              <button onClick={this.props.closePopup}>Cancel</button>  
             </div>
-           
+
+
+           </div>
         </div>  
     );  
   } 

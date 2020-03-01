@@ -31,6 +31,7 @@ class SortBooks extends Component{
 
 	toggleOrder = () =>{
 		this.state.order===ASC? this.setState({order:DSC}) : this.setState({order:ASC})
+		this.sortByTitle();
 	}
 	
 	sortByTitle = () =>{

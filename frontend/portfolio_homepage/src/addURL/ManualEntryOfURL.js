@@ -1,6 +1,7 @@
 //The container that holds the books
 import React, {Component} from 'react'
 
+import './url-entry.css'
 // import { withStyles } from '@material-ui/core/styles';
 //npm i react-simple-flex-grid
  import '../books/bookStyles.css'
@@ -18,7 +19,7 @@ handleFocus = (event) => event.target.select();
 //else show title
 
   render() {  
-    return <div>
+    return <div class = "url-entry-box-container">
                 <form onSubmit={this.manuallyAddURL}>
                   <input ref={(t) => this._inputURL = t}
                     defaultValue="https://www.google.com">

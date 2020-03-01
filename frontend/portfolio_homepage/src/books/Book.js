@@ -37,6 +37,7 @@ class Book extends Component{
 
 		var hoverMenu = this.createHoverMenu();
 		return (
+			<div>
 			<div className = 'book'
 					onMouseEnter = {()=>this.setState({isHovered:true})}
 					onMouseLeave = {()=>this.setState({isHovered:false})}>
@@ -51,9 +52,10 @@ class Book extends Component{
 						<div className = 'title' ><h1>{this.state.title}</h1></div>
 						
 					}
-					<ManualEntryOfURL setBookURLs = {this.setBookURLs}/>
 						
-
+				</div>
+				
+					<ManualEntryOfURL setBookURLs = {this.setBookURLs}/>
 			</div>
 		);
 	}

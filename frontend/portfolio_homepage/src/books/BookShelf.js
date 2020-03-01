@@ -5,7 +5,7 @@ import Book from './Book'
 
 import './bookStyles.css'
 
-import BookNavbar from '../hamburger_bar/BookNavbar'
+// import BookNavbar from '../hamburger_bar/BookNavbar'
 class BookShelf extends Component {
 
   constructor(){
@@ -52,7 +52,7 @@ class BookShelf extends Component {
     return <Grid key = {_index} item xs zeroMinWidth>
               {_book===null?null:
                     <div key={_book.key}>
-                    <BookNavbar />
+                    {/*<BookNavbar />*/}
                     <button onClick = {()=>this.deleteBook(_book)}>...</button>
                     <Book book ={_book} deleteBook = {this.props.deleteBook}  />
                     </div>

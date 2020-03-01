@@ -5,6 +5,7 @@ import React, {Component} from 'react'
 //npm i react-simple-flex-grid
 import './bookStyles.css'
 import Launcher from '../launcher/Launcher'
+import ManualEntryOfURL from '../addURL/ManualEntryOfURL'
 class Book extends Component{
 
   constructor(){
@@ -50,45 +51,20 @@ class Book extends Component{
 						<div className = 'title' ><h1>{this.state.title}</h1></div>
 						
 					}
-						{this.manualEntry()}
+					<ManualEntryOfURL setBookURLs = {this.setBookURLs}/>
 						
 
 			</div>
 		);
 	}
-
-
-	/*Temporary functions allowing user to input url*/
-	manualEntry = () =>{
-		return <div>
-			 <form onSubmit={this.manuallyAddURL}>
-                  <input ref={(t) => this._inputURL = t}
-                    defaultValue="https://www.google.com">
-                  </input>
-                  <button type="submit">add</button>
-                </form>
-            </div>
+	setBookURLs = (newURL) => {
+		this.setState(
+	      {
+	        urls: [...this.state.urls,newURL],
+	      }
+	    );
 	}
 
-  manuallyAddURL = (e) =>{
-
-      e.preventDefault();
-      //TODO in future put date label on URLs
-      // var _newURL = {
-      //   key: Date.now(),
-      //   url: this._inputURL.value
-      // };
-      
-   
-     this.setState(
-      {
-        urls: [...this.state.urls,this._inputURL.value],
-      }
-    );
-     
-      this._inputURL.value = "";
-
-  }
 	
 
 

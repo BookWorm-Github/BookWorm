@@ -91,23 +91,7 @@ class BookShelf extends Component {
 
     return (
         <div className='book-shelf'> 
-           {/*<Grid container spacing={space}>
-                  {books}
-                </Grid>
-
-              <Grid container spacing={space}>
-                <Grid item xs zeroMinWidth>
-                  <Book ></Book>
-                </Grid>
-                <Grid item xs zeroMinWidth>
-                  <Book ></Book>
-                </Grid>
-                <Grid item xs zeroMinWidth>
-                  
-                </Grid>
-              </Grid>*/
-
-            }
+          
             {books}
           </div>
 

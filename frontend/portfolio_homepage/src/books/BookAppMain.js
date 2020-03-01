@@ -4,6 +4,7 @@ import BookShelf from './BookShelf'
 /*Testing branch*/
 import AddBookUI from '../AddBookUI/AddBookUI'
 import './bookStyles.css'
+import SortBooks from '../sortItems/SortBooks'
 
 class BookAppMain extends Component {
 
@@ -24,7 +25,9 @@ class BookAppMain extends Component {
       
         <div id = 'blurrable' className = 'book-shelf'>
           <div className = {this.state.addingBook?'blur-bg':'clear-bg'}>
+            <SortBooks books = {this.state.bookshelf} setBooks = {this.setBooks}/>
             <BookShelf bks = {this.state.bookshelf} deleteBook = {this.deleteBook}/>
+
           </div>
         </div>
       
@@ -81,6 +84,14 @@ class BookAppMain extends Component {
     });
   }
 
+
+
+
+  setBooks=(books)=>{
+    this.setState({
+      bookshelf: books
+    });
+  }
 
 
   debugBkShelf = () => {

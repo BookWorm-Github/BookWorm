@@ -32,11 +32,11 @@ handleFocus = (event) => event.target.select();
                     placeholder="Enter Title Here" defaultValue="Title" autoFocus onFocus={this.handleFocus}>
                   </input>
                   <span>
-
-                  <button onClick={this.props.closePopup}>Cancel</button> 
                   <button type="submit">Add</button> 
                   </span>
                 </form>
+                
+                  <button onClick={this.props.closePopup}>Cancel</button> 
 
 
               </div>

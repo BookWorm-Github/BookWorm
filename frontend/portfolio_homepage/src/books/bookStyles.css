@@ -43,6 +43,20 @@ for optimization*/
   	height: 200px;
     width: 100%;
   }
+.book input {
+  width: 80%;
+  height: 100%;
+  padding: 12px 10px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 6px solid black;
+  border-radius: 10px;
+  font-size:24px;
+}  
+/*for future if want to style box input*/
+.book input:focus {
+  background-color: #add8e6;
+}
 
 /*The title of the user's book*/
 .title{
@@ -65,21 +79,6 @@ for optimization*/
     position: relative;
 }
 
-/*The launcher button*/
-.launcher{
-  width: 50%;
-  height: 100%;
-
-    cursor: pointer;
-  display: flex;  
-}
-
-.launcher a{
-  border-radius: 5px;
-  width: 100%;
-  height:100%;
-  background-color: #52FFE9 
-}
 /*The wormhole button*/
 .wormhole{
 
@@ -89,7 +88,7 @@ for optimization*/
   display: flex;  
 }
 .wormhole a{
-  border-radius: 5px;
+  border-radius: 2px;
 
    background-color: #285A6B ;
 

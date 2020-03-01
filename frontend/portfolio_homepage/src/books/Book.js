@@ -11,7 +11,8 @@ class Book extends Component{
     super();
     this.state = {
       title:'',
-      isHovered: false
+      isHovered: false,
+      urls: ['https://www.github.com/']
     };
   }
   componentDidMount=() =>{
@@ -19,20 +20,20 @@ class Book extends Component{
 			title: this.props.book.title
 		});
 	}
-
 	  createHoverMenu() {
 	    return <div className ='hover-menu'>
-								<Launcher />
-
+								<Launcher urls = {this.state.urls}/>
+								
 								<div className = 'wormhole' >
 									<a href = "https://www.google.com">Placeholder for Worm Hole. Insert Wormhole launch button here when Wormhole is completed</a>
 								</div>
+
 							</div>
 	  }
 
 
 	render(){
-		
+
 		var hoverMenu = this.createHoverMenu();
 		return (
 			<div className = 'book'
@@ -49,10 +50,47 @@ class Book extends Component{
 						<div className = 'title' ><h1>{this.state.title}</h1></div>
 						
 					}
+						{this.manualEntry()}
+						
 
 			</div>
 		);
 	}
+
+
+	/*Temporary functions allowing user to input url*/
+	manualEntry = () =>{
+		return <div>
+			 <form onSubmit={this.manuallyAddURL}>
+                  <input ref={(t) => this._inputURL = t}
+                    defaultValue="https://www.google.com">
+                  </input>
+                  <button type="submit">add</button>
+                </form>
+            </div>
+	}
+
+  manuallyAddURL = (e) =>{
+
+      e.preventDefault();
+      //TODO in future put date label on URLs
+      // var _newURL = {
+      //   key: Date.now(),
+      //   url: this._inputURL.value
+      // };
+      
+   
+     this.setState(
+      {
+        urls: [...this.state.urls,this._inputURL.value],
+      }
+    );
+     
+      this._inputURL.value = "";
+
+  }
+	
+
 
 
 }

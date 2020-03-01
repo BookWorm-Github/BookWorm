@@ -1,7 +1,7 @@
 
 import React, {Component} from 'react'
 import BookShelf from './BookShelf'
-
+/*Testing branch*/
 import AddBookUI from '../AddBookUI/AddBookUI'
 import './bookStyles.css'
 
@@ -24,7 +24,7 @@ class BookAppMain extends Component {
       
         <div id = 'blurrable' className = 'book-shelf'>
           <div className = {this.state.addingBook?'blur-bg':'clear-bg'}>
-            <BookShelf bks = {this.state.bookshelf} deleteBook = {this.deleteBook}/>
+            <BookShelf bks = {this.state.bookshelf} deleteBookKey = {this.deleteBookKey}/>
           </div>
         </div>
       
@@ -68,7 +68,7 @@ class BookAppMain extends Component {
     // this.debugBkShelf()
   }
 
-  deleteBook =(key) => {
+  deleteBookKey =(key) => {
     console.log("Deleting key "+key)
     var filteredBooks = this.state.bookshelf.filter(function (bk) {
       return (bk.key !== key);

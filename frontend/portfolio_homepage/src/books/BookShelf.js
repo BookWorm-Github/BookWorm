@@ -5,6 +5,7 @@ import Book from './Book'
 
 import './bookStyles.css'
 
+import BookNavbar from '../hamburger_bar/BookNavbar'
 class BookShelf extends Component {
 
   constructor(){
@@ -50,10 +51,10 @@ class BookShelf extends Component {
 
     return <Grid key = {_index} item xs zeroMinWidth>
               {_book===null?null:
-                    <div key={_book.key}>
-                    <button onClick = {()=>this.deleteBook(_book)}>...</button>
-                    <Book book ={_book} deleteBook = {this.props.deleteBook}  />
-                    </div>
+                      <div key={_book.key}>
+                          <BookNavbar book ={_book} deleteBook = {this.deleteBook} />
+                        <Book book ={_book} />
+                      </div>
               }
             </Grid>
   }
@@ -61,7 +62,7 @@ class BookShelf extends Component {
   createShelf =(_bookshelf,_index) => {
 
     const space = 5;
-    return <Grid key = {_index} container spacing={5}>
+    return <Grid key = {_index} container spacing={space}>
                   {_bookshelf.map(this.createBook)}
                 </Grid>
   }
@@ -71,7 +72,7 @@ class BookShelf extends Component {
   }
 
   deleteBook = (_book) =>{
-    console.log(_book.title+" Key is "+_book.key); this.props.deleteBook(_book.key)
+    console.log(_book.title+" Key is "+_book.key); this.props.deleteBookKey(_book.key)
   }
 
 

@@ -27,7 +27,7 @@ handleFocus = (event) => event.target.select();
               <div>
 
 
-               <form onSubmit={this.submitBook}>
+               <form onSubmit={this.createBook}>
                   <input ref={(t) => this._inputTitle = t}
                     placeholder="Enter Title Here" defaultValue="Title" autoFocus onFocus={this.handleFocus}>
                   </input>
@@ -49,7 +49,7 @@ handleFocus = (event) => event.target.select();
     );  
   } 
 
-  submitBook = (e) =>{
+  createBook = (e) =>{
       var newBook = {
         key: Date.now(),
         title: this._inputTitle.value
@@ -61,7 +61,7 @@ handleFocus = (event) => event.target.select();
         };
       });
      
-     /* console.log("Input Title at submitBook is: "+newBook.title);*/
+     /* console.log("Input Title at createBook is: "+newBook.title);*/
     
       this.props.addBook(newBook);
 

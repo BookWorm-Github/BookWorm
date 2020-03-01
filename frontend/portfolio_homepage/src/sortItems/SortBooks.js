@@ -1,20 +1,13 @@
-//The container that holds the books
+//The sort button
 import React, {Component} from 'react'
+import PropTypes from 'prop-types'; // ES6
 
-// import { withStyles } from '@material-ui/core/styles';
-//npm i react-simple-flex-grid
-import PropTypes from 'prop-types'
-import './bookStyles.css'
-import Launcher from '../launcher/Launcher'
-import ManualEntryOfURL from '../addURL/ManualEntryOfURL'
-class Book extends Component{
+class SortBooks extends Component{
 
   constructor(){
     super();
     this.state = {
-      title:'',
-      isHovered: false,
-      urls: ['https://www.github.com/']
+    	books: [];
     };
   }
   componentDidMount=() =>{
@@ -70,16 +63,11 @@ class Book extends Component{
 
 	
 
+	SortBooks.propTypes = {
+	  books: PropTypes.array
+	};
 
 
 }
 
-Book.propTypes = {
-	  book: PropTypes.shape({
-	  		key: PropTypes.number,
-		    title: PropTypes.string.isRequired
-		  }),
-	};
-
-
-export default Book;
+export default SortBooks;

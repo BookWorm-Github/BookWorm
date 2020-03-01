@@ -1,6 +1,7 @@
 //The container that holds the books
 import React, {Component} from 'react'
 
+import PropTypes from 'prop-types'
 import './url-entry.css'
 // import { withStyles } from '@material-ui/core/styles';
 //npm i react-simple-flex-grid
@@ -19,7 +20,7 @@ handleFocus = (event) => event.target.select();
 //else show title
 
   render() {  
-    return <div class = "url-entry-box-container">
+    return <div className = "url-entry-box-container">
                 <form onSubmit={this.manuallyAddURL}>
                   <input ref={(t) => this._inputURL = t}
                     defaultValue="https://www.google.com">
@@ -52,7 +53,9 @@ handleFocus = (event) => event.target.select();
 
 
 }
-
+ManualEntryOfURL.propTypes = {
+    setBookURLs: PropTypes.func.isRequired
+  };
 export default ManualEntryOfURL;
 
 

@@ -49,6 +49,10 @@ class BookAppMain extends Component {
     );
   }
 
+
+
+
+/*Methods for adding and deleting books*/
   toggleAddBook = () =>{
     //console.log("Adding book");
     this.setState({addingBook:!this.state.addingBook});
@@ -63,8 +67,6 @@ class BookAppMain extends Component {
         addingBook:false
       }
     );
-
-
     // this.debugBkShelf()
   }
 

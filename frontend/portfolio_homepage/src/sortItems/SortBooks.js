@@ -120,7 +120,6 @@ class SortBooks extends Component{
 
 		this.props.setBooks(books);
 
-		alert("Sort by date created has not been implemented")
 	}
 
 	sortByLastAccessed = () =>{

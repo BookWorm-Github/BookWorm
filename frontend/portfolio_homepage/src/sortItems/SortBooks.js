@@ -1,15 +1,24 @@
 //The sort button
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'; // ES6
+import {MDBBtnGroup, MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem } from "mdbreact";
 
 
 const ASC = 'ascending';
 const DSC = 'descending';
+
+const sortBy = {
+    TITLE: 'Title',
+    DATE_CREATED: 'Date Created'
+}
+
+
 class SortBooks extends Component{
 
   constructor(){
     super();
     this.state = {
+    	sortCriteria: sortBy.TITLE,
     	order: ASC,
     	books: []
     };
@@ -21,10 +30,19 @@ class SortBooks extends Component{
 		return (
 			<div>
 			<h6>Sort By: </h6>
-				
-				<button onClick={this.sortByTitle}>Title</button> 
+				<MDBBtnGroup>
+				      <MDBDropdown size = "xs">
 
-				<button onClick={this.toggleOrder}>{this.state.order===ASC? ASC : DSC}</button> 
+				        <MDBDropdownToggle caret color="info" className="h-100">
+				          {this.state.sortCriteria}
+				        </MDBDropdownToggle>
+
+				        <MDBDropdownMenu basic color="info">
+				          <MDBDropdownItem onClick={this.sortByTitle}>{sortBy.TITLE}</MDBDropdownItem>
+				        </MDBDropdownMenu>
+				      </MDBDropdown>
+				  </MDBBtnGroup>
+
 			</div>
 		);
 	}

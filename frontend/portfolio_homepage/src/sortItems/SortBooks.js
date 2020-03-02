@@ -1,7 +1,7 @@
 //The sort button
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'; // ES6
-import {MDBBtnGroup, MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem } from "mdbreact";
+import {MDBBtn,Button,MDBBtnGroup, MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem } from "mdbreact";
 import './sort-btns.css'
 
 const ASC = 'ascending';
@@ -10,7 +10,8 @@ const DSC = 'descending';
 const sortBy = {
 	NONE: 'None',
     TITLE: 'Title',
-    DATE_CREATED: 'Date Created'
+    DATE_CREATED: 'Date Created',
+    LAST_ACCESSED: 'Last Accessed'
 }
 
 
@@ -32,6 +33,7 @@ class SortBooks extends Component{
 			<div>
 				<MDBBtnGroup className="sort-btn-container">
 				Sort By:
+
 				      <MDBDropdown size = "sm">
 
 				        <MDBDropdownToggle caret color = "info">
@@ -45,9 +47,15 @@ class SortBooks extends Component{
 				           {sortBy.DATE_CREATED}
 				           </MDBDropdownItem>
 				       
+
+				           <MDBDropdownItem onClick={() =>{this.sort(sortBy.LAST_ACCESSED)}}>
+				           {sortBy.LAST_ACCESSED}
+				           </MDBDropdownItem>
+
 				        </MDBDropdownMenu>
 				        
 				      </MDBDropdown>
+				      <MDBBtn>Hi</MDBBtn>
 				  </MDBBtnGroup>
 
 			</div>
@@ -61,6 +69,9 @@ class SortBooks extends Component{
 			break;
 		    case sortBy.DATE_CREATED:
 				this.sortByDateCreated();
+		    break;
+		    case sortBy.LAST_ACCESSED:
+				this.sortByLastAccessed();
 		    break;
 		}
 	}
@@ -92,8 +103,31 @@ class SortBooks extends Component{
 
 	sortByDateCreated = () =>{
 		this.setState({sortCriteria: sortBy.DATE_CREATED})
+		var books = [...this.props.books];
 		console.log("Sort by date created has not been implemented")
+
+		function compareDates(a, b, order = ASC) {
+		    const diff = a.key - b.key;
+
+		    if (order === ASC) {
+		        return diff;
+		    }
+
+		    return -1 * diff;
+		}
+
+		books.sort((a, b) => compareDates(a, b, this.state.order));
+
+		this.props.setBooks(books);
+
 		alert("Sort by date created has not been implemented")
+	}
+
+	sortByLastAccessed = () =>{
+		this.setState({sortCriteria: sortBy.LAST_ACCESSED})
+		console.log("Sort by last accessed has not been implemented")
+
+		alert("Sort by last accessed has not been implemented")
 	}
 
 

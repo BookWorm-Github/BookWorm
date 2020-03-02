@@ -25,6 +25,7 @@ class BookAppMain extends Component {
       
         <div id = 'blurrable' className = 'book-shelf'>
           <div className = {this.state.addingBook?'blur-bg':'clear-bg'}>
+
             <SortBooks books = {this.state.bookshelf} setBooks = {this.setBooks}/>
             <BookShelf bks = {this.state.bookshelf} deleteBook = {this.deleteBook}/>
 

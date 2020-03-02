@@ -8,6 +8,7 @@ const ASC = 'ascending';
 const DSC = 'descending';
 
 const sortBy = {
+	NONE: 'None',
     TITLE: 'Title',
     DATE_CREATED: 'Date Created'
 }
@@ -18,7 +19,7 @@ class SortBooks extends Component{
   constructor(){
     super();
     this.state = {
-    	sortCriteria: sortBy.TITLE,
+    	sortCriteria: sortBy.NONE,
     	order: ASC,
     	books: []
     };
@@ -38,9 +39,9 @@ class SortBooks extends Component{
 				        </MDBDropdownToggle>
 
 				        <MDBDropdownMenu>
-				          <MDBDropdownItem onClick={this.sortByTitle}>{sortBy.TITLE}</MDBDropdownItem>
+				          <MDBDropdownItem onClick={() =>{this.sort(sortBy.TITLE)}}>{sortBy.TITLE}</MDBDropdownItem>
 
-				           <MDBDropdownItem onClick={this.sortByDateCreated}>
+				           <MDBDropdownItem onClick={() =>{this.sort(sortBy.DATE_CREATED)}}>
 				           {sortBy.DATE_CREATED}
 				           </MDBDropdownItem>
 				       
@@ -51,6 +52,17 @@ class SortBooks extends Component{
 
 			</div>
 		);
+	}
+
+	sort = (criteria=sortBy.TITLE) =>{
+		switch(criteria){
+			case sortBy.TITLE:
+				this.sortByTitle();
+			break;
+		    case sortBy.DATE_CREATED:
+				this.sortByDateCreated();
+		    break;
+		}
 	}
 
 	toggleOrder = () =>{

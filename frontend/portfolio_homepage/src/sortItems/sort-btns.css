@@ -1,0 +1,8 @@
+.sort-btn-container{
+	display: inline-flex;
+	border-radius: 5px;
+	background-color: #FFFAFA;
+	padding: 3px;
+	
+  align-items: center;
+}

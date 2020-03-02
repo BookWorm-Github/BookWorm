@@ -2,7 +2,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'; // ES6
 import {MDBBtnGroup, MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem } from "mdbreact";
-
+import './sort-btns.css'
 
 const ASC = 'ascending';
 const DSC = 'descending';
@@ -29,17 +29,23 @@ class SortBooks extends Component{
 
 		return (
 			<div>
-			<h6>Sort By: </h6>
-				<MDBBtnGroup>
-				      <MDBDropdown size = "xs">
+				<MDBBtnGroup className="sort-btn-container">
+				Sort By:
+				      <MDBDropdown size = "sm">
 
-				        <MDBDropdownToggle caret color="info" className="h-100">
+				        <MDBDropdownToggle caret color = "info">
 				          {this.state.sortCriteria}
 				        </MDBDropdownToggle>
 
-				        <MDBDropdownMenu basic color="info">
+				        <MDBDropdownMenu>
 				          <MDBDropdownItem onClick={this.sortByTitle}>{sortBy.TITLE}</MDBDropdownItem>
+
+				           <MDBDropdownItem onClick={this.sortByDateCreated}>
+				           {sortBy.DATE_CREATED}
+				           </MDBDropdownItem>
+				       
 				        </MDBDropdownMenu>
+				        
 				      </MDBDropdown>
 				  </MDBBtnGroup>
 
@@ -53,6 +59,7 @@ class SortBooks extends Component{
 	}
 	
 	sortByTitle = () =>{
+		this.setState({sortCriteria: sortBy.TITLE})
 		var books = [...this.props.books];
 		//custom compare function for title
 		function compareTitle(a, b, order = ASC) {
@@ -69,6 +76,12 @@ class SortBooks extends Component{
 		books.sort((a, b) => compareTitle(a, b, this.state.order))
 
 		this.props.setBooks(books)
+	}
+
+	sortByDateCreated = () =>{
+		this.setState({sortCriteria: sortBy.DATE_CREATED})
+		console.log("Sort by date created has not been implemented")
+		alert("Sort by date created has not been implemented")
 	}
 
 

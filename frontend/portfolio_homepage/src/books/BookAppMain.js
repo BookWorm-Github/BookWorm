@@ -20,13 +20,13 @@ class BookAppMain extends Component {
   render(){
 
     return (
+      <div>
       
+            <SortBooks books = {this.state.bookshelf} setBooks = {this.setBooks}/>
       <div className = 'main-container-center'>
       
         <div id = 'blurrable' className = 'book-shelf'>
           <div className = {this.state.addingBook?'blur-bg':'clear-bg'}>
-
-            <SortBooks books = {this.state.bookshelf} setBooks = {this.setBooks}/>
             <BookShelf bks = {this.state.bookshelf} deleteBook = {this.deleteBook}/>
 
           </div>
@@ -49,6 +49,7 @@ class BookAppMain extends Component {
 
           <button className = 'add-bk-btn' onClick={this.toggleAddBook}><h2>+</h2></button>
     
+      </div>
       </div>
     );
   }

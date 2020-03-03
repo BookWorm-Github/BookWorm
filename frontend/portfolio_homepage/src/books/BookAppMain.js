@@ -1,4 +1,3 @@
-
 import React, {Component} from 'react'
 import BookShelf from './BookShelf'
 /*Testing branch*/
@@ -21,7 +20,7 @@ class BookAppMain extends Component {
 
     return (
       <div>
-      
+      {/*<button onClick = {this.getURLS}>Get Open Windows</button>*/}
             <SortBooks books = {this.state.bookshelf} setBooks = {this.setBooks}/>
       <div className = 'main-container-center'>
       
@@ -54,6 +53,29 @@ class BookAppMain extends Component {
     );
   }
 
+ // getURLS = () =>{
+
+ //  chrome.tabs.get(1, () =>{console.log("Callback from getURLS")});
+
+ //  chrome.windows.getAll({populate:true}, getAllOpenWindows);
+
+ //    function getAllOpenWindows(winData) {
+
+ //      var tabs = [];
+ //      for (var i in winData) {
+ //        if (winData[i].focused === true) {
+ //            var winTabs = winData[i].tabs;
+ //            var totTabs = winTabs.length;
+ //            for (var j=0; j<totTabs;j++) {
+ //              tabs.push(winTabs[j].url);
+ //            }
+ //        }
+ //      }
+ //      console.log(tabs);
+ //    }
+
+
+ // }
 
 
 

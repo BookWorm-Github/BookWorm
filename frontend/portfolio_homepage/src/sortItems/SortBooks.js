@@ -1,7 +1,7 @@
 //The sort button
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'; // ES6
-import {MDBBtn,Button,MDBBtnGroup, MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem } from "mdbreact";
+import {MDBBtn,MDBBtnGroup, MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem } from "mdbreact";
 import './sort-btns.css'
 
 const ASC = 'ascending';

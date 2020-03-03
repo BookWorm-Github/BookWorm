@@ -1,4 +1,7 @@
-
+import { 
+  fetchRepositories, 
+  saveToLocalStorage
+} from './lib/helpers';
 
 chrome.runtime.onInstalled.addListener(() => {
   console.log('onInstalled...');

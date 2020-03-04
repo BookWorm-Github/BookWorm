@@ -1,7 +1,6 @@
 
-
 chrome.runtime.onInstalled.addListener(() => {
-  console.log('onInstalled...');
+  console.log('onInstalled public bckgrns...');
   // create alarm after extension is installed / upgraded
   scheduleRequest();
   scheduleWatchdog();
@@ -11,6 +10,7 @@ chrome.runtime.onInstalled.addListener(() => {
 // fetch and save data when chrome restarted, alarm will continue running when chrome is restarted
 chrome.runtime.onStartup.addListener(() => {
   console.log('onStartup....');
+  helloWorld();
   startRequest();
 });
 
@@ -49,8 +49,7 @@ function scheduleWatchdog() {
 // fetch data and save to local storage
 async function startRequest() {
   console.log('start HTTP Request...');
-  const data = await fetchRepositories();
-  saveToLocalStorage(data);
+  
 }
 
 
@@ -74,5 +73,10 @@ function getAllOpenWindows(winData) {
 
 function helloWorld() {
 
-  console.log("Hello, world!");
+  console.log("This is public background");
+}
+
+function testFunction(){
+  console.log("Chrome is "+chrome)
+  console.log("This is a test function");
 }

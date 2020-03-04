@@ -5,18 +5,25 @@
   "name": "BookWorm",
 
   "version": "1.0.1",
-  "permissions": [
-          "tabs","storage","alarms"
+  "permissions": ["declarativeContent","tabs","storage","activeTab"
         ], 
 
   "background":{
     "scripts": ["background.js"],
     "persistent":false
   },
+   "content_scripts": [
+   {
+     "matches": ["*://localhost:*/*"],
+     "all_frames": true,
+     "js": ["content.js"]
+   }
+ ],
+
   "browser_action": {
         "default_popup": "index.html"
     },
-    
+
   "chrome_url_overrides": {
     "newtab": "index.html"
   },

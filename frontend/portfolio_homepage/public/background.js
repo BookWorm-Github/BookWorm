@@ -7,6 +7,7 @@ chrome.runtime.onInstalled.addListener(() => {
   startRequest();
 });
 
+
 // fetch and save data when chrome restarted, alarm will continue running when chrome is restarted
 chrome.runtime.onStartup.addListener(() => {
   console.log('onStartup....');

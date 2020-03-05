@@ -7,11 +7,28 @@
 //   chrome.tabs.create({url: 'index.html'})
 // })
 
+    // chrome.runtime.onConnect.addListener(port => {
+    //     console.log('connected ', port);
+
+    //     if (port.name === 'hi') {
+    //         port.onMessage.addListener(this.processMessage);
+    //     }
+    // });
+
 window.tabs = {}
-window.language = "Bye Brandon"
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  console.log("Background received message from "+sender+ " with request "+request);
-  if(request.greeting=="hello"){
+chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
+  // console.log("Background received message from "+sender+ " with message "+msg);
+  //     switch (msg.type) {
+  //       case 'popupInit':
+  //           sendResponse("Sending message from background: "+tabStorage[msg.tabId]);
+  //           break;
+  //       default:
+  //           sendResponse('unknown request');
+  //           break;
+  //   }
+
+  if(msg.greeting=="hello"){
+
     sendResponse({farewell:window.tabs})
   }
 })

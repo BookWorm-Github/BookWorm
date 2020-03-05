@@ -73,6 +73,8 @@ class SortBooks extends Component{
 		    case sortBy.LAST_ACCESSED:
 				this.sortByLastAccessed();
 		    break;
+		    default:
+		    break;
 		}
 	}
 

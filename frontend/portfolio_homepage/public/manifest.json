@@ -5,7 +5,7 @@
   "name": "BookWorm",
 
   "version": "1.0.1",
-  "permissions": ["tabs","storage","activeTab","declarativeContent"
+  "permissions": ["tabs","storage","activeTab","declarativeContent","background"
         ], 
 
   "background":{
@@ -20,7 +20,7 @@
  ],
 
   "browser_action": {
-        "default_popup": "index.html"
+        "default_title": "Book Worm"
     },
 
   "chrome_url_overrides": {

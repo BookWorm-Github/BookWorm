@@ -1,17 +1,18 @@
-window.bears = {}
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  window.bears[request.url] = request.count
-})
+// window.bears = {}
+// chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+//   window.bears[request.url] = request.count
+// })
 
-chrome.browserAction.onClicked.addListener(function (tab) {
-  chrome.tabs.create({url: 'index.html'})
-})
+// chrome.browserAction.onClicked.addListener(function (tab) {
+//   chrome.tabs.create({url: 'index.html'})
+// })
 
-
+window.tabs = {}
+window.language = "Bye Brandon"
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   console.log("Background received message from "+sender+ " with request "+request);
   if(request.greeting=="hello"){
-    sendResponse({farewell:"goodbye"})
+    sendResponse({farewell:window.tabs})
   }
 })
 
@@ -19,13 +20,13 @@ chrome.windows.getAll({populate:true}, getAllOpenWindows);
 
 function getAllOpenWindows(winData) {
 	console.log("Getting all opened tabs: ")
-  var tabs = [];
+  window.tabs = [];
   for (var i in winData) {
     if (winData[i].focused === true) {
         var winTabs = winData[i].tabs;
         var totTabs = winTabs.length;
         for (var j=0; j<totTabs;j++) {
-          tabs.push(winTabs[j].url);
+          window.tabs.push(winTabs[j].url);
         }
     }
   }

@@ -5,7 +5,7 @@
   "name": "BookWorm",
 
   "version": "1.0.1",
-  "permissions": ["declarativeContent","tabs","storage","activeTab"
+  "permissions": ["tabs","storage","activeTab","declarativeContent"
         ], 
 
   "background":{
@@ -15,7 +15,6 @@
    "content_scripts": [
    {
      "matches": ["*://localhost:*/*"],
-     "all_frames": true,
      "js": ["content.js"]
    }
  ],

@@ -9,13 +9,90 @@ chrome.runtime.onInstalled.addListener(() => {
   // scheduleWatchdog();
   // startRequest();
 });
-chrome.runtime.onConnect.addListener(port => {
-    console.log('connected ', port);
-    console.log('port name is '+port.name);
-    if (port.name === 'hi') {
-        port.onMessage.addListener(this.processMessage);
-    }
+
+chrome.runtime.onMessage.addListener(
+  function(response,sender,sendResponse){
+    alert("Received Message"+response);
 });
+
+// chrome.runtime.onMessage.addListener(
+//   function(request, sender, sendResponse) {
+//     console.log(sender.tab ?
+//                 "from a content script:" + sender.tab.url :
+//                 "from the extension");
+//     if (request.greeting == "hello")
+//       sendResponse({farewell: "goodbye"});
+//   });
+// chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+//   chrome.tabs.sendMessage(tabs[0].id, {greeting: "hello"}, function(response) {
+//     console.log(response.farewell);
+//   });
+// });
+
+// // Called when the user clicks on the browser action.
+// chrome.browserAction.onClicked.addListener(function(tab) {
+//   // Send a message to the active tab
+//   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+//     var activeTab = tabs[0];
+//     console.log("Active tab is "+activeTab);
+//     chrome.tabs.sendMessage(activeTab.id, {"message": "clicked_browser_action"});
+//   });
+// });
+
+// // This block is new!
+// chrome.runtime.onMessage.addListener(
+//   function(request, sender, sendResponse) {
+//     if( request.message === "open_new_tab" ) {
+//       chrome.tabs.create({"url": request.url});
+//     }
+//   }
+// );
+
+
+//trying to connect content.js dynamically
+// window.addEventListener('load', (event) => {
+//   chrome.tabs.executeScript(null, {
+//     file: 'content.js', //my content script   
+//     }, () => {
+//       connect() //this is where I call my function to establish a connection     });
+//   });
+// });
+
+// function connect() {
+//   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+//     const port = chrome.tabs.connect(tabs[0].id);
+//     port.postMessage({ function: 'html' });
+//     port.onMessage.addListener((response) => {
+//       html = response.html;
+//       title = response.title;
+//       description = response.description;
+//     });
+//   });
+// }
+
+//message passing experiments
+// chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+//   console.log("Received tab id on background : "+tabs[0].id)
+//   chrome.tabs.sendMessage(tabs[0].id, {greeting: "hello"}, function(response) {
+//     console.log("Response from content is "+response);
+//   });
+// });
+
+// chrome.runtime.onMessage.addListener(
+//   function(request, sender, sendResponse) {
+//     console.log(sender.tab ?
+//                 "from a content script:" + sender.tab.url :
+//                 "from the extension");
+//     if (request.greeting == "hello")
+//       sendResponse({farewell: "goodbye"});
+//   });
+// chrome.runtime.onConnect.addListener(port => {
+//     console.log('connected ', port);
+//     console.log('port name is '+port.name);
+//     if (port.name === 'hi') {
+//         port.onMessage.addListener(this.processMessage);
+//     }
+// });
 
 
 // (function() {

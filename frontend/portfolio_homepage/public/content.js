@@ -8,8 +8,8 @@
 
 // })
 
-const re = new RegExp('bear', 'gi')
-const matches = document.documentElement.innerHTML.match(re) || []
+// const re = new RegExp('bear', 'gi')
+// const matches = document.documentElement.innerHTML.match(re) || []
 
 chrome.runtime.sendMessage({greeting: "hello"}, 
   response =>{
@@ -27,3 +27,12 @@ chrome.runtime.sendMessage({greeting: "hello"},
     console.log("Experiment button was clicked");
     alert(greeting + button.person_name + ".");
   }, false);
+
+
+
+  var abutton = document.getElementById("app-btn");
+  abutton.addEventListener("click", function() {
+    console.log("App button was clicked");
+    alert("App button was clicked");
+  }, false);
+

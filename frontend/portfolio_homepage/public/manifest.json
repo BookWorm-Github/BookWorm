@@ -26,9 +26,6 @@
   "chrome_url_overrides": {
     "newtab": "index.html"
   },
- "content_security_policy": "script-src 'self' 'sha256-URZms8dLeNt//Fv3Mba1a2bqw+bnaR3ArBer7pBjRwU='; object-src 'self'",
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+ "content_security_policy": "script-src 'self' 'sha256-URZms8dLeNt//Fv3Mba1a2bqw+bnaR3ArBer7pBjRwU='; object-src 'self'"
+  
 }

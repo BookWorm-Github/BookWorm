@@ -1,19 +1,34 @@
 
-chrome.runtime.onInstalled.addListener(() => {
-  console.log('onInstalled public bckgrns...');
-  chrome.storage.sync.set({color: '#e77471'}, function() {
-      console.log("The color is light coral.");
-    });
-  // create alarm after extension is installed / upgraded
-  // scheduleRequest();
-  // scheduleWatchdog();
-  // startRequest();
-});
+// chrome.runtime.onInstalled.addListener(() => {
+//   console.log('onInstalled public bckgrns...');
+//   chrome.storage.sync.set({color: '#e77471'}, function() {
+//       console.log("The color is light coral.");
+//     });
+//   // create alarm after extension is installed / upgraded
+//   // scheduleRequest();
+//   // scheduleWatchdog();
+//   // startRequest();
+// });
 
-chrome.runtime.onMessage.addListener(
-  function(response,sender,sendResponse){
-    alert("Received Message"+response);
-});
+
+// chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+
+//   console.log("Tabs is "+tabs);
+
+//   chrome.tabs.sendMessage(tabs[0].id, {greeting: "hello"}, function(response) {
+//     console.log("Sent message hellow to content from background, and response is "+response);
+//   });
+// });
+
+
+
+// chrome.runtime.onMessage.addListener(receiver);
+
+// function receiver(request, sender, sendResponse) {
+//   console.log(request);
+//   alert("Received Message "+request);
+// }
+
 
 // chrome.runtime.onMessage.addListener(
 //   function(request, sender, sendResponse) {
@@ -168,7 +183,9 @@ chrome.runtime.onMessage.addListener(
 // }());
 
 
-
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  console.log("Background received message from "+sender+ " with request "+request);
+})
 
 chrome.windows.getAll({populate:true}, getAllOpenWindows);
 

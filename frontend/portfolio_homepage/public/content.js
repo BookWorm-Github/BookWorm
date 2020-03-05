@@ -7,9 +7,21 @@
 //     }
 //   });
 // });
-chrome.runtime.sendMessage('Hello World');
 
 
+chrome.runtime.onMessage.addListener(function(request){
+  alert("Request received in content: "+request);
+})
+// chrome.runtime.sendMessage('Hello World from content to background');
+
+
+
+// chrome.runtime.onMessage.addListener(receiver);
+// function receiver(request, sender, sendResponse) {
+//   console.log("Received msg from "+sender);
+//   console.log("Request: "+request);
+  
+// }
 // chrome.runtime.onMessage.addListener(
 //   function(request, sender, sendResponse) {
 //     console.log(sender.tab ?
@@ -66,9 +78,3 @@ chrome.runtime.sendMessage('Hello World');
 
 
 
-  var colorbutton = document.getElementById("changeColor");
-  button.addEventListener("click", function() {
-    console.log("Color was clicked");
-
-    chrome.runtime.sendMessage('changeColor');
-  }, false);

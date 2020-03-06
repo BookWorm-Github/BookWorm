@@ -77,7 +77,7 @@ function startAuth(interactive) {
     if (chrome.runtime.lastError && !interactive) {
       console.log("It was not possible to get a token programmatically.");
     } else if (chrome.runtime.lastError) {
-      console.error(chrome.runtime.lastError);
+      console.error(chrome.runtime.lastError.message);
     } else if (token) {
       // Authorize Firebase with the OAuth Access Token.
       var credential = firebase.auth.GoogleAuthProvider.credential(null, token);

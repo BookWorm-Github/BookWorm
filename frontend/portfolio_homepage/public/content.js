@@ -1,23 +1,32 @@
-// alert('Grrr.')
 
 
-// chrome.runtime.onMessage.addListener(function(request,sender,sendResponse)
-// {
-//   alert("content received msg: "+request);
+//This line opens up a long-lived connection to your background page.
+var port = chrome.runtime.connect({name:"mycontentscript"});
 
 
-// })
+port.onMessage.addListener(function(message,sender){
+      if(message.openTabs != null){
+        console.log("Content got message from background: "+message.openTabs);
+        createListOfURLs(message.openTabs);
+      }
+      else{
+        console.log("content got that Message was null")
+      }
+});
 
-// const re = new RegExp('bear', 'gi')
-// const matches = document.documentElement.innerHTML.match(re) || []
 
-chrome.runtime.sendMessage({greeting: "hello"}, 
-  response =>{
+function createListOfURLs (openTabs){
 
-    console.log("Content got response from background now: "+response.farewell)
+  //clears list
+   (function deleteChild() { 
+         const myNode = document.getElementById('url-list');
+        myNode.innerHTML = ''
+    })();
+
     // console.log("Content got response from background now: "+response.farewell[0])
-    var openTabs = response.farewell;
+    //lists urls
      ul = document.createElement('ul');
+     ul.setAttribute("id", "list");
 
       document.getElementById('url-list').appendChild(ul);
 
@@ -28,7 +37,7 @@ chrome.runtime.sendMessage({greeting: "hello"},
           li.innerHTML += item;
       });
     // console.log("Content got response from background now: "+response.farewell[1])
-  });
+  }
 
 //connect to index.html
  var greeting = "hola, ";
@@ -45,7 +54,32 @@ chrome.runtime.sendMessage({greeting: "hello"},
   abutton.addEventListener("click", function() {
     console.log("App button was clicked");
     alert("App button was clicked");
+
   }, false);
+
+
+
+// chrome.runtime.onConnect.addListener(port => {
+//     console.log('connected ', port);
+
+//     if (port.name === 'background') {
+//         port.onMessage.addListener(function(message,sender){
+//         if(message.openTabs != null){
+//           console.log("Content got message from background again ");
+//           createListOfURLs(message.openTabs);
+//         }
+//       });
+//     }
+// });
+
+// chrome.runtime.sendMessage({greeting: "hello"}, 
+//   createListOfURLs);
+
+
+// chrome.runtime.onMessage.addListener(
+//   function(request, sender, sendResponse) {
+//     console.log("content script received from background" +request);
+//   });
 
   // //connect to url.js component
   // var ubutton = document.getElementById("url-btn");

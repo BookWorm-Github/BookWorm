@@ -1,13 +1,16 @@
 
-
+//With some lag in the initial call of getURLs (needs to be clicked twice), it works.
 //This line opens up a long-lived connection to your background page.
 var port = chrome.runtime.connect({name:"mycontentscript"});
-
+var openTabs = null;
 
 port.onMessage.addListener(function(message,sender){
       if(message.openTabs != null){
         console.log("Content got message from background: "+message.openTabs);
-        createListOfURLs(message.openTabs);
+        openTabs = message.openTabs;
+
+        createListOfURLs(openTabs);
+        console.log("openTabs in content is now "+openTabs)
       }
       else{
         console.log("content got that Message was null")
@@ -54,6 +57,7 @@ function createListOfURLs (openTabs){
   abutton.addEventListener("click", function() {
     console.log("App button was clicked");
     alert("App button was clicked");
+    port.postMessage({rq: "Tabs"});
 
   }, false);
 

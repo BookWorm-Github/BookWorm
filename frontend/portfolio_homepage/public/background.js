@@ -1,25 +1,29 @@
 
 //TODO currently clumsy way of getting tabs (recomputing all opened tabs when tab opened/closed)
 //need to figure out how to get the url of a closed or opened tab in chrome
-
+window.tabs = [];
 window.contentPort;
-chrome.runtime.onConnect.addListener(function(replyPort){
+chrome.runtime.onConnect.addListener(function(port){
   console.log("Background is connected to content")
-  getOpenTabs();
-  window.contentPort = replyPort;
-  replyPort.postMessage({openTabs:window.tabs});
+    port.onMessage.addListener(function(msg) {
+    if (msg.rq == "Tabs"){
+
+      getOpenTabs();
+      window.contentPort = port;
+      port.postMessage({openTabs:window.tabs});
+    }
+    else {console.log("unknown message")}
+  });
 });
 function getOpenTabs(){
-  // window.tabs.splice(0,window.tabs.length);//clears the window.tabs array
    chrome.tabs.query({},function(tabs){
-
-    window.tabs = [];     
-    console.log("\n/////////////////////\n");
-    tabs.forEach(function(tab){
-      console.log(tab.url);
-      window.tabs.push(tab.url);
-    });
-    console.log("Length of window tabs is "+window.tabs.length);
+    window.tabs.splice(0,window.tabs.length);//clears the window.tabs array
+      console.log("\n/////////////////////\n");
+      tabs.forEach(function(tab){
+        console.log(tab.url);
+        window.tabs.push(tab.url);
+      });
+      console.log("Length of window tabs is "+window.tabs.length);
  });
 }
 

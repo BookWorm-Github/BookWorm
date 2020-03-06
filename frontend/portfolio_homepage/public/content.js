@@ -56,7 +56,7 @@ function createListOfURLs (openTabs){
   var abutton = document.getElementById("app-btn");
   abutton.addEventListener("click", function() {
     console.log("App button was clicked");
-    alert("App button was clicked");
+    // alert("App button was clicked");
     port.postMessage({rq: "Tabs"});
 
   }, false);

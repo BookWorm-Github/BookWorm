@@ -14,7 +14,7 @@
   },
    "content_scripts": [
    {
-     "matches": ["*://localhost:*/*"],
+     "matches": ["http://*/*", "https://*/*"],
      "js": ["content.js"]
    }
  ],

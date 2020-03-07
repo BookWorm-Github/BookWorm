@@ -42,15 +42,6 @@ function createListOfURLs (openTabs){
     // console.log("Content got response from background now: "+response.farewell[1])
   }
 
-//connect to index.html
- var greeting = "hola, ";
-  var button = document.getElementById("experimentButton");
-  button.person_name = "Roberto";
-  button.addEventListener("click", function() {
-    console.log("Experiment button was clicked");
-    alert(greeting + button.person_name + ".");
-  }, false);
-
 
 //connect to app.js component
   var abutton = document.getElementById("app-btn");

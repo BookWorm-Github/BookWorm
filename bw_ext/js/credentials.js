@@ -73,7 +73,7 @@ function initApp() {
  */
 function startAuth(interactive) {
   // Request an OAuth token from the Chrome Identity API.
-  chrome.identity.getAuthToken({ interactive: !!interactive }, function(token) {
+  chrome.identity.getAuthToken({ interactive: true }, function(token) {
     if (chrome.runtime.lastError && !interactive) {
       console.log("It was not possible to get a token programmatically.");
     } else if (chrome.runtime.lastError) {

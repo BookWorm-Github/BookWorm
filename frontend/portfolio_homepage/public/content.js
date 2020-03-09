@@ -18,7 +18,22 @@
 // });
   //put the creation of url-list here
 
-//adds button
+const modal = document.createElement('div');
+   modal.innerHTML = `<iframe id="app-frame" style="height:100%; width:100%"></iframe>`;
+        document.body.appendChild(modal);
+        // const div = document.querySelector("div");
+        // div.showModal();
+
+  //Connect content to html!
+  const iframe = document.getElementById("app-frame");
+  iframe.src = chrome.extension.getURL("index.html");
+  iframe.frameBorder = 0;
+   iframe.setAttribute("style","position:absolute; top:0; left:0; bottom:0; right:0; width:100%; height:100%; border:none; margin:0; padding:0; z-index:999999;");
+    
+
+
+
+//adds button to list all urls
 var button = document.createElement("button");
 button.innerHTML = "Get Opened URLs";
 document.body.appendChild(button);

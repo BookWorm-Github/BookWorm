@@ -34,47 +34,47 @@ const modal = document.createElement('div');
 
 
 //adds button to list all urls
-var button = document.createElement("button");
-button.innerHTML = "Get Opened URLs";
-document.body.appendChild(button);
-button.addEventListener ("click", function() {
+// var button = document.createElement("button");
+// button.innerHTML = "Get Opened URLs";
+// document.body.appendChild(button);
+// button.addEventListener ("click", function() {
   
-  chrome.runtime.sendMessage({rq: "Tabs"}, function(response) {
-    console.log(response.openTabs);
-    createListOfURLs(response.openTabs);
-  });
+//   chrome.runtime.sendMessage({rq: "Tabs"}, function(response) {
+//     console.log(response.openTabs);
+//     createListOfURLs(response.openTabs);
+//   });
 
-});
+// });
 
 //creates div for url-list
-const div = document.createElement('div');
-div.setAttribute("style","height: 50%");
-div.setAttribute("id", "url-list");
+// const div = document.createElement('div');
+// div.setAttribute("style","height: 50%");
+// div.setAttribute("id", "url-list");
 
-document.body.appendChild(div);
+// document.body.appendChild(div);
 
 
 
 chrome.runtime.sendMessage({rq: "Tabs"}, function(response) {
-  console.log(response.openTabs);
-  createListOfURLs(response.openTabs);
+  // console.log(response.openTabs);
+  // createListOfURLs(response.openTabs);
 });
 
-chrome.runtime.onMessage.addListener(
-  (message, sender, sendResponse) => {
-    console.log("content script received msg ("+message+") from background sender "+sender);
-      if(message.openTabs != null){
-        console.log("Content got message from background: "+message.openTabs);
-        openTabs = message.openTabs;
+// chrome.runtime.onMessage.addListener(
+//   (message, sender, sendResponse) => {
+//     console.log("content script received msg ("+message+") from background sender "+sender);
+//       if(message.openTabs != null){
+//         console.log("Content got message from background: "+message.openTabs);
+//         openTabs = message.openTabs;
 
-        createListOfURLs(openTabs);
-        console.log("openTabs in content is now "+openTabs)
-      }
-      else{
-        console.log("content got that Message was null")
-      }
+//         createListOfURLs(openTabs);
+//         console.log("openTabs in content is now "+openTabs)
+//       }
+//       else{
+//         console.log("content got that Message was null")
+//       }
 
-  });
+//   });
 
 function createListOfURLs (openTabs){
   if(document.getElementById('url-list')){

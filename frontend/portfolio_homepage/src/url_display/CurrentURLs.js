@@ -10,14 +10,29 @@ class App extends Component{
     }
 
 	render(){
+		var openTabs = this.createListOfopenTabs(this.props.urls);
 		  return (
 		    <div>
-
-    			<button id="url-btn">URL Button</button>
-		    	<h3>Currently Opened URLs:</h3>
-		    	<div id = "url-list"></div>
+		    	{openTabs}
 		    </div>
 		  );
+	}
+	createListOfopenTabs(tabs){
+
+		// Create an empty array that will hold the final JSX output.
+	    let buffer = []
+	    
+	    tabs.forEach((item)=> {
+	      
+	    	buffer.push(<li>{item}</li>);
+	    });
+
+	    // And return the buffer for display inside the render() function
+	    return (
+	        <ul>
+	            {buffer}
+	        </ul>
+	    );
 	}
 
 

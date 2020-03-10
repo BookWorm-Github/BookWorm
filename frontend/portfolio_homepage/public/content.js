@@ -18,63 +18,48 @@
 // });
   //put the creation of url-list here
 
-const modal = document.createElement('div');
-   modal.innerHTML = `<iframe id="app-frame" style="height:100%; width:100%"></iframe>`;
-        document.body.appendChild(modal);
-        // const div = document.querySelector("div");
-        // div.showModal();
-
-  //Connect content to html!
-  const iframe = document.getElementById("app-frame");
-  iframe.src = chrome.extension.getURL("index.html");
-  iframe.frameBorder = 0;
-   iframe.setAttribute("style","position:absolute; top:0; left:0; bottom:0; right:0; width:100%; height:100%; border:none; margin:0; padding:0; z-index:999999;");
-    
-
-
-
-//adds button to list all urls
-// var button = document.createElement("button");
-// button.innerHTML = "Get Opened URLs";
-// document.body.appendChild(button);
-// button.addEventListener ("click", function() {
+//adds button
+var button = document.createElement("button");
+button.innerHTML = "Get Opened URLs";
+document.body.appendChild(button);
+button.addEventListener ("click", function() {
   
-//   chrome.runtime.sendMessage({rq: "Tabs"}, function(response) {
-//     console.log(response.openTabs);
-//     createListOfURLs(response.openTabs);
-//   });
+  chrome.runtime.sendMessage({rq: "Tabs"}, function(response) {
+    console.log(response.openTabs);
+    createListOfURLs(response.openTabs);
+  });
 
-// });
+});
 
 //creates div for url-list
-// const div = document.createElement('div');
-// div.setAttribute("style","height: 50%");
-// div.setAttribute("id", "url-list");
+const div = document.createElement('div');
+div.setAttribute("style","height: 50%");
+div.setAttribute("id", "url-list");
 
-// document.body.appendChild(div);
+document.body.appendChild(div);
 
 
 
 chrome.runtime.sendMessage({rq: "Tabs"}, function(response) {
-  // console.log(response.openTabs);
-  // createListOfURLs(response.openTabs);
+  console.log(response.openTabs);
+  createListOfURLs(response.openTabs);
 });
 
-// chrome.runtime.onMessage.addListener(
-//   (message, sender, sendResponse) => {
-//     console.log("content script received msg ("+message+") from background sender "+sender);
-//       if(message.openTabs != null){
-//         console.log("Content got message from background: "+message.openTabs);
-//         openTabs = message.openTabs;
+chrome.runtime.onMessage.addListener(
+  (message, sender, sendResponse) => {
+    console.log("content script received msg ("+message+") from background sender "+sender);
+      if(message.openTabs != null){
+        console.log("Content got message from background: "+message.openTabs);
+        openTabs = message.openTabs;
 
-//         createListOfURLs(openTabs);
-//         console.log("openTabs in content is now "+openTabs)
-//       }
-//       else{
-//         console.log("content got that Message was null")
-//       }
+        createListOfURLs(openTabs);
+        console.log("openTabs in content is now "+openTabs)
+      }
+      else{
+        console.log("content got that Message was null")
+      }
 
-//   });
+  });
 
 function createListOfURLs (openTabs){
   if(document.getElementById('url-list')){
@@ -155,6 +140,3 @@ function createListOfURLs (openTabs){
   //   console.log("URL button was clicked");
   //   alert("URL button was clicked");
   // }, false);
-
-  
-

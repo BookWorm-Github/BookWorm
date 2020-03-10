@@ -18,6 +18,8 @@
 // });
   //put the creation of url-list here
 
+
+
 //adds button
 var button = document.createElement("button");
 button.innerHTML = "Get Opened URLs";

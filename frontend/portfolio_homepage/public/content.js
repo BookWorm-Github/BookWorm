@@ -19,22 +19,25 @@
   //put the creation of url-list here
 
 //adds button
-var button = document.createElement("button");
-button.innerHTML = "Get Opened URLs";
-button.setAttribute('id','clickButton');
-button.setAttribute('style','display:none');
-document.body.appendChild(button);
-button.addEventListener ("click", function() {
+// var button = document.createElement("button");
+// button.innerHTML = "Get Opened URLs";
+// button.setAttribute('id','clickButton');
+// button.setAttribute('style','display:none');
+// document.body.appendChild(button);
+// button.addEventListener ("click", function() {
   
-  chrome.runtime.sendMessage({rq: "Tabs"}, function(response) {
+//   chrome.runtime.sendMessage({rq: "Tabs"}, function(response) {
+//     console.log(response.openTabs);
+//     createListOfURLs(response.openTabs);
+//   });
+
+// });
+
+window.onload = function(){
+    chrome.runtime.sendMessage({rq: "Tabs"}, function(response) {
     console.log(response.openTabs);
     createListOfURLs(response.openTabs);
   });
-
-});
-
-window.onload = function(){
-   document.getElementById('clickButton').click();
 }
 
 

@@ -21,6 +21,8 @@
 //adds button
 var button = document.createElement("button");
 button.innerHTML = "Get Opened URLs";
+button.setAttribute('id','clickButton');
+button.setAttribute('style','display:none');
 document.body.appendChild(button);
 button.addEventListener ("click", function() {
   
@@ -30,6 +32,11 @@ button.addEventListener ("click", function() {
   });
 
 });
+
+window.onload = function(){
+   document.getElementById('clickButton').click();
+}
+
 
 //creates div for url-list
 const div = document.createElement('div');

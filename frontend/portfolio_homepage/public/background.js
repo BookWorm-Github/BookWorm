@@ -72,17 +72,9 @@ function sendToContent(){
     });
 }
 
-
-function helloWorld() {
-
-  console.log("This is public background");
+function openHomePage(){
+   chrome.tabs.create({url: 'index.html'});
 }
-
-function testFunction(){
-  console.log("Chrome is "+chrome)
-  console.log("This is a test function");
-}
-
 
 // chrome.browserAction.onClicked.addListener(function (tab) {
 //   chrome.tabs.create({url: 'index.html'})

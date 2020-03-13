@@ -1,4 +1,3 @@
-
 //With some lag in the initial call of getURLs (needs to be clicked twice), it works.
 //This line opens up a long-lived connection to your background page.
 // var port = chrome.runtime.connect({name:"mycontentscript"});
@@ -25,7 +24,7 @@
 // button.setAttribute('style','display:none');
 // document.body.appendChild(button);
 // button.addEventListener ("click", function() {
-  
+
 //   chrome.runtime.sendMessage({rq: "Tabs"}, function(response) {
 //     console.log(response.openTabs);
 //     createListOfURLs(response.openTabs);
@@ -33,23 +32,20 @@
 
 // });
 
-window.onload = function(){
-    chrome.runtime.sendMessage({rq: "Tabs"}, function(response) {
-    console.log(response.openTabs);
-    createListOfURLs(response.openTabs);
-  });
-}
-
+// window.onload = function(){
+//     chrome.runtime.sendMessage({rq: "Tabs"}, function(response) {
+//     console.log(response.openTabs);
+//     createListOfURLs(response.openTabs);
+//   });
+// };
 
 //creates div for url-list
-const div = document.createElement('div');
+var div = document.createElement('div');
 div.setAttribute("style","height: 50%");
 div.setAttribute("id", "url-list");
 
 document.body.appendChild(div);
-
-
-
+//grabs the tabs right when the app is created and ran using npm start BUT NOT in newtabs.
 chrome.runtime.sendMessage({rq: "Tabs"}, function(response) {
   console.log(response.openTabs);
   createListOfURLs(response.openTabs);

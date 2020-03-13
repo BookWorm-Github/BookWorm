@@ -18,7 +18,7 @@ window.tabs = [];
 
 chrome.runtime.onMessage.addListener(
   function(msg, sender, sendResponse) {
-       if (msg.rq == "Tabs"){
+      if (msg.rq == "Tabs"){
         console.log("Background received request for tabs");
         getOpenTabs();
         sendResponse({openTabs:window.tabs});
@@ -29,8 +29,8 @@ chrome.runtime.onMessage.addListener(
   });
 
 
-function getOpenTabs(){
-   chrome.tabs.query({},function(tabs){
+function getOpenTabs(){//get current open tabs
+   chrome.tabs.query({currentWindow:true},function(tabs){
     window.tabs.splice(0,window.tabs.length);//clears the window.tabs array
       console.log("\n/////////////////////\n");
       tabs.forEach(function(tab){
@@ -63,6 +63,20 @@ chrome.windows.onRemoved.addListener(function(windowid) {
  sendToContent();
  // window.contentPort.postMessage({openTabs:window.tabs});
 })
+
+
+chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {//when a newtab is created, get info on how many tabs in current opened window
+    console.log("tab " + tabId + "updated: " + tab + "\n");
+    console.log("changeInfo: " + changeInfo);
+    getOpenTabs();
+    sendToContent();
+})
+
+chrome.tabs.onActivated.addListener(function(TabInfo) {
+    console.log("current tab selected is" + TabInfo.tabId + " in window " + TabInfo.windowId);
+    getOpenTabs();
+    sendToContent();
+});
 
 function sendToContent(){
   console.log("Background is sending to content... ");

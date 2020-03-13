@@ -4,27 +4,21 @@ import './App.css';
 
 import BookAppMain from './books/BookAppMain';
 // import {getCurrentTab} from "./experiment/common/Utils";
-
+//TODO currently clumsy way of dealing with the chrome extension connection error in the local host main page.
 
 class App extends Component{
     constructor(props) {
         super(props);
-        
     }
 
 	render(){
-		  return (
-		    <div className="App">
-		    	
-    			<button id="app-btn">App Button- Get URLs</button>
-    			<div id = "url-list"><ul></ul></div>
-		  		<h1>BookWorm</h1>
-		  		<div>
-		      <BookAppMain />
-		      </div>
-		    </div>
-		  );
+
+		  return <div className="App">
+		    		<h1>BookWorm</h1>
+		    		<BookAppMain />
+		    	</div> 
 	}
+
 
 
 } 

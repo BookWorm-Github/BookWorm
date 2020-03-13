@@ -1,23 +1,16 @@
 {
-
   "manifest_version": 2,
   "short_name": "BookWorm",
   "name": "BookWorm",
 
   "version": "1.0.1",
-  "permissions": ["tabs","storage","activeTab","declarativeContent","background"
+  "permissions": ["contextMenus","tabs","storage","activeTab","declarativeContent","background"
         ], 
 
   "background":{
     "scripts": ["background.js"],
     "persistent":false
   },
-   "content_scripts": [
-   {
-     "matches": ["*://localhost:*/*"],
-     "js": ["content.js"]
-   }
- ],
 
   "browser_action": {
         "default_title": "Book Worm"
@@ -26,6 +19,9 @@
   "chrome_url_overrides": {
     "newtab": "index.html"
   },
+
+   "web_accessible_resources" : ["*.html"],
+
  "content_security_policy": "script-src 'self' 'sha256-URZms8dLeNt//Fv3Mba1a2bqw+bnaR3ArBer7pBjRwU='; object-src 'self'"
   
 }

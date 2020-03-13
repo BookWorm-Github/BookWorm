@@ -55,7 +55,9 @@ class SortBooks extends Component{
 				        </MDBDropdownMenu>
 				        
 				      </MDBDropdown>
-				      <MDBBtn>Hi</MDBBtn>
+				      <MDBBtn size="sm" onClick = {this.toggleOrder}>
+				      		{this.state.order===ASC? <div>&#9650;</div> : <div>&#9660;</div>}
+				      </MDBBtn>
 				  </MDBBtnGroup>
 
 			</div>
@@ -80,7 +82,7 @@ class SortBooks extends Component{
 
 	toggleOrder = () =>{
 		this.state.order===ASC? this.setState({order:DSC}) : this.setState({order:ASC})
-		this.sortByTitle();
+		this.sort();
 	}
 	
 	sortByTitle = () =>{

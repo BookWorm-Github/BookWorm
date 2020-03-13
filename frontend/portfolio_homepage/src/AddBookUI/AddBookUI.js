@@ -52,7 +52,8 @@ handleFocus = (event) => event.target.select();
   createBook = (e) =>{
       var newBook = {
         key: Date.now(),
-        title: this._inputTitle.value
+        title: this._inputTitle.value,
+        time_created: Date.now(),
       };
       
       this.setState((prevState) => {

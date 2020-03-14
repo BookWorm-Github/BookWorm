@@ -1,20 +1,9 @@
 //TODO currently clumsy way of getting tabs (recomputing all opened tabs when tab opened/closed)
 //need to figure out how to get the url of a closed or opened tab in chrome
 window.tabs = [];
-// window.contentPort;
-// chrome.runtime.onConnect.addListener(function(port){
-//   console.log("Background is connected to content")
-//     port.onMessage.addListener(function(msg) {
-//     if (msg.rq == "Tabs"){
-//       console.log("Background received request for tabs");
-//       getOpenTabs();
-//       sendToContent();
-//       // window.contentPort = port;
-//       // port.postMessage({openTabs:window.tabs});
-//     }
-//     else {console.log("unknown message")}
-//   });
-// });
+
+var tabsInWindow = {} //tabsInWindow[x] stores all tabs in the window with the windowid 'x'
+
 
 chrome.runtime.onMessage.addListener(
   function(msg, sender, sendResponse) {
@@ -28,8 +17,11 @@ chrome.runtime.onMessage.addListener(
         else {console.log("unknown message")}
   });
 
+function getClosedTabs(windowid){//gets closed tabs by comparing tabs that were opened before and tabs currently opened
 
-function getOpenTabs(){//get current open tabs
+}
+
+function getOpenTabs(){//get current open tabs urls
    chrome.tabs.query({currentWindow:true},function(tabs){
     window.tabs.splice(0,window.tabs.length);//clears the window.tabs array
       console.log("\n/////////////////////\n");
@@ -37,30 +29,42 @@ function getOpenTabs(){//get current open tabs
         console.log(tab.url);
         window.tabs.push(tab.url);
       });
-      console.log("Length of window tabs is "+window.tabs.length);
+      // console.log("Length of window tabs is "+window.tabs.length);
  });
 }
 
 chrome.tabs.onCreated.addListener(function(windowid) {
- console.log("tab created")
+ console.log("tab created");
  getOpenTabs();
 
+tabsInWindow[windowid] = window.tabs; //must be after getOpenTabs! so that windows.tabs is updated
  sendToContent();
  // window.contentPort.postMessage({openTabs:window.tabs});
 })
 
-chrome.tabs.onRemoved.addListener(function(tabid, removed) {
- console.log("tab closed: tab id is "+tabid);
-   getOpenTabs();
-
-    sendToContent();
- // window.contentPort.postMessage({openTabs:window.tabs});
-})
 
 chrome.windows.onRemoved.addListener(function(windowid) {
- console.log("window closed")
- getOpenTabs();
+ alert("window closed. window id is "+windowid);
+ var closedTabsInWindow = [];
+ chrome.tabs.query({windowId: windowid},function(tabs){
+      tabs.forEach(function(tab){
+        console.log("Closed tab "+tab.url);
+        closedTabsInWindow.push(tab.url);
+      });
+      alert("The "+tabs.length+" closed tabs are "+closedTabsInWindow.toString());
+ });
+
+ // getOpenTabs(); tabs.onRemoved is already updating window tabs
  sendToContent();
+ // window.contentPort.postMessage({openTabs:window.tabs});
+})
+
+
+chrome.tabs.onRemoved.addListener(function(tabid, removed) {
+ alert("tab closed: tab id is "+tabid);
+    getOpenTabs();
+
+    sendToContent();
  // window.contentPort.postMessage({openTabs:window.tabs});
 })
 
@@ -81,7 +85,9 @@ chrome.tabs.onActivated.addListener(function(TabInfo) {
 function sendToContent(){
   console.log("Background is sending to content... ");
   chrome.tabs.query({active: true, currentWindow: true},
-      tabs =>{chrome.tabs.sendMessage(tabs[0].id, 
+      tabs =>{
+        if(tabs[0]!=undefined)
+        chrome.tabs.sendMessage(tabs[0].id, 
         {openTabs:window.tabs});
     });
 }

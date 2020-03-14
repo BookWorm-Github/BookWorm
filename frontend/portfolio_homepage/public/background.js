@@ -1,20 +1,8 @@
 //TODO currently clumsy way of getting tabs (recomputing all opened tabs when tab opened/closed)
 //need to figure out how to get the url of a closed or opened tab in chrome
 window.tabs = [];
-// window.contentPort;
-// chrome.runtime.onConnect.addListener(function(port){
-//   console.log("Background is connected to content")
-//     port.onMessage.addListener(function(msg) {
-//     if (msg.rq == "Tabs"){
-//       console.log("Background received request for tabs");
-//       getOpenTabs();
-//       sendToContent();
-//       // window.contentPort = port;
-//       // port.postMessage({openTabs:window.tabs});
-//     }
-//     else {console.log("unknown message")}
-//   });
-// });
+var urls = []; //urls[tabid] returns the url for the current tab
+var urlsToBeStoredInLaunch=[];
 
 chrome.runtime.onMessage.addListener(
   function(msg, sender, sendResponse) {
@@ -51,23 +39,33 @@ chrome.tabs.onCreated.addListener(function(windowid) {
 
 chrome.tabs.onRemoved.addListener(function(tabid, removed) {
  console.log("tab closed: tab id is "+tabid);
+    if(removed.isWindowClosing){//if tab was removed due to window closing
+      //if this url is not already stored
+      if(!urlsToBeStoredInLaunch.includes(urls[tabid])){
+        urlsToBeStoredInLaunch.push(urls[tabid]);
+      }
+    }
    getOpenTabs();
-
-    sendToContent();
- // window.contentPort.postMessage({openTabs:window.tabs});
+   sendToContent();
 })
 
 chrome.windows.onRemoved.addListener(function(windowid) {
  console.log("window closed")
  getOpenTabs();
+ console.log("URLs to be stored in launch are "+urlsToBeStoredInLaunch.toString());
+ alert("URLs to be stored in launch are "+urlsToBeStoredInLaunch.toString())
  sendToContent();
  // window.contentPort.postMessage({openTabs:window.tabs});
 })
 
 
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {//when a newtab is created, get info on how many tabs in current opened window
-    console.log("tab " + tabId + "updated: " + tab + "\n");
-    console.log("changeInfo: " + changeInfo);
+    // console.log("tab " + tabId + "updated: " + tab + "\n");
+    // console.log("changeInfo: " + changeInfo);
+      if (changeInfo.url) {
+        urls[tabId] = changeInfo.url;
+      }
+
     getOpenTabs();
     sendToContent();
 })
@@ -81,7 +79,9 @@ chrome.tabs.onActivated.addListener(function(TabInfo) {
 function sendToContent(){
   console.log("Background is sending to content... ");
   chrome.tabs.query({active: true, currentWindow: true},
-      tabs =>{chrome.tabs.sendMessage(tabs[0].id, 
+      tabs =>{
+        if(tabs[0]!=undefined)
+        chrome.tabs.sendMessage(tabs[0].id, 
         {openTabs:window.tabs});
     });
 }

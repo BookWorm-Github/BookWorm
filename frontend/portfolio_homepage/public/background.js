@@ -19,9 +19,10 @@ chrome.runtime.onMessage.addListener(
   });
 
 function getClosedTabs(windowid){//gets closed tabs by comparing tabs that were opened before and tabs currently opened
+    printTabsInWindow();
     var closedWindowTabs = tabsInWindow[windowid];
     tabsInWindow[windowid] = [];
-    console.log("getClosedTabs is returning "+closedWindowTabs);
+    console.log("getClosedTabs received window id "+windowid +" and is returning "+closedWindowTabs);
     return closedWindowTabs;
 }
 
@@ -30,22 +31,21 @@ function getOpenTabs(){//get current open tabs urls
     window.tabs.splice(0,window.tabs.length);//clears the window.tabs array
     if(Array.isArray(tabs) && tabs.length){ //if tabs is not empty
       tabs.forEach(function(tab){
-        console.log("Tab id is "+tab.id);
+        //console.log("Tab id is "+tab.id);
         window.tabs.push(tab.url);
       });
-      var windowid = tabs[0].windowId;
-      console.log("tab window id is "+windowid)
-      tabsInWindow[windowid] = window.tabs;
-      console.log("Tabs in window "+windowid+" are "+tabsInWindow[windowid].toString())
     }
       // //console.log("Length of window tabs is "+window.tabs.length);
  });
 }
 
-chrome.tabs.onCreated.addListener(function(windowid) {
+chrome.tabs.onCreated.addListener(function(tab) {
  //console.log("tab created");
  getOpenTabs();
-
+ var windowid = tab.windowId;
+  console.log("tab window id is "+windowid)
+  tabsInWindow[windowid] = window.tabs;
+  console.log("Tabs in window "+windowid+" are "+tabsInWindow[windowid].toString())
  sendToContent();
  // window.contentPort.postMessage({openTabs:window.tabs});
 })
@@ -53,8 +53,9 @@ chrome.tabs.onCreated.addListener(function(windowid) {
 
 chrome.windows.onRemoved.addListener(function(windowid) {
  alert("window closed. window id is "+windowid);
+ console.log("window closed. window id is "+windowid);
  var closedTabsInWindow = getClosedTabs(windowid);
-
+ console.log("The "+tabs.length+" closed tabs are "+closedTabsInWindow.toString());
  alert("The "+tabs.length+" closed tabs are "+closedTabsInWindow.toString());
 
  // getOpenTabs(); tabs.onRemoved is already updating window tabs
@@ -97,6 +98,17 @@ function sendToContent(){
 
 function openHomePage(){
    chrome.tabs.create({url: 'index.html'});
+}
+
+//prints all tabs in the window
+function printTabsInWindow(){
+
+  for (var w in tabsInWindow) {
+    if (tabsInWindow.hasOwnProperty(w)) {
+      console.log("Window "+w+"has tabs "+tabsInWindow[w].toString())
+    }
+  }
+
 }
 
 // chrome.browserAction.onClicked.addListener(function (tab) {

@@ -1,6 +1,8 @@
+
 //The container that holds the books
 import React, {Component} from 'react'
 import './launcher.css'
+import PropTypes from 'prop-types'
 
 // import { withStyles } from '@material-ui/core/styles';
 //npm i react-simple-flex-grid
@@ -52,5 +54,10 @@ class Launcher extends Component{
 
 
 }
+
+
+Launcher.propTypes = {
+    urls: PropTypes.arrayOf(PropTypes.string)
+  };
 
 export default Launcher;

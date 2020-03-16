@@ -19,34 +19,41 @@ handleFocus = (event) => event.target.select();
 
   render() {  
     return (  
-      
+        <div>
         <div className='popup'>    
 
-            <div className = 'book' style = {{height:'100%'}} >
+            <div className = 'book'>
               <h2>Name of the book: </h2>  
               <div>
 
 
-               <form onSubmit={this.submitBook}>
+               <form onSubmit={this.createBook}>
                   <input ref={(t) => this._inputTitle = t}
                     placeholder="Enter Title Here" defaultValue="Title" autoFocus onFocus={this.handleFocus}>
                   </input>
-                  <button type="submit">add</button>
+                  <span>
+                  <button type="submit">Add</button> 
+                  </span>
                 </form>
+                
+                  <button onClick={this.props.closePopup}>Cancel</button> 
 
 
               </div>
+
             </div>
-            <button onClick={this.props.closePopup}>close me</button>  
-           
+
+
+           </div>
         </div>  
     );  
   } 
 
-  submitBook = (e) =>{
+  createBook = (e) =>{
       var newBook = {
         key: Date.now(),
-        title: this._inputTitle.value
+        title: this._inputTitle.value,
+        time_created: Date.now(),
       };
       
       this.setState((prevState) => {
@@ -55,7 +62,7 @@ handleFocus = (event) => event.target.select();
         };
       });
      
-     /* console.log("Input Title at submitBook is: "+newBook.title);*/
+     /* console.log("Input Title at createBook is: "+newBook.title);*/
     
       this.props.addBook(newBook);
 

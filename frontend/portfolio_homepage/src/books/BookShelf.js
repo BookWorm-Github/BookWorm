@@ -3,6 +3,8 @@ import React, {Component} from 'react'
 import Grid from '@material-ui/core/Grid';
 import Book from './Book'
 
+import PropTypes from 'prop-types'
+
 import './bookStyles.css'
 
 import BookNavbar from '../hamburger_bar/BookNavbar'
@@ -72,7 +74,7 @@ class BookShelf extends Component {
   }
 
   deleteBook = (_book) =>{
-    console.log(_book.title+" Key is "+_book.key); this.props.deleteBookKey(_book.key)
+    console.log(_book.title+" Key is "+_book.key); this.props.deleteBook(_book.key)
   }
 
 
@@ -88,23 +90,7 @@ class BookShelf extends Component {
 
     return (
         <div className='book-shelf'> 
-           {/*<Grid container spacing={space}>
-                  {books}
-                </Grid>
-
-              <Grid container spacing={space}>
-                <Grid item xs zeroMinWidth>
-                  <Book ></Book>
-                </Grid>
-                <Grid item xs zeroMinWidth>
-                  <Book ></Book>
-                </Grid>
-                <Grid item xs zeroMinWidth>
-                  
-                </Grid>
-              </Grid>*/
-
-            }
+          
             {books}
           </div>
 
@@ -135,4 +121,15 @@ class BookShelf extends Component {
 
  
 }
+
+
+BookShelf.propTypes = {
+    bks: PropTypes.arrayOf(PropTypes.shape({
+        key: PropTypes.number,
+        title: PropTypes.string.isRequired
+
+      })),
+     deleteBook: PropTypes.func.isRequired
+  };
+
 export default (BookShelf);

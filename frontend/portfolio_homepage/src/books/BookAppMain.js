@@ -103,7 +103,7 @@ class BookAppMain extends Component {
       return (bk.key !== key);
     });
    
-    this.setState({
+    this.setState({ //This will update the state and trigger a rerender of the components
       bookshelf: filteredBooks
     });
   }

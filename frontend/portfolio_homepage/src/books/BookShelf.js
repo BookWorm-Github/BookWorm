@@ -54,7 +54,8 @@ class BookShelf extends Component {
     return <Grid key = {_index} item xs zeroMinWidth>
               {_book===null?null:
                       <div key={_book.key}>
-                          <BookNavbar book ={_book} deleteBook = {this.deleteBook} />
+                          {/*<BookNavbar book ={_book} deleteBook = {this.deleteBook} />*/}
+                          <button onClick={() => this.deleteBook(_book)}>Delete Book</button>
                         <Book book ={_book} />
                       </div>
               }

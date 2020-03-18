@@ -26,7 +26,7 @@ render() {
       <MDBContainer>
         <MDBNavbar color="amber lighten-4" style={{float: 'fixed-top'}} light>
           <MDBContainer>
-            <MDBHamburgerToggler color="#d3531a" id="hamburger1" onClick={()=> this.toggleSingleCollapse('collapse1')} />
+            <MDBHamburgerToggler color="#d3531a" id={this.state.collapseID} onClick={()=> this.toggleSingleCollapse('collapse1')} />
               <MDBCollapse isOpen={this.state.collapse1} navbar>
                 <MDBNavbarNav left>
                   <MDBNavItem active>

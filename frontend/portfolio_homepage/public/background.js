@@ -15,6 +15,9 @@ chrome.runtime.onMessage.addListener(
       // window.contentPort = port;
       // port.postMessage({openTabs:window.tabs});
         }
+        else if (msg.rq=="urlsForLaunch"){
+          sendResponse({urlsForLaunch: urlsToBeStoredInLaunch})
+        }
         else {//console.log("unknown message")
       }
   });

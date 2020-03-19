@@ -4,10 +4,14 @@ MDBHamburgerToggler } from 'mdbreact';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 class BookNavbar extends Component {
-state = {
-  collapse1: false,
-  collapseID: ''
-}
+  constructor(props) {
+    super(props);
+    this.state = {
+      collapse1: false,
+      collapseID: ''
+    }
+  }
+
 
 toggleCollapse = collapseID => () => {
   this.setState(prevState => ({ collapseID: (prevState.collapseID !== collapseID ? collapseID : '') }));

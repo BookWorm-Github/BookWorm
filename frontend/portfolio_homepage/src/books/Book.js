@@ -9,8 +9,8 @@ import Launcher from '../launcher/Launcher'
 import ManualEntryOfURL from '../addURL/ManualEntryOfURL'
 class Book extends Component{
 
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
     this.state = {
       title:'',
       isHovered: false,

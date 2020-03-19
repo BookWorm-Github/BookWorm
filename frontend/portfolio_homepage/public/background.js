@@ -29,6 +29,7 @@ function getOpenTabs(){//get current open tabs urls
     if(Array.isArray(tabs) && tabs.length){ //if tabs is not empty
       tabs.forEach(function(tab){
         //console.log("Tab id is "+tab.id);
+        urls[tab.id] = tab.url;
         window.tabs.push(tab.url);
       });
     }
@@ -49,6 +50,7 @@ chrome.tabs.onRemoved.addListener(function(tabid, removed) {
       //if this url is not already stored
       if(!urlsToBeStoredInLaunch.includes(urls[tabid])){
         urlsToBeStoredInLaunch.push(urls[tabid]);
+        alert("Added URL to be stored in launch: "+urls[tabid]);
       }
     }
    getOpenTabs();
@@ -66,8 +68,10 @@ chrome.windows.onRemoved.addListener(function(windowid) {
 
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {//when a newtab is created, get info on how many tabs in current opened window
 
-      if (changeInfo.url) {
+      if (changeInfo.url) { //if url in tabid has changed, update the url to the changed url
         urls[tabId] = changeInfo.url;
+        if(changeInfo.url==undefined)
+          alert("Undefined url in background")
       }
 
     getOpenTabs();
@@ -76,6 +80,9 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {//when a ne
 
 chrome.tabs.onActivated.addListener(function(TabInfo) {
     //console.log("current tab selected is" + TabInfo.tabId + " in window " + TabInfo.windowId);
+     // chrome.tabs.get(activeInfo.tabId, function(tab){ //get the active tab's url
+     //    urls[activeInfo.tabId] = tab.url;
+     //  });
     getOpenTabs();
     sendToContent();
 });

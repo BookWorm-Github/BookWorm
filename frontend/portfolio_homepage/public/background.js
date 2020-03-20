@@ -50,7 +50,7 @@ chrome.tabs.onRemoved.addListener(function(tabid, removed) {
       //if this url is not already stored
       if(!urlsToBeStoredInLaunch.includes(urls[tabid])){
         urlsToBeStoredInLaunch.push(urls[tabid]);
-        alert("Added URL to be stored in launch: "+urls[tabid]);
+        // alert("Added URL to be stored in launch: "+urls[tabid]);
       }
     }
    getOpenTabs();

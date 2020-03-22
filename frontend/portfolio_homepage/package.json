@@ -1,4 +1,4 @@
- {
+{
   "name": "portfolio_homepage",
   "version": "0.1.0",
   "private": true,
@@ -37,5 +37,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "npm-force-resolutions": "0.0.3"
   }
 }

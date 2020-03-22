@@ -3,7 +3,8 @@
 window.tabs = [];
 
 var urls = []; //urls[tabid] returns the url for the current tab
-var urlsToBeStoredInLaunch=[];
+var urlsToBeStoredInWormhole=[]; //the history of all closed urls
+var urlsToBeStoredInLaunch=[]; //the urls of the most recently closed window
 
 
 chrome.runtime.onMessage.addListener(
@@ -18,6 +19,9 @@ chrome.runtime.onMessage.addListener(
         else if (msg.rq=="urlsForLaunch"){
           sendResponse({urlsForLaunch: urlsToBeStoredInLaunch})
         }
+        else if (msg.rg=="urlsForWormhole"){
+          sendResponse({urlsForWormhole: urlsToBeStoredInWormhole})
+        }
         else {//console.log("unknown message")
       }
   });
@@ -29,7 +33,8 @@ function getOpenTabs(){//get current open tabs urls
     if(Array.isArray(tabs) && tabs.length){ //if tabs is not empty
       tabs.forEach(function(tab){
         //console.log("Tab id is "+tab.id);
-        urls[tab.id] = tab.url;
+        // windowUrls[tab.windowId][tab.id] = tab.url;
+        urls[tab.id] = tab.url; //update the url of a tab
         window.tabs.push(tab.url);
       });
     }
@@ -48,10 +53,17 @@ chrome.tabs.onRemoved.addListener(function(tabid, removed) {
  console.log("tab closed: tab id is "+tabid);
     if(removed.isWindowClosing){//if tab was removed due to window closing
       //if this url is not already stored
+      if(!urlsToBeStoredInWormhole.includes(urls[tabid])){
+        urlsToBeStoredInWormhole.push(urls[tabid]);
+        // alert("Added URL to be stored in launch: "+urls[tabid]);
+      }
+
       if(!urlsToBeStoredInLaunch.includes(urls[tabid])){
         urlsToBeStoredInLaunch.push(urls[tabid]);
         // alert("Added URL to be stored in launch: "+urls[tabid]);
       }
+
+
     }
    getOpenTabs();
    sendToContent();
@@ -60,8 +72,23 @@ chrome.tabs.onRemoved.addListener(function(tabid, removed) {
 chrome.windows.onRemoved.addListener(function(windowid) {
  console.log("window closed")
  getOpenTabs();
- console.log("URLs to be stored in launch are "+urlsToBeStoredInLaunch.toString());
- alert("URLs to be stored in launch are "+urlsToBeStoredInLaunch.toString())
+
+ //debug wormhole
+ console.log("URLs to be stored in wormhole are "+urlsToBeStoredInWormhole.toString());
+ alert("URLs to be stored in wormhole are "+urlsToBeStoredInWormhole.toString())
+
+
+ //debug launch
+
+ //copies the urlsToBeStoredInLaunch
+ storedInLaunchURls = urlsToBeStoredInLaunch.slice(0,urlsToBeStoredInLaunch.length);
+
+ console.log("URLs to be stored in launch are "+storedInLaunchURls.toString());
+ alert("URLs to be stored in launch are "+storedInLaunchURls.toString())
+//resets the urlsToBeStoredInLaunch for next window
+ urlsToBeStoredInLaunch.splice(0,urlsToBeStoredInLaunch.length);
+
+
  sendToContent();
 })
 

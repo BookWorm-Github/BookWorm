@@ -6,6 +6,10 @@ var urls = []; //urls[tabid] returns the url for the current tab
 var urlsToBeStoredInWormhole=[]; //the history of all closed urls
 var urlsToBeStoredInLaunch=[]; //the urls of the most recently closed window
 
+// Check whether extension has been reloaded
+chrome.runtime.onInstalled.addListener(function(details){
+    getOpenTabs();
+});
 
 chrome.runtime.onMessage.addListener(
   function(msg, sender, sendResponse) {
@@ -90,6 +94,7 @@ chrome.windows.onRemoved.addListener(function(windowid) {
 
 
  sendToContent();
+
 })
 
 

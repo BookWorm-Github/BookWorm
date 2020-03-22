@@ -4,7 +4,8 @@ import BookShelf from './BookShelf'
 import AddBookUI from '../AddBookUI/AddBookUI'
 import './bookStyles.css'
 import SortBooks from '../sortItems/SortBooks'
-
+import Hotkeys from 'react-hot-keys';
+//added hotkeys: https://github.com/jaywcjlove/react-hotkeys#readme
 class BookAppMain extends Component {
 
   constructor(props){
@@ -20,6 +21,7 @@ class BookAppMain extends Component {
 
     return (
       <div>
+      <Hotkeys keyName = "shift+a" onKeyDown = {this.toggleAddBook}></Hotkeys>
       {/*<button onClick = {this.getURLS}>Get Open Windows</button>*/}
             <SortBooks books = {this.state.bookshelf} setBooks = {this.setBooks}/>
       <div className = 'main-container-center'>

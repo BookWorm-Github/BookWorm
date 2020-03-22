@@ -21,7 +21,8 @@ class BookAppMain extends Component {
 
     return (
       <div>
-      <Hotkeys keyName = "shift+a" onKeyDown = {this.toggleAddBook}></Hotkeys>
+    {/*Hotkey for dev only, when lots of experimental books are added. take away from final product.*/}
+      <Hotkeys keyName = "shift+a" onKeyUp = {this.toggleAddBook}></Hotkeys>
       {/*<button onClick = {this.getURLS}>Get Open Windows</button>*/}
             <SortBooks books = {this.state.bookshelf} setBooks = {this.setBooks}/>
       <div className = 'main-container-center'>

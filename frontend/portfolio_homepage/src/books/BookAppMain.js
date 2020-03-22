@@ -1,11 +1,24 @@
 import React, {Component} from 'react'
 import BookShelf from './BookShelf'
+import { GlobalHotKeys } from "react-hotkeys";
 /*Testing branch*/
 import AddBookUI from '../AddBookUI/AddBookUI'
 import './bookStyles.css'
 import SortBooks from '../sortItems/SortBooks'
 
+//for keyboard shortcut
+//need npm install react-hotkeys and also
+//npx babel-upgrade
+const keyMap = {
+    ADDBK: "a",
+};
+
 class BookAppMain extends Component {
+
+    handlers = {
+        ADDBK: event => this.toggleAddBook
+
+    };
 
   constructor(props){
     super(props);
@@ -20,6 +33,7 @@ class BookAppMain extends Component {
 
     return (
       <div>
+    <GlobalHotKeys keyMap={keyMap} handlers={this.handlers}/>{/*adding keyboard shortcut*/}
       {/*<button onClick = {this.getURLS}>Get Open Windows</button>*/}
             <SortBooks books = {this.state.bookshelf} setBooks = {this.setBooks}/>
       <div className = 'main-container-center'>

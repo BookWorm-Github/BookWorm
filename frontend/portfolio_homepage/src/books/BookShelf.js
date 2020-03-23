@@ -10,8 +10,8 @@ import './bookStyles.css'
 import BookNavbar from '../hamburger_bar/BookNavbar'
 class BookShelf extends Component {
 
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
     this.state = {
       books:[],
       numBksPerShelf:3

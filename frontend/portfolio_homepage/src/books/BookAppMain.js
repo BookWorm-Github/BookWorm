@@ -7,8 +7,8 @@ import SortBooks from '../sortItems/SortBooks'
 
 class BookAppMain extends Component {
 
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
     this.state = {
       bookshelf: [],
       addingBook: false,

@@ -7,8 +7,8 @@ import BookAppMain from './books/BookAppMain';
 //TODO currently clumsy way of dealing with the chrome extension connection error in the local host main page.
 
 class App extends Component{
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
     }
 
 	render(){

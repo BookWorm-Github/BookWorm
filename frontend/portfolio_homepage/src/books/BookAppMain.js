@@ -7,8 +7,8 @@ import SortBooks from '../sortItems/SortBooks'
 
 class BookAppMain extends Component {
 
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
     this.state = {
       bookshelf: [],
       addingBook: false,
@@ -103,7 +103,7 @@ class BookAppMain extends Component {
       return (bk.key !== key);
     });
    
-    this.setState({
+    this.setState({ //This will update the state and trigger a rerender of the components
       bookshelf: filteredBooks
     });
   }

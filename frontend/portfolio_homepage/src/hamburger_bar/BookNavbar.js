@@ -4,10 +4,14 @@ MDBHamburgerToggler } from 'mdbreact';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 class BookNavbar extends Component {
-state = {
-  collapse1: false,
-  collapseID: ''
-}
+  constructor(props) {
+    super(props);
+    this.state = {
+      collapse1: false,
+      collapseID: ''
+    }
+  }
+
 
 toggleCollapse = collapseID => () => {
   this.setState(prevState => ({ collapseID: (prevState.collapseID !== collapseID ? collapseID : '') }));
@@ -26,7 +30,7 @@ render() {
       <MDBContainer>
         <MDBNavbar color="amber lighten-4" style={{float: 'fixed-top'}} light>
           <MDBContainer>
-            <MDBHamburgerToggler color="#d3531a" id="hamburger1" onClick={()=> this.toggleSingleCollapse('collapse1')} />
+            <MDBHamburgerToggler color="#d3531a" id={this.props.book.key.toString()} onClick={()=> this.toggleSingleCollapse('collapse1')} />
               <MDBCollapse isOpen={this.state.collapse1} navbar>
                 <MDBNavbarNav left>
                   <MDBNavItem active>

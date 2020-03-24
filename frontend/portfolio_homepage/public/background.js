@@ -2,9 +2,9 @@
 //need to figure out how to get the url of a closed or opened tab in chrome
 window.tabs = [];
 
-var urls = []; //urls[tabid] returns the url for the current tab
-var urlsToBeStoredInWormhole=[]; //the history of all closed urls
-var urlsToBeStoredInLaunch=[]; //the urls of the most recently closed window
+window.urls = []; //window.urls[tabid] returns the url for the current tab
+window.urlsToBeStoredInWormhole=[]; //the history of all closed window.urls
+window.urlsToBeStoredInLaunch=[]; //the window.urls of the most recently closed window
 
 // Check whether extension has been reloaded
 chrome.runtime.onInstalled.addListener(function(details){
@@ -20,25 +20,25 @@ chrome.runtime.onMessage.addListener(
       // window.contentPort = port;
       // port.postMessage({openTabs:window.tabs});
         }
-        else if (msg.rq=="urlsForLaunch"){
-          sendResponse({urlsForLaunch: urlsToBeStoredInLaunch})
+        else if (msg.rq=="window.urlsForLaunch"){
+          sendResponse({urlsForLaunch: window.urlsToBeStoredInLaunch})
         }
-        else if (msg.rg=="urlsForWormhole"){
-          sendResponse({urlsForWormhole: urlsToBeStoredInWormhole})
+        else if (msg.rg=="window.urlsForWormhole"){
+          sendResponse({urlsForWormhole: window.urlsToBeStoredInWormhole})
         }
         else {//console.log("unknown message")
       }
   });
 
 
-function getOpenTabs(){//get current open tabs urls
+function getOpenTabs(){//get current open tabs window.urls
    chrome.tabs.query({currentWindow:true},function(tabs){
     window.tabs.splice(0,window.tabs.length);//clears the window.tabs array
     if(Array.isArray(tabs) && tabs.length){ //if tabs is not empty
       tabs.forEach(function(tab){
         //console.log("Tab id is "+tab.id);
-        // windowUrls[tab.windowId][tab.id] = tab.url;
-        urls[tab.id] = tab.url; //update the url of a tab
+        // windowwindow.urls[tab.windowId][tab.id] = tab.url;
+        window.urls[tab.id] = tab.url; //update the url of a tab
         window.tabs.push(tab.url);
       });
     }
@@ -57,15 +57,15 @@ chrome.tabs.onRemoved.addListener(function(tabid, removed) {
  console.log("tab closed: tab id is "+tabid);
     if(removed.isWindowClosing){//if tab was removed due to window closing
       //if this url is not already stored
-      if(!urlsToBeStoredInWormhole.includes(urls[tabid])){
-        urlsToBeStoredInWormhole.push(urls[tabid]);
-        // alert("Added URL to be stored in launch: "+urls[tabid]);
+      if(!window.urlsToBeStoredInWormhole.includes(window.urls[tabid])){
+        window.urlsToBeStoredInWormhole.push(window.urls[tabid]);
+        // alert("Added URL to be stored in launch: "+window.urls[tabid]);
       }
 
-      if(!urlsToBeStoredInLaunch.includes(urls[tabid])){
-        urlsToBeStoredInLaunch.push(urls[tabid]);
-        // alert("Added URL to be stored in launch: "+urls[tabid]);
-      }
+      // if(!window.urlsToBeStoredInLaunch.includes(window.urls[tabid])){
+        window.urlsToBeStoredInLaunch.push(window.urls[tabid]);
+        // alert("Added URL to be stored in launch: "+window.urls[tabid]);
+      // }
 
 
     }
@@ -78,19 +78,19 @@ chrome.windows.onRemoved.addListener(function(windowid) {
  getOpenTabs();
 
  //debug wormhole
- console.log("URLs to be stored in wormhole are "+urlsToBeStoredInWormhole.toString());
- alert("URLs to be stored in wormhole are "+urlsToBeStoredInWormhole.toString())
+ console.log("window.urls to be stored in wormhole are "+window.urlsToBeStoredInWormhole.toString());
+ alert("window.urls to be stored in wormhole are "+window.urlsToBeStoredInWormhole.toString())
 
 
  //debug launch
 
- //copies the urlsToBeStoredInLaunch
- storedInLaunchURls = urlsToBeStoredInLaunch.slice(0,urlsToBeStoredInLaunch.length);
+ //copies the window.urlsToBeStoredInLaunch
+ storedInLaunchUrls = window.urlsToBeStoredInLaunch.slice(0,window.urlsToBeStoredInLaunch.length);
 
- console.log("URLs to be stored in launch are "+storedInLaunchURls.toString());
- alert("URLs to be stored in launch are "+storedInLaunchURls.toString())
-//resets the urlsToBeStoredInLaunch for next window
- urlsToBeStoredInLaunch.splice(0,urlsToBeStoredInLaunch.length);
+ console.log("window.urls to be stored in launch are "+storedInLaunchUrls.toString());
+ alert("window.urls to be stored in launch are "+storedInLaunchUrls.toString())
+//resets the window.urlsToBeStoredInLaunch for next window
+ window.urlsToBeStoredInLaunch.splice(0,window.urlsToBeStoredInLaunch.length);
 
 
  sendToContent();
@@ -101,7 +101,7 @@ chrome.windows.onRemoved.addListener(function(windowid) {
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {//when a newtab is created, get info on how many tabs in current opened window
 
       if (changeInfo.url) { //if url in tabid has changed, update the url to the changed url
-        urls[tabId] = changeInfo.url;
+        window.urls[tabId] = changeInfo.url;
         if(changeInfo.url==undefined)
           alert("Undefined url in background")
       }
@@ -113,7 +113,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {//when a ne
 chrome.tabs.onActivated.addListener(function(TabInfo) {
     //console.log("current tab selected is" + TabInfo.tabId + " in window " + TabInfo.windowId);
      // chrome.tabs.get(activeInfo.tabId, function(tab){ //get the active tab's url
-     //    urls[activeInfo.tabId] = tab.url;
+     //    window.urls[activeInfo.tabId] = tab.url;
      //  });
     getOpenTabs();
     sendToContent();

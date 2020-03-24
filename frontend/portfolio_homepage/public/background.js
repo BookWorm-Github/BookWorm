@@ -87,8 +87,8 @@ chrome.windows.onRemoved.addListener(function(windowid) {
  //copies the window.urlsToBeStoredInLaunch
  storedInLaunchUrls = window.urlsToBeStoredInLaunch.slice(0,window.urlsToBeStoredInLaunch.length);
 
- console.log("window.urls to be stored in launch are "+storedInLaunchUrls.toString());
- alert("window.urls to be stored in launch are "+storedInLaunchUrls.toString())
+ console.log("The"+window.urlsToBeStoredInLaunch.length+" urls to be stored in launch are "+storedInLaunchUrls.toString());
+ alert("The"+window.urlsToBeStoredInWormhole.length+"urls to be stored in launch are "+storedInLaunchUrls.toString())
 //resets the window.urlsToBeStoredInLaunch for next window
  window.urlsToBeStoredInLaunch.splice(0,window.urlsToBeStoredInLaunch.length);
 

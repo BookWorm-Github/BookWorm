@@ -30,7 +30,7 @@ class SortBooks extends Component{
 	render(){
 
 		return (
-			<div>
+			<div className = {this.props.isBlurred? 'blur-bg':'clear-bg'}>
 				<MDBBtnGroup className="sort-btn-container">
 				Sort By:
 

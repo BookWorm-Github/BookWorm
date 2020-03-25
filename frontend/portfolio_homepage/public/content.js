@@ -45,7 +45,7 @@ div.setAttribute("style","height: 50%");
 div.setAttribute("id", "url-list");
 
 document.body.appendChild(div);
-//grabs the tabs right when the app is created and ran using npm start BUT NOT in newtabs.
+
 chrome.runtime.sendMessage({rq: "Tabs"}, function(response) {
   console.log(response.openTabs);
   createListOfURLs(response.openTabs);

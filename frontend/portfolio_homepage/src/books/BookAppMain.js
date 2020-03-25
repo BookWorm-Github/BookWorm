@@ -4,7 +4,8 @@ import BookShelf from './BookShelf'
 import AddBookUI from '../AddBookUI/AddBookUI'
 import './bookStyles.css'
 import SortBooks from '../sortItems/SortBooks'
-
+import Hotkeys from 'react-hot-keys';
+//added hotkeys: https://github.com/jaywcjlove/react-hotkeys#readme
 class BookAppMain extends Component {
 
   constructor(props){
@@ -20,11 +21,14 @@ class BookAppMain extends Component {
 
     return (
       <div>
+    {/*Hotkey for dev only, when lots of experimental books are added. take away from final product.*/}
+      <Hotkeys keyName = "shift+a" onKeyUp = {this.toggleAddBook}></Hotkeys>
       {/*<button onClick = {this.getURLS}>Get Open Windows</button>*/}
-            <SortBooks books = {this.state.bookshelf} setBooks = {this.setBooks}/>
       <div className = 'main-container-center'>
       
         <div id = 'blurrable' className = 'book-shelf'>
+
+            <SortBooks books = {this.state.bookshelf} setBooks = {this.setBooks} isBlurred = {this.state.addingBook}/>
           <div className = {this.state.addingBook?'blur-bg':'clear-bg'}>
             <BookShelf bks = {this.state.bookshelf} deleteBook = {this.deleteBook}/>
 

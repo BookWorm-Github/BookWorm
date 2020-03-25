@@ -6,3 +6,13 @@
 	
   align-items: center;
 }
+
+.blur-bg {
+
+  /* Add the blur effect */
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
+}
+.clear-bg{
+  filter:none;
+}

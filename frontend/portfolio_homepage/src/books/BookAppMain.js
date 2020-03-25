@@ -36,7 +36,8 @@ class BookAppMain extends Component {
             <div>
               <AddBookUI 
                 addBook = {this.addBook}
-                closePopup={this.toggleAddBook} 
+                closePopup={this.toggleAddBook}
+                bks = {this.state.bookshelf}
               />
             </div>
             : 
@@ -54,13 +55,13 @@ class BookAppMain extends Component {
   }
 
  // getURLS = () =>{
-
+ //
  //  chrome.tabs.get(1, () =>{console.log("Callback from getURLS")});
-
+ //
  //  chrome.windows.getAll({populate:true}, getAllOpenWindows);
-
+ //
  //    function getAllOpenWindows(winData) {
-
+ //
  //      var tabs = [];
  //      for (var i in winData) {
  //        if (winData[i].focused === true) {
@@ -73,8 +74,8 @@ class BookAppMain extends Component {
  //      }
  //      console.log(tabs);
  //    }
-
-
+ //
+ //
  // }
 
 
@@ -85,7 +86,7 @@ class BookAppMain extends Component {
     this.setState({addingBook:!this.state.addingBook});
   }
 
-  addBook = (newBook)=>{
+  addBook = (newBook)=>{//gets the newBook from addBookUI
     /*Every book has title and key, which is the date*/
     //console.log("Todo later need to update backend etc in this method (replace this console log msg). Book :"+newBook.title);
     this.setState(

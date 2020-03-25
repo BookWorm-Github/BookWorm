@@ -14,9 +14,6 @@ handleFocus = (event) => event.target.select();
     };
   }
 
-//if user is hovering over album, show launch
-//else show title
-
   render() {  
     return (  
         <div>
@@ -49,30 +46,46 @@ handleFocus = (event) => event.target.select();
     );  
   } 
 
-  createBook = (e) =>{
-      var newBook = {
-        key: Date.now(),
-        title: this._inputTitle.value,
-        time_created: Date.now(),
-      };
+  createBook = async (e) => {
+      //check to see if the newBook added with title this._inputTitle.value already exists
+      let isDup = await this.checkDuplicates(this._inputTitle.value);
+      if (isDup) {
+          alert(this._inputTitle.value + " already exists! Please pick another");
+      } else {
+          var newBook = {//what a book should contain
+              key: Date.now(),
+              title: this._inputTitle.value,
+              time_created: Date.now(),
+          };
 
-      //don't need to setState here since we a;ready moved the newBook up to the props
-      // this.setState((prevState) => {
-      //   return {
-      //     title: newBook.title
-      //   };
-      // });
-     
-     /* console.log("Input Title at createBook is: "+newBook.title);*/
-    
-      this.props.addBook(newBook);//calls props addBook function so that we can add the newly created book and go back to portfolio homepage
+          //don't need to setState here since we already moved the newBook up to the props
+          // this.setState((prevState) => {
+          //   return {
+          //     title: newBook.title
+          //   };
+          // });
 
+          /* console.log("Input Title at createBook is: "+newBook.title);*/
+
+          this.props.addBook(newBook);//calls this.props.addBook function so that we can add the newly created book and go back to portfolio homepage clearing the addBookUI
+      }
       this._inputTitle.value = "";
 
       e.preventDefault();
   }
 
-  
+  checkDuplicates = (new_book_name) => {
+      let isDuplicate = true;
+      for(const books of this.props.bks){
+          console.log(books);
+          console.log(books.title + " current new book title is : " + new_book_name);
+          if(books.title === new_book_name){
+              isDuplicate = !isDuplicate;
+              break;
+          }
+      }
+      return isDuplicate;
+  }
 
 
 

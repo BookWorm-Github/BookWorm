@@ -94,7 +94,7 @@ class BookAppMain extends Component {
     this.setState(
       {
         bookshelf: [...this.state.bookshelf, newBook],
-        addingBook:false
+        addingBook:false//this clears the addBookUI
       }
     );
     // this.debugBkShelf()

@@ -55,16 +55,17 @@ handleFocus = (event) => event.target.select();
         title: this._inputTitle.value,
         time_created: Date.now(),
       };
-      
-      this.setState((prevState) => {
-        return { 
-          title: newBook.title
-        };
-      });
+
+      //don't need to setState here since we a;ready moved the newBook up to the props
+      // this.setState((prevState) => {
+      //   return {
+      //     title: newBook.title
+      //   };
+      // });
      
      /* console.log("Input Title at createBook is: "+newBook.title);*/
     
-      this.props.addBook(newBook);
+      this.props.addBook(newBook);//calls props addBook function so that we can add the newly created book and go back to portfolio homepage
 
       this._inputTitle.value = "";
 

@@ -28,7 +28,7 @@ for optimization*/
 }
 .container {
   margin: auto;
-   overflow: 'hidden'
+   overflow: 'hidden';
 
   }
 .paper {
@@ -65,22 +65,6 @@ for optimization*/
     position: relative;
 }
 
-/*The wormhole button*/
-.wormhole{
-
-    cursor: pointer;
-  width: 50%;
-  height: 100%;
-  display: flex;  
-}
-.wormhole a{
-  border-radius: 2px;
-
-   background-color: #285A6B ;
-
-  overflow: hidden;
-  height:100%;
-}
 
 /*The blur effect of background when popup occurs*/
 .blur-bg {

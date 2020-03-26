@@ -7,6 +7,7 @@ import PropTypes from 'prop-types'
 import './bookStyles.css'
 import Launcher from '../launcher/Launcher'
 import ManualEntryOfURL from '../addURL/ManualEntryOfURL'
+import WormHole from "../WormHole/WormHole";
 class Book extends Component{
 
   constructor(props){
@@ -24,13 +25,9 @@ class Book extends Component{
 	}
 	  createHoverMenu() {
 	    return <div className ='hover-menu'>
-								<Launcher urls = {this.state.urls}/>
-								
-								<div className = 'wormhole' >
-									<a href = "https://www.google.com">Placeholder for Worm Hole. Insert Wormhole launch button here when Wormhole is completed</a>
-								</div>
-
-							</div>
+		    <Launcher urls = {this.state.urls}/>
+		    <WormHole/>
+	    </div>
 	  }
 
 
@@ -40,23 +37,23 @@ class Book extends Component{
 		return (
 			<div>
 			<div className = 'book'
-					onMouseEnter = {()=>this.setState({isHovered:true})}
-					onMouseLeave = {()=>this.setState({isHovered:false})}>
+				onMouseEnter = {()=>this.setState({isHovered:true})}
+				onMouseLeave = {()=>this.setState({isHovered:false})}>
 
-					{
+				{
 
-						this.state.isHovered? 
-							hoverMenu
-						: 
+					this.state.isHovered?
+						hoverMenu
+					:
 
 
-						<div className = 'title' ><h1>{this.state.title}</h1></div>
-						
-					}
-						
-				</div>
-				
-					<ManualEntryOfURL setBookURLs = {this.setBookURLs}/>
+					<div className = 'title' ><h1>{this.state.title}</h1></div>
+
+				}
+
+			</div>
+
+				<ManualEntryOfURL setBookURLs = {this.setBookURLs}/>
 			</div>
 		);
 	}
@@ -68,7 +65,7 @@ class Book extends Component{
 	    );
 	}
 
-	
+
 
 
 

@@ -1,6 +1,6 @@
 //TODO currently clumsy way of getting tabs (recomputing all opened tabs when tab opened/closed)
 //need to figure out how to get the url of a closed or opened tab in chrome
-window.tabs = [];
+window.tabs = [];//list of all open urls in the window
 
 window.urls = []; //window.urls[tabid] returns the url for the current tab
 window.urlsToBeStoredInWormhole=[]; //the history of all closed window.urls
@@ -57,7 +57,11 @@ chrome.tabs.onRemoved.addListener(function(tabid, removed) {
  console.log("tab closed: tab id is "+tabid);
     if(removed.isWindowClosing){//if tab was removed due to window closing
       //if this url is not already stored
+      if(window.urls[tabid]==undefined||window.urls[tabid]==null){
+          alert("WARNING: Window URL at tab id "+tabid+" is "+window.urls[tabid]+". Window URLs is "+window.urls.toString());
+        }
       if(!window.urlsToBeStoredInWormhole.includes(window.urls[tabid])){
+        
         window.urlsToBeStoredInWormhole.push(window.urls[tabid]);
         // alert("Added URL to be stored in launch: "+window.urls[tabid]);
       }

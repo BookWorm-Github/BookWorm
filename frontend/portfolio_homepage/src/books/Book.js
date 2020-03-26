@@ -5,9 +5,11 @@ import React, {Component} from 'react'
 //npm i react-simple-flex-grid
 import PropTypes from 'prop-types'
 import './bookStyles.css'
+import '../wormhole/wormhole.css'
 import Launcher from '../launcher/Launcher'
+import Wormhole from '../wormhole/Wormhole'
 import ManualEntryOfURL from '../addURL/ManualEntryOfURL'
-import WormHole from "../WormHole/WormHole";
+
 class Book extends Component{
 
   constructor(props){
@@ -15,7 +17,9 @@ class Book extends Component{
     this.state = {
       title:'',
       isHovered: false,
-      urls: ['https://www.github.com/']
+      isShowingWormhole:false,
+      launchURLs: ['https://www.github.com/'],
+      wormholeURLs:['https://www.github.com/']
     };
   }
   componentDidMount=() =>{
@@ -25,9 +29,16 @@ class Book extends Component{
 	}
 	  createHoverMenu() {
 	    return <div className ='hover-menu'>
-		    <Launcher urls = {this.state.urls}/>
-		    <WormHole/>
-	    </div>
+				<Launcher urls = {this.state.launchURLs}/>
+				<div className = 'wormhole' 
+						onClick = {() => this.toggleWormhole(true)}>Wormhole
+				</div>
+			</div>
+
+	  }
+	  toggleWormhole = (bool) =>{
+	    //console.log("Adding book");
+	    this.setState({isShowingWormhole:bool});
 	  }
 
 
@@ -46,21 +57,37 @@ class Book extends Component{
 						hoverMenu
 					:
 
-
 					<div className = 'title' ><h1>{this.state.title}</h1></div>
-
 				}
 
 			</div>
 
-				<ManualEntryOfURL setBookURLs = {this.setBookURLs}/>
+				{
+					this.state.isShowingWormhole? 
+					<div>
+						<Wormhole urls = {this.state.wormholeURLs} toggleWormhole = {this.toggleWormhole}/>
+					</div> : <div></div>
+				}
+				
+				
+					<ManualEntryOfURL setLaunchURLs = {this.setLaunchURLs}/>
+
 			</div>
 		);
 	}
-	setBookURLs = (newURL) => {
+	setLaunchURLs = (newURL) => {
 		this.setState(
 	      {
-	        urls: [...this.state.urls,newURL],
+	        launchURLs: [...this.state.wormholeURLs,newURL],
+	        wormholeURLs:[...this.state.launchURLs,newURL]
+	      }
+	    );
+	}
+
+	setWormholeURLs = (newURL) =>{
+		this.setState(
+	      {
+	        wormholeURLs: [...this.state.wormholeURLs,newURL],
 	      }
 	    );
 	}

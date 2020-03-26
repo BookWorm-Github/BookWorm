@@ -8,32 +8,6 @@ import PropTypes from 'prop-types'
 //npm i react-simple-flex-grid
 class Launcher extends Component{
 
-  // constructor(){
-  //   super();
-  //   this.state = {
-  //   	urls: ['https://www.github.com/','http://www.bu.edu/']
-  //   };
-  // }
- //  /*For adding URL*/
-	// componentDidUpdate(prevProps) {
-	// 	function contains(list,item) {  
-	// 			console.log("Called contains in launcher update");
-	//             return false; 
-	//         }
-
-	//   if (!(contains(this.state.urls,this.props.newURL))) { //
-	//       this.addURL(this.props.newURL);
-	//   }
-	// }
-	// addURL = (_newURL) =>{
-		
-	// 	this.setState(state => {
-	//       const list = this.state.urls.push(_newURL);
-	//       return {
-	//         urls: list
-	//       };
-	//     });
-	// }
 
 	render(){
 

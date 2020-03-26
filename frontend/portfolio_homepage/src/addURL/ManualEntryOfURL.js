@@ -54,7 +54,7 @@ handleFocus = (event) => event.target.select();
 
 }
 ManualEntryOfURL.propTypes = {
-    setBookURLs: PropTypes.func.isRequired
+    setLaunchURLs: PropTypes.func.isRequired
   };
 export default ManualEntryOfURL;
 

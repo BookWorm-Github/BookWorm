@@ -64,8 +64,8 @@ class Wormhole extends Component{
         return lc.includes(filter);
       });
     } else {
-			// If the search bar is empty, set newList to original task list
-      newList = this.props.urls;
+			// If the search bar is empty, set newList to original task list: do we want this effect?
+     // newList = this.props.urls;
     }
     console.log("newList in wormhole is "+newList.toString());
 		// Set the filtered state based on what our rules added to newList

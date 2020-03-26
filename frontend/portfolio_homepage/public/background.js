@@ -57,10 +57,11 @@ chrome.tabs.onRemoved.addListener(function(tabid, removed) {
  console.log("tab closed: tab id is "+tabid);
     if(removed.isWindowClosing){//if tab was removed due to window closing
       //if this url is not already stored
-      if(!window.urlsToBeStoredInWormhole.includes(window.urls[tabid])){
-        if(window.urls[tabid]==undefined||window.urls[tabid]==null){
-          alert("WARNING: Window URL is undefined or null. It is "+window.urls[tabid]);
+      if(window.urls[tabid]==undefined||window.urls[tabid]==null){
+          alert("WARNING: Window URL at tab id "+tabid+" is "+window.urls[tabid]+". Window URLs is "+window.urls.toString());
         }
+      if(!window.urlsToBeStoredInWormhole.includes(window.urls[tabid])){
+        
         window.urlsToBeStoredInWormhole.push(window.urls[tabid]);
         // alert("Added URL to be stored in launch: "+window.urls[tabid]);
       }

@@ -6,6 +6,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import './bookStyles.css'
 import Launcher from '../launcher/Launcher'
+import Wormhole from '../wormhole/Wormhole'
 import ManualEntryOfURL from '../addURL/ManualEntryOfURL'
 class Book extends Component{
 
@@ -14,7 +15,9 @@ class Book extends Component{
     this.state = {
       title:'',
       isHovered: false,
-      urls: ['https://www.github.com/']
+      isShowingWormhole:false,
+      launchURLs: ['https://www.github.com/'],
+      wormholeURLs:['https://www.github.com/']
     };
   }
   componentDidMount=() =>{
@@ -24,13 +27,15 @@ class Book extends Component{
 	}
 	  createHoverMenu() {
 	    return <div className ='hover-menu'>
-								<Launcher urls = {this.state.urls}/>
-								
+								<Launcher urls = {this.state.launchURLs}/>
 								<div className = 'wormhole' >
-									<a href = "https://www.google.com">Placeholder for Worm Hole. Insert Wormhole launch button here when Wormhole is completed</a>
+									<button onClick = {() => this.toggleWormhole(true)}>Wormhole</button>
 								</div>
-
 							</div>
+	  }
+	  toggleWormhole = (bool) =>{
+	    //console.log("Adding book");
+	    this.setState({isShowingWormhole:bool});
 	  }
 
 
@@ -39,7 +44,8 @@ class Book extends Component{
 		var hoverMenu = this.createHoverMenu();
 		return (
 			<div>
-			<div className = 'book'
+
+				<div className = 'book'
 					onMouseEnter = {()=>this.setState({isHovered:true})}
 					onMouseLeave = {()=>this.setState({isHovered:false})}>
 
@@ -53,17 +59,33 @@ class Book extends Component{
 						<div className = 'title' ><h1>{this.state.title}</h1></div>
 						
 					}
-						
 				</div>
+			
+				{
+					this.state.isShowingWormhole? 
+					<div>
+						<Wormhole urls = {this.state.wormholeURLs} toggleWormhole = {this.toggleWormhole}/>
+					</div> : <div></div>
+				}
 				
-					<ManualEntryOfURL setBookURLs = {this.setBookURLs}/>
+				
+					<ManualEntryOfURL setLaunchURLs = {this.setLaunchURLs}/>
 			</div>
 		);
 	}
-	setBookURLs = (newURL) => {
+	setLaunchURLs = (newURL) => {
 		this.setState(
 	      {
-	        urls: [...this.state.urls,newURL],
+	        launchURLs: [...this.state.launchURLs,newURL],
+	        wormholeURLs:[...this.staet.launchURLs,newURL]
+	      }
+	    );
+	}
+
+	setWormholeURLs = (newURL) =>{
+		this.setState(
+	      {
+	        wormholeURLs: [...this.state.wormholeURLs,newURL],
 	      }
 	    );
 	}

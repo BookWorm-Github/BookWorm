@@ -6,8 +6,8 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import './bookStyles.css'
 import '../wormhole/wormhole.css'
-import Launcher from '../launcher/Launcher'
 import Wormhole from '../wormhole/Wormhole'
+import Launcher from '../launcher/Launcher'
 import ManualEntryOfURL from '../addURL/ManualEntryOfURL'
 
 class Book extends Component{

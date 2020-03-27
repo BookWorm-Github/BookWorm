@@ -40,7 +40,7 @@ function initApp() {
       var uid = user.uid;
       var providerData = user.providerData;
       // [START_EXCLUDE]
-      document.getElementById("quickstart-button").textContent = "Sign out";
+      document.getElementById("quickstart-button").textContent = "Log out";
       document.getElementById("quickstart-sign-in-status").textContent =
         "Signed in";
       document.getElementById(
@@ -51,7 +51,7 @@ function initApp() {
       // Let's try to get a Google auth token programmatically.
       // [START_EXCLUDE]
       document.getElementById("quickstart-button").textContent =
-        "Sign-in with Google";
+        "Log in";
       document.getElementById("quickstart-sign-in-status").textContent =
         "Signed out";
       document.getElementById("quickstart-account-details").textContent =

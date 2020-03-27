@@ -20,7 +20,7 @@
   "browser_action": {
     "default_icon": "bookworm.png",
     "default_popup": "html/credentials.html",
-    "default_title": "Bookworm Login"
+    "default_title": "Bookworm"
   },
   "permissions": [
     "storage",
@@ -31,7 +31,7 @@
   ],
   "content_security_policy": "script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://apis.google.com https://www.googleapis.com; object-src 'self'",
   "oauth2": {
-    "client_id": "845803795351-ihjqncemcfltrlk4tj83to59qv764g3d.apps.googleusercontent.com",
+    "client_id": "845803795351-dg72mapss103q7c1jntk4aondis33j2f.apps.googleusercontent.com",
     "scopes": [
       "https://www.googleapis.com/auth/userinfo.email",
       "https://www.googleapis.com/auth/userinfo.profile"

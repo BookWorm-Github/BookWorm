@@ -19,7 +19,7 @@ class Book extends Component{
       isHovered: false,
       isShowingWormhole:false,
       launchURLs: ['https://www.github.com/'],
-      wormholeURLs:['https://www.github.com/']
+      wormholeURLs:['https://www.github.com/','https://www.google.com']
     };
   }
   componentDidMount=() =>{

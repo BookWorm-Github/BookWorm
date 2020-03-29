@@ -16,7 +16,9 @@
   border-style: solid;
 
 }  
-
+.input{
+  overflow: hidden;
+}
 .wormhole{
 
     cursor: pointer;
@@ -34,4 +36,30 @@
     overflow: hidden;
     width: 100%;
     height:100%;
+}
+.wormhole-list {
+  width: inherit;
+  display: grid;
+  margin-left: 15px;
+}
+.wormhole-list{
+  overflow: scroll;
+}
+.wormhole-list li {
+  float: left;
+  text-align: center;
+  align-items: center;
+  justify-content: space-between;
+  border-style: solid;
+  border-radius: 5px;
+  border-width: thin;
+  border-color: #add8e6;
+}
+.wormhole-list li a{
+  padding-left: 0px;
+  margin-left: 0px;
+  text-align: top;
+  vertical-align: bottom;
+  font-size: 20px;
+  background: #ffffff;
 }

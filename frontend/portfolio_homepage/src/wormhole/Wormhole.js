@@ -17,18 +17,22 @@ class Wormhole extends Component{
 	render(){
 
 		return (
+
 				<div className = 'popup'>
 				<div>
-					Wormhole
+					<h3>Wormhole</h3>
 					<form className="input" >
 					<input type="text" onChange={this.filterURLs} placeholder="Search..." />
                     </form>
                     <ul className = 'wormhole-list'>
                         {this.state.searchResults.map(item => (
-                          <li  key={item} style={{listStyleImage: 'url('+item+'/favicon.ico)'}}>
+                          <li  key={item} style={{listStyleImage: 'url('+this.getBaseUrl(item)+'/favicon.ico)'}}>
+                            <span>
                             <a>
                                 {item} &nbsp;                        
                             </a>
+                            </span>
+                            
                             </li>
                         ))}
                     </ul>
@@ -39,6 +43,11 @@ class Wormhole extends Component{
 				</div>
 		);
 	}
+
+  getBaseUrl = (url) => {
+    var re = new RegExp(/^.*\//);
+    return re.exec(url);
+}
 
 
 

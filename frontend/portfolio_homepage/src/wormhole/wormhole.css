@@ -12,7 +12,6 @@
   margin: auto;  
   border-radius: 15px;
   border-color: #000000;
-  background-color: #ffffff;  
   border-style: solid;
 
 }  
@@ -39,27 +38,27 @@
 }
 .wormhole-list {
   width: inherit;
-  display: grid;
+  display: flex;
+  flex-direction: column;
   margin-left: 15px;
 }
 .wormhole-list{
   overflow: scroll;
 }
+
 .wormhole-list li {
-  float: left;
-  text-align: center;
-  align-items: center;
-  justify-content: space-between;
+
+  padding: -10px;
   border-style: solid;
   border-radius: 5px;
   border-width: thin;
   border-color: #add8e6;
 }
+.wormhole-list li span{
+  align-items: left;
+}
 .wormhole-list li a{
-  padding-left: 0px;
-  margin-left: 0px;
-  text-align: top;
-  vertical-align: bottom;
+  width: 100%;
   font-size: 20px;
-  background: #ffffff;
+  background: #fffff0;
 }

@@ -33,7 +33,6 @@ class Wormhole extends Component{
                     </ul>
 
 
-
           			<button onClick={()=>this.props.toggleWormhole(false)}>Back</button>
                     </div>
 				</div>

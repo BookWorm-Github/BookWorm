@@ -9,7 +9,7 @@
 
   "background":{
     "scripts": ["background.js"],
-    "persistent":false
+    "persistent":true
   },
 
   "browser_action": {

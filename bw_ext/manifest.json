@@ -2,25 +2,40 @@
   "manifest_version": 2,
   "name": "BookWorm",
   "version": "1.0",
-  "content_scripts":[
+  "content_scripts": [
     {
-      "matches": ["<all_urls>"],
-      "js":["js/deepai.min.js", "js/content.js"]
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "js/content.js"
+      ]
     }
   ],
   "background": {
-    "scripts": ["js/background.js"],
-    "persistent": false
+    "page": "html/background.html",
+    "persistent": true
   },
   "browser_action": {
     "default_icon": "bookworm.png",
-    "default_popup": "html/popup.html",
-    "default_title": "a popup will come here"
+    "default_popup": "html/credentials.html",
+    "default_title": "Bookworm"
   },
   "permissions": [
-    "storage", "activeTab","tabs", "contentSettings",
-    "https://*/", "http://*/"
+    "storage",
+    "activeTab",
+    "tabs",
+    "contentSettings",
+    "identity"
   ],
-  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
-  "web_accessible_resources": ["css/collapsible.css"]
+  "content_security_policy": "script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://apis.google.com https://www.googleapis.com; object-src 'self'",
+  "oauth2": {
+    "client_id": "845803795351-dg72mapss103q7c1jntk4aondis33j2f.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email",
+      "https://www.googleapis.com/auth/userinfo.profile"
+    ]
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyeRw6oIgwSgj+b1ckf+ioGOcOHBmWwTnK+aK+ZDlkNNKt6tmAlS1yVPE3vWgOfXixUq/gAE2eESizPfeDAjCRdiJy9OsYGvU+AztfXbj4VKzpdm9SqJ40/7rl1AnAZTlQHhTsevpBdLqnX55Jnm8LxvvvnQAk9wPmsSOJ+dXiND6H3qWlaG6HO8KMS54OJeeOeiZU+slWlQ+qrDnD/SsLotoumTeLEiP+5ymbl44eTTfBH+mKzrMw4P3wMXKLU4Y89yMcZgnb9BDcJH0thgqOIH6HN+vXx7pkJzu8VCt1y+wognLMYYZovuiB/dbTQWU3NDht7hRMeftLyPxouGoeQIDAQAB"
 }

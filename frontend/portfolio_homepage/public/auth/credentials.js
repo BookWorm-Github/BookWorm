@@ -28,7 +28,7 @@ firebase.initializeApp(config);
 function initApp() {
   // Listen for auth state changes.
   // [START authstatelistener]
-  firebase.auth().onAuthStateChanged(function(user) {
+	firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
       // User is signed in.
       var displayName = user.displayName;
@@ -78,7 +78,7 @@ function startAuth(interactive) {
     } else if (token) {
       // Authorize Firebase with the OAuth Access Token.
       var credential = firebase.auth.GoogleAuthProvider.credential(null, token);
-      firebase.auth().signInWithCredential(credential).catch(function(error) {
+	    firebase.auth().signInWithCredential(credential).catch(function(error) {
           // The OAuth token might have been invalidated. Lets' remove it from cache.
           if (error.code === "auth/invalid-credential") {
             chrome.identity.removeCachedAuthToken({ token: token }, function() {
@@ -98,7 +98,7 @@ function startAuth(interactive) {
 function startSignIn() {
   document.getElementById("quickstart-button").disabled = true;
   if (firebase.auth().currentUser) {
-    firebase.auth().signOut();
+	  firebase.auth().signOut();
   } else {
     startAuth(true);
   }

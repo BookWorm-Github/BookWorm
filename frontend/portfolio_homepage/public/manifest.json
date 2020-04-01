@@ -13,11 +13,12 @@
   },
 
   "browser_action": {
-        "default_title": "Book Worm"
+        "default_title": "Book Worm",
+        "default_popup": "auth/credentials.html"
     },
 
   "chrome_url_overrides": {
-    "newtab": "auth/credentials.html"
+    "newtab": "index.html"
   },
 
    "web_accessible_resources" : ["*.html"],

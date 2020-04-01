@@ -9,8 +9,11 @@ var config = {
 	appId: "1:845803795351:web:ffc463d678559e9118cad2",
 	measurementId: "G-8FV64KKTXN"
 };
-var fbapp = firebase.initializeApp(config);
+var bw_backend_app = firebase.initializeApp(config);
 
 const db = firebase.firestore();
 // db.settings({timestampsInSnapshots: true});
 console.log("hello");
+
+export default bw_backend_app;
+export {db};

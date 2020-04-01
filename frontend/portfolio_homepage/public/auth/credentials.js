@@ -1,16 +1,5 @@
 // TODO(DEVELOPER): Change the values below using values from the initialization snippet: Firebase Console > Overview > Add Firebase to your web app.
-// Initialize Firebase
-var config = {
-  apiKey: "AIzaSyBkGGKw3_CKSVlsK8XUWRqmjTqcggTmtU0",
-  authDomain: "bookworm-backend.firebaseapp.com",
-  databaseURL: "https://bookworm-backend.firebaseio.com",
-  projectId: "bookworm-backend",
-  storageBucket: "bookworm-backend.appspot.com",
-  messagingSenderId: "845803795351",
-  appId: "1:845803795351:web:ffc463d678559e9118cad2",
-  measurementId: "G-8FV64KKTXN"
-};
-firebase.initializeApp(config);
+import bw_backend_app from "../firebase/init.js";
 /**
  * initApp handles setting up the Firebase context and registering
  * callbacks for the auth status.

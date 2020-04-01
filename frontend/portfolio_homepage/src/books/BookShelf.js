@@ -13,8 +13,10 @@ class BookShelf extends Component {
   constructor(props){
     super(props);
     this.state = {
+
+      isShowingWormhole:false,
       books:[], //unnecessary?
-      numBksPerShelf:3
+      numBksPerShelf:4
     };
   }
 
@@ -56,7 +58,7 @@ class BookShelf extends Component {
                       <div key={_book.key}>
                           <BookNavbar book ={_book} deleteBook = {this.deleteBook} />
                           {/*<button onClick={() => this.deleteBook(_book)}>Delete Book</button>*/}
-                        <Book book ={_book} />
+                        <Book book ={_book} toggleWormhole = {this.toggleWormhole} isShowingWormhole = {this.state.isShowingWormhole} />
                       </div>
               }
             </Grid>
@@ -120,6 +122,10 @@ class BookShelf extends Component {
   }
 
 
+  toggleWormhole = (bool) =>{
+      //console.log("Adding book");
+      this.setState({isShowingWormhole:bool});
+    }
  
 }
 

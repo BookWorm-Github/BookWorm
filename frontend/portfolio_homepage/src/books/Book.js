@@ -17,7 +17,6 @@ class Book extends Component{
     this.state = {
       title:'',
       isHovered: false,
-      isShowingWormhole:false,
       launchURLs: ['https://www.github.com/'],
       wormholeURLs:['https://www.github.com/','https://www.google.com/search?sxsrf=ALeKk03xO56CXGouNmYNfOx9L3LEpIKKrQ%3A1585511879738&ei=x_2AXofVLMusytMPvui78AI&q=when+will+coronavirus+end&oq=when+will+&gs_lcp=CgZwc3ktYWIQAxgAMgQIIxAnMgQIIxAnMgUIABCDATIFCAAQgwEyAggAMgIIADICCAAyAggAMgIIADICCAA6BAgAEEc6BggAEBYQHjoFCAAQzQI6BwgAEBQQhwI6BwgjEOoCECc6BQgAEJECOgQIABBDUOcpWM1kYPBsaARwAngDgAGJAogBrCqSAQczMi4xOC4zmAEAoAEBqgEHZ3dzLXdperABCg&sclient=psy-ab']
     };
@@ -31,15 +30,12 @@ class Book extends Component{
 	    return <div className ='hover-menu'>
 				<Launcher urls = {this.state.launchURLs}/>
 				<div className = 'wormhole' 
-						onClick = {() => this.toggleWormhole(true)}>Wormhole
+						onClick = {() => this.props.toggleWormhole(true)}>Wormhole
 				</div>
 			</div>
 
 	  }
-	  toggleWormhole = (bool) =>{
-	    //console.log("Adding book");
-	    this.setState({isShowingWormhole:bool});
-	  }
+	  
 
 
 	render(){
@@ -63,9 +59,9 @@ class Book extends Component{
 			</div>
 
 				{
-					this.state.isShowingWormhole? 
+					this.props.isShowingWormhole? 
 					<div>
-						<Wormhole urls = {this.state.wormholeURLs} toggleWormhole = {this.toggleWormhole}/>
+						<Wormhole urls = {this.state.wormholeURLs} toggleWormhole = {this.props.toggleWormhole}/>
 					</div> : <div></div>
 				}
 				
@@ -103,6 +99,8 @@ Book.propTypes = {
 	  		key: PropTypes.number,
 		    title: PropTypes.string.isRequired
 		  }),
+	  toggleWormhole: PropTypes.func.isRequired,
+	  isShowingWormhole: PropTypes.bool.isRequired
 	};
 
 

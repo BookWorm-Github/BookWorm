@@ -92,7 +92,6 @@ class Wormhole extends Component{
 
 Wormhole.propTypes = {
     urls: PropTypes.arrayOf(PropTypes.string).isRequired,
-    toggleWormhole: PropTypes.func.isRequired
   };
 
 export default Wormhole;

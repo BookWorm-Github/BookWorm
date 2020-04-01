@@ -30,6 +30,8 @@
       "https://www.googleapis.com/auth/userinfo.profile"
     ]
   },
+  "icons": { "16": "./icons/favicon-16x16.png",
+           "32": "./icons/favicon-32x32.png"},
   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyeRw6oIgwSgj+b1ckf+ioGOcOHBmWwTnK+aK+ZDlkNNKt6tmAlS1yVPE3vWgOfXixUq/gAE2eESizPfeDAjCRdiJy9OsYGvU+AztfXbj4VKzpdm9SqJ40/7rl1AnAZTlQHhTsevpBdLqnX55Jnm8LxvvvnQAk9wPmsSOJ+dXiND6H3qWlaG6HO8KMS54OJeeOeiZU+slWlQ+qrDnD/SsLotoumTeLEiP+5ymbl44eTTfBH+mKzrMw4P3wMXKLU4Y89yMcZgnb9BDcJH0thgqOIH6HN+vXx7pkJzu8VCt1y+wognLMYYZovuiB/dbTQWU3NDht7hRMeftLyPxouGoeQIDAQAB",
 
   "content_security_policy": "script-src 'self' 'sha256-URZms8dLeNt//Fv3Mba1a2bqw+bnaR3ArBer7pBjRwU=' https://www.gstatic.com/ https://*.firebaseio.com https://apis.google.com https://www.googleapis.com; object-src 'self'"

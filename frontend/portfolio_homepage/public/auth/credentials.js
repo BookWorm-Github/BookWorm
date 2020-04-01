@@ -1,5 +1,4 @@
 // TODO(DEVELOPER): Change the values below using values from the initialization snippet: Firebase Console > Overview > Add Firebase to your web app.
-import bw_backend_app from "../firebase/init.js";
 /**
  * initApp handles setting up the Firebase context and registering
  * callbacks for the auth status.

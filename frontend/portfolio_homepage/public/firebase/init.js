@@ -11,9 +11,4 @@ var config = {
 };
 var bw_backend_app = firebase.initializeApp(config);
 
-const db = firebase.firestore();
-// db.settings({timestampsInSnapshots: true});
-console.log("hello");
-
 export default bw_backend_app;
-export {db};

@@ -20,18 +20,18 @@ class Wormhole extends Component{
 				<div className = 'popup'>
 				<div>
 					Wormhole
-					<form>
-					<input type="text" className="input" onChange={this.filterURLs} placeholder="Search..." />
+					<form className="input" >
+					<input type="text" onChange={this.filterURLs} placeholder="Search..." />
                     </form>
-                    <ul>
+                    <ul className = 'wormhole-list'>
                         {this.state.searchResults.map(item => (
-                            <li key={item}>
-                                {item} &nbsp;
-                                
+                          <li  key={item} style={{listStyleImage: 'url('+item+'/favicon.ico)'}}>
+                            <a>
+                                {item} &nbsp;                        
+                            </a>
                             </li>
                         ))}
                     </ul>
-
 
 
           			<button onClick={()=>this.props.toggleWormhole(false)}>Back</button>
@@ -39,6 +39,9 @@ class Wormhole extends Component{
 				</div>
 		);
 	}
+
+
+
 
 	filterURLs = (e) =>{
 				// Variable to hold the original version of the list

@@ -17,7 +17,7 @@
     },
 
   "chrome_url_overrides": {
-    "newtab": "auth/credentials.html"
+    "newtab": "index.html"
   },
 
    "web_accessible_resources" : ["*.html"],

@@ -43,6 +43,7 @@ function initApp() {
       document.getElementById("quickstart-sign-in-status").textContent =
         "Signed in";
       document.getElementById("quickstart-account-details").textContent = JSON.stringify(user, null, "  ");
+      
       // [END_EXCLUDE]
     } else {
       // Let's try to get a Google auth token programmatically.

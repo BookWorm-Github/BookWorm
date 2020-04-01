@@ -66,7 +66,7 @@ class Book extends Component{
 				}
 				
 				
-					<ManualEntryOfURL setLaunchURLs = {this.setLaunchURLs}/>
+					<ManualEntryOfURL setWormholeURLs = {this.setWormholeURLs} setLaunchURLs = {this.setLaunchURLs}/>
 
 			</div>
 		);

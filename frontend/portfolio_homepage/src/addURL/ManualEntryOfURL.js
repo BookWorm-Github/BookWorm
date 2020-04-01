@@ -43,7 +43,8 @@ handleFocus = (event) => event.target.select();
       // };
       
    
-     this.props.setBookURLs(this._inputURL.value);
+     this.props.setLaunchURLs(this._inputURL.value);
+     this.props.setWormholeURLs(this._inputURL.value);
      
       this._inputURL.value = "";
 
@@ -54,7 +55,9 @@ handleFocus = (event) => event.target.select();
 
 }
 ManualEntryOfURL.propTypes = {
-    setLaunchURLs: PropTypes.func.isRequired
+    setLaunchURLs: PropTypes.func.isRequired,
+
+    setWormholeURLs: PropTypes.func.isRequired
   };
 export default ManualEntryOfURL;
 

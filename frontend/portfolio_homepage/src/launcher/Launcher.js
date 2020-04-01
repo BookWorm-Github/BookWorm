@@ -3,7 +3,10 @@
 import React, {Component} from 'react'
 import './launcher.css'
 import PropTypes from 'prop-types'
-
+//https://urlmeta.org/
+//import $ from 'jquery'
+//import WebTitleFetcher from '../experiments/webtitlefetcher.php'
+//import '../experiments/get_external_content.php'
 // import { withStyles } from '@material-ui/core/styles';
 //npm i react-simple-flex-grid
 class Launcher extends Component{
@@ -20,11 +23,16 @@ class Launcher extends Component{
 	}
 
 	openURLs = (e) =>{
+	
 		e.preventDefault();
 		for(var i = 0; i<this.props.urls.length; i++){
+			
 	    	window.open(this.props.urls[i]);
 		}
 	}
+
+
+	
 
 
 }

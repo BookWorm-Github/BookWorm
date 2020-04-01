@@ -41,7 +41,6 @@ function getOpenTabs(){//get current open tabs window.urls
         // windowwindow.urls[tab.windowId][tab.id] = tab.url;
         if(tab.url!==undefined){
           window.urls[tab.id] = tab.url; //update the url of a tab
-          window.urlTitles[tab.url] = tab.title;
         }
         window.tabs.push(tab.url);
       });
@@ -52,10 +51,8 @@ function getOpenTabs(){//get current open tabs window.urls
 
 chrome.tabs.onCreated.addListener(function(tab) {
  //console.log("tab created");
- if(tab.url!==undefined){
+ if(tab.url!==undefined)
     window.urls[tab.id] = tab.url; //update the url of a tab
-    window.urlTitles[tab.url] = tab.title;
- }
  getOpenTabs();
  sendToContent();
  // window.contentPort.postMessage({openTabs:window.tabs});
@@ -101,7 +98,6 @@ chrome.windows.onRemoved.addListener(function(windowid) {
 
  console.log("The"+window.urlsToBeStoredInLaunch.length+" urls to be stored in launch are "+storedInLaunchUrls.toString());
  alert("The"+window.urlsToBeStoredInLaunch.length+"urls to be stored in launch are "+storedInLaunchUrls.toString())
- alert("Tab titles are "+window.urlTitles.toString());
 //resets the window.urlsToBeStoredInLaunch for next window
  window.urlsToBeStoredInLaunch.splice(0,window.urlsToBeStoredInLaunch.length);
 
@@ -114,10 +110,8 @@ chrome.windows.onRemoved.addListener(function(windowid) {
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {//when a newtab is created, get info on how many tabs in current opened window
 
       if (changeInfo.url) { //if url in tabid has changed, update the url to the changed url
-        if(tab.url!==undefined){
+        if(tab.url!==undefined)
           window.urls[tabId] = changeInfo.url;
-          window.urlTitles[changeInfo.url] = tab.title;
-        }
         if(changeInfo.url==undefined)
           alert("Undefined url in background")
       }

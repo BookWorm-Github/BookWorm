@@ -1,3 +1,4 @@
+
 //TODO currently clumsy way of getting tabs (recomputing all opened tabs when tab opened/closed)
 //need to figure out how to get the url of a closed or opened tab in chrome
 window.tabs = [];//list of all open urls in the window
@@ -195,4 +196,3 @@ function openHomePage(){
 //     }
 //   }
 //   //console.log(tabs);
-// }

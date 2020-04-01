@@ -1,4 +1,5 @@
 // TODO(DEVELOPER): Change the values below using values from the initialization snippet: Firebase Console > Overview > Add Firebase to your web app.
+import bw_backend_app from "../firebase/init.js";
 /**
  * initApp handles setting up the Firebase context and registering
  * callbacks for the auth status.
@@ -16,7 +17,7 @@
 function initApp() {
   // Listen for auth state changes.
   // [START authstatelistener]
-	firebase.auth().onAuthStateChanged(function(user) {
+	bw_backend_app.auth().onAuthStateChanged(function(user) {
     if (user) {
       // User is signed in.
       var displayName = user.displayName;
@@ -66,7 +67,7 @@ function startAuth(interactive) {
     } else if (token) {
       // Authorize Firebase with the OAuth Access Token.
       var credential = firebase.auth.GoogleAuthProvider.credential(null, token);
-	    firebase.auth().signInWithCredential(credential).catch(function(error) {
+	    bw_backend_app.auth().signInWithCredential(credential).catch(function(error) {
           // The OAuth token might have been invalidated. Lets' remove it from cache.
           if (error.code === "auth/invalid-credential") {
             chrome.identity.removeCachedAuthToken({ token: token }, function() {
@@ -85,8 +86,9 @@ function startAuth(interactive) {
  */
 function startSignIn() {
   document.getElementById("quickstart-button").disabled = true;
-  if (firebase.auth().currentUser) {
-	  firebase.auth().signOut();
+  console.log(bw_backend_app.auth().currentUser === firebase.auth().currentUser);
+  if (bw_backend_app.auth().currentUser) {
+	  bw_backend_app.auth().signOut();
   } else {
     startAuth(true);
   }

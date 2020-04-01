@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "BookWorm",
+  "name": "BookWorm_AuthTest",
   "version": "1.0",
   "content_scripts": [
     {
@@ -29,6 +29,7 @@
     "contentSettings",
     "identity"
   ],
+
   "content_security_policy": "script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://apis.google.com https://www.googleapis.com; object-src 'self'",
   "oauth2": {
     "client_id": "845803795351-dg72mapss103q7c1jntk4aondis33j2f.apps.googleusercontent.com",

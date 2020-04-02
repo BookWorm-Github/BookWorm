@@ -3,6 +3,7 @@
 import React, {Component} from 'react'
 import './launcher.css'
 import PropTypes from 'prop-types'
+import TitleFetcher from '../urlTitleFetcher/TitleFetcher'
 //https://urlmeta.org/
 //import $ from 'jquery'
 //import WebTitleFetcher from '../experiments/webtitlefetcher.php'
@@ -17,19 +18,37 @@ class Launcher extends Component{
 		return (
 				<div className = 'launcher' onClick = {this.openURLs}>
 					Launcher
-					
+					<TitleFetcher urls = {this.props.urls} />
 				</div>
 		);
 	}
 
 	openURLs = (e) =>{
-	
+
 		e.preventDefault();
 		for(var i = 0; i<this.props.urls.length; i++){
 			
-	    	window.open(this.props.urls[i]);
+			window.open(this.props.urls[i]);
 		}
+
 	}
+
+	// getTitle(url){
+	// 		var title = "";
+	// 		var xhr = new XMLHttpRequest();
+	// 		xhr.open("GET", url, true);
+	// 		xhr.onreadystatechange = function() { 
+	// 		  if (xhr.readyState == 4) {
+	// 		    var fetchTitle = (/<title>(.*?)<\/title>/m).exec(xhr.responseText);
+	// 		    if(fetchTitle!=null){ //if the title could be fetched per cors policy
+	// 			    title = fetchTitle[1];
+	// 			    alert(title);
+	// 			}
+	// 		  }
+	// 		}
+	// 		xhr.send();
+	// 		return title;
+	// 	}
 
 
 	

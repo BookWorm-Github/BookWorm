@@ -72,10 +72,10 @@ chrome.tabs.onRemoved.addListener(function(tabid, removed) {
         // alert("Added URL to be stored in launch: "+window.urls[tabid]);
       }
 
-      // if(!window.urlsToBeStoredInLaunch.includes(window.urls[tabid])){
+      if(!window.urlsToBeStoredInLaunch.includes(window.urls[tabid])){
         window.urlsToBeStoredInLaunch.push(window.urls[tabid]);
         // alert("Added URL to be stored in launch: "+window.urls[tabid]);
-      // }
+      }
 
 
     }

@@ -30,7 +30,7 @@ class TitleFetcher extends Component{
 			  url: externalUrl,
 			  async: true,
 			  success: function(data) {
-			    var matches = data.match(/<title>(.*?)<\/title>/);
+			    var matches = data.match(/<title(.*?)<\/title>/);
 			    //alert(matches[0]);
 			    titles = [...titles,matches[0]];
 			    	console.log("Titles inside is "+titles.toString());
@@ -74,10 +74,11 @@ class TitleFetcher extends Component{
 			console.log("Param in callback is "+t.toString());
 			//state.push(t);
 			function stripHTMLTags(str) {
-				var s1 = str.replace('<title>', '');
+				// var s1 = str.replace('<title>', '');
 
-				var s2 = s1.replace('</title>', '');
-				return s2;
+				// var s2 = s1.replace('</title>', '');
+				var stripedHtml = $("<div>").html(str).text();
+				return stripedHtml;
 			}
 			var title = stripHTMLTags(t);
 			

@@ -1,4 +1,3 @@
-//this second intialization file for the firebase may be unnecessary, but the only work around since i can't inject this into the credentials/html and make it work.
 var config = {
 	apiKey: "AIzaSyBkGGKw3_CKSVlsK8XUWRqmjTqcggTmtU0",
 	authDomain: "bookworm-backend.firebaseapp.com",
@@ -9,6 +8,9 @@ var config = {
 	appId: "1:845803795351:web:ffc463d678559e9118cad2",
 	measurementId: "G-8FV64KKTXN"
 };
-var bw_backend_app = firebase.initializeApp(config);
+const bw_backend_app = firebase.initializeApp(config);
+const bw_auth = firebase.auth();
+const bw_db = firebase.firestore();
 
 export default bw_backend_app;
+export {bw_auth, bw_db};

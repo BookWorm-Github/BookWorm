@@ -10,5 +10,6 @@
     <orderEntry type="library" name="firebase-firestore" level="application" />
     <orderEntry type="library" name="firebase-auth" level="application" />
     <orderEntry type="library" name="@types/firebase-client" level="application" />
+    <orderEntry type="library" name="materialize" level="application" />
   </component>
 </module>

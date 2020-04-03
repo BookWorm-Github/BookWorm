@@ -1,5 +1,4 @@
-// TODO(DEVELOPER): Change the values below using values from the initialization snippet: Firebase Console > Overview > Add Firebase to your web app.
-import bw_backend_app from "../firebase/init.js";
+import bw_backend_app from '../firebase/init.js';
 /**
  * initApp handles setting up the Firebase context and registering
  * callbacks for the auth status.
@@ -86,7 +85,6 @@ function startAuth(interactive) {
  */
 function startSignIn() {
   document.getElementById("quickstart-button").disabled = true;
-  console.log(bw_backend_app.auth().currentUser === firebase.auth().currentUser);
   if (bw_backend_app.auth().currentUser) {
 	  bw_backend_app.auth().signOut();
   } else {

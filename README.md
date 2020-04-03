@@ -15,3 +15,19 @@ they can be used in the Chrome extensions menu by pressing "Load unpacked" and s
 
 More on Devpost:
 https://devpost.com/software/bookworm-t0586n
+
+
+
+#When in directory/ homepage
+
+<code>Npm install 
+
+
+Npm run build 
+
+
+Npm start 
+
+More tools – extensions – developer mode 
+
+load ...\BookWorm\frontend\portfolio_homepage\build

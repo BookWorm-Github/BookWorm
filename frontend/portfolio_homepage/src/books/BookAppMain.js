@@ -13,7 +13,6 @@ class BookAppMain extends Component {
     this.state = {
       bookshelf: [],
       addingBook: false,
-
     };
   }
 
@@ -27,7 +26,7 @@ class BookAppMain extends Component {
       <div className = 'main-container-center'>
       
         <div id = 'blurrable' className = 'book-shelf'>
-	        <SortBooks books = {this.state.bookshelf} setBooks = {this.setBooks} isBlurred = {this.state.addingBook}/>\
+	        <SortBooks books = {this.state.bookshelf} setBooks = {this.setBooks} isBlurred = {this.state.addingBook}/>
 	        <div className = {this.state.addingBook?'blur-bg':'clear-bg'}>
             <BookShelf bks = {this.state.bookshelf} deleteBook = {this.deleteBook}/>
 

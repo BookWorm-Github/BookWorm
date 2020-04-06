@@ -1,8 +1,4 @@
-import {bw_auth} from "../firebase/BW_init.js";
-
-bw_db.collection('UserData').get().then(snapshot => {
-	console.log(snapshot.docs);
-});
+import {bw_auth} from "../../firebase/init.js";
 
 //listen for auth status changes
 bw_auth.onAuthStateChanged(user => {

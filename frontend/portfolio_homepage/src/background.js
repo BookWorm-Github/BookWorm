@@ -1,1 +1,0 @@
-import '../public/background.js'

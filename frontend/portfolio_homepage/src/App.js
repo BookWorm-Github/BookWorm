@@ -1,6 +1,7 @@
 
 import React, { Component } from 'react';
 import './App.css';
+// import {sample} from './firebase/BW_DatabaseService.js'
 
 import BookAppMain from './books/BookAppMain';
 // import {getCurrentTab} from "./experiment/common/Utils";
@@ -13,14 +14,12 @@ class App extends Component{
 
 	render(){
 
-		  return <div className="App">
+		  return (
+		  	<div className="App">
 		    		<h1>BookWorm</h1>
 		    		<BookAppMain />
-		    	</div> 
+		    	</div> )
 	}
-
-
-
 } 
 
 export default App;

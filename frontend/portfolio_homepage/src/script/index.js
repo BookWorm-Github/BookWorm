@@ -1,3 +1,4 @@
+
 // setup materialize components
 document.addEventListener('DOMContentLoaded', function() {// when content has been loaded into page, anything of class modal gets grabbed and initialized.
 

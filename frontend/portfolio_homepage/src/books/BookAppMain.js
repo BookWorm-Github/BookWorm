@@ -22,14 +22,13 @@ class BookAppMain extends Component {
     return (
       <div>
     {/*Hotkey for dev only, when lots of experimental books are added. take away from final product.*/}
-      <Hotkeys keyName = "shift+a" onKeyUp = {this.toggleAddBook}></Hotkeys>
+      <Hotkeys keyName = "shift+a" onKeyUp = {this.toggleAddBook}/>
       {/*<button onClick = {this.getURLS}>Get Open Windows</button>*/}
       <div className = 'main-container-center'>
       
         <div id = 'blurrable' className = 'book-shelf'>
-
-            <SortBooks books = {this.state.bookshelf} setBooks = {this.setBooks} isBlurred = {this.state.addingBook}/>
-          <div className = {this.state.addingBook?'blur-bg':'clear-bg'}>
+	        <SortBooks books = {this.state.bookshelf} setBooks = {this.setBooks} isBlurred = {this.state.addingBook}/>\
+	        <div className = {this.state.addingBook?'blur-bg':'clear-bg'}>
             <BookShelf bks = {this.state.bookshelf} deleteBook = {this.deleteBook}/>
 
           </div>

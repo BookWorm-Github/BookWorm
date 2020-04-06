@@ -1,6 +1,6 @@
-import {bw_auth, bw_db} from "../../firebase/init.js";
+import {bw_auth} from "../firebase/BW_init.js";
 
-bw_db.collection('nathan_learning_one').get().then(snapshot => {
+bw_db.collection('UserData').get().then(snapshot => {
 	console.log(snapshot.docs);
 });
 

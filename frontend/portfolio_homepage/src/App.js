@@ -12,7 +12,7 @@ class App extends Component{
         this.state = {
         	urlsForWormhole:[]
         };
-        chrome.runtime.sendMessage({rq: "Tabs"}, this._callbackForURLResponse);
+        chrome.runtime.sendMessage({rq: "urlsForWormhole"}, this._callbackForURLResponse);
 		
 
     }
@@ -33,13 +33,13 @@ class App extends Component{
 		  console.log("Currently opened tabs in app in chrome runtime are "+response.openTabs);
 		  console.log("URLs for wormhole in app in chrome runtime are "+response.urlsForWormhole);
 
-			this.setState({urlsForWormhole: response.openTabs})
+			this.setState({urlsForWormhole: response.urlsForWormhole})
 			console.log("In callback App urlsForWormhole state is "+this.state.urlsForWormhole.toString());
 
 		}
 	experiment = ()=>{
 
-		chrome.runtime.sendMessage({rq: "Tabs"}, this._callbackForURLResponse);
+		chrome.runtime.sendMessage({rq: "urlsForWormhole"}, this._callbackForURLResponse);
 		
 		chrome.runtime.onMessage.addListener(
 		  (response, sender, sendResponse) => {

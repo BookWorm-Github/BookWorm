@@ -1,3 +1,7 @@
+import firebase from "firebase/app"
+import "firebase/firestore"
+import "firebase/auth"
+
 var config = {
 	apiKey: "AIzaSyBkGGKw3_CKSVlsK8XUWRqmjTqcggTmtU0",
 	authDomain: "bookworm-backend.firebaseapp.com",

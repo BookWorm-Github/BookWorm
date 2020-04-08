@@ -1,4 +1,4 @@
-import bw_backend_app from '../firebase/init.js';
+import bw_backend_app from '../../src/firebase/init.js';
 /**
  * initApp handles setting up the Firebase context and registering
  * callbacks for the auth status.

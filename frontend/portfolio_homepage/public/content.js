@@ -5,14 +5,14 @@
 
 // port.onMessage.addListener(function(message,sender){
 //       if(message.openTabs != null){
-//         console.log("Content got message from background: "+message.openTabs);
+//         //console.log("Content got message from background: "+message.openTabs);
 //         openTabs = message.openTabs;
 
 //         createListOfURLs(openTabs);
-//         console.log("openTabs in content is now "+openTabs)
+//         //console.log("openTabs in content is now "+openTabs)
 //       }
 //       else{
-//         console.log("content got that Message was null")
+//         //console.log("content got that Message was null")
 //       }
 // });
   //put the creation of url-list here
@@ -26,7 +26,7 @@
 // button.addEventListener ("click", function() {
 
 //   chrome.runtime.sendMessage({rq: "Tabs"}, function(response) {
-//     console.log(response.openTabs);
+//     //console.log(response.openTabs);
 //     createListOfURLs(response.openTabs);
 //   });
 
@@ -34,7 +34,7 @@
 
 // window.onload = function(){
 //     chrome.runtime.sendMessage({rq: "Tabs"}, function(response) {
-//     console.log(response.openTabs);
+//     //console.log(response.openTabs);
 //     createListOfURLs(response.openTabs);
 //   });
 // };
@@ -47,22 +47,22 @@ div.setAttribute("id", "url-list");
 document.body.appendChild(div);
 
 chrome.runtime.sendMessage({rq: "Tabs"}, function(response) {
-  console.log(response.openTabs);
+  //console.log(response.openTabs);
   createListOfURLs(response.openTabs);
 });
 
 chrome.runtime.onMessage.addListener(
   (message, sender, sendResponse) => {
-    console.log("content script received msg ("+message+") from background sender "+sender);
+    //console.log("content script received msg ("+message+") from background sender "+sender);
       if(message.openTabs != null){
-        console.log("Content got message from background: "+message.openTabs);
+        //console.log("Content got message from background: "+message.openTabs);
         openTabs = message.openTabs;
 
         createListOfURLs(openTabs);
-        console.log("openTabs in content is now "+openTabs)
+        //console.log("openTabs in content is now "+openTabs)
       }
       else{
-        console.log("content got that Message was null")
+        //console.log("content got that Message was null")
       }
 
   });
@@ -78,7 +78,7 @@ function createListOfURLs (openTabs){
         myNode.innerHTML = ''
     })();
 
-    // console.log("Content got response from background now: "+response.farewell[0])
+    // //console.log("Content got response from background now: "+response.farewell[0])
     //lists urls
      ul = document.createElement('ul');
      ul.setAttribute("id", "list");
@@ -101,9 +101,9 @@ function createListOfURLs (openTabs){
       }
     }
     else{
-      console.log("ERROR: URL-list does not exist");
+      //console.log("ERROR: URL-list does not exist");
     }
-    // console.log("Content got response from background now: "+response.farewell[1])
+    // //console.log("Content got response from background now: "+response.farewell[1])
   }
 
 

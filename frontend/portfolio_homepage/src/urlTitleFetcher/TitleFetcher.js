@@ -20,7 +20,7 @@ class TitleFetcher extends Component{
 	    };
 
   	}
-  	componentDidMount(){
+  	componentDidUpdate(){
   		// this.getTitles();
   		var titles = [];
   		

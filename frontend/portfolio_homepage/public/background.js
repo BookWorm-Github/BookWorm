@@ -22,13 +22,15 @@ chrome.runtime.onMessage.addListener(
       // window.contentPort = port;
       // port.postMessage({openTabs:window.tabs});
         }
-        else if (msg.rq=="window.urlsForLaunch"){
+        else if (msg.rq=="urlsForLaunch"){
           sendResponse({urlsForLaunch: window.urlsToBeStoredInLaunch})
         }
-        else if (msg.rg=="window.urlsForWormhole"){
+        else if (msg.rq=="urlsForWormhole"){
+          console.log("Background received request for wormhole urls and is sending back "+window.urlsToBeStoredInWormhole.toString())
           sendResponse({urlsForWormhole: window.urlsToBeStoredInWormhole})
         }
         else {//console.log("unknown message")
+          return true;
       }
   });
 

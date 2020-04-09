@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import { Link } from "@reach/router";
+import {signInWithGoogle} from "../firebase/init";
 
 class SignIn extends Component{
 	constructor() {
@@ -43,24 +43,37 @@ class SignIn extends Component{
 							id="userPassword"
 							onChange = {(event) => this.onChangeHandler(event)}
 						/>
-						<button className="bg-green-400 hover:bg-green-500 w-full py-2 text-white" onClick = {(event) => {this.signInWithEmailAndPasswordHandler(event, this.state.email, this.state.password)}}>
+						<button className="bg-green-400 hover:bg-green-500 w-full py-2 text-white"
+						        onClick = {(event) => {
+						        	this.signInWithEmailAndPasswordHandler(event, this.state.email, this.state.password)
+						        }}>
 							Sign in
 						</button>
 					</form>
 					<p className="text-center my-3">or</p>
 					<button
-						className="bg-red-500 hover:bg-red-600 w-full py-2 text-white">
-						Sign in with Google
+						onClick={() => {
+							try {
+								signInWithGoogle();
+							} catch (error) {
+								console.error("Error signing in with Google", error);
+							}
+						}}
+						className="bg-red-500 hover:bg-red-600 w-full py-2 text-white"
+					>
+						Sign In with Google
 					</button>
 					<p className="text-center my-3">
 						Don't have an account?{" "}
-						<Link to="signUp" className="text-blue-500 hover:text-blue-600">
+						{/*<Link to="/SignUp" >*/}
+						{/*	className="text-blue-500 hover:text-blue-600"*/}
 							Sign up here
-						</Link>{" "}
+						{/*</Link>{" "}*/}
 						<br />{" "}
-						<Link to = "passwordReset" className="text-blue-500 hover:text-blue-600">
+						{/*<Link to = "/PasswordReset" >*/}
+							{/*className="text-blue-500 hover:text-blue-600"*/}
 							Forgot Password?
-						</Link>
+						{/*</Link>*/}
 					</p>
 				</div>
 			</div>
@@ -69,9 +82,9 @@ class SignIn extends Component{
 
 	signInWithEmailAndPasswordHandler = (event,email, password) => {
 			event.preventDefault();
-		};
+	};
 
-	 onChangeHandler = (event) => {
+	onChangeHandler = (event) => {
 		const {name, value} = event.currentTarget;
 
 		if(name === 'userEmail') {

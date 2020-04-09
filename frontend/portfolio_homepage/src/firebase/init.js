@@ -12,8 +12,48 @@ var config = {
 	appId: "1:845803795351:web:ffc463d678559e9118cad2",
 	measurementId: "G-8FV64KKTXN"
 };
-const bw_backend_app = firebase.initializeApp(config);
-const bw_auth = firebase.auth();
-const bw_db = firebase.firestore();
+export const bw_backend_app = firebase.initializeApp(config);
+export const bw_auth = firebase.auth();
+export const bw_db = firebase.firestore();
 
-export {bw_backend_app, bw_auth, bw_db};
+//Google Sign in w/ Popup
+const provider = new firebase.auth.GoogleAuthProvider();
+export const signInWithGoogle = () => {
+	bw_auth.signInWithPopup(provider);
+};
+
+export const generateUserDocument = async (user, additionalData) => {
+	if (!user) return;
+
+	const userRef = bw_db.doc(`users/${user.uid}`);
+	const snapshot = await userRef.get();
+
+	if (!snapshot.exists) {
+		const { email, displayName, photoURL } = user;
+		try {
+			await userRef.set({
+				displayName,
+				email,
+				photoURL,
+				...additionalData
+			});
+		} catch (error) {
+			console.error("Error creating user document", error);
+		}
+	}
+	return getUserDocument(user.uid);
+};
+
+const getUserDocument = async uid => {
+	if (!uid) return null;
+	try {
+		const userDocument = await bw_db.doc(`users/${uid}`).get();
+
+		return {
+			uid,
+			...userDocument.data()
+		};
+	} catch (error) {
+		console.error("Error fetching user", error);
+	}
+};

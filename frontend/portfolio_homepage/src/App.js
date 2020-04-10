@@ -1,26 +1,20 @@
-
 import React, { Component } from 'react';
 import './App.css';
-
-import BookAppMain from './books/BookAppMain';
-// import {getCurrentTab} from "./experiment/common/Utils";
+import UserProvider from "./Authentication/UserProvider";
+import Application from "./Authentication/Application";
 //TODO currently clumsy way of dealing with the chrome extension connection error in the local host main page.
 
 class App extends Component{
-    constructor() {
-        super();
-    }
-
 	render(){
+		  return (
+			<div className="App">
 
-		  return <div className="App">
-		    		<h1>BookWorm</h1>
-		    		<BookAppMain />
-		    	</div> 
+				<UserProvider>
+					<Application />
+				</UserProvider>
+			</div>
+		  )
 	}
-
-
-
-} 
+}
 
 export default App;

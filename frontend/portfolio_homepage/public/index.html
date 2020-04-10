@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+    <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
@@ -8,7 +8,6 @@
       name="description"
       content="Web site created using create-react-app"
     />
-
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="%PUBLIC_URL%/icons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="%PUBLIC_URL%/icons/favicon-32x32.png">
@@ -16,7 +15,6 @@
     <link rel="mask-icon" href="%PUBLIC_URL%/icons/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
-
     <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
@@ -31,14 +29,105 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>React App</title>
-  </head>
-  <body>
+<!--    <script type="module" src="../src/script/init.js"></script>-->
+    <title>BookWorm 420 no scope</title>
+    </head>
+    <body class="grey lighten-3">
+<!--    &lt;!&ndash; NAVBAR &ndash;&gt;-->
+<!--    <nav class="z-depth-0 grey lighten-4">-->
+<!--        <div class="nav-wrapper container">-->
+<!--            <a href="#" class="brand-logo">-->
+<!--                <img src="icons/bkwrm-logo.png" style="height: 50px; width: 50px; margin-top: 5px;">-->
+<!--            </a>-->
+<!--            <ul id="nav-mobile" class="right hide-on-med-and-down">-->
+<!--                <li class="logged-in">-->
+<!--                    <a href="#" class="grey-text modal-trigger" data-target="modal-account">Account</a>-->
+<!--                </li>-->
+<!--                <li class="logged-in">-->
+<!--                    <a href="#" class="grey-text" id="logout">Logout</a>-->
+<!--                </li>-->
+<!--                <li class="logged-in">-->
+<!--                    <a href="#" class="grey-text modal-trigger" data-target="modal-create">Connect with Database</a>-->
+<!--                </li>-->
+<!--                <li class="logged-out">-->
+<!--                    <a href="#" class="grey-text modal-trigger" data-target="modal-login">Login</a>-->
+<!--                </li>-->
+<!--                <li class="logged-out">-->
+<!--                    <a href="#" class="grey-text modal-trigger" data-target="modal-signup">Sign up</a>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--    </nav>-->
+
+<!--    &lt;!&ndash; SIGN UP MODAL &ndash;&gt;-->
+<!--    <div id="modal-signup" class="modal">-->
+<!--        <div class="modal-content">-->
+<!--            <h4>Sign up</h4><br />-->
+<!--            <form id="signup-form">-->
+<!--                <div class="input-field">-->
+<!--                    <input type="email" id="signup-email" required />-->
+<!--                    <label for="signup-email">Email address</label>-->
+<!--                </div>-->
+<!--                <div class="input-field">-->
+<!--                    <input type="password" id="signup-password" required />-->
+<!--                    <label for="signup-password">Choose password</label>-->
+<!--                </div>-->
+<!--                <button class="btn yellow darken-2 z-depth-0">Sign up</button>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; LOGIN MODAL &ndash;&gt;-->
+<!--    <div id="modal-login" class="modal">-->
+<!--        <div class="modal-content">-->
+<!--            <h4>Login</h4><br />-->
+<!--            <form id="login-form">-->
+<!--                <div class="input-field">-->
+<!--                    <input type="email" id="login-email" required />-->
+<!--                    <label for="login-email">Email address</label>-->
+<!--                </div>-->
+<!--                <div class="input-field">-->
+<!--                    <input type="password" id="login-password" required />-->
+<!--                    <label for="login-password">Your password</label>-->
+<!--                </div>-->
+<!--                <button class="btn yellow darken-2 z-depth-0">Login</button>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; ACCOUNT MODAL &ndash;&gt;-->
+<!--    <div id="modal-account" class="modal">-->
+<!--        <div class="modal-content center-align">-->
+<!--            <h4>Account details</h4><br />-->
+<!--            <div class="account-details"></div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; CREATE GUIDE MODAL &ndash;&gt;-->
+<!--    <div id="modal-create" class="modal">-->
+<!--        <div class="modal-content">-->
+<!--            <h4>Create Guide</h4><br />-->
+<!--            <form id="create-form">-->
+<!--                <div class="input-field">-->
+<!--                    <input type="text" id="title" required>-->
+<!--                    <label for="title">Guide Title</label>-->
+<!--                </div>-->
+<!--                <div class="input-field">-->
+<!--                    <textarea id="content" class="materialize-textarea" required></textarea>-->
+<!--                    <label for="content">Guide Content</label>-->
+<!--                </div>-->
+<!--                <button class="btn yellow darken-2 z-depth-0">Create</button>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--    </div>-->
+
+    <!-- Compiled and minified JavaScript -->
     <script src = "content.js"></script>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    
-    <div id="root"></div>
 
+    <div id="root"></div>
+<!--    <script type="module" src="auth/scripts/auth.js"></script>-->
+<!--    <script type="module" src="auth/scripts/auth_materialize.js"></script>-->
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
@@ -49,5 +138,5 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
-  </body>
+    </body>
 </html>

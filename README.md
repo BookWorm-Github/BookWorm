@@ -16,23 +16,34 @@ they can be used in the Chrome extensions menu by pressing "Load unpacked" and s
 More on Devpost:
 https://devpost.com/software/bookworm-t0586n
 
-###Project Setup:
-#install the directory
-#Go to Bookworm --> frontend --> portfolio_homepage
+### Project Setup:
 
+install the directory:
+first
+```
+Go to Bookworm --> frontend --> portfolio_homepage
+```
+then execute
 <code>Npm install 
 
 To build chrome extension:
 <code>Npm run build 
 
-To configure chrome extension into Google Chrome web browser, go to the web browser:
+To configure chrome extension into Google Chrome web browser:
 
-More tools – extensions -> turn developer mode on 
-
-click Load Unpackaged:
+In Chrome web browser
+```
+More tools –> extensions -> turn developer mode on 
+```
+then 
+```
+click Load Unpackaged
+```
+and
+```
 select folder at ...\BookWorm\frontend\portfolio_homepage\build
-
-
+```
+Then in console run:
 <code>Npm start 
 
 

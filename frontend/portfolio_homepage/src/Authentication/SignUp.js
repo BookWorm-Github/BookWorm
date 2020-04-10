@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { bw_auth, signInWithGoogle, generateUserDocument } from "../firebase/init.js";
+import SignIn from "./SignIn";
+import {Link} from "react-chrome-extension-router";
 
 const SignUp = () => {
 	const [email, setEmail] = useState("");
@@ -11,7 +13,7 @@ const SignUp = () => {
 		event.preventDefault();
 		try{
 			const {user} = await bw_auth.createUserWithEmailAndPassword(email, password);
-			generateUserDocument(user, {displayName});
+			await generateUserDocument(user, {displayName});
 		}
 		catch(error){
 			setError('Error Signing up with email and password');
@@ -83,7 +85,9 @@ const SignUp = () => {
 					<button
 						className="bg-green-400 hover:bg-green-500 w-full py-2 text-white"
 						onClick={event => {
-							createUserWithEmailAndPasswordHandler(event, email, password);
+							createUserWithEmailAndPasswordHandler(event, email, password).then(onFulfilled => {
+
+							});
 						}}
 					>
 						Sign up
@@ -104,9 +108,9 @@ const SignUp = () => {
 				</button>
 				<p className="text-center my-3">
 					Already have an account?{" "}
-					{/*<Link to="/" className="text-blue-500 hover:text-blue-600">*/}
+					<Link component={SignIn} className="text-blue-500 hover:text-blue-600">
 						Sign in here
-					{/*</Link>{" "}*/}
+					</Link>{" "}
 				</p>
 			</div>
 		</div>

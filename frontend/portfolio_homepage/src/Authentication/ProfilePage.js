@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-
 import { UserContext } from "./UserProvider.js";
 import {bw_auth} from "../firebase/init.js";
 
@@ -25,7 +24,15 @@ const ProfilePage = () => {
 					<h3 className = "italic">{email}</h3>
 				</div>
 			</div>
-			<button className = "w-full py-3 bg-red-600 mt-4 text-white" onClick = {() => {bw_auth.signOut()}}>Sign out</button>
+			<button className = "w-full py-3 bg-red-600 mt-4 text-white"
+		        onClick = {() => {
+		            bw_auth.signOut().then(
+		                onFulfilled => {
+		                    console.log(onFulfilled)
+		                }
+		                )
+		        }
+			}>Sign out</button>
 		</div>
 	)
 };

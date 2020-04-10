@@ -1,7 +1,7 @@
-import React, { Component, createContext } from "react";
+import React, { Component } from "react";
 import { bw_auth, generateUserDocument } from "../firebase/init.js";
 
-export const UserContext = createContext({ user: null });
+export const UserContext = React.createContext({user: null}); //creates and returns to UserContext a Context object.
 
 class UserProvider extends Component {
 	state = {
@@ -19,7 +19,6 @@ class UserProvider extends Component {
 
 	render() {
 		const { user } = this.state;
-
 		return (
 			<UserContext.Provider value={user}>
 				{this.props.children}

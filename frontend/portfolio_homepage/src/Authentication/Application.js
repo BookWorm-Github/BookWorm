@@ -1,41 +1,29 @@
-import React, {Component} from 'react';
+import React, {useContext} from 'react';
 import SignIn from "./SignIn";//class
-import SignUp from "./SignUp";//function
-import PasswordReset from "./PasswordReset";
+
 import BookAppMain from "../books/BookAppMain";
 import ProfilePage from "./ProfilePage";
+import {UserContext} from "./UserProvider";
+import {Router} from "react-chrome-extension-router";
 
-class Application extends Component {
-	constructor() {
-		super();
-		this.state = {
-			user: null
-		}
-	}
-	render() {
-		return(
-		this.state.user ?
+function Application() {
+	const user = useContext(UserContext);//returns an object and takes in a Context object
+	return (
+		user ?
 			<div className="users_portfolio_homepage">
 				<h1>BookWorm</h1>
 				<BookAppMain />
 				<ProfilePage/>
 			</div>
 			:
-				<div>
-					<SignUp/>
-					<SignIn/>
-					<PasswordReset/>
-				</div>
-				// <Router>
-				// 	<Switch>
-				// 		<Route path="/" exact component={SignIn}/>
-				// 		<Route path="/SignUp" component={SignUp}/>
-				// 		<Route path = "/PasswordReset" component={PasswordReset}/>
-				// 	</Switch>
-				//  </Router>
-		)
+			<Router>
+				<SignIn/>
+			</Router>
 
-	}
+	);
 }
+
+
+
 export default Application;
 

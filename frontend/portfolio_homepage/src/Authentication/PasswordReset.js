@@ -1,6 +1,8 @@
 
 import React, { useState } from "react";
 import {bw_auth} from "../firebase/init.js";
+import SignIn from "./SignIn";
+import {Link} from "react-chrome-extension-router";
 
 const PasswordReset = () => {
 	const [email, setEmail] = useState("");
@@ -65,12 +67,12 @@ const PasswordReset = () => {
 					</button>
 				</form>
 
-				{/*<Link*/}
-				{/*	to="/"*/}
-				{/*	className="my-2 text-blue-700 hover:text-blue-800 text-center block"*/}
-				{/*>*/}
-				{/*	&larr; back to sign in page*/}
-				{/*</Link>*/}
+				<Link
+					component={SignIn}
+					className="my-2 text-blue-700 hover:text-blue-800 text-center block"
+				>
+					&larr; back to sign in page
+				</Link>
 			</div>
 		</div>
 	);

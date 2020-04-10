@@ -13,6 +13,7 @@
     "node-sass": "^4.13.1",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
+    "react-chrome-extension-router": "^1.1.0",
     "react-dom": "^16.13.1",
     "react-hot-keys": "^2.5.2",
     "react-native-elements": "^1.2.7",

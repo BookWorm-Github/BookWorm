@@ -6,8 +6,6 @@ import PropTypes from 'prop-types'
 // import { withStyles } from '@material-ui/core/styles';
 //npm i react-simple-flex-grid
 class Launcher extends Component{
-
-
 	render(){
 
 		return (
@@ -20,7 +18,7 @@ class Launcher extends Component{
 
 	openURLs = (e) =>{
 		e.preventDefault();
-		for(var i = 0; i<this.props.urls.length; i++){
+		for(let i = 0; i<this.props.urls.length; i++){
 	    	window.open(this.props.urls[i]);
 		}
 	}

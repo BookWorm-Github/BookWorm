@@ -1,5 +1,3 @@
-
-
 import React, {Component} from 'react'
 import './wormhole.css'
 import PropTypes from 'prop-types'

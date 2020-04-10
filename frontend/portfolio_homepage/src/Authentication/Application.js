@@ -1,8 +1,6 @@
 import React, {useContext} from 'react';
 import SignIn from "./SignIn";//class
-
 import BookAppMain from "../books/BookAppMain";
-import ProfilePage from "./ProfilePage";
 import {UserContext} from "./UserProvider";
 import {Router} from "react-chrome-extension-router";
 
@@ -13,7 +11,7 @@ function Application() {
 			<div className="users_portfolio_homepage">
 				<h1>BookWorm</h1>
 				<BookAppMain />
-				<ProfilePage/>
+				{/*<ProfilePage/>*/}
 			</div>
 			:
 			<Router>

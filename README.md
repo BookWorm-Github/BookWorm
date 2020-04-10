@@ -18,7 +18,7 @@ https://devpost.com/software/bookworm-t0586n
 
 ### Project Setup:
 
-install the directory:
+##### install the directory:
 
 first
 ```
@@ -27,10 +27,10 @@ Go to Bookworm --> frontend --> portfolio_homepage
 then execute
 <code>Npm install 
 
-To build chrome extension:
+##### To build chrome extension:
 <code>Npm run build 
 
-To configure chrome extension into Google Chrome web browser:
+##### To configure chrome extension into Google Chrome web browser:
 
 In Chrome web browser
 ```
@@ -44,7 +44,7 @@ and
 ```
 select folder at ...\BookWorm\frontend\portfolio_homepage\build
 ```
-Then in console run:
+##### Then in console run:
 <code>Npm start 
 
 

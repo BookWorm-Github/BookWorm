@@ -25,13 +25,17 @@ first
 Go to Bookworm --> frontend --> portfolio_homepage
 ```
 then execute
-<code>Npm install 
 
+```
+Npm install
+```
+  
 ##### To build chrome extension:
-<code>Npm run build 
-
+```
+Npm run build 
+```
+  
 ##### To configure chrome extension into Google Chrome web browser:
-
 In Chrome web browser
 ```
 More tools –> extensions -> turn developer mode on 
@@ -45,7 +49,9 @@ and
 select folder at ...\BookWorm\frontend\portfolio_homepage\build
 ```
 ##### Then in console run:
-<code>Npm start 
+```
+Npm start 
+```
 
 
 

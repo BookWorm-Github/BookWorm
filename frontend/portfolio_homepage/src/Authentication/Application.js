@@ -9,7 +9,7 @@ function Application() {
 	return (
 		user ?
 			<div className="users_portfolio_homepage">
-				<h1>BookWorm</h1>
+				<h1 className={"ph_title"}>BookWorm</h1>
 				<BookAppMain />
 				{/*<ProfilePage/>*/}
 			</div>

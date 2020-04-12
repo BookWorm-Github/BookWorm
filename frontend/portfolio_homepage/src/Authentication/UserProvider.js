@@ -8,8 +8,15 @@ class UserProvider extends Component {
 		user: null
 	};
 
+	componentWillMount = async () => {
+		await bw_auth.onAuthStateChanged(async userAuth => {
+			const user = await generateUserDocument(userAuth);
+			this.setState({ user });
+		});
+	}
+
 	componentDidMount = async () => {
-		bw_auth.onAuthStateChanged(async userAuth => {
+		await bw_auth.onAuthStateChanged(async userAuth => {
 			const user = await generateUserDocument(userAuth);
 			this.setState({ user });
 		});

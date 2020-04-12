@@ -1,5 +1,4 @@
-/*TODO later combine all css files into one file in App.css 
-for optimization*/
+/*TODO later combine all css files into one file in App.css for optimization*/
 
 .main-container-center{
   justify-content: center;
@@ -40,18 +39,30 @@ for optimization*/
     border: 10px solid black;
     background-color: #ffffff;/*#3391AF;*/
   	border-radius: 15px;
-  	height: 200px;
-    width: 100%;
+  	height: 280px;
+    width: 280px;
   }
+
+.add_book_page {
+    border: 10px solid black;
+    background-color: #ffffff;/*#3391AF;*/
+    border-radius: 15px;
+    height: 100%;
+    width: 100%;
+}
   
 /*The title of the user's book*/
-.title{
+.book_title{
 
   text-align: center;
+    vertical-align: auto;
 	width: 100%;
 	height: 100%;
   overflow: hidden;
+    font-size: xx-large;
+    padding-top: 100px;
 }
+
 
 /*The hover menu which contains the launcher and wormhole*/
 .hover-menu{

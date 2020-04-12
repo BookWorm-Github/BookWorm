@@ -20,7 +20,7 @@ class AddBookUI extends Component {
             <div>
                 <div className='popup'>
 
-                    <div className='book'>
+                    <div className='add_book_page'>
                         <h2>Name of the book: </h2>
                         <div>
 

@@ -1,10 +1,7 @@
 //The container that holds the books
 import React, {Component} from 'react'
-
-// import { withStyles } from '@material-ui/core/styles';
-//npm i react-simple-flex-grid
- import '../books/bookStyles.css'
- import './pop-up.css'
+import '../books/bookStyles.css'
+import './pop-up.css'
 class AddBookUI extends Component {
     handleFocus = (event) => event.target.select();
 

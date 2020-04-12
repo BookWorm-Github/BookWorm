@@ -1,11 +1,8 @@
 import React, {Component} from 'react'
 import Grid from '@material-ui/core/Grid';
 import Book from './Book'
-
 import PropTypes from 'prop-types'
-
 import './bookStyles.css'
-
 import BookNavbar from '../hamburger_bar/BookNavbar'
 class BookShelf extends Component {
 

@@ -65,7 +65,7 @@ class App extends Component{
 
 		    		<h2>URLs for wormhole</h2>
 					<ul>
-        			{ this.state.urlsForWormhole.map(title => <li>{this.state.urlsForWormhole}</li>)}
+        			{ this.state.urlsForWormhole.map(title => <li>{title}</li>)}
       				</ul>
 		    	</div> 
 

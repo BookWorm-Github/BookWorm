@@ -3,7 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import Book from './Book'
 import PropTypes from 'prop-types'
 import './bookStyles.css'
-import BookNavbar from '../hamburger_bar/BookNavbar'
+
 class BookShelf extends Component {
 
   constructor(props){
@@ -77,24 +77,24 @@ class BookShelf extends Component {
   }
 
 
-  render(){
-    var booklist = this.props.bks;//array of all books
+	render(){
+		const booklist = this.props.bks;//array of all books
 
-    var shelfOfBooks = this.create2DArrayOfBooks(booklist);
-    // this.printBkList(booklist);
-    // var books = booklist.map(this.createBook);
-    var books = this.separateBooksIntoShelves(shelfOfBooks,booklist.length);
-    // var books = this.divideBooksIntoRows(booklist,booklist.length);
+		const shelfOfBooks = this.create2DArrayOfBooks(booklist);
+		// this.printBkList(booklist);
+		// var books = booklist.map(this.createBook);
+		const books = this.separateBooksIntoShelves(shelfOfBooks, booklist.length);
+		// var books = this.divideBooksIntoRows(booklist,booklist.length);
 
 
-    return (
-        <div className='book-shelf'> 
-          
-            {books}
-          </div>
+		return (
+		    <div className='book-shelf'>
 
-    );
-  }
+		        {books}
+		      </div>
+
+		);
+	}
 
 
   //print methods for debug

@@ -85,9 +85,7 @@ const SignUp = () => {
 					<button
 						className="bg-green-400 hover:bg-green-500 w-full py-2 text-white"
 						onClick={event => {
-							createUserWithEmailAndPasswordHandler(event, email, password).then(onFulfilled => {
-
-							});
+							createUserWithEmailAndPasswordHandler(event, email, password).then(r => console.log(r))
 						}}
 					>
 						Sign up

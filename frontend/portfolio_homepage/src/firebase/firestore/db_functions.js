@@ -1,25 +1,22 @@
 import {bw_db} from "../init";
-import React from "react";
 
 export const storeBook = async (book, user) => {
 	const bookDataRef = bw_db.collection(`users/${user}/bookData`).doc(book.title)
 
-	const result = await bookDataRef.get() // returns true if
+	return await bookDataRef.get() // returns true if
 		.then(async snapshot => {//needs to check if the snapshot exists or not
-			if(snapshot.exists){
+			if (snapshot.exists) {
 				console.log("doc already exists")
 				console.log(snapshot.id)//gets the docs id
 				console.log(snapshot.data())//gets the docs data
-			}
-			else{//doc.data() here will be undefined in this case
+			} else {//doc.data() here will be undefined in this case
 				console.log("initializing book " + book.title)
 				await bookDataRef.set({
 					key: book.key,
 					title: book.title,
 					time_created: book.time_created,
 					Launch: [],
-					WormHole: {
-					}
+					WormHole: {}
 				})
 			}
 			return true
@@ -27,6 +24,4 @@ export const storeBook = async (book, user) => {
 			console.log("Error getting from document: " + e)
 			return false
 		})
-
-	return result
 }

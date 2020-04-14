@@ -2,7 +2,7 @@ import firebase from "firebase/app"
 import "firebase/firestore"
 import "firebase/auth"
 
-var config = {
+const config = {
 	apiKey: "AIzaSyBkGGKw3_CKSVlsK8XUWRqmjTqcggTmtU0",
 	authDomain: "bookworm-backend.firebaseapp.com",
 	databaseURL: "https://bookworm-backend.firebaseio.com",
@@ -19,7 +19,11 @@ export const bw_db = firebase.firestore();
 //Google Sign in w/ Popup
 const provider = new firebase.auth.GoogleAuthProvider();
 export const signInWithGoogle = () => {
-	bw_auth.signInWithPopup(provider);
+	bw_auth.signInWithPopup(provider)
+		.then(cred => {
+			console.log("Google login success!:")
+			console.log(cred)
+		});
 };
 
 export const generateUserDocument = async (user, additionalData) => {

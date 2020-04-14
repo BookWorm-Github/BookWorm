@@ -1,8 +1,7 @@
 //The container that holds the books
-import React, {Component, useContext} from 'react'
+import React, {Component} from 'react'
 import '../books/bookStyles.css'
 import './pop-up.css'
-import {storeBook} from "../firebase/firestore/db_functions";
 
 class AddBookUI extends Component {
 

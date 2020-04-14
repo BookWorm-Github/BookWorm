@@ -3,7 +3,6 @@ import {bw_auth, signInWithGoogle} from "../firebase/init";
 import {Link} from "react-chrome-extension-router";
 import SignUp from "./SignUp";
 import PasswordReset from "./PasswordReset";
-import {storeBook} from "../firebase/firestore/db_functions";
 
 const SignIn = () => {
 

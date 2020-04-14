@@ -18,14 +18,6 @@ const SignIn = () => {
 			setError("Error signing in with password and email!");
 			console.error("Error signing in with password and email", error);
 		})
-		// 	.then(cred => {
-		// 	console.log(cred)
-		// 	if(cred) {
-		// 		storeBook({key: 1, title: "TEST", time_created: Date.now()}, cred.user).then(e => {
-		// 			console.log(e)
-		// 		});
-		// 	}
-		// })
 	};
 
 	const onChangeHandler = (event) => {

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { bw_auth, generateUserDocument } from "../firebase/init.js";
+import {storeBook} from "../firebase/firestore/db_functions";
 
 export const UserContext = React.createContext({user: null}); //creates and returns to UserContext a Context object.
 
@@ -12,7 +13,15 @@ class UserProvider extends Component {
 		await bw_auth.onAuthStateChanged(async userAuth => {
 			const user = await generateUserDocument(userAuth);
 			this.setState({ user });
-		});
+			console.log(userAuth)
+			if(userAuth) {//if it exists, grab user bookdata from the database into react
+				console.log(userAuth.providerData)
+				console.log(userAuth.providerId)
+				storeBook({key: 1, title: "TEST", time_created: Date.now()}, userAuth.uid).then(onFulfilled => {
+					console.log(onFulfilled)
+				});
+			}
+		})
 	};
 
 	render() {

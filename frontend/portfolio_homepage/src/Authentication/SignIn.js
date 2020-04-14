@@ -3,6 +3,7 @@ import {bw_auth, signInWithGoogle} from "../firebase/init";
 import {Link} from "react-chrome-extension-router";
 import SignUp from "./SignUp";
 import PasswordReset from "./PasswordReset";
+import {storeBook} from "../firebase/firestore/db_functions";
 
 const SignIn = () => {
 
@@ -16,7 +17,15 @@ const SignIn = () => {
 		bw_auth.signInWithEmailAndPassword(email, password).catch(error => {
 			setError("Error signing in with password and email!");
 			console.error("Error signing in with password and email", error);
-		});
+		})
+		// 	.then(cred => {
+		// 	console.log(cred)
+		// 	if(cred) {
+		// 		storeBook({key: 1, title: "TEST", time_created: Date.now()}, cred.user).then(e => {
+		// 			console.log(e)
+		// 		});
+		// 	}
+		// })
 	};
 
 	const onChangeHandler = (event) => {

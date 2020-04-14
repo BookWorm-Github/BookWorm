@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component, useContext} from 'react'
 import BookShelf from './BookShelf'
 /*Testing branch*/
 import AddBookUI from '../AddBookUI/AddBookUI'
@@ -6,6 +6,7 @@ import './bookStyles.css'
 import SortBooks from '../sortItems/SortBooks'
 import Hotkeys from 'react-hot-keys';
 //added hotkeys: https://github.com/jaywcjlove/react-hotkeys#readme
+
 class BookAppMain extends Component {
 
   constructor(props){
@@ -102,11 +103,11 @@ class BookAppMain extends Component {
 
   deleteBook =(key) => {
     console.log("Deleting key "+key)
-    var filteredBooks = this.state.bookshelf.filter(function (bk) {
-      return (bk.key !== key);
-    });
-   
-    this.setState({ //This will update the state and trigger a rerender of the components
+	  const filteredBooks = this.state.bookshelf.filter(function (bk) {
+		  return (bk.key !== key);
+	  });
+
+	  this.setState({ //This will update the state and trigger a rerender of the components
       bookshelf: filteredBooks
     });
   }

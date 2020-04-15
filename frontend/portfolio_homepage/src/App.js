@@ -11,9 +11,9 @@ class App extends Component{
     constructor() {
         super();
         this.state = {
-        	urlsForWormhole:[]
+        	urlsForLaunch:[]
         };
-        chrome.runtime.sendMessage({rq: "urlsForWormhole"}, this._callbackForURLResponse);
+        chrome.runtime.sendMessage({rq: "urlsForLaunch"}, this._callbackForURLResponse);
 		
 
     }
@@ -21,38 +21,24 @@ class App extends Component{
 
     componentDidMount() {
         
-		this.experiment()
+		// this.experiment()
 		//   this.setState({
-		// 	urlsForWormhole: response.urlsForWormhole
+		// 	urlsForLaunch: response.urlsForLaunch
 			// });
 		// })
-		// console.log("App state is "+this.state.urlsForWormhole.toString());
+		// console.log("App state is "+this.state.urlsForLaunch.toString());
     }
     
   	_callbackForURLResponse = (response) => {
 			
 		  console.log("Currently opened tabs in app in chrome runtime are "+response.openTabs);
-		  console.log("URLs for wormhole in app in chrome runtime are "+response.urlsForWormhole);
+		  console.log("URLs for Launch in app in chrome runtime are "+response.urlsForLaunch);
 
-			this.setState({urlsForWormhole: response.urlsForWormhole})
-			console.log("In callback App urlsForWormhole state is "+this.state.urlsForWormhole.toString());
+			this.setState({urlsForLaunch: response.urlsForLaunch})
+			console.log("In callback App urlsForLaunch state is "+this.state.urlsForLaunch.toString());
 
 		}
-	experiment = ()=>{
 
-		chrome.runtime.sendMessage({rq: "urlsForWormhole"}, this._callbackForURLResponse);
-		
-		chrome.runtime.onMessage.addListener(
-		  (response, sender, sendResponse) => {
-		      if(response.urlsForWormhole != null){
-		      	console.log("Got URLs for wormhole in App.js from background")
-		      }
-		      else{
-		      	console.log("Got msg in App.js from background but it was unexpected: "+response)
-		      }
-
-		  });
-	}
 	render(){
 
 		  return <div className="App">
@@ -61,11 +47,10 @@ class App extends Component{
 						<Application />
 					</UserProvider>
 
-		    		<button onClick = {this.experiment}>Experiment: watch in console</button>
 
-		    		<h2>URLs for wormhole</h2>
+		    		<h2>URLs for Launch</h2>
 					<ul>
-        			{ this.state.urlsForWormhole.map(title => <li>{title}</li>)}
+        			{ this.state.urlsForLaunch.map(title => <li>{title}</li>)}
       				</ul>
 		    	</div> 
 

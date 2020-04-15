@@ -23,7 +23,7 @@ chrome.runtime.onMessage.addListener(
       // port.postMessage({openTabs:window.tabs});
         }
         else if (msg.rq=="urlsForLaunch"){
-          sendResponse({urlsForLaunch: window.urlsToBeStoredInLaunch})
+          sendResponse({urlsForLaunch: window.tabs})
         }
         else if (msg.rq=="urlsForWormhole"){
           console.log("Background received request for wormhole urls and is sending back "+window.urlsToBeStoredInWormhole.toString())

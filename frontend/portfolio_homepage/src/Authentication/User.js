@@ -1,15 +1,16 @@
 import React, { Component } from "react";
 import { bw_auth, generateUserDocument } from "../firebase/init.js";
-import {storeBook} from "../firebase/firestore/db_functions";
 import BookAppMain from "../books/BookAppMain";
 import {Router} from "react-chrome-extension-router";
 import SignIn from "./SignIn";
+import {deleteBook, updatePortfolioHomepage} from "../firebase/firestore/db_functions";
 
 class User extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			user: null
+			user: null,
+			books: []
 		};
 	}
 
@@ -18,15 +19,18 @@ class User extends Component {
 			if(user) {//if it exists, grab user bookData from the database into app
 				// console.log(userAuth.providerData)
 				// console.log(userAuth.providerId)
+				await updatePortfolioHomepage(user.uid)
+					.then(async books => {
+						console.log(books)
+						this.setState({
+							user: await generateUserDocument(user),
+							books: [...books]
+						})
+					}, e => console.log(e))
 
-				this.setState({
-					user: await generateUserDocument(user)
-				});
-
-				storeBook({key: 1, title: "TEST", time_created: Date.now()}, user.uid).then(onFulfilled => {
-					console.log(onFulfilled)
-				});
+				await deleteBook("TEST", user.uid)
 			}
+
 		})
 	};
 

@@ -12,8 +12,6 @@ class App extends Component{
 			urlsForWormhole:[]
 		};
 		chrome.runtime.sendMessage({rq: "urlsForWormhole"}, this._callbackForURLResponse);
-
-
 	}
 
 
@@ -56,7 +54,7 @@ class App extends Component{
 		  return (
 			<div className="App">
 				<User/>
-				<button onClick = {this.experiment}>Experiment: watch in console</button>
+				{/*<button onClick = {this.experiment}>Experiment: watch in console</button>*/}
 				<h2>URLs for wormhole</h2>
 				<ul>
 					{this.state.urlsForWormhole.map(title => <li>{title}</li>)}

@@ -4,7 +4,8 @@
   "name": "BookWorm",
 
   "version": "1.0.2",
-  "permissions": ["contextMenus","tabs","storage","activeTab","declarativeContent","background","identity", "contentSettings", "<all_urls>"
+  "permissions": ["contextMenus","tabs","storage","activeTab","declarativeContent",
+    "background","identity", "contentSettings", "<all_urls>"
         ], 
 
   "background":{

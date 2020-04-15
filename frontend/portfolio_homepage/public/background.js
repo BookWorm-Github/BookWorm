@@ -22,13 +22,15 @@ chrome.runtime.onMessage.addListener(
       // window.contentPort = port;
       // port.postMessage({openTabs:window.tabs});
         }
-        else if (msg.rq=="window.urlsForLaunch"){
+        else if (msg.rq=="urlsForLaunch"){
           sendResponse({urlsForLaunch: window.urlsToBeStoredInLaunch})
         }
-        else if (msg.rg=="window.urlsForWormhole"){
+        else if (msg.rq=="urlsForWormhole"){
+          console.log("Background received request for wormhole urls and is sending back "+window.urlsToBeStoredInWormhole.toString())
           sendResponse({urlsForWormhole: window.urlsToBeStoredInWormhole})
         }
         else {//console.log("unknown message")
+          return true;
       }
   });
 
@@ -72,10 +74,10 @@ chrome.tabs.onRemoved.addListener(function(tabid, removed) {
         // alert("Added URL to be stored in launch: "+window.urls[tabid]);
       }
 
-      // if(!window.urlsToBeStoredInLaunch.includes(window.urls[tabid])){
+      if(!window.urlsToBeStoredInLaunch.includes(window.urls[tabid])){
         window.urlsToBeStoredInLaunch.push(window.urls[tabid]);
         // alert("Added URL to be stored in launch: "+window.urls[tabid]);
-      // }
+      }
 
 
     }
@@ -97,10 +99,13 @@ chrome.windows.onRemoved.addListener(function(windowid) {
  //copies the window.urlsToBeStoredInLaunch
  storedInLaunchUrls = window.urlsToBeStoredInLaunch.slice(0,window.urlsToBeStoredInLaunch.length);
 
- console.log("The"+window.urlsToBeStoredInLaunch.length+" urls to be stored in launch are "+storedInLaunchUrls.toString());
- alert("The"+window.urlsToBeStoredInLaunch.length+"urls to be stored in launch are "+storedInLaunchUrls.toString())
-//resets the window.urlsToBeStoredInLaunch for next window
- window.urlsToBeStoredInLaunch.splice(0,window.urlsToBeStoredInLaunch.length);
+
+ if(storedInLaunchUrls.length>0){
+   console.log("The"+window.urlsToBeStoredInLaunch.length+" urls to be stored in launch are "+storedInLaunchUrls.toString());
+   alert("The"+window.urlsToBeStoredInLaunch.length+"urls to be stored in launch are "+storedInLaunchUrls.toString())
+  //resets the window.urlsToBeStoredInLaunch for next window
+   window.urlsToBeStoredInLaunch.splice(0,window.urlsToBeStoredInLaunch.length);
+  }
 
 
  sendToContent();

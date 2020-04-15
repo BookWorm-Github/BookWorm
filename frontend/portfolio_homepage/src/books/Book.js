@@ -75,8 +75,8 @@ class Book extends Component{
 	setLaunchURLs = (newURL) => {
 		this.setState(
 	      {
-	        launchURLs: [...this.state.wormholeURLs,newURL],
-	        wormholeURLs:[...this.state.launchURLs,newURL]
+	        launchURLs: [...this.state.launchURLs,newURL],
+	        wormholeURLs:[...this.state.wormholeURLs,newURL]
 	      }
 	    );
 	}

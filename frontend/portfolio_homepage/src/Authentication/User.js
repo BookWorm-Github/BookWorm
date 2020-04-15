@@ -3,7 +3,7 @@ import { bw_auth, generateUserDocument } from "../firebase/init.js";
 import BookAppMain from "../books/BookAppMain";
 import {Router} from "react-chrome-extension-router";
 import SignIn from "./SignIn";
-import {deleteBook, updatePortfolioHomepage} from "../firebase/firestore/db_functions";
+import {deleteBook, populatePortfolioHomepage} from "../firebase/firestore/db_functions";
 
 class User extends Component {
 	constructor(props) {
@@ -19,7 +19,7 @@ class User extends Component {
 			if(user) {//if it exists, grab user bookData from the database into app
 				// console.log(userAuth.providerData)
 				// console.log(userAuth.providerId)
-				await updatePortfolioHomepage(user.uid)
+				await populatePortfolioHomepage(user.uid)
 					.then(async books => {
 						console.log(books)
 						this.setState({

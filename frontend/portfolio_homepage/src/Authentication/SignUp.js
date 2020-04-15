@@ -6,22 +6,24 @@ import {Link} from "react-chrome-extension-router";
 const SignUp = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [displayName, setDisplayName] = useState("");
 	const [error, setError] = useState(null);
 
 	const createUserWithEmailAndPasswordHandler = async (event, email, password) => {
 		event.preventDefault();
-		try{
-			const {user} = await bw_auth.createUserWithEmailAndPassword(email, password);
-			await generateUserDocument(user, {displayName});
-		}
-		catch(error){
-			setError('Error Signing up with email and password');
-		}
+		const result = await bw_auth.createUserWithEmailAndPassword(email, password)
+			.then(async userCredential => {
+				await generateUserDocument(userCredential.user);
+
+			},
+			error => {
+				setError('Error Signing up with email and password');
+				setTimeout(() => {setError(null)}, 3000);
+				return error
+			});
 
 		setEmail("");
 		setPassword("");
-		setDisplayName("");
+		return result
 	};
 
 	const onChangeHandler = event => {
@@ -31,8 +33,6 @@ const SignUp = () => {
 			setEmail(value);
 		} else if (name === "userPassword") {
 			setPassword(value);
-		} else if (name === "displayName") {
-			setDisplayName(value);
 		}
 	};
 
@@ -46,18 +46,6 @@ const SignUp = () => {
 					</div>
 				)}
 				<form className="">
-					<label htmlFor="displayName" className="block">
-						Display Name:
-					</label>
-					<input
-						type="text"
-						className="my-1 p-1 w-full "
-						name="displayName"
-						value={displayName}
-						placeholder="E.g: Faruq"
-						id="displayName"
-						onChange={event => onChangeHandler(event)}
-					/>
 					<label htmlFor="userEmail" className="block">
 						Email:
 					</label>
@@ -85,7 +73,11 @@ const SignUp = () => {
 					<button
 						className="bg-green-400 hover:bg-green-500 w-full py-2 text-white"
 						onClick={event => {
-							createUserWithEmailAndPasswordHandler(event, email, password).then(r => console.log(r))
+							setError(null)
+							createUserWithEmailAndPasswordHandler(event, email, password)
+								.catch(e => {
+									console.log(e)
+								})
 						}}
 					>
 						Sign up

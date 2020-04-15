@@ -26,20 +26,19 @@ export const signInWithGoogle = () => {
 		});
 };
 
-export const generateUserDocument = async (user, additionalData) => {
-	if (!user) return;
+export const generateUserDocument = async (user) => {
+	if (!user) {
+		return;
+	}
 
 	const userRef = bw_db.doc(`users/${user.uid}`);
 	const snapshot = await userRef.get();
 
 	if (!snapshot.exists) {
-		const { email, displayName, photoURL } = user;
 		try {
 			await userRef.set({
-				displayName,
-				email,
-				photoURL,
-				...additionalData
+				email: user.email,
+				photoURL: user.photoURL,
 			});
 		} catch (error) {
 			console.error("Error creating user document", error);

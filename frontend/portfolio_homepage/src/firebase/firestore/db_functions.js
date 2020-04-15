@@ -3,7 +3,7 @@ import {bw_db} from "../init";
 export const storeBook = async (book, user) => {
 	const bookDataRef = bw_db.collection(`users/${user}/bookData`).doc(book.title)
 
-	return await bookDataRef.get() // returns true if
+	return await bookDataRef.get()
 		.then(async snapshot => {//needs to check if the snapshot exists or not
 			if (snapshot.exists) {
 				console.log("doc already exists")

@@ -26,7 +26,7 @@ export const signInWithGoogle = () => {
 		});
 };
 
-export const generateUserDocument = async (user) => {
+export const generateUserDocument = async (user) => {//generates user document in firestore. If already exists in firestore then just returns a user object
 	if (!user) {
 		return;
 	}
@@ -51,7 +51,6 @@ const getUserDocument = async uid => {
 	if (!uid) return null;
 	try {
 		const userDocument = await bw_db.doc(`users/${uid}`).get();
-
 		return {
 			uid,
 			...userDocument.data()

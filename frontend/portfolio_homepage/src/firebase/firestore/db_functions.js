@@ -32,7 +32,7 @@ export const populatePortfolioHomepage = async (user_id) => {//returns an array 
 	const bookDataRef = bw_db.collection(`users/${user_id}/bookData`)
 	await bookDataRef.get()
 		.then(async (snapshot) => {
-			console.log("iterating through bookData")
+			console.log("iterating through user: " + user_id + " bookData")
 			await snapshot.docs.forEach(book => {
 				books.push(book.data())
 			})

@@ -3,6 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import Book from './Book'
 import PropTypes from 'prop-types'
 import './bookStyles.css'
+import {deleteBook} from "../firebase/firestore/db_functions";
 
 class BookShelf extends Component {
 
@@ -11,7 +12,7 @@ class BookShelf extends Component {
     this.state = {
 
       isShowingWormhole:false,
-      books:[], //unnecessary?
+      books:[],
       numBksPerShelf:4
     };
   }
@@ -73,7 +74,8 @@ class BookShelf extends Component {
   }
 
   deleteBook = (_book) =>{
-    console.log(_book.title+" Key is "+_book.key); this.props.deleteBook(_book.key)
+    console.log(_book.title+" Key is "+_book.key);
+    this.props.deleteBook(_book)
   }
 
 

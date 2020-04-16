@@ -9,7 +9,8 @@ class App extends Component{
 	constructor(props) {
 		super(props);
 		this.state = {
-			urlsForWormhole:[]
+			urlsForWormhole:[],
+			linkedBook: "" //the current book that is linked to the window
 		};
 		chrome.runtime.sendMessage({rq: "urlsForWormhole"}, this._callbackForURLResponse);
 	}

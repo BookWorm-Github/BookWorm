@@ -107,7 +107,7 @@ class BookAppMain extends Component {
 
     // this.debugBkShelf()
   }
-
+e
   deleteBook = (book) => {
   	console.log("Deleting key " + book);
   	deleteBook(book.title, this.props.user.uid).then(() => {

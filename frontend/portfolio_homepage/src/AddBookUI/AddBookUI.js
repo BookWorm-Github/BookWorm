@@ -1,11 +1,10 @@
 //The container that holds the books
 import React, {Component} from 'react'
+import '../books/bookStyles.css'
+import './pop-up.css'
 
-// import { withStyles } from '@material-ui/core/styles';
-//npm i react-simple-flex-grid
- import '../books/bookStyles.css'
- import './pop-up.css'
 class AddBookUI extends Component {
+
     handleFocus = (event) => event.target.select();
 
     constructor(props) {
@@ -20,7 +19,7 @@ class AddBookUI extends Component {
             <div>
                 <div className='popup'>
 
-                    <div className='book'>
+                    <div className='add_book_page'>
                         <h2>Name of the book: </h2>
                         <div>
 
@@ -53,18 +52,18 @@ class AddBookUI extends Component {
         let isDup = this.checkDuplicates(this._inputTitle.value);
         if (!isDup) {
 
-                var newBook = {//what a book should contain
-                    key: Date.now(),
-                    title: this._inputTitle.value,
-                    time_created: Date.now(),
-                };
+	        const newBook = {//what a book should contain
+		        key: Date.now(),
+		        title: this._inputTitle.value,
+		        time_created: Date.now(),
+	        };
 
-            //don't need to setState here since we already moved the newBook up to the props
+	        //don't need to setState here since we already moved the newBook up to the props
             // this.setState((prevState) => {
             //   return {
             //     title: newBook.title
             //   };
-            // });
+            // })
 
             console.log("Input Title at createBook is: " + this._inputTitle.value);
 

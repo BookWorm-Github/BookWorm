@@ -16,7 +16,7 @@ const SignIn = () => {
 		bw_auth.signInWithEmailAndPassword(email, password).catch(error => {
 			setError("Error signing in with password and email!");
 			console.error("Error signing in with password and email", error);
-		});
+		})
 	};
 
 	const onChangeHandler = (event) => {
@@ -76,7 +76,7 @@ const SignIn = () => {
 				</button>
 				<p className="text-center my-3">
 					Don't have an account?{" "}
-					<Link component={SignUp} className="text-blue-500 hover:text-blue-600">
+					<Link component={SignUp} className="text-blue-500 hover:text-blue-600" >
 						Sign up here
 					</Link>{" "}
 					<br />{" "}

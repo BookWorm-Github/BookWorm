@@ -1,11 +1,12 @@
 import React, {Component} from 'react'
 import BookShelf from './BookShelf'
-/*Testing branch*/
 import AddBookUI from '../AddBookUI/AddBookUI'
 import './bookStyles.css'
 import SortBooks from '../sortItems/SortBooks'
 import Hotkeys from 'react-hot-keys';
+import {deleteBook, storeBook} from "../firebase/firestore/db_functions";
 //added hotkeys: https://github.com/jaywcjlove/react-hotkeys#readme
+
 class BookAppMain extends Component {
 
   constructor(props){
@@ -14,6 +15,10 @@ class BookAppMain extends Component {
       bookshelf: [],
       addingBook: false,
     };
+  }
+
+  componentDidMount = () => {//updating the user's personal books
+  	this.setState({bookshelf: this.props.books})
   }
 
   render(){
@@ -91,24 +96,28 @@ class BookAppMain extends Component {
   addBook = (newBook)=>{//gets the newBook from addBookUI
     /*Every book has title and key, which is the date*/
     //console.log("Todo later need to update backend etc in this method (replace this console log msg). Book :"+newBook.title);
-    this.setState(
-      {
-        bookshelf: [...this.state.bookshelf, newBook],
-        addingBook:false//this clears the addBookUI
-      }
-    );
+
+	  storeBook(newBook, this.props.user.uid).then(e => {
+	  	this.setState({
+				  bookshelf: [...this.state.bookshelf, newBook],
+				  addingBook:false//this clears the addBookUI
+			  });
+	  })
+
+
     // this.debugBkShelf()
   }
-
-  deleteBook =(key) => {
-    console.log("Deleting key "+key)
-    var filteredBooks = this.state.bookshelf.filter(function (bk) {
-      return (bk.key !== key);
-    });
-   
-    this.setState({ //This will update the state and trigger a rerender of the components
-      bookshelf: filteredBooks
-    });
+e
+  deleteBook = (book) => {
+  	console.log("Deleting key " + book);
+  	deleteBook(book.title, this.props.user.uid).then(() => {
+	    const filteredBooks = this.state.bookshelf.filter((bk) => {
+			    return (bk.title !== book.title);
+	    });
+	    this.setState({ //This will update the state and trigger a rerender of the components
+		    bookshelf: filteredBooks
+	    })
+  	})
   }
 
 

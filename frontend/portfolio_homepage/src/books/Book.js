@@ -54,7 +54,7 @@ class Book extends Component{
 						hoverMenu
 					:
 
-					<div className = 'title' ><h1>{this.state.title}</h1></div>
+					<div className = 'book_title' ><h1>{this.state.title}</h1></div>
 				}
 
 			</div>

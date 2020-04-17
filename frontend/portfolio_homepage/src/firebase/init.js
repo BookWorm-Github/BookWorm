@@ -2,7 +2,7 @@ import firebase from "firebase/app"
 import "firebase/firestore"
 import "firebase/auth"
 
-var config = {
+const config = {
 	apiKey: "AIzaSyBkGGKw3_CKSVlsK8XUWRqmjTqcggTmtU0",
 	authDomain: "bookworm-backend.firebaseapp.com",
 	databaseURL: "https://bookworm-backend.firebaseio.com",
@@ -19,23 +19,26 @@ export const bw_db = firebase.firestore();
 //Google Sign in w/ Popup
 const provider = new firebase.auth.GoogleAuthProvider();
 export const signInWithGoogle = () => {
-	bw_auth.signInWithPopup(provider);
+	bw_auth.signInWithPopup(provider)
+		.then(cred => {
+			console.log("Google login success!:")
+			console.log(cred)
+		});
 };
 
-export const generateUserDocument = async (user, additionalData) => {
-	if (!user) return;
+export const generateUserDocument = async (user) => {//generates user document in firestore. If already exists in firestore then just returns a user object
+	if (!user) {
+		return;
+	}
 
 	const userRef = bw_db.doc(`users/${user.uid}`);
 	const snapshot = await userRef.get();
 
 	if (!snapshot.exists) {
-		const { email, displayName, photoURL } = user;
 		try {
 			await userRef.set({
-				displayName,
-				email,
-				photoURL,
-				...additionalData
+				email: user.email,
+				photoURL: user.photoURL,
 			});
 		} catch (error) {
 			console.error("Error creating user document", error);
@@ -48,7 +51,6 @@ const getUserDocument = async uid => {
 	if (!uid) return null;
 	try {
 		const userDocument = await bw_db.doc(`users/${uid}`).get();
-
 		return {
 			uid,
 			...userDocument.data()

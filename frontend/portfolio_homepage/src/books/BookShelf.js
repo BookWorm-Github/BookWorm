@@ -1,14 +1,10 @@
-
-
 import React, {Component} from 'react'
 import Grid from '@material-ui/core/Grid';
 import Book from './Book'
-
 import PropTypes from 'prop-types'
-
 import './bookStyles.css'
+import {deleteBook} from "../firebase/firestore/db_functions";
 
-import BookNavbar from '../hamburger_bar/BookNavbar'
 class BookShelf extends Component {
 
   constructor(props){
@@ -16,27 +12,27 @@ class BookShelf extends Component {
     this.state = {
 
       isShowingWormhole:false,
-      books:[], //unnecessary?
+      books:[],
       numBksPerShelf:4
     };
   }
 
 
-  create2DArrayOfBooks(booklist){
-    const numShelves = Math.ceil(booklist.length/this.state.numBksPerShelf);
+  create2DArrayOfBooks(bookList){
+    const numShelves = Math.ceil(bookList.length/this.state.numBksPerShelf);
 
-    var shelfOfBooks = new Array(numShelves);
-    for (var k = 0; k < shelfOfBooks.length; k++) { 
+	  const shelfOfBooks = new Array(numShelves);
+	  for (let k = 0; k < shelfOfBooks.length; k++) {
         shelfOfBooks[k] = new Array(this.state.numBksPerShelf); 
     } 
 
-    // Loop to initilize 2D array elements (books). 
-    var debugString = "";
-    for (var i = 0; i < numShelves; i++) { 
-        for (var j = 0; j < this.state.numBksPerShelf; j++) { 
-            var n = i*this.state.numBksPerShelf+j;
-            if(n<booklist.length){
-              shelfOfBooks[i][j] = booklist[n];
+    // Loop to initialize 2D array elements (books).
+	  let debugString = "";
+	  for (let i = 0; i < numShelves; i++) {
+        for (let j = 0; j < this.state.numBksPerShelf; j++) {
+	        const n = i * this.state.numBksPerShelf + j;
+	        if(n<bookList.length){
+              shelfOfBooks[i][j] = bookList[n];
             }
             else{
               shelfOfBooks[i][j] = null;   
@@ -44,7 +40,7 @@ class BookShelf extends Component {
             debugString+=("Shelf ("+i+","+j+") is "+shelfOfBooks[i][j]+"\n");
         }
     } 
-    console.log("DEBUG SHELF PARSE of booklist len: "+booklist.length+": "+debugString);
+    console.log("DEBUG SHELF PARSE of bookList len: "+bookList.length+": "+debugString);
     // this.printShelf(shelfOfBooks);
     return shelfOfBooks;
 
@@ -57,8 +53,8 @@ class BookShelf extends Component {
     return <Grid key = {_index} item xs zeroMinWidth>
               {_book===null?null:
                       <div key={_book.key}>
-                          <BookNavbar book ={_book} deleteBook = {this.deleteBook} />
-                          {/*<button onClick={() => this.deleteBook(_book)}>Delete Book</button>*/}
+                          {/*<BookNavbar book ={_book} deleteBook = {this.deleteBook} />*/}
+                          <button onClick={() => this.deleteBook(_book)}>...</button>
                         <Book book ={_book} toggleWormhole = {this.toggleWormhole} isShowingWormhole = {this.state.isShowingWormhole} />
                       </div>
               }
@@ -78,42 +74,43 @@ class BookShelf extends Component {
   }
 
   deleteBook = (_book) =>{
-    console.log(_book.title+" Key is "+_book.key); this.props.deleteBook(_book.key)
+    console.log(_book.title+" Key is "+_book.key);
+    this.props.deleteBook(_book)
   }
 
 
-  render(){
-    var booklist = this.props.bks;//array of all books
+	render(){
+		const bookList = this.props.bks;//array of all books
 
-    var shelfOfBooks = this.create2DArrayOfBooks(booklist);
-    // this.printBkList(booklist);
-    // var books = booklist.map(this.createBook);
-    var books = this.separateBooksIntoShelves(shelfOfBooks,booklist.length);
-    // var books = this.divideBooksIntoRows(booklist,booklist.length);
+		const shelfOfBooks = this.create2DArrayOfBooks(bookList);
+		// this.printBkList(bookList);
+		// var books = bookList.map(this.createBook);
+		const books = this.separateBooksIntoShelves(shelfOfBooks, bookList.length);
+		// var books = this.divideBooksIntoRows(bookList,bookList.length);
 
 
-    return (
-        <div className='book-shelf'> 
-          
-            {books}
-          </div>
+		return (
+		    <div className='book-shelf'>
 
-    );
-  }
+		        {books}
+		      </div>
+
+		);
+	}
 
 
   //print methods for debug
-  printBkList(booklist){
+  printBkList(bookList){
      console.log("Printing Book List");
-    for(var x = 0; x<booklist.length; x++){
-      var jsonObj = booklist[x];
-      this.printBook(x,jsonObj);
+    for(let x = 0; x<bookList.length; x++){
+	    const jsonObj = bookList[x];
+	    this.printBook(x,jsonObj);
     }
   }
   printBook(x,jsonObj){
-       var strBuilder = [];
-       strBuilder.push("Item "+x+": ");
-        for(var key in jsonObj){
+	  const strBuilder = [];
+	  strBuilder.push("Item "+x+": ");
+        for(const key in jsonObj){
             if (jsonObj.hasOwnProperty(key)) {
                  strBuilder.push(""+jsonObj[key]+",");
             }

@@ -1,8 +1,4 @@
-
-
-
-.popup {  
-
+ .popup {
   position: fixed;  
   width: 60%;  
   height: 60%;  
@@ -13,14 +9,12 @@
   bottom: 0;  
   margin: auto;  
   border-color: #000000;
-  background-color: #ffffff;  
-
-}  
-
-.popup .book {
-  height: 100%;
+  background-color: #ffffff;
 }
-.popup .book form {
+
+
+
+.popup .add_book_page form {
   display: flex;
   /*border: solid red;*//*For debug*/
 
@@ -28,13 +22,13 @@
   flex-direction: column;
 
 }
-.popup .book form button{
+.popup .add_book_page form button{
   background: #ffffff;
   border: 3px solid black;
   border-radius: 15px;
   margin: 5px;
 } 
-.popup .book input {
+.popup .add_book_page input {
 
   width: 80%;
   height: 100%;
@@ -46,7 +40,7 @@
   font-size:24px;
 }  
 /*for future if want to style box input*/
-.popup .book input:focus {
+.popup .add_book_page input:focus {
   background-color: #add8e6;
 }
 

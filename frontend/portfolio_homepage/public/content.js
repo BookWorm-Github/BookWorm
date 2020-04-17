@@ -46,26 +46,26 @@ div.setAttribute("id", "url-list");
 
 document.body.appendChild(div);
 
-chrome.runtime.sendMessage({rq: "Tabs"}, function(response) {
-  //console.log(response.openTabs);
-  createListOfURLs(response.openTabs);
-});
+// chrome.runtime.sendMessage({rq: "Tabs"}, function(response) {
+//   //console.log(response.openTabs);
+//   createListOfURLs(response.openTabs);
+// });
 
-chrome.runtime.onMessage.addListener(
-  (message, sender, sendResponse) => {
-    //console.log("content script received msg ("+message+") from background sender "+sender);
-      if(message.openTabs != null){
-        //console.log("Content got message from background: "+message.openTabs);
-        openTabs = message.openTabs;
+// chrome.runtime.onMessage.addListener(
+//   (message, sender, sendResponse) => {
+//     //console.log("content script received msg ("+message+") from background sender "+sender);
+//       if(message.openTabs != null){
+//         //console.log("Content got message from background: "+message.openTabs);
+//         openTabs = message.openTabs;
 
-        createListOfURLs(openTabs);
-        //console.log("openTabs in content is now "+openTabs)
-      }
-      else{
-        //console.log("content got that Message was null")
-      }
+//         createListOfURLs(openTabs);
+//         //console.log("openTabs in content is now "+openTabs)
+//       }
+//       else{
+//         //console.log("content got that Message was null")
+//       }
 
-  });
+//   });
 
 function createListOfURLs (openTabs){
   if(document.getElementById('url-list')){

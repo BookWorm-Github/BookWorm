@@ -11,33 +11,49 @@ class App extends Component{
     constructor() {
         super();
         this.state = {
-        	urlsForLaunch:[]
+        	urlsForLaunch:[],
+        	urlsForWormhole:[]
         };
-        chrome.runtime.sendMessage({rq: "urlsForLaunch"}, this._callbackForURLResponse);
-		
 
+        //TODO move the chrome runtime stuff and their callback fns to somewhere more suitable
+        chrome.runtime.sendMessage({rq: "urlsForLaunch"}, this._cbForLaunchResponse);
+		chrome.runtime.sendMessage({rq: "urlsForWormhole"}, this._cbForWormholeResponse);
+		this.handleMessage.bind(this);
+    }
+    componentDidMount(){
+
+		chrome.runtime.onMessage.addListener(this.handleMessage.bind(this));
+    }
+    handleMessage(message, sender, sendResponse){
+		  	console.log("App.js got response from background.js")
+		    if(message.urlsForLaunch != null){
+		    	console.log("App.js got launch urls from background")
+		    	
+				this.setState({urlsForLaunch: message.urlsForLaunch})
+		      }
+			if(message.urlsForWormhole != null){
+		    	console.log("App.js got launch wormhole from background")
+		    	this.setState({urlsForWormhole: message.urlsForWormhole})
+
+		      }
+		  
     }
 
 
-    componentDidMount() {
-        
-		// this.experiment()
-		//   this.setState({
-		// 	urlsForLaunch: response.urlsForLaunch
-			// });
-		// })
-		// console.log("App state is "+this.state.urlsForLaunch.toString());
-    }
+
     
-  	_callbackForURLResponse = (response) => {
+  	_cbForLaunchResponse = (response) => {
 			
-		  console.log("Currently opened tabs in app in chrome runtime are "+response.openTabs);
-		  console.log("URLs for Launch in app in chrome runtime are "+response.urlsForLaunch);
-
 			this.setState({urlsForLaunch: response.urlsForLaunch})
-			console.log("In callback App urlsForLaunch state is "+this.state.urlsForLaunch.toString());
+			
+		}
+
+	_cbForWormholeResponse = (response) => {
+
+			this.setState({urlsForWormhole: response.urlsForWormhole})
 
 		}
+
 
 	render(){
 
@@ -48,10 +64,16 @@ class App extends Component{
 					</UserProvider>
 
 
+		    		<h2>URLs for Wormhole</h2>
+					<ul>
+        			{ this.state.urlsForWormhole.map(title => <li>{title}</li>)}
+      				</ul>
+
 		    		<h2>URLs for Launch</h2>
 					<ul>
         			{ this.state.urlsForLaunch.map(title => <li>{title}</li>)}
       				</ul>
+
 		    	</div> 
 
 	}

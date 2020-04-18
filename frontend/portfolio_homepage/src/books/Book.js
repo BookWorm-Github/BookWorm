@@ -92,16 +92,16 @@ class Book extends Component{
 
 
 
-
 }
 
 Book.propTypes = {
-	  book: PropTypes.shape({
-	  		key: PropTypes.number,
-		    title: PropTypes.string.isRequired
-		  }),
-	  toggleWormhole: PropTypes.func.isRequired,
-	  isShowingWormhole: PropTypes.bool.isRequired
+	book: PropTypes.shape({
+		key: PropTypes.number.isRequired,
+		title: PropTypes.string.isRequired,
+		linkedWindowId: PropTypes.number
+	}),
+		toggleWormhole: PropTypes.func.isRequired,
+		isShowingWormhole: PropTypes.bool.isRequired
 	};
 
 

@@ -1,9 +1,8 @@
-import React, { useContext } from "react";
-import { UserContext } from "./UserProvider.js";
+import React  from "react";
 import {bw_auth} from "../firebase/init.js";
 
-const ProfilePage = () => {
-	const user = useContext(UserContext);
+const ProfilePage = (props) => {
+	const user = props.user;
 	const {photoURL, displayName, email} = user;
 	console.log(user);
 
@@ -25,16 +24,20 @@ const ProfilePage = () => {
 				</div>
 			</div>
 			<button className = "w-full py-3 bg-red-600 mt-4 text-white"
-		        onClick = {() => {
-		            bw_auth.signOut().then(
-		                onFulfilled => {
-		                    console.log(onFulfilled)
-		                }
-		                )
-		        }
-			}>Sign out</button>
+			        onClick = {() => {
+				        bw_auth.signOut().then(
+					        () => {
+						        console.log("Logged out successful")
+					        },
+					        onRejected => {
+						        console.log("log out unsuccessful")
+						        console.log(onRejected)
+					        }
+				        )
+			        }
+			        }>Sign out</button>
 		</div>
 	)
 };
 
-export default ProfilePage;
+// export default ProfilePage;

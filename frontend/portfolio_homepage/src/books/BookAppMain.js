@@ -8,13 +8,13 @@ import {deleteBook, storeBook} from "../firebase/firestore/db_functions";
 //added hotkeys: https://github.com/jaywcjlove/react-hotkeys#readme
 class BookAppMain extends Component {
 
-  constructor(props){
-    super(props);
-    this.state = {
-      bookshelf: [],
-      addingBook: false,
-    };
-  }
+	constructor(props){
+		super(props);
+		this.state = {
+		  bookshelf: [],
+		  addingBook: false,
+		};
+	}
 
 	componentDidMount = () => {//updating the user's personal books
 		this.setState({bookshelf: this.props.books})
@@ -22,43 +22,43 @@ class BookAppMain extends Component {
 
 	render(){
 
-    return (
-      <div>
-    {/*Hotkey for dev only, when lots of experimental books are added. take away from final product.*/}
-      <Hotkeys keyName = "shift+a" onKeyUp = {this.toggleAddBook}/>
-      {/*<button onClick = {this.getURLS}>Get Open Windows</button>*/}
-      <div className = 'main-container-center'>
+	return (
+		  <div>
+		{/*Hotkey for dev only, when lots of experimental books are added. take away from final product.*/}
+		  <Hotkeys keyName = "shift+a" onKeyUp = {this.toggleAddBook}/>
+		  {/*<button onClick = {this.getURLS}>Get Open Windows</button>*/}
+		  <div className = 'main-container-center'>
 
-        <div id = 'blurrable' className = 'book-shelf'>
-	        <SortBooks books = {this.state.bookshelf} setBooks = {this.setBooks} isBlurred = {this.state.addingBook}/>
-	        <div className = {this.state.addingBook?'blur-bg':'clear-bg'}>
-            <BookShelf bks = {this.state.bookshelf} deleteBook = {this.deleteBook}/>
+		    <div id = 'blurrable' className = 'book-shelf'>
+		        <SortBooks books = {this.state.bookshelf} setBooks = {this.setBooks} isBlurred = {this.state.addingBook}/>
+		        <div className = {this.state.addingBook?'blur-bg':'clear-bg'}>
+		        <BookShelf bks = {this.state.bookshelf} deleteBook = {this.deleteBook}/>
 
-          </div>
-        </div>
+		      </div>
+		    </div>
 
-          {
-            this.state.addingBook?
-            <div>
-              <AddBookUI
-                addBook = {this.addBook}
-                closePopup={this.toggleAddBook}
-                bks = {this.state.bookshelf}
-              />
-            </div>
-            :
-            <div>
+		      {
+		        this.state.addingBook?
+		        <div>
+		          <AddBookUI
+		            addBook = {this.addBook}
+		            closePopup={this.toggleAddBook}
+		            bks = {this.state.bookshelf}
+		          />
+		        </div>
+		        :
+		        <div>
 
 
-            </div>            
-          }
+		        </div>
+		      }
 
-          <button className = 'add-bk-btn' onClick={this.toggleAddBook}><h2>+</h2></button>
-    
-      </div>
-      </div>
-    );
-  }
+		      <button className = 'add-bk-btn' onClick={this.toggleAddBook}><h2>+</h2></button>
+
+		  </div>
+		  </div>
+		);
+	}
 
  // getURLS = () =>{
  //
@@ -84,42 +84,37 @@ class BookAppMain extends Component {
  //
  // }
 
-
-
 	/*Methods for adding and deleting books*/
 	toggleAddBook = () =>{
-	//console.log("Adding book");
+		//console.log("Adding book");
 		this.setState({addingBook:!this.state.addingBook});
 	}
 
-  addBook = (newBook)=>{//gets the newBook from addBookUI
-    /*Every book has title and key, which is the date*/
-    //console.log("Todo later need to update backend etc in this method (replace this console log msg). Book :"+newBook.title);
+	addBook = (newBook)=>{//gets the newBook from addBookUI
+		/*Every book has title and key, which is the date*/
+		//console.log("Todo later need to update backend etc in this method (replace this console log msg). Book :"+newBook.title);
 
-	  storeBook(newBook, this.props.user.uid).then(e => {
-	  	this.setState({
-				  bookshelf: [...this.state.bookshelf, newBook],
-				  addingBook:false//this clears the addBookUI
-			  });
-	  })
-
-
-    // this.debugBkShelf()
-  }
-
-  deleteBook = (book) => {
-  	deleteBook(book, this.props.user.uid).then(() => {
-	    const filteredBooks = this.state.bookshelf.filter((bk) => {
-			    return (bk.title !== book.title);
-	    });
-	    this.setState({ //This will update the state and trigger a rerender of the components
-		    bookshelf: filteredBooks
-	    })
-  	})
-  }
+		storeBook(newBook, this.props.user.uid).then(e => {
+			this.setState({
+				bookshelf: [...this.state.bookshelf, newBook],
+				addingBook:false//this clears the addBookUI
+			});
+		})
+		// this.debugBkShelf()
 
 
+	}
 
+	deleteBook = (book) => {
+		deleteBook(book, this.props.user.uid).then(() => {
+		    const filteredBooks = this.state.bookshelf.filter((bk) => {
+				    return (bk.title !== book.title);
+		    });
+		    this.setState({ //This will update the state and trigger a rerender of the components
+			    bookshelf: filteredBooks
+		    })
+		})
+	}
 
 	setBooks=(books)=>{
 		this.setState({

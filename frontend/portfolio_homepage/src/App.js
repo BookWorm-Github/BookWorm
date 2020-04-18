@@ -26,6 +26,7 @@ class App extends Component{
 
 		chrome.runtime.onMessage.addListener(this.handleMessage.bind(this));
 	}
+	
 	handleMessage(message, sender, sendResponse){
 		console.log("App.js got response from background.js")
 		if(message.urlsForLaunch != null){

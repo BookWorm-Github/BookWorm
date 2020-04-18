@@ -1,7 +1,7 @@
 import {bw_db} from "../init";
 
 export const storeBook = async (book, user_id) => {//takes in a book object and a users special uid to create a book under the uid.
-	const bookDataRef = bw_db.collection(`users/${user_id}/bookData`).doc(book.title)
+	const bookDataRef = bw_db.collection(`users/${user_id}/bookData`).doc(book.key.toString())
 
 	await bookDataRef.get()
 		.then(async snapshot => {//needs to check if the snapshot exists or not
@@ -12,9 +12,9 @@ export const storeBook = async (book, user_id) => {//takes in a book object and 
 			} else {//doc.data() here will be undefined in this case
 				console.log("initializing book " + book.title)
 				await bookDataRef.set({
-					key: book.key,
 					title: book.title,
-					time_created: book.time_created,
+					// time_created: book.time_created,
+					linkedWindowId: book.linkedWindowId,
 					Launch: [],
 					WormHole: {}
 				})
@@ -34,18 +34,20 @@ export const populatePortfolioHomepage = async (user_id) => {//returns an array 
 		.then(async (snapshot) => {
 			console.log("iterating through user: " + user_id + " bookData")
 			await snapshot.docs.forEach(book => {
-				books.push(book.data())
+				let x = book.data()
+				x.key = book.id
+				books.push(x)
 			})
-				return books
-			}, e => {
-				return e
-			})
+			return books
+		}, e => {
+			return e
+		})
 	return books
 }
 
-export const deleteBook = async (book_title, user_id) => {
-	console.log("deleting book " + book_title + " for user: " + user_id)
-	const bookDataRef = bw_db.doc(`users/${user_id}/bookData/${book_title}`)
+export const deleteBook = async (bk, user_id) => {
+	console.log("deleting book " + bk.title + " for user: " + user_id)
+	const bookDataRef = bw_db.doc(`users/${user_id}/bookData/${bk.key.toString()}`)
 	const book = await bookDataRef.get()
 	if(book.data()){
 		bookDataRef.delete()

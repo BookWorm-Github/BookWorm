@@ -1,4 +1,5 @@
-/*TODO later combine all css files into one file in App.css for optimization*/
+/*TODO later combine all css files into one file in App.css 
+for optimization*/
 
 .main-container-center{
   justify-content: center;
@@ -6,13 +7,13 @@
 
   display: flex;
 
-  background: #ffffff; /*for allowing users to customzize background color later*/
+  background: #fff176; /*for allowing users to customzize background color later*/
 }
 .book-shelf{
 
   width: 95%;
   padding: 10px;
-  background: #ffffe0;
+  background: #fff176;
 }
 
 /*Circular add-book-button*/
@@ -39,30 +40,18 @@
     border: 10px solid black;
     background-color: #ffffff;/*#3391AF;*/
   	border-radius: 15px;
-  	height: 280px;
-    width: 280px;
+  	height: 200px;
+    width: 100%;
   }
 
-.add_book_page {
-    border: 10px solid black;
-    background-color: #ffffff;/*#3391AF;*/
-    border-radius: 15px;
-    height: 100%;
-    width: 100%;
-}
-  
 /*The title of the user's book*/
-.book_title{
-
-  text-align: center;
-    vertical-align: auto;
-	width: 100%;
-	height: 100%;
-  overflow: hidden;
+.bk_title{
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
     font-size: xx-large;
-    padding-top: 100px;
 }
-
 
 /*The hover menu which contains the launcher and wormhole*/
 .hover-menu{
@@ -86,5 +75,9 @@
 }
 .clear-bg{
   filter:none;
+}
+
+.ph_title{
+    font-size: 70px;
 }
 

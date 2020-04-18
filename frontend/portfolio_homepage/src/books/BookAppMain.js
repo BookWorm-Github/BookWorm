@@ -6,7 +6,6 @@ import SortBooks from '../sortItems/SortBooks'
 import Hotkeys from 'react-hot-keys';
 import {deleteBook, storeBook} from "../firebase/firestore/db_functions";
 //added hotkeys: https://github.com/jaywcjlove/react-hotkeys#readme
-
 class BookAppMain extends Component {
 
   constructor(props){
@@ -17,11 +16,11 @@ class BookAppMain extends Component {
     };
   }
 
-  componentDidMount = () => {//updating the user's personal books
-  	this.setState({bookshelf: this.props.books})
-  }
+	componentDidMount = () => {//updating the user's personal books
+		this.setState({bookshelf: this.props.books})
+	}
 
-  render(){
+	render(){
 
     return (
       <div>
@@ -29,7 +28,7 @@ class BookAppMain extends Component {
       <Hotkeys keyName = "shift+a" onKeyUp = {this.toggleAddBook}/>
       {/*<button onClick = {this.getURLS}>Get Open Windows</button>*/}
       <div className = 'main-container-center'>
-      
+
         <div id = 'blurrable' className = 'book-shelf'>
 	        <SortBooks books = {this.state.bookshelf} setBooks = {this.setBooks} isBlurred = {this.state.addingBook}/>
 	        <div className = {this.state.addingBook?'blur-bg':'clear-bg'}>
@@ -37,17 +36,17 @@ class BookAppMain extends Component {
 
           </div>
         </div>
-      
+
           {
-            this.state.addingBook? 
+            this.state.addingBook?
             <div>
-              <AddBookUI 
+              <AddBookUI
                 addBook = {this.addBook}
                 closePopup={this.toggleAddBook}
                 bks = {this.state.bookshelf}
               />
             </div>
-            : 
+            :
             <div>
 
 
@@ -87,11 +86,11 @@ class BookAppMain extends Component {
 
 
 
-/*Methods for adding and deleting books*/
-  toggleAddBook = () =>{
-    //console.log("Adding book");
-    this.setState({addingBook:!this.state.addingBook});
-  }
+	/*Methods for adding and deleting books*/
+	toggleAddBook = () =>{
+	//console.log("Adding book");
+		this.setState({addingBook:!this.state.addingBook});
+	}
 
   addBook = (newBook)=>{//gets the newBook from addBookUI
     /*Every book has title and key, which is the date*/
@@ -107,10 +106,9 @@ class BookAppMain extends Component {
 
     // this.debugBkShelf()
   }
-e
+
   deleteBook = (book) => {
-  	console.log("Deleting key " + book);
-  	deleteBook(book.title, this.props.user.uid).then(() => {
+  	deleteBook(book, this.props.user.uid).then(() => {
 	    const filteredBooks = this.state.bookshelf.filter((bk) => {
 			    return (bk.title !== book.title);
 	    });
@@ -123,22 +121,22 @@ e
 
 
 
-  setBooks=(books)=>{
-    this.setState({
-      bookshelf: books
-    });
-  }
+	setBooks=(books)=>{
+		this.setState({
+		  bookshelf: books
+		});
+	}
 
 
-  debugBkShelf = () => {
+	debugBkShelf = () => {
 
-    console.log("BookAppMain State is now "+this.state.bookshelf);
-      this.state.bookshelf.map((_book, _key) => {
-            return(
-              console.log("Book ("+_book.title+","+_book.key+")")
-            );
-          })
-  }
+	console.log("BookAppMain State is now "+this.state.bookshelf);
+		this.state.bookshelf.map((_book, _key) => {
+	        return(
+	          console.log("Book ("+_book.title+","+_book.key+")")
+	        );
+	      })
+	}
 
 }
 export default (BookAppMain);

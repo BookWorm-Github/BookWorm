@@ -40,7 +40,7 @@
 // };
 
 //creates div for url-list
-var div = document.createElement('div');
+const div = document.createElement('div');
 div.setAttribute("style","height: 50%");
 div.setAttribute("id", "url-list");
 
@@ -68,41 +68,39 @@ document.body.appendChild(div);
 //   });
 
 function createListOfURLs (openTabs){
-  if(document.getElementById('url-list')){
-   
-  
+	let ul;
+	if (document.getElementById('url-list')) {
 
-  //clears list
-   (function deleteChild() { 
-         const myNode = document.getElementById('url-list');
-        myNode.innerHTML = ''
-    })();
 
-    // //console.log("Content got response from background now: "+response.farewell[0])
-    //lists urls
-     ul = document.createElement('ul');
-     ul.setAttribute("id", "list");
+		//clears list
+		(function deleteChild() {
+			const myNode = document.getElementById('url-list');
+			myNode.innerHTML = ''
+		})();
 
-      document.getElementById('url-list').appendChild(ul);
+		// //console.log("Content got response from background now: "+response.farewell[0])
+		//lists urls
+		ul = document.createElement('ul');
+		ul.setAttribute("id", "list");
 
-      if(Array.isArray(openTabs)){
-        openTabs.forEach(function (item) {
-          let li = document.createElement('li');
-          ul.appendChild(li);
+		document.getElementById('url-list').appendChild(ul);
 
-          li.innerHTML += item;
-        });
-      }
-      else{//debug condition
+		if (Array.isArray(openTabs)) {
+			openTabs.forEach(function (item) {
+				let li = document.createElement('li');
+				ul.appendChild(li);
 
-        let li = document.createElement('li');
-        ul.append(li);
-        li.innerHTML = 'Error: openTabs is not array'
-      }
-    }
-    else{
-      //console.log("ERROR: URL-list does not exist");
-    }
+				li.innerHTML += item;
+			});
+		} else {//debug condition
+
+			let li = document.createElement('li');
+			ul.append(li);
+			li.innerHTML = 'Error: openTabs is not array'
+		}
+	} else {
+		//console.log("ERROR: URL-list does not exist");
+	}
     // //console.log("Content got response from background now: "+response.farewell[1])
   }
 

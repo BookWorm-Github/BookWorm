@@ -19,23 +19,24 @@ class AddBookUI extends Component {
             <div>
                 <div className='popup'>
 
-                    <div className='add_book_page'>
+                    <div className='book'>
                         <h2>Name of the book: </h2>
                         <div>
 
-
                             <form onSubmit={this.createBook}>
+
                                 <input ref={(t) => this._inputTitle = t}
                                        placeholder="Enter Title Here" defaultValue="Title" autoFocus
                                        onFocus={this.handleFocus}>
                                 </input>
+
                                 <span>
-                  <button type="submit">Add</button> 
-                  </span>
+									<button type="submit">Add</button>
+								</span>
+
                             </form>
 
                             <button onClick={this.props.closePopup}>Cancel</button>
-
 
                         </div>
 
@@ -52,18 +53,21 @@ class AddBookUI extends Component {
         let isDup = this.checkDuplicates(this._inputTitle.value);
         if (!isDup) {
 
-	        const newBook = {//what a book should contain
+	        const newBook = {//what a book should contain.
 		        key: Date.now(),
 		        title: this._inputTitle.value,
-		        time_created: Date.now(),
+		        // time_created: Date.now(),
+		        linkedWindowId: null
 	        };
+
+	        // chrome.runtime.sendMessage({rq: "getCurrWindowId"}, this.cbWindowIdResponse)
 
 	        //don't need to setState here since we already moved the newBook up to the props
             // this.setState((prevState) => {
             //   return {
             //     title: newBook.title
             //   };
-            // })
+            // });
 
             console.log("Input Title at createBook is: " + this._inputTitle.value);
 
@@ -73,6 +77,12 @@ class AddBookUI extends Component {
 
         e.preventDefault();
     }
+
+	cbWindowIdResponse = (windowId, book) => {
+		console.log("Linking current window " + windowId + " to book: " + book.title)
+		book.linkedWindowId = windowId
+	}
+
 
     checkDuplicates = (new_book_name) => {//compare book titles making sure there are no duplicates
         let isDuplicate = false;

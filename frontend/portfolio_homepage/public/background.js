@@ -10,38 +10,43 @@ window.urls = []; //window.urls[tabid] returns the url for the tab with ID: tabi
 window.urlsForWormhole=[];
 // Check whether extension has been reloaded
 chrome.runtime.onInstalled.addListener(function(details){
+	console.log("Welcome to BookWorm :3 Thank you for installing!!! ")
     getOpenTabs();
 });
 
 chrome.runtime.onMessage.addListener(
-  function(msg, sender, sendResponse) {
-      if (msg.rq == "Tabs"){
-        //console.log("Background received request for tabs");
-        getOpenTabs();
-        sendResponse({openTabs:window.tabs});
-      // window.contentPort = port;
-      // port.postMessage({openTabs:window.tabs});
-        }
-        else if (msg.rq=="urlsForLaunch"){
-          sendResponse({urlsForLaunch: window.tabs})
-        }
-        else if (msg.rq=="urlsForWormhole"){
-          console.log("Background received request for wormhole urls and is sending back "+window.urlsForWormhole.toString())
-          sendResponse({urlsForWormhole: window.urlsForWormhole})
-        }
-        else {//console.log("unknown message")
-          return true;
-      }
-  });
+	function(msg, sender, sendResponse) {
+		switch(msg.rq) {
+		    case "Tabs":
+			    //console.log("Background received request for tabs");
+			    getOpenTabs();
+			    sendResponse({openTabs: window.tabs});
+			    // window.contentPort = port;
+			    // port.postMessage({openTabs:window.tabs});
+			    break;
+
+		    case ("urlsForLaunch"):
+			    sendResponse({urlsForLaunch: window.tabs});
+			    break;
+
+		    case ("urlsForWormhole"):
+			    console.log("Background received request for wormhole urls and is sending back " + window.urlsForWormhole.toString());
+			    sendResponse({urlsForWormhole: window.urlsForWormhole});
+			    break;
+
+		    default://console.log("unknown message")
+				    return true;
+		}
+	});
 
 
-function getOpenTabs(){//get current open tabs window.urls
+function getOpenTabs(){//get current open tabs in window
    chrome.tabs.query({currentWindow:true},function(tabs){
     window.tabs.splice(0,window.tabs.length);//clears the window.tabs array
     if(Array.isArray(tabs) && tabs.length){ //if tabs is not empty
       tabs.forEach(function(tab){
         //console.log("Tab id is "+tab.id);
-        // windowwindow.urls[tab.windowId][tab.id] = tab.url;
+        // window.urls[tab.windowId][tab.id] = tab.url;
         if(tab.url!==undefined){
           window.urls[tab.id] = tab.url; //update the url of a tab
         }
@@ -55,15 +60,15 @@ function getOpenTabs(){//get current open tabs window.urls
       });
     }
       // //console.log("Length of window tabs is "+window.tabs.length);
- });
+ }  );
 }
 
 chrome.tabs.onCreated.addListener(function(tab) {
- //console.log("tab created");
- if(tab.url!==undefined)
-    window.urls[tab.id] = tab.url; //update the url of a tab
- getOpenTabs();
- sendToContent();
+ // console.log("tab created");
+	if(tab.url!==undefined)
+		window.urls[tab.id] = tab.url; //update the url of a tab
+	getOpenTabs();
+	sendToContent();
  // window.contentPort.postMessage({openTabs:window.tabs});
 })
 
@@ -91,9 +96,9 @@ chrome.tabs.onRemoved.addListener(function(tabid, removed) {
    sendToContent();
 })
 
-chrome.windows.onRemoved.addListener(function(windowid) {
- console.log("window closed")
- getOpenTabs();
+chrome.windows.onRemoved.addListener(function(windowId) {
+	console.log("window closed")
+	getOpenTabs();
 
  window.urlsForWormhole.splice(0,window.urlsForWormhole.length);//clears the window.tabs array
  //debug wormhole
@@ -125,7 +130,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {//when a ne
       if (changeInfo.url) { //if url in tabid has changed, update the url to the changed url
         if(tab.url!==undefined)
           window.urls[tabId] = changeInfo.url;
-        if(changeInfo.url==undefined)
+        if(changeInfo.url===undefined)
           alert("Undefined url in background")
       }
 
@@ -146,14 +151,14 @@ function sendToContent(){
   //console.log("Background is sending to content... ");
   chrome.tabs.query({active: true, currentWindow: true},
       tabs =>{
-        if(tabs[0]!=undefined)
+        if(tabs[0]!==undefined)
         chrome.tabs.sendMessage(tabs[0].id, 
         {urlsForLaunch:window.tabs});
     });
   chrome.tabs.query({active: true, currentWindow: true},
       tabs =>{
         if(tabs[0]!=undefined)
-        chrome.tabs.sendMessage(tabs[0].id, 
+        chrome.tabs.sendMessage(tabs[0].id,
         {urlsForWormhole:window.urlsForWormhole});
     });
 }

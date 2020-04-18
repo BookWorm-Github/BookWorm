@@ -50,9 +50,9 @@ class User extends Component {
 					        onClick = {() => {
 						        bw_auth.signOut().then(() => {
 								        console.log("Logged out successful")
-							            this.setState({
-								            user: null
-							            })
+								        this.setState({
+									        user: null
+								        })
 							        },
 							        onRejected => {
 								        console.log("log out unsuccessful")

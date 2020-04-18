@@ -41,7 +41,7 @@ class Book extends Component{
 
 	render(){
 
-		var hoverMenu = this.createHoverMenu();
+		const hoverMenu = this.createHoverMenu();
 		return (
 			<div>
 			<div className = 'book'
@@ -54,7 +54,7 @@ class Book extends Component{
 						hoverMenu
 					:
 
-					<div className = 'title' ><h1>{this.state.title}</h1></div>
+					<div className = 'bk_title' ><h1>{this.state.title}</h1></div>
 				}
 
 			</div>
@@ -63,7 +63,7 @@ class Book extends Component{
 					this.props.isShowingWormhole? 
 					<div>
 						<Wormhole urls = {this.state.wormholeURLs} toggleWormhole = {this.props.toggleWormhole}/>
-					</div> : <div></div>
+					</div> : <div/>
 				}
 				
 				

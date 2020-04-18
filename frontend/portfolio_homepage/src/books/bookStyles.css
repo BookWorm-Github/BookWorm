@@ -7,13 +7,13 @@ for optimization*/
 
   display: flex;
 
-  background: #ffffff; /*for allowing users to customzize background color later*/
+  background: #fff176; /*for allowing users to customzize background color later*/
 }
 .book-shelf{
 
   width: 95%;
   padding: 10px;
-  background: #ffffe0;
+  background: #fff176;
 }
 
 /*Circular add-book-button*/
@@ -43,14 +43,14 @@ for optimization*/
   	height: 200px;
     width: 100%;
   }
-  
-/*The title of the user's book*/
-.title{
 
-  text-align: center;
-	width: 100%;
-	height: 100%;
-  overflow: hidden;
+/*The title of the user's book*/
+.bk_title{
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-size: xx-large;
 }
 
 /*The hover menu which contains the launcher and wormhole*/
@@ -75,5 +75,9 @@ for optimization*/
 }
 .clear-bg{
   filter:none;
+}
+
+.ph_title{
+    font-size: 70px;
 }
 

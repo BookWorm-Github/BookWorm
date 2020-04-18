@@ -53,17 +53,14 @@ class AddBookUI extends Component {
         let isDup = this.checkDuplicates(this._inputTitle.value);
         if (!isDup) {
 
-	        const newBook = {//what a book should contain
+	        const newBook = {//what a book should contain.
 		        key: Date.now(),
 		        title: this._inputTitle.value,
 		        // time_created: Date.now(),
 		        linkedWindowId: null
 	        };
 
-	        // chrome.runtime.sendMessage({rq: "getCurrWindowId"}, windowId => {
-	        // 	console.log("Linking current window " + windowId + " to book: " + newBook.title)
-		    //     newBook.linkedWindowId = windowId
-	        // })
+	        // chrome.runtime.sendMessage({rq: "getCurrWindowId"}, this.cbWindowIdResponse)
 
 	        //don't need to setState here since we already moved the newBook up to the props
             // this.setState((prevState) => {

@@ -55,16 +55,7 @@ class AddBookUI extends Component {
 	    let isDup = this.checkDuplicates(this._inputTitle.value);
 	    if (!isDup) {
 
-		    this.setState({
-			    newBook: {
-				    key: Date.now(),
-				    title: this._inputTitle.value,
-				    // time_created: Date.now(),
-				    linkedWindowId: null
-			    }
-		    });
-
-		    chrome.runtime.sendMessage({rq: "getCurrWindowId"}, this._cbWindowIdResponse).bind(this)
+		    chrome.runtime.sendMessage({rq: "getCurrWindowId"}, this._cbWindowIdResponse.bind(this));
 
 		    //don't need to setState here since we already moved the newBook up to the props
 		    // this.setState((prevState) => {
@@ -72,11 +63,6 @@ class AddBookUI extends Component {
 		    //     title: newBook.title
 		    //   };
 		    // });
-
-		    console.log("Input Title at createBook is: " + this._inputTitle.value);
-		    this.props.addBook(this.state.newBook);//calls this.props.addBook function so that we can add the newly created book and go back to portfolio homepage clearing the addBookUI
-		    this._inputTitle.value = "";
-		    this.setState({newBook: null})
 		    e.preventDefault();
 	    }
     }
@@ -96,14 +82,36 @@ class AddBookUI extends Component {
         return isDuplicate;
     }
 
-	// _cbWindowIdResponse = (windowId, e) => {
-	// 	// console.log("Linking current window " + windowId.toString() + " to book: " + this.state.newBook.title)
-	// 	// this.setState(prevState => ({
-	// 	// 	newBook: {
-	// 	// 		...prevState.newBook,
-	// 	// 		linkedWindowId: windowId
-	// 	// }}));
-	// }
+	_cbWindowIdResponse(response) {
+
+        console.log("Newbk: "+this.state.newBook)
+
+        let windowId = response.windowId;
+		
+        var nb = {//what a book should contain
+            key: Date.now(),
+            title: this._inputTitle.value,
+            time_created: Date.now(),
+            linkedWindowId: windowId
+        };
+        console.log("Linking current window " + windowId.toString() + " to book: "+nb.title )
+        
+
+        // this.setState({
+        //     newBook: nb
+        // });
+        // this.setState(prevState => ({
+        //     newBook: {
+        //         ...prevState.newBook,
+        //         linkedWindowId: windowId
+        // }}));
+
+
+            console.log("Input Title at createBook is: " + this._inputTitle.value);
+            this.props.addBook(nb);//calls this.props.addBook function so that we can add the newly created book and go back to portfolio homepage clearing the addBookUI
+            this._inputTitle.value = "";
+            // this.setState({newBook: null})
+	}
 
 
 }

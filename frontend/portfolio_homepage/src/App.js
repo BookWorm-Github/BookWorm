@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import User from "./Authentication/User";
+import BgColor from "./ColorCustomizer/BackgroundColor"
 //TODO currently clumsy way of dealing with the chrome extension connection error in the local host main page.
 
 class App extends Component{
@@ -58,8 +59,9 @@ class App extends Component{
 
 	render(){
 		return <div className="App">
+			<BgColor />
+			
 			<User/>
-
 			<h2>URLs for Wormhole</h2>
 			<ul>
 				{ this.state.urlsForWormhole.map(title => <li>{title}</li>)}

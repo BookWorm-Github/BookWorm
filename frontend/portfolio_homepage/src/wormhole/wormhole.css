@@ -24,7 +24,9 @@
     width: 100%;
     height: 100%;
     display: table-cell;
-    background-color: #285A6B ;
+    border: 2px solid #f1e756;
+    border-radius: 15px;
+    background-color: #f1e756;;
     vertical-align: center;
 }
 .wormhole a{

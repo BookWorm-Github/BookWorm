@@ -7,13 +7,11 @@ for optimization*/
 
   display: flex;
 
-  background: #fff176; /*for allowing users to customzize background color later*/
 }
 .book-shelf{
 
   width: 95%;
   padding: 10px;
-  background: #fff176;
 }
 
 /*Circular add-book-button*/

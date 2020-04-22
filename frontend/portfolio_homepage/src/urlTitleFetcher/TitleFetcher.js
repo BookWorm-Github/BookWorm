@@ -3,7 +3,7 @@
 import React, {Component} from 'react'
 
 import PropTypes from 'prop-types'
-import axios from 'axios'
+// import axios from 'axios'
 import $ from 'jquery'
 //https://urlmeta.org/
 //import $ from 'jquery'
@@ -22,16 +22,16 @@ class TitleFetcher extends Component{
   	}
   	componentDidUpdate(){
   		// this.getTitles();
-  		var titles = [];
-  		
+	    let titles = [];
 
-		function fetchHTML(externalUrl,state,cb){
+
+	    function fetchHTML(externalUrl,state,cb){
 			$.ajax({
 			  url: externalUrl,
 			  async: true,
 			  success: function(data) {
-			    var matches = data.match(/<title(.*?)<\/title>/);
-			    //alert(matches[0]);
+				  const matches = data.match(/<title(.*?)<\/title>/);
+				  //alert(matches[0]);
 			    titles = [...titles,matches[0]];
 			    	console.log("Titles inside is "+titles.toString());
 			    cb(state,matches[0]);
@@ -41,7 +41,7 @@ class TitleFetcher extends Component{
 
 		
 		
-		for(var i = 0; i<this.props.urls.length; i++){
+		for(let i = 0; i<this.props.urls.length; i++){
 
 				fetchHTML(this.props.urls[i],this.state.titles,this.callback);
 		}
@@ -77,7 +77,7 @@ class TitleFetcher extends Component{
 				// var s1 = str.replace('<title>', '');
 
 				// var s2 = s1.replace('</title>', '');
-				var stripedHtml = $("<div>").html(str).text();
+				const stripedHtml = $("<div>").html(str).text();
 				return stripedHtml;
 			}
 			var title = stripHTMLTags(t);

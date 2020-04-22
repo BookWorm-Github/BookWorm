@@ -27,8 +27,7 @@ class Launcher extends Component{
 
 		e.preventDefault();
 		for(let i = 0; i<this.props.urls.length; i++){
-			
-			window.open(this.props.urls[i]);
+			window.open(this.props.urls[i], '_blank', 'width=1000');
 		}
 
 	}

@@ -40,6 +40,10 @@ class BookAppMain extends Component {
 				}
 				return book;
 			})
+
+			console.log("updating books after launch: ")
+			console.log(filteredBook)
+
 			this.setState({
 				bookshelf: filteredBook,
 				urlsForLaunch: message.urlsForLaunch
@@ -55,6 +59,10 @@ class BookAppMain extends Component {
 				}
 				return book;
 			})
+
+			console.log("updating books after Wormhole: ")
+			console.log(filteredBook)
+
 			this.setState({
 				bookshelf: filteredBook,
 				urlsForWormhole: message.urlsForWormhole

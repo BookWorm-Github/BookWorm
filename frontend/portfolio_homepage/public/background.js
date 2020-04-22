@@ -99,7 +99,8 @@ chrome.tabs.onRemoved.addListener(function(tabid, removed) {
  //    }
    getOpenTabs();
    sendToContent();
-})
+});
+
 
 chrome.windows.onRemoved.addListener(function(windowId) {
 	console.log("window closed")
@@ -123,6 +124,17 @@ chrome.windows.onRemoved.addListener(function(windowId) {
  //  //resets the //window.urlsToBeStoredInLaunch for next window
  //   //window.urlsToBeStoredInLaunch.splice(0,//window.urlsToBeStoredInLaunch.length);
  //  }
+
+
+ sendToContent();
+
+})
+
+chrome.windows.onCreated.addListener(function(windowId) {
+  console.log("window opened");
+  getOpenTabs();
+
+ window.urlsForWormhole.splice(0,window.urlsForWormhole.length);//clears the window.tabs array
 
 
  sendToContent();

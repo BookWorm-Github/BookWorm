@@ -26,6 +26,7 @@ export const storeBook = async (book, user_id) => {//takes in a book object and 
 		})
 }
 
+
 export const populatePortfolioHomepage = async (user_id) => {//returns an array of book objects for user from firestore.
 	console.log("updating portfolio homepage with books from " + user_id)
 	let books = []

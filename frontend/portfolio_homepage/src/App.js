@@ -57,7 +57,6 @@ class App extends Component{
 
 	render(){
 		return <div className="App">
-			<BgColor />
 			
 			<User/>
 			<h2>URLs for Wormhole</h2>
@@ -69,7 +68,8 @@ class App extends Component{
 			<ul>
 				{ this.state.urlsForLaunch.map(title => <li>{title}</li>)}
 			</ul>
-
+			<BgColor />
+			
 		</div>
 	}
 }

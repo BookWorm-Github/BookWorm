@@ -57,11 +57,11 @@ export const deleteBook = async (bk, user_id) => {
 	})
 }
 
-export const deLinkBookfromWindow = async (bk, linkedWindowId, user_id) => {//update the book with the linked window id
-	if (bk.linkedWindowId === linkedWindowId) {
-		let bookDataRef = bw_db.doc(`users/${user_id}/BookData/${bk.key.toString()}`);
+export const deLinkBookfromWindow = async (bk, currWindowId, user_id) => {//update the book with the linked window id
+	if (bk.linkedWindowId === currWindowId) {
+		let bookDataRef = bw_db.doc(`users/${user_id}/bookData/${bk.key.toString()}`);
 		await bookDataRef.update({linkedWindowId: null}).then(() => {
-			console.log("Delinked successful for " + bk.title + " and window " + linkedWindowId);
+			console.log("Delinked successful for " + bk.title + " and window " + currWindowId);
 		}).catch(error => {
 			console.error("error updating book with delinking: ", error);
 		})

@@ -5,6 +5,7 @@ import './bookStyles.css'
 import SortBooks from '../sortItems/SortBooks'
 import Hotkeys from 'react-hot-keys';
 import {deleteBook, deLinkBookfromWindow, storeBook} from "../firebase/firestore/db_functions";
+import {bw_db} from "../firebase/init";
 //added hotkeys: https://github.com/jaywcjlove/react-hotkeys#readme
 class BookAppMain extends Component {
 
@@ -90,49 +91,33 @@ class BookAppMain extends Component {
 		this.setState({addingBook:!this.state.addingBook});
 	}
 
-	addBook = (newBook)=>{//gets the newBook from addBookUI
-		/*Every book has title and key, which is the date and linkedwindowId*/
-		//console.log("Todo later need to update backend etc in this method (replace this console log msg). Book :"+newBook.title);
-
+	addBook = (newBook)=> {//gets the newBook from addBookUI /*Every book has title and key, which is the date and linkedwindowId*/
 		// deLinking books that may have already linked with this window
+
 		const currWindowId = newBook.linkedWindowId;
 
-		if(this.state.bookshelf.length === 0){
-			storeBook(newBook, this.props.user.uid).then(e => {
-				this.setState(prevState => ({
-					bookshelf: [...filteredBooks, newBook],
-					addingBook:false//this clears the addBookUI
-				}));
-				console.log("adding book was successful")
-			});
-		}
-		const filteredBooks = this.state.bookshelf.map( (book, index, array) => {
-			deLinkBookfromWindow(book, currWindowId, this.props.user.uid).then(() => {//delinks the book from window in the database
-				book.linkedWindowId = null;
-				if(array[index] === array.length - 1){//if the last element in the array has been processed and delinked...
-					//storing the newBook that is linked to the current window
-					storeBook(newBook, this.props.user.uid).then(e => {
-						this.setState(prevState => ({
-							bookshelf: [...filteredBooks, newBook],
-							addingBook:false//this clears the addBookUI
-						}));
-						console.log("adding book was successful")
-					});
-				}
-			}).catch(e => {
+		const filteredBooks = this.state.bookshelf.map((book, index, array) => {
+			deLinkBookfromWindow(book, currWindowId, this.props.user.uid)
+				.then(() => {//delinks the book from window in the database
+					book.linkedWindowId = null;
+					if (array[index] === array.length - 1) {//if the last element in the array has been processed and delinked...
+
+					}
+				}).catch(e => {
 				console.log(e);
 			});
 
 			return book;
-		})
+		});
 
-		//
-
-		// this.setState({
-		// 	bookshelf: filteredBooks
-		// });
-
-
+		//storing the newBook that is linked to the current window
+		storeBook(newBook, this.props.user.uid).then(e => {
+			this.setState(prevState => ({
+				bookshelf: [...filteredBooks, newBook],
+				addingBook: false//this clears the addBookUI
+			}));
+			console.log("Adding book success!")
+		});
 	}
 
 	deleteBook = (book) => {

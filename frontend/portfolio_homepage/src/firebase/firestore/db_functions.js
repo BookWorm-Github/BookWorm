@@ -48,18 +48,23 @@ export const populatePortfolioHomepage = async (user_id) => {//returns an array 
 export const deleteBook = async (bk, user_id) => {
 	console.log("deleting book " + bk.title + " for user: " + user_id)
 	const bookDataRef = bw_db.doc(`users/${user_id}/bookData/${bk.key.toString()}`)
-	const book = await bookDataRef.get()
-	if(book.data()){
-		bookDataRef.delete()
-			.then(function() {
-				console.log("Document successfully deleted!");
-			}).catch(function(error) {
+	await bookDataRef.get().then(snapshot => {
+		bookDataRef.delete().then(function () {
+			console.log("Document successfully deleted!");
+		}).catch(function (error) {
 			console.error("Error removing document: ", error);
-		});
-	}
-	else{
-		console.log("Book either doesn't exist or unsuspected error")
-	}
+		})
+	})
+}
 
+export const deLinkBookfromWindow = async (bk, linkedWindowId, user_id) => {//update the book with the linked window id
+	if (bk.linkedWindowId === linkedWindowId) {
+		let bookDataRef = bw_db.doc(`users/${user_id}/BookData/${bk.key.toString()}`);
+		await bookDataRef.update({linkedWindowId: null}).then(() => {
+			console.log("Delinked successful for " + bk.title + " and window " + linkedWindowId);
+		}).catch(error => {
+			console.error("error updating book with delinking: ", error);
+		})
+	}
 }
 

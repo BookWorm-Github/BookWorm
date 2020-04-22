@@ -63,8 +63,14 @@ class AddBookUI extends Component {
 		    //     title: newBook.title
 		    //   };
 		    // });
-		    e.preventDefault();
+
 	    }
+	    else{
+		    this._inputTitle.value = "";
+		    this.setState({newBook: null})
+	    }
+
+	    e.preventDefault();
     }
 
     checkDuplicates = (new_book_name) => {//compare book titles making sure there are no duplicates
@@ -83,18 +89,15 @@ class AddBookUI extends Component {
     }
 
 	_cbWindowIdResponse(response) {
-
-        console.log("Newbk: "+this.state.newBook)
-
         let windowId = response.windowId;
-		
-        var nb = {//what a book should contain
-            key: Date.now(),
-            title: this._inputTitle.value,
-            time_created: Date.now(),
-            linkedWindowId: windowId
-        };
-        console.log("Linking current window " + windowId.toString() + " to book: "+nb.title )
+
+		const nb = {//what a book should contain
+			key: Date.now(),
+			title: this._inputTitle.value,
+			time_created: Date.now(),
+			linkedWindowId: windowId
+		};
+		console.log("Linking current window " + windowId.toString() + " to book: "+nb.title )
         
 
         // this.setState({
@@ -107,10 +110,10 @@ class AddBookUI extends Component {
         // }}));
 
 
-            console.log("Input Title at createBook is: " + this._inputTitle.value);
-            this.props.addBook(nb);//calls this.props.addBook function so that we can add the newly created book and go back to portfolio homepage clearing the addBookUI
-            this._inputTitle.value = "";
-            // this.setState({newBook: null})
+        console.log("Input Title at createBook is: " + this._inputTitle.value);
+        this.props.addBook(nb);//calls this.props.addBook function so that we can add the newly created book and go back to portfolio homepage clearing the addBookUI
+		this._inputTitle.value = "";
+        this.setState({newBook: null})
 	}
 
 

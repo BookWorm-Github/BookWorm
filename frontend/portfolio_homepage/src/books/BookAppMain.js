@@ -4,7 +4,8 @@ import AddBookUI from '../AddBookUI/AddBookUI'
 import './bookStyles.css'
 import SortBooks from '../sortItems/SortBooks'
 import Hotkeys from 'react-hot-keys';
-import {deleteBook, storeBook} from "../firebase/firestore/db_functions";
+import {deleteBook, deLinkBookfromWindow, storeBook} from "../firebase/firestore/db_functions";
+import {bw_db} from "../firebase/init";
 //added hotkeys: https://github.com/jaywcjlove/react-hotkeys#readme
 class BookAppMain extends Component {
 
@@ -90,19 +91,33 @@ class BookAppMain extends Component {
 		this.setState({addingBook:!this.state.addingBook});
 	}
 
-	addBook = (newBook)=>{//gets the newBook from addBookUI
-		/*Every book has title and key, which is the date*/
-		//console.log("Todo later need to update backend etc in this method (replace this console log msg). Book :"+newBook.title);
+	addBook = (newBook)=> {//gets the newBook from addBookUI /*Every book has title and key, which is the date and linkedwindowId*/
+		// deLinking books that may have already linked with this window
 
-		storeBook(newBook, this.props.user.uid).then(e => {
-			this.setState({
-				bookshelf: [...this.state.bookshelf, newBook],
-				addingBook:false//this clears the addBookUI
+		const currWindowId = newBook.linkedWindowId;
+
+		const filteredBooks = this.state.bookshelf.map((book, index, array) => {
+			deLinkBookfromWindow(book, currWindowId, this.props.user.uid)
+				.then(() => {//delinks the book from window in the database
+					book.linkedWindowId = null;
+					if (array[index] === array.length - 1) {//if the last element in the array has been processed and delinked...
+
+					}
+				}).catch(e => {
+				console.log(e);
 			});
-		})
-		// this.debugBkShelf()
 
+			return book;
+		});
 
+		//storing the newBook that is linked to the current window
+		storeBook(newBook, this.props.user.uid).then(e => {
+			this.setState(prevState => ({
+				bookshelf: [...filteredBooks, newBook],
+				addingBook: false//this clears the addBookUI
+			}));
+			console.log("Adding book success!")
+		});
 	}
 
 	deleteBook = (book) => {
@@ -112,25 +127,23 @@ class BookAppMain extends Component {
 		    });
 		    this.setState({ //This will update the state and trigger a rerender of the components
 			    bookshelf: filteredBooks
-		    })
-		})
+		    });
+		});
 	}
 
-	setBooks=(books)=>{
+	setBooks = (books) => {
 		this.setState({
 		  bookshelf: books
 		});
 	}
 
-
 	debugBkShelf = () => {
-
-	console.log("BookAppMain State is now "+this.state.bookshelf);
+		console.log("BookAppMain State is now "+this.state.bookshelf);
 		this.state.bookshelf.map((_book, _key) => {
 	        return(
 	          console.log("Book ("+_book.title+","+_book.key+")")
 	        );
-	      })
+		})
 	}
 
 }

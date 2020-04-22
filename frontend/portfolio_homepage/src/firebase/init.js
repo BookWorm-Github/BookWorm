@@ -2,7 +2,7 @@ import firebase from "firebase/app"
 import "firebase/firestore"
 import "firebase/auth"
 
-var config = {
+const config = {
 	apiKey: "AIzaSyBkGGKw3_CKSVlsK8XUWRqmjTqcggTmtU0",
 	authDomain: "bookworm-backend.firebaseapp.com",
 	databaseURL: "https://bookworm-backend.firebaseio.com",

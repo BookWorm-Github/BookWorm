@@ -3,7 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import Book from './Book'
 import PropTypes from 'prop-types'
 import './bookStyles.css'
-
+import WindowResizer from '../WindowResizer/WindowResizer'
 class BookShelf extends Component {
 
 	constructor(props){
@@ -89,11 +89,20 @@ class BookShelf extends Component {
 
 
 		return (
+			<div>
+			<WindowResizer setNumBksPerShelf = {this.setNumBooksPerShelf} />
 		    <div className='book-shelf'>
 		        {books}
 		    </div>
+		    </div>
 
 		);
+	}
+
+	setNumBooksPerShelf = (num) =>{
+		this.setState({
+			numBksPerShelf:num
+		});
 	}
 
 

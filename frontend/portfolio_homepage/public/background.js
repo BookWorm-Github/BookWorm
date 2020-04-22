@@ -55,10 +55,10 @@ function getOpenTabs(){//get current open tabs in window
         if(tab.url!==undefined){
           window.urls[tab.id] = tab.url; //update the url of a tab
         }
-        if(!window.tabs.includes(tab.url)){
+        if(!window.tabs.includes(tab.url)&&tab.url!==undefined&&!tab.url.includes('chrome://newtab')){
           window.tabs.push(tab.url);
         }
-        if(!window.urlsForWormhole.includes(tab.url)){
+        if(!window.urlsForWormhole.includes(tab.url)&&tab.url!==undefined&&!tab.url.includes('chrome://newtab')){
 
           window.urlsForWormhole.push(tab.url);
         }

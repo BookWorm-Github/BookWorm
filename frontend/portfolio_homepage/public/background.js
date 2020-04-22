@@ -8,6 +8,7 @@ window.urls = []; //window.urls[tabid] returns the url for the tab with ID: tabi
 // //window.urlsToBeStoredInLaunch=[]; //the window.urls of the most recently closed window
 // window.urlTitles = []; //window.urlTitles[url] stores the title of the webpage with the given url
 window.urlsForWormhole=[];
+
 // Check whether extension has been reloaded
 chrome.runtime.onInstalled.addListener(function(details){
 	console.log("Welcome to BookWorm :3 Thank you for installing!!! ")
@@ -33,14 +34,14 @@ chrome.runtime.onMessage.addListener(
 			    console.log("Background received request for wormhole urls and is sending back " + window.urlsForWormhole.toString());
 			    sendResponse({urlsForWormhole: window.urlsForWormhole});
 			    break;
-        case("getCurrWindowId"):
-          console.log("Background received request for current window id and is sending back "+sender.tab.windowId);
-          getOpenTabs();
-          sendResponse({windowId: sender.tab.windowId});
-        break;
+	        case("getCurrWindowId"):
+				console.log("Background received request for current window id and is sending back "+sender.tab.windowId);
+				getOpenTabs();
+				sendResponse({windowId: sender.tab.windowId});
+	        break;
 
 		    default://console.log("unknown message")
-				    return true;
+			    return true;
 		}
 	});
 
@@ -52,6 +53,7 @@ function getOpenTabs(){//get current open tabs in window
       tabs.forEach(function(tab){
         //console.log("Tab id is "+tab.id);
         // window.urls[tab.windowId][tab.id] = tab.url;
+	      console.log("tab url is " + tab.url);
         if(tab.url!==undefined){
           window.urls[tab.id] = tab.url; //update the url of a tab
         }
@@ -132,12 +134,12 @@ chrome.windows.onRemoved.addListener(function(windowId) {
 
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {//when a newtab is created, get info on how many tabs in current opened window
 
-      if (changeInfo.url) { //if url in tabid has changed, update the url to the changed url
-        if(tab.url!==undefined)
-          window.urls[tabId] = changeInfo.url;
-        if(changeInfo.url===undefined)
-          alert("Undefined url in background")
-      }
+	if (changeInfo.url) { //if url in tabid has changed, update the url to the changed url
+		if(tab.url!==undefined)
+		  window.urls[tabId] = changeInfo.url;
+		if(changeInfo.url===undefined)
+		  alert("Undefined url in background")
+	}
 
     getOpenTabs();
     sendToContent();
@@ -145,9 +147,9 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {//when a ne
 
 chrome.tabs.onActivated.addListener(function(TabInfo) {
     //console.log("current tab selected is" + TabInfo.tabId + " in window " + TabInfo.windowId);
-     // chrome.tabs.get(activeInfo.tabId, function(tab){ //get the active tab's url
-     //    window.urls[activeInfo.tabId] = tab.url;
-     //  });
+	// chrome.tabs.get(activeInfo.tabId, function(tab){ //get the active tab's url
+	//    window.urls[activeInfo.tabId] = tab.url;
+	//  });
     getOpenTabs();
     sendToContent();
 });

@@ -62,10 +62,12 @@ class BookShelf extends Component {
 
 	createShelf =(_bookshelf,_index) => {
 
-	const space = 5;
-	return <Grid key = {_index} container spacing={space}>
-	              {_bookshelf.map(this.createBook)}
-	            </Grid>
+		const space = this.state.numBksPerShelf;
+		return (
+			<Grid key = {_index} container spacing={space}>
+				{_bookshelf.map(this.createBook)}
+			</Grid>
+		)
 	}
 
 	separateBooksIntoShelves = (shelfOfBooks,numBooks) =>{
@@ -128,7 +130,9 @@ BookShelf.propTypes = {
     bks: PropTypes.arrayOf(PropTypes.shape({
         key: PropTypes.number.isRequired,
         title: PropTypes.string.isRequired,
-		linkedWindowId: PropTypes.number
+		linkedWindowId: PropTypes.number,
+	    Launch: PropTypes.array.isRequired,
+	    WormHole: PropTypes.object.isRequired
     })),
 	deleteBook: PropTypes.func.isRequired
   };

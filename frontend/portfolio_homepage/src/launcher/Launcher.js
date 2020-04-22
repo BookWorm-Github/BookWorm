@@ -26,7 +26,7 @@ class Launcher extends Component{
 	openURLs = (e) =>{
 
 		e.preventDefault();
-		for(var i = 0; i<this.props.urls.length; i++){
+		for(let i = 0; i<this.props.urls.length; i++){
 			
 			window.open(this.props.urls[i]);
 		}

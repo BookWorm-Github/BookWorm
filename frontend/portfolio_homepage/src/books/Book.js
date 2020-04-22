@@ -18,8 +18,8 @@ class Book extends Component{
     this.state = {
       title:'',
       isHovered: false,
-      launchURLs: ['https://www.github.com/'],
-      wormholeURLs:['https://www.github.com/','https://www.google.com/search?sxsrf=ALeKk03xO56CXGouNmYNfOx9L3LEpIKKrQ%3A1585511879738&ei=x_2AXofVLMusytMPvui78AI&q=when+will+coronavirus+end&oq=when+will+&gs_lcp=CgZwc3ktYWIQAxgAMgQIIxAnMgQIIxAnMgUIABCDATIFCAAQgwEyAggAMgIIADICCAAyAggAMgIIADICCAA6BAgAEEc6BggAEBYQHjoFCAAQzQI6BwgAEBQQhwI6BwgjEOoCECc6BQgAEJECOgQIABBDUOcpWM1kYPBsaARwAngDgAGJAogBrCqSAQczMi4xOC4zmAEAoAEBqgEHZ3dzLXdperABCg&sclient=psy-ab']
+      // launchURLs: ['https://www.github.com/'],
+      // wormholeURLs:['https://www.github.com/','https://www.google.com/search?sxsrf=ALeKk03xO56CXGouNmYNfOx9L3LEpIKKrQ%3A1585511879738&ei=x_2AXofVLMusytMPvui78AI&q=when+will+coronavirus+end&oq=when+will+&gs_lcp=CgZwc3ktYWIQAxgAMgQIIxAnMgQIIxAnMgUIABCDATIFCAAQgwEyAggAMgIIADICCAAyAggAMgIIADICCAA6BAgAEEc6BggAEBYQHjoFCAAQzQI6BwgAEBQQhwI6BwgjEOoCECc6BQgAEJECOgQIABBDUOcpWM1kYPBsaARwAngDgAGJAogBrCqSAQczMi4xOC4zmAEAoAEBqgEHZ3dzLXdperABCg&sclient=psy-ab']
     };
   }
   componentDidMount=() =>{
@@ -29,7 +29,7 @@ class Book extends Component{
 	}
 	  createHoverMenu() {
 	    return <div className ='hover-menu'>
-				<Launcher urls = {this.state.launchURLs}/>
+				<Launcher urls = {this.props.book.Launch}/>
 				<div className = 'wormhole' 
 						onClick = {() => this.props.toggleWormhole(true)}>Wormhole
 				</div>
@@ -62,16 +62,16 @@ class Book extends Component{
 				{
 					this.props.isShowingWormhole? 
 					<div>
-						<Wormhole urls = {this.state.wormholeURLs} toggleWormhole = {this.props.toggleWormhole}/>
+						<Wormhole urls = {this.props.book.WormHole} toggleWormhole = {this.props.toggleWormhole}/>
 					</div> : <div/>
 				}
 				
-				
-					<ManualEntryOfURL setWormholeURLs = {this.setWormholeURLs} setLaunchURLs = {this.setLaunchURLs}/>
+					{/*<ManualEntryOfURL setWormholeURLs = {this.setWormholeURLs} setLaunchURLs = {this.setLaunchURLs}/>*/}
 
 			</div>
 		);
 	}
+
 	setLaunchURLs = (newURL) => {
 		this.setState(
 	      {
@@ -98,7 +98,9 @@ Book.propTypes = {
 	book: PropTypes.shape({
 		key: PropTypes.number.isRequired,
 		title: PropTypes.string.isRequired,
-		linkedWindowId: PropTypes.number
+		linkedWindowId: PropTypes.number,
+		Launch: PropTypes.array.isRequired,
+		WormHole: PropTypes.object.isRequired
 	}),
 		toggleWormhole: PropTypes.func.isRequired,
 		isShowingWormhole: PropTypes.bool.isRequired

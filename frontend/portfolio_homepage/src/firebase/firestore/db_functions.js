@@ -1,4 +1,4 @@
-import {bw_db} from "../init";
+import {bw_auth, bw_db} from "../init";
 
 export const storeBook = async (book, user_id) => {//takes in a book object and a users special uid to create a book under the uid.
 	const bookDataRef = bw_db.collection(`users/${user_id}/bookData`).doc(book.key.toString())

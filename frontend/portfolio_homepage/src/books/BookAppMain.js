@@ -31,32 +31,59 @@ class BookAppMain extends Component {
 	}
 
 	handleMessage(message, sender, sendResponse){
-		console.log("App.js got response from background.js")
 		if(message.urlsForLaunch != null){
 			console.log("App.js got launch urls from background")
 
-			this.setState({urlsForLaunch: message.urlsForLaunch})
+			const filteredBook = this.state.bookshelf.map(book => {//find the linked book and then update the Launch for the book
+				if( book.key === this.state.linkedBook){
+					book.Launch = message.urlsForLaunch;
+				}
+				return book;
+			})
+			this.setState({
+				bookshelf: filteredBook,
+				urlsForLaunch: message.urlsForLaunch
+			})
+
 		}
 		if(message.urlsForWormhole != null){
 			console.log("App.js got launch wormhole from background")
-			this.setState({urlsForWormhole: message.urlsForWormhole})
+
+			const filteredBook = this.state.bookshelf.map(book => {//find the linked book and then update the WormHole for the book
+				if( book.key === this.state.linkedBook){
+					book.WormHole = message.urlsForWormhole;
+				}
+				return book;
+			})
+			this.setState({
+				bookshelf: filteredBook,
+				urlsForWormhole: message.urlsForWormhole
+			})
 
 		}
+
+		console.log(this.state.bookshelf);
 	}
 
 
 	_cbForLaunchResponse = (response) => {
+		this.setState({
+			urlsForLaunch: response.urlsForLaunch
+		})
 
-		this.setState({urlsForLaunch: response.urlsForLaunch})
+		console.log("state of book after LAUNCH update from background:")
 
 	}
 
 	_cbForWormholeResponse = (response) => {
+		this.setState({
+			urlsForWormhole: response.urlsForWormhole
+		})
 
-		this.setState({urlsForWormhole: response.urlsForWormhole})
+		console.log("state of book after WORMHOLE update from background:")
+		console.log(this.state.bookshelf);
 
 	}
-
 
 	/*Methods for adding and deleting books*/
 	toggleAddBook = () =>{
@@ -72,13 +99,10 @@ class BookAppMain extends Component {
 		const filteredBooks = this.state.bookshelf.map((book, index, array) => {
 			deLinkBookfromWindow(book, currWindowId, this.props.user.uid)
 				.then(() => {//delinks the book from window in the database
+					book.Launch = null;
+					book.WormHole = null;
 					book.linkedWindowId = null;
-					if (array[index] === array.length - 1) {//if the last element in the array has been processed and delinked...
-
-					}
-				}).catch(e => {
-				console.log(e);
-			});
+				});
 
 			return book;
 		});
@@ -86,13 +110,12 @@ class BookAppMain extends Component {
 		//storing the newBook that is linked to the current window
 		storeBook(newBook, this.props.user.uid).then(e => {
 			this.setState(prevState => ({
+				linkedBook: newBook.key,
 				bookshelf: [...filteredBooks, newBook],
 				addingBook: false//this clears the addBookUI
 			}));
 			console.log("Adding book success!")
 		});
-
-
 	}
 
 	deleteBook = (book) => {
@@ -131,6 +154,9 @@ class BookAppMain extends Component {
 				{/*<button onClick = {this.getURLS}>Get Open Windows</button>*/}
 				<div className = 'main-container-center'>
 
+					{/*{console.log("books are: ")};*/}
+					{/*{console.log(this.state.bookshelf)};*/}
+
 					<div id = 'blurrable' className = 'book-shelf'>
 						<SortBooks books = {this.state.bookshelf} setBooks = {this.setBooks} isBlurred = {this.state.addingBook}/>
 						<div className = {this.state.addingBook?'blur-bg':'clear-bg'}>
@@ -154,6 +180,15 @@ class BookAppMain extends Component {
 
 					<button className = 'add-bk-btn' onClick={this.toggleAddBook}><h2>+</h2></button>
 
+					{/*<h2>URLs for Wormhole</h2>*/}
+					{/*<ul>*/}
+					{/*	{ this.state.urlsForWormhole.map(title => <li>{title}</li>)}*/}
+					{/*</ul>*/}
+
+					{/*<h2>URLs for Launch</h2>*/}
+					{/*<ul>*/}
+					{/*	{ this.state.urlsForLaunch.map(title => <li>{title}</li>)}*/}
+					{/*</ul>*/}
 
 				</div>
 			</div>

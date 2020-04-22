@@ -7,13 +7,12 @@ import './bookStyles.css'
 class BookShelf extends Component {
 
 	constructor(props){
-	super(props);
-	this.state = {
-
-	  isShowingWormhole:false,
-	  books:[],
-	  numBksPerShelf:4
-	};
+		super(props);
+		this.state = {
+			isShowingWormhole:false,
+			// books:[],
+			numBksPerShelf:4
+		};
 	}
 
 
@@ -91,9 +90,8 @@ class BookShelf extends Component {
 
 		return (
 		    <div className='book-shelf'>
-
 		        {books}
-		      </div>
+		    </div>
 
 		);
 	}

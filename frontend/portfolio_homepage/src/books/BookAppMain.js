@@ -1,3 +1,4 @@
+/*global chrome*/
 import React, {Component} from 'react'
 import BookShelf from './BookShelf'
 import AddBookUI from '../AddBookUI/AddBookUI'
@@ -5,85 +6,57 @@ import './bookStyles.css'
 import SortBooks from '../sortItems/SortBooks'
 import Hotkeys from 'react-hot-keys';
 import {deleteBook, deLinkBookfromWindow, storeBook} from "../firebase/firestore/db_functions";
-import {bw_db} from "../firebase/init";
 //added hotkeys: https://github.com/jaywcjlove/react-hotkeys#readme
 class BookAppMain extends Component {
 
 	constructor(props){
 		super(props);
 		this.state = {
-		  bookshelf: [],
-		  addingBook: false,
+			bookshelf: [],
+			addingBook: false,
+			linkedBook: "", //the current book that is linked to the window
+			urlsForLaunch:[],
+			urlsForWormhole:[]
 		};
+
+		//TODO move the chrome runtime stuff and their callback fns to somewhere more suitable
+		chrome.runtime.sendMessage({rq: "urlsForLaunch"}, this._cbForLaunchResponse);
+		chrome.runtime.sendMessage({rq: "urlsForWormhole"}, this._cbForWormholeResponse);
+		this.handleMessage.bind(this);
 	}
 
 	componentDidMount = () => {//updating the user's personal books
 		this.setState({bookshelf: this.props.books})
+		chrome.runtime.onMessage.addListener(this.handleMessage.bind(this));
 	}
 
-	render(){
+	handleMessage(message, sender, sendResponse){
+		console.log("App.js got response from background.js")
+		if(message.urlsForLaunch != null){
+			console.log("App.js got launch urls from background")
 
-	return (
-		  <div>
-		{/*Hotkey for dev only, when lots of experimental books are added. take away from final product.*/}
-		  <Hotkeys keyName = "shift+a" onKeyUp = {this.toggleAddBook}/>
-		  {/*<button onClick = {this.getURLS}>Get Open Windows</button>*/}
-		  <div className = 'main-container-center'>
+			this.setState({urlsForLaunch: message.urlsForLaunch})
+		}
+		if(message.urlsForWormhole != null){
+			console.log("App.js got launch wormhole from background")
+			this.setState({urlsForWormhole: message.urlsForWormhole})
 
-		    <div id = 'blurrable' className = 'book-shelf'>
-		        <SortBooks books = {this.state.bookshelf} setBooks = {this.setBooks} isBlurred = {this.state.addingBook}/>
-		        <div className = {this.state.addingBook?'blur-bg':'clear-bg'}>
-		        <BookShelf bks = {this.state.bookshelf} deleteBook = {this.deleteBook}/>
-
-		      </div>
-		    </div>
-
-		      {
-		        this.state.addingBook?
-		        <div>
-		          <AddBookUI
-		            addBook = {this.addBook}
-		            closePopup={this.toggleAddBook}
-		            bks = {this.state.bookshelf}
-		          />
-		        </div>
-		        :
-		        <div>
-
-
-		        </div>
-		      }
-
-		      <button className = 'add-bk-btn' onClick={this.toggleAddBook}><h2>+</h2></button>
-
-		  </div>
-		  </div>
-		);
+		}
 	}
 
- // getURLS = () =>{
- //
- //  chrome.tabs.get(1, () =>{console.log("Callback from getURLS")});
- //
- //  chrome.windows.getAll({populate:true}, getAllOpenWindows);
- //
- //    function getAllOpenWindows(winData) {
- //
- //      var tabs = [];
- //      for (var i in winData) {
- //        if (winData[i].focused === true) {
- //            var winTabs = winData[i].tabs;
- //            var totTabs = winTabs.length;
- //            for (var j=0; j<totTabs;j++) {
- //              tabs.push(winTabs[j].url);
- //            }
- //        }
- //      }
- //      console.log(tabs);
- //    }
- //
- //
- // }
+
+	_cbForLaunchResponse = (response) => {
+
+		this.setState({urlsForLaunch: response.urlsForLaunch})
+
+	}
+
+	_cbForWormholeResponse = (response) => {
+
+		this.setState({urlsForWormhole: response.urlsForWormhole})
+
+	}
+
 
 	/*Methods for adding and deleting books*/
 	toggleAddBook = () =>{
@@ -118,6 +91,8 @@ class BookAppMain extends Component {
 			}));
 			console.log("Adding book success!")
 		});
+
+
 	}
 
 	deleteBook = (book) => {
@@ -144,6 +119,45 @@ class BookAppMain extends Component {
 	          console.log("Book ("+_book.title+","+_book.key+")")
 	        );
 		})
+	}
+
+
+	render(){
+
+		return (
+			<div>
+				{/*Hotkey for dev only, when lots of experimental books are added. take away from final product.*/}
+				<Hotkeys keyName = "shift+a" onKeyUp = {this.toggleAddBook}/>
+				{/*<button onClick = {this.getURLS}>Get Open Windows</button>*/}
+				<div className = 'main-container-center'>
+
+					<div id = 'blurrable' className = 'book-shelf'>
+						<SortBooks books = {this.state.bookshelf} setBooks = {this.setBooks} isBlurred = {this.state.addingBook}/>
+						<div className = {this.state.addingBook?'blur-bg':'clear-bg'}>
+							<BookShelf bks = {this.state.bookshelf} deleteBook = {this.deleteBook}/>
+						</div>
+					</div>
+
+					{this.state.addingBook?
+						<div>
+							<AddBookUI
+								addBook = {this.addBook}
+								closePopup={this.toggleAddBook}
+								bks = {this.state.bookshelf}
+								urlsForLaunch={this.state.urlsForLaunch}
+								urlsForWormhole={this.state.urlsForWormhole}
+							/>
+						</div>
+						:
+						<div/>
+					}
+
+					<button className = 'add-bk-btn' onClick={this.toggleAddBook}><h2>+</h2></button>
+
+
+				</div>
+			</div>
+		);
 	}
 
 }

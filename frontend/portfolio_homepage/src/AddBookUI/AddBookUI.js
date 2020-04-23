@@ -3,6 +3,9 @@
 import React, {Component} from 'react'
 import '../books/bookStyles.css'
 import './pop-up.css'
+import Checkbox from "./Checkbox";
+
+const OPTIONS = ["Link book to window"];
 
 class AddBookUI extends Component {
 
@@ -12,7 +15,14 @@ class AddBookUI extends Component {
         super(props);
         this.state = {
             title: '',
-	        newBook: null
+	        newBook: null,
+            checkboxes: OPTIONS.reduce(
+              (options, option) => ({
+                ...options,
+                [option]: false
+              }),
+              {}
+            )
         };
     }
 
@@ -31,6 +41,8 @@ class AddBookUI extends Component {
                                        placeholder="Enter Title Here" defaultValue="Title" autoFocus
                                        onFocus={this.handleFocus}>
                                 </input>
+                                
+                                {this.createCheckboxes()}
 
                                 <span>
 									<button type="submit">Add</button>
@@ -85,6 +97,13 @@ class AddBookUI extends Component {
             alert('window id is null');
 
 
+        Object.keys(this.state.checkboxes)
+          .filter(checkbox => this.state.checkboxes[checkbox])
+          .forEach(checkbox => {
+            console.log(checkbox, "is selected.");
+            alert('This book will be linked to current window');
+          });
+
 		const nb = {//what a book should contain
 			key: Date.now(),
 			title: this._inputTitle.value,
@@ -99,6 +118,30 @@ class AddBookUI extends Component {
 		this._inputTitle.value = "";
         this.setState({newBook: null})
 	}
+
+    /*link window questionaire*/
+
+      handleCheckboxChange = changeEvent => {
+        const { name } = changeEvent.target;
+
+        this.setState(prevState => ({
+          checkboxes: {
+            ...prevState.checkboxes,
+            [name]: !prevState.checkboxes[name]
+          }
+        }));
+      };
+
+    createCheckbox = option => (
+        <Checkbox
+          label={option}
+          isSelected={this.state.checkboxes[option]}
+          onCheckboxChange={this.handleCheckboxChange}
+          key={option}
+        />
+      );
+
+      createCheckboxes = () => OPTIONS.map(this.createCheckbox);
 
 
 }

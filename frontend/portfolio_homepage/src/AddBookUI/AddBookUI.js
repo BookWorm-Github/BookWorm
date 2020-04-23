@@ -84,8 +84,7 @@ class AddBookUI extends Component {
         if(windowId==null)
             alert('window id is null');
 
-
-		const nb = {//what a book should contain
+        const nb = {//what a book should contain
 			key: Date.now(),
 			title: this._inputTitle.value,
 			time_created: Date.now(),

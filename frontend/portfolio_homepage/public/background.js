@@ -35,6 +35,7 @@ chrome.runtime.onMessage.addListener(
 			    sendResponse({urlsForWormhole: window.urlsForWormhole});
 			    break;
 	        case("getCurrWindowId"):
+          urlsForWormhole.splice(0,window.urlsForWormhole.length);
 				console.log("Background received request for current window id and is sending back "+sender.tab.windowId);
 				getOpenTabs();
 				sendResponse({windowId: sender.tab.windowId});
@@ -57,10 +58,10 @@ function getOpenTabs(){//get current open tabs in window
         if(tab.url!==undefined){
           window.urls[tab.id] = tab.url; //update the url of a tab
         }
-        if(!window.tabs.includes(tab.url)&&tab.url!==undefined&&!tab.url.includes('chrome://newtab')){
+        if(!window.tabs.includes(tab.url)&&tab.url!==undefined&&tab.url!==""&&!tab.url.includes('chrome://newtab')){
           window.tabs.push(tab.url);
         }
-        if(!window.urlsForWormhole.includes(tab.url)&&tab.url!==undefined&&!tab.url.includes('chrome://newtab')){
+        if(!window.urlsForWormhole.includes(tab.url)&&tab.url!==undefined&&tab.url!==""&&!tab.url.includes('chrome://newtab')){
 
           window.urlsForWormhole.push(tab.url);
         }

@@ -60,6 +60,7 @@ export const deleteBook = async (bk, user_id) => {
 export const deLinkBookfromWindow = async (bk, currWindowId, user_id) => {//update the book with the linked window id
 	if (bk.linkedWindowId === currWindowId) {
 		let bookDataRef = bw_db.doc(`users/${user_id}/bookData/${bk.key.toString()}`);
+		
 		await bookDataRef.update({
 			// Launch: null,
 			// WormHole: null,

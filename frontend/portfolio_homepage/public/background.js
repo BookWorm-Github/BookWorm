@@ -38,7 +38,7 @@ chrome.runtime.onMessage.addListener(
           urlsForWormhole = [];
 				console.log("Background received request for current window id and is sending back "+sender.tab.windowId);
 				getOpenTabs();
-				sendResponse({windowId: sender.tab.windowId});
+				sendResponse({windowId: sender.tab.windowId, urlsForWormhole: window.urlsForWormhole, urlsForLaunch: window.urlsForLaunch});
 	        break;
 
 		    default://console.log("unknown message")

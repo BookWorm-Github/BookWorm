@@ -57,10 +57,10 @@ class BookAppMain extends Component {
 				linkedBook: recentBook
 			});
 
-		alert("BookAppMain linked book at componentwillmount is "+this.state.linkedBook.title);
+		//alert("BookAppMain linked book at componentwillmount is "+this.state.linkedBook.title);
 		}
 		else{
-			alert('Add a book to continue');
+			//alert('Add a book to continue');
 		}
 	}
 
@@ -108,7 +108,7 @@ class BookAppMain extends Component {
 
 		}
 		this.setState({linkedBook: linkedBookCopy});
-		alert('BookAppMain Linked book at handleMessage is '+this.state.linkedBook.title);
+		//alert('BookAppMain Linked book at handleMessage is '+this.state.linkedBook.title);
 		// console.log(this.state.bookshelf);
 	}
 
@@ -176,7 +176,7 @@ class BookAppMain extends Component {
 			console.log("Adding book success!")
 		});
 
-		alert("BookAppMain linked book at addBook is "+this.state.linkedBook.title);
+		//alert("BookAppMain linked book at addBook is "+this.state.linkedBook.title);
 	}
 
 	deleteBook = (book) => {
@@ -190,7 +190,7 @@ class BookAppMain extends Component {
 		});
 		this.findLinkedBook();
 
-		alert("BookAppMain linked book at deleteBook (beware if linkedbook is deleted) is "+this.state.linkedBook.title);
+		//alert("BookAppMain linked book at deleteBook (beware if linkedbook is deleted) is "+this.state.linkedBook.title);
 	}
 
 	setBooks = (books) => {

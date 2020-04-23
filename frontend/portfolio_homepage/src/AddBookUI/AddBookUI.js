@@ -96,19 +96,22 @@ class AddBookUI extends Component {
         if(windowId==null)
             alert('window id is null');
 
-
+        var linkToWindow = -1;
         Object.keys(this.state.checkboxes)
           .filter(checkbox => this.state.checkboxes[checkbox])
           .forEach(checkbox => {
             console.log(checkbox, "is selected.");
-            alert('This book will be linked to current window');
+            if(checkbox =='Link book to window'){
+                linkToWindow = windowId;
+                alert('Checkbox '+checkbox +' is selected. This book will be linked to current window');
+            }
           });
-
+          alert('Book is linked to window'+linkToWindow);
 		const nb = {//what a book should contain
 			key: Date.now(),
 			title: this._inputTitle.value,
 			time_created: Date.now(),
-			linkedWindowId: windowId,
+			linkedWindowId: linkToWindow,
 			Launch: this.props.urlsForLaunch,
 			WormHole: this.props.urlsForWormhole
 		};

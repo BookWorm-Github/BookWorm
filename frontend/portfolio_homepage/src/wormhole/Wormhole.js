@@ -25,7 +25,8 @@ class Wormhole extends Component{
                     </form>
                     <ul className = 'wormhole-list'>
                         {this.state.searchResults.map(item => (
-                          <li  key={item} style={{listStyleImage: 'url('+this.getBaseUrl(item)+'/favicon.ico)'}}>
+                          <li>
+                          {/*<li  key={item} style={{listStyleImage: 'url('+this.getBaseUrl(item)+'/favicon.ico)'}}>*/}
                             <span>
                             <a>
                                 {item} &nbsp;                        
@@ -76,7 +77,7 @@ class Wormhole extends Component{
       });
     } else {
 			// If the search bar is empty, set newList to original task list: do we want this effect?
-     // newList = this.props.urls;
+      newList = this.props.urls;
     }
     console.log("newList in wormhole is "+newList.toString());
 		// Set the filtered state based on what our rules added to newList

@@ -39,11 +39,11 @@ class TitleFetcher extends Component{
 			});
 		}
 
-		
-		
-		for(let i = 0; i<this.props.urls.length; i++){
+		if(this.props.urls!=null){
+			for(let i = 0; i<this.props.urls.length; i++){
 
-				fetchHTML(this.props.urls[i],this.state.titles,this.callback);
+					fetchHTML(this.props.urls[i],this.state.titles,this.callback);
+			}
 		}
 
 

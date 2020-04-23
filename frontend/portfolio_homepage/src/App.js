@@ -28,14 +28,11 @@ class App extends Component{
 	}
 	
 	handleMessage(message, sender, sendResponse){
-		console.log("App.js got response from background.js")
 		if(message.urlsForLaunch != null){
-			console.log("App.js got launch urls from background")
 	
 			this.setState({urlsForLaunch: message.urlsForLaunch})
 		}
 		if(message.urlsForWormhole != null){
-			console.log("App.js got launch wormhole from background")
 			this.setState({urlsForWormhole: message.urlsForWormhole})
 	
 		}
@@ -57,19 +54,17 @@ class App extends Component{
 
 	render(){
 		return <div className="App">
+				<User/>
+			<h2>URLs for Wormhole</h2>
+			<ul>
+				{ this.state.urlsForWormhole.map(title => <li>{title}</li>)}
+			</ul>
+
+			<h2>URLs for Launch</h2>
+			<ul>
+				{ this.state.urlsForLaunch.map(title => <li>{title}</li>)}
+			</ul>
 			<BgColor />
-			
-			<User/>
-			{/*<h2>URLs for Wormhole</h2>*/}
-			{/*<ul>*/}
-			{/*	{ this.state.urlsForWormhole.map(title => <li>{title}</li>)}*/}
-			{/*</ul>*/}
-
-			{/*<h2>URLs for Launch</h2>*/}
-			{/*<ul>*/}
-			{/*	{ this.state.urlsForLaunch.map(title => <li>{title}</li>)}*/}
-			{/*</ul>*/}
-
 		</div>
 	}
 }

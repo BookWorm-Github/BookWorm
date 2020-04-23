@@ -10,6 +10,7 @@ import '../wormhole/wormhole.css'
 import Wormhole from '../wormhole/Wormhole'
 import Launcher from '../launcher/Launcher'
 import ManualEntryOfURL from '../addURL/ManualEntryOfURL'
+import WindowId from '../debug/WindowId'
 
 class Book extends Component{
 
@@ -44,6 +45,7 @@ class Book extends Component{
 		const hoverMenu = this.createHoverMenu();
 		return (
 			<div>
+			<div> <WindowId linkedWindowId = {this.props.book.linkedWindowId} /> </div>
 			<div className = 'book'
 				onMouseEnter = {()=>this.setState({isHovered:true})}
 				onMouseLeave = {()=>this.setState({isHovered:false})}>
@@ -98,7 +100,7 @@ Book.propTypes = {
 	book: PropTypes.shape({
 		key: PropTypes.number.isRequired,
 		title: PropTypes.string.isRequired,
-		linkedWindowId: PropTypes.number,
+		linkedWindowId: PropTypes.number.isRequired,
 		Launch: PropTypes.array.isRequired,
 		WormHole: PropTypes.object.isRequired
 	}),

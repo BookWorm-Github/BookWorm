@@ -107,9 +107,9 @@ class BookAppMain extends Component {
 		const filteredBooks = this.state.bookshelf.map((book, index, array) => {
 			deLinkBookfromWindow(book, currWindowId, this.props.user.uid)
 				.then(() => {//delinks the book from window in the database
-					book.Launch = null;
-					book.WormHole = null;
-					book.linkedWindowId = null;
+					// book.Launch = null;
+					// book.WormHole = null;
+					book.linkedWindowId = -1001;
 				});
 
 			return book;

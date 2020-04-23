@@ -81,6 +81,8 @@ class AddBookUI extends Component {
 
 	_cbWindowIdResponse(response) {
         let windowId = response.windowId;
+        if(windowId==null)
+            alert('window id is null');
 
 
 		const nb = {//what a book should contain
@@ -92,9 +94,7 @@ class AddBookUI extends Component {
 			WormHole: this.props.urlsForWormhole
 		};
 
-		console.log("Linking current window " + windowId.toString() + " to book: "+nb.title )
-
-        console.log("Input Title at createBook is: " + this._inputTitle.value);
+		console.log("Linking current window " + windowId.toString() + " to book: "+nb.title +" so nb linked window is "+nb.linkedWindowId);
         this.props.addBook(nb);//calls this.props.addBook function so that we can add the newly created book and go back to portfolio homepage clearing the addBookUI
 		this._inputTitle.value = "";
         this.setState({newBook: null})

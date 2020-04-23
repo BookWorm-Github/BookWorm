@@ -51,7 +51,6 @@ export const deleteBook = async (bk, user_id) => {
 	const bookDataRef = bw_db.doc(`users/${user_id}/bookData/${bk.key.toString()}`)
 	await bookDataRef.get().then(snapshot => {
 		bookDataRef.delete().then(function () {
-			console.log("Document successfully deleted!");
 		}).catch(function (error) {
 			console.error("Error removing document: ", error);
 		})
@@ -62,9 +61,9 @@ export const deLinkBookfromWindow = async (bk, currWindowId, user_id) => {//upda
 	if (bk.linkedWindowId === currWindowId) {
 		let bookDataRef = bw_db.doc(`users/${user_id}/bookData/${bk.key.toString()}`);
 		await bookDataRef.update({
-			Launch: null,
-			WormHole: null,
-			linkedWindowId: null
+			// Launch: null,
+			// WormHole: null,
+			linkedWindowId: -132
 		}).then(() => {
 			console.log("Delinked successful for " + bk.title + " and window " + currWindowId);
 		}).catch(error => {

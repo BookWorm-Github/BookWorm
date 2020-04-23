@@ -38,7 +38,7 @@ class BookShelf extends Component {
 	        debugString+=("Shelf ("+i+","+j+") is "+shelfOfBooks[i][j]+"\n");
 	    }
 	}
-	console.log("DEBUG SHELF PARSE of bookList len: "+bookList.length+": "+debugString);
+	// console.log("DEBUG SHELF PARSE of bookList len: "+bookList.length+": "+debugString);
 	// this.printShelf(shelfOfBooks);
 	return shelfOfBooks;
 

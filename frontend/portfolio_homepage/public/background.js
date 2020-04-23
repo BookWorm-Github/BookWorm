@@ -53,7 +53,7 @@ function getOpenTabs(){//get current open tabs in window
       tabs.forEach(function(tab){
         //console.log("Tab id is "+tab.id);
         // window.urls[tab.windowId][tab.id] = tab.url;
-	      console.log("tab url is " + tab.url);
+	      //console.log("tab url is " + tab.url);
         if(tab.url!==undefined){
           window.urls[tab.id] = tab.url; //update the url of a tab
         }
@@ -104,6 +104,7 @@ chrome.tabs.onRemoved.addListener(function(tabid, removed) {
 });
 
 
+
 chrome.windows.onRemoved.addListener(function(windowId) {
 	console.log("window closed")
 	getOpenTabs();
@@ -127,17 +128,31 @@ chrome.windows.onRemoved.addListener(function(windowId) {
  //   //window.urlsToBeStoredInLaunch.splice(0,//window.urlsToBeStoredInLaunch.length);
  //  }
 
+  console.log("window removed and urlsForWormhole are "+window.urlsForWormhole);
 
  sendToContent();
 
 })
 
+
+// chrome.tabs.onDetached.addListener(function(windowId) {
+//   console.log("window opened");
+//   getOpenTabs();
+
+//  window.urlsForWormhole.splice(0,window.urlsForWormhole.length);//clears the window.tabs array
+
+
+//   console.log("window created and urlsForWormhole are "+window.urlsForWormhole);
+//  sendToContent();
+
+// })
+
 chrome.windows.onCreated.addListener(function(windowId) {
-  console.log("window opened");
   getOpenTabs();
 
  window.urlsForWormhole.splice(0,window.urlsForWormhole.length);//clears the window.tabs array
 
+  console.log("window created and urlsForWormhole are "+window.urlsForWormhole);
 
  sendToContent();
 

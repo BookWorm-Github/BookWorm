@@ -35,7 +35,7 @@ chrome.runtime.onMessage.addListener(
 			    sendResponse({urlsForWormhole: window.urlsForWormhole});
 			    break;
 	        case("getCurrWindowId"):
-          urlsForWormhole.splice(0,window.urlsForWormhole.length);
+          urlsForWormhole = [];
 				console.log("Background received request for current window id and is sending back "+sender.tab.windowId);
 				getOpenTabs();
 				sendResponse({windowId: sender.tab.windowId});
@@ -110,7 +110,7 @@ chrome.windows.onRemoved.addListener(function(windowId) {
 	console.log("window closed")
 	getOpenTabs();
 
- window.urlsForWormhole.splice(0,window.urlsForWormhole.length);//clears the window.tabs array
+ window.urlsForWormhole=[];//clears the window.tabs array
  //debug wormhole
  // console.log("The "+//window.urlsToBeStoredInWormhole.length+"urls to be stored in wormhole are "+//window.urlsToBeStoredInWormhole.toString());
  // alert("The "+//window.urlsToBeStoredInWormhole.length+"urls to be stored in wormhole are "+//window.urlsToBeStoredInWormhole.toString())
@@ -151,7 +151,7 @@ chrome.windows.onRemoved.addListener(function(windowId) {
 chrome.windows.onCreated.addListener(function(windowId) {
   getOpenTabs();
 
- window.urlsForWormhole.splice(0,window.urlsForWormhole.length);//clears the window.tabs array
+ window.urlsForWormhole=[];//clears the window.tabs array
 
   console.log("window created and urlsForWormhole are "+window.urlsForWormhole);
 

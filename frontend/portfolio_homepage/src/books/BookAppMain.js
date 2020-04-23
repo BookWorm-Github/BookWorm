@@ -14,44 +14,75 @@ class BookAppMain extends Component {
 		this.state = {
 			bookshelf: [],
 			addingBook: false,
-			linkedBook: "", //the current book that is linked to the window
+			linkedBook: null, //the current book that is linked to the window
 			urlsForLaunch:[],
 			urlsForWormhole:[]
 		};
 
-		//TODO move the chrome runtime stuff and their callback fns to somewhere more suitable
-		chrome.runtime.sendMessage({rq: "urlsForLaunch"}, this._cbForLaunchResponse);
-		chrome.runtime.sendMessage({rq: "urlsForWormhole"}, this._cbForWormholeResponse);
 		this.handleMessage.bind(this);
 	}
 
 	componentDidMount = () => {//updating the user's personal books
-		this.setState({bookshelf: this.props.books})
+
+
+		this.setState({bookshelf: this.props.books});
+		this.findLinkedBook();
+
+		chrome.runtime.sendMessage({rq: "urlsForLaunch"}, this._cbForLaunchResponse);
+		chrome.runtime.sendMessage({rq: "urlsForWormhole"}, this._cbForWormholeResponse);
+		
 		chrome.runtime.onMessage.addListener(this.handleMessage.bind(this));
 	}
 
-	handleMessage(message, sender, sendResponse){
-		if(message.urlsForLaunch != null){
-			console.log("App.js got launch urls from background")
-
-			const filteredBook = this.state.bookshelf.map(book => {//find the linked book and then update the Launch for the book
-				if( book.key === this.state.linkedBook){
-					book.Launch = message.urlsForLaunch;
-				}
-				return book;
-			})
-
-			console.log("updating books after launch: ")
-			console.log(filteredBook)
-
+	findLinkedBook = () =>{
+		//finds the most recently added book
+		var highestKey = -1;
+		var books = this.state.bookshelf;
+		if(books!==null&&books.length>0){
+			var recentBook = books[0];
+			for (var i = 0; i < books.length; i++) {
+			  if(books[i].key>highestKey){
+			  	highestKey = books[i].key;
+			  	recentBook = books[i];
+			  }
+			}
 			this.setState({
-				bookshelf: filteredBook,
-				urlsForLaunch: message.urlsForLaunch
-			})
+				linkedBook: recentBook
+			});
+
+		alert("BookAppMain linked book at componentwillmount is "+this.state.linkedBook.title);
+		}
+		else{
+			alert('Add a book to continue');
+		}
+	}
+
+	handleMessage(message, sender, sendResponse){
+
+		var linkedBookCopy = JSON.parse(JSON.stringify(this.state.linkedBook));
+		if(message.urlsForLaunch != null){
+			linkedBookCopy.Launch = message.urlsForLaunch;
+			// console.log("App.js got launch urls from background")
+
+			// const filteredBook = this.state.bookshelf.map(book => {//find the linked book and then update the Launch for the book
+			// 	if( book.key === this.state.linkedBook){
+			// 		book.Launch = message.urlsForLaunch;
+			// 	}
+			// 	return book;
+			// })
+
+			// console.log("updating books after launch: ")
+			// console.log(filteredBook)
+
+			// this.setState({
+			// 	bookshelf: filteredBook,
+			// 	urlsForLaunch: message.urlsForLaunch
+			// })
 
 		}
 		if(message.urlsForWormhole != null){
 			console.log("App.js got launch wormhole from background")
+			linkedBookCopy.WormHole = message.urlsForWormhole;
 
 			const filteredBook = this.state.bookshelf.map(book => {//find the linked book and then update the WormHole for the book
 				if( book.key === this.state.linkedBook){
@@ -69,23 +100,35 @@ class BookAppMain extends Component {
 			})
 
 		}
-
-		console.log(this.state.bookshelf);
+		this.setState({linkedBook: linkedBookCopy});
+		alert('BookAppMain Linked book at handleMessage is '+this.state.linkedBook.title);
+		// console.log(this.state.bookshelf);
 	}
 
-
+	//TODO I dunno how to write to database so I need to delete and add books each time there's an update.
+	//This inefficient
 	_cbForLaunchResponse = (response) => {
-		this.setState({
-			urlsForLaunch: response.urlsForLaunch
-		})
+		let lbc = JSON.parse(JSON.stringify(this.state.linkedBook));
+		lbc.Launch = response.urlsForLaunch;
 
-		console.log("state of book after LAUNCH update from background:")
+		this.setState({
+			urlsForLaunch: response.urlsForLaunch,
+			linkedBook: lbc
+		});
+
+
+		// console.log("state of book after LAUNCH update from background:")
 
 	}
 
 	_cbForWormholeResponse = (response) => {
+
+		let lbc = JSON.parse(JSON.stringify(this.state.linkedBook));
+		lbc.WormHole = response.urlsForWormhole;
+
 		this.setState({
-			urlsForWormhole: response.urlsForWormhole
+			urlsForWormhole: response.urlsForWormhole,
+			linkedBook: lbc
 		})
 
 		console.log("state of book after WORMHOLE update from background:")
@@ -115,15 +158,18 @@ class BookAppMain extends Component {
 			return book;
 		});
 
+
 		//storing the newBook that is linked to the current window
 		storeBook(newBook, this.props.user.uid).then(e => {
 			this.setState(prevState => ({
-				linkedBook: newBook.key,
+				linkedBook: newBook,
 				bookshelf: [...filteredBooks, newBook],
 				addingBook: false//this clears the addBookUI
 			}));
 			console.log("Adding book success!")
 		});
+
+		alert("BookAppMain linked book at addBook is "+this.state.linkedBook.title);
 	}
 
 	deleteBook = (book) => {
@@ -135,6 +181,9 @@ class BookAppMain extends Component {
 			    bookshelf: filteredBooks
 		    });
 		});
+		this.findLinkedBook();
+
+		alert("BookAppMain linked book at deleteBook (beware if linkedbook is deleted) is "+this.state.linkedBook.title);
 	}
 
 	setBooks = (books) => {
@@ -159,9 +208,10 @@ class BookAppMain extends Component {
 			<div>
 				{/*Hotkey for dev only, when lots of experimental books are added. take away from final product.*/}
 				<Hotkeys keyName = "shift+a" onKeyUp = {this.toggleAddBook}/>
+
 				{/*<button onClick = {this.getURLS}>Get Open Windows</button>*/}
 				<div className = 'main-container-center'>
-
+				
 					{/*{console.log("books are: ")};*/}
 					{/*{console.log(this.state.bookshelf)};*/}
 

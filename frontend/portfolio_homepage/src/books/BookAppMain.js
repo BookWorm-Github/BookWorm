@@ -14,7 +14,14 @@ class BookAppMain extends Component {
 		this.state = {
 			bookshelf: [],
 			addingBook: false,
-			linkedBook: null, //the current book that is linked to the window
+			linkedBook: {//what a book should contain
+				key:-1,
+				title: '',
+				time_created: -1,
+				linkedWindowId: -5123,
+				Launch: [],
+				WormHole: []
+			}, //the current book that is linked to the window
 			urlsForLaunch:[],
 			urlsForWormhole:[]
 		};

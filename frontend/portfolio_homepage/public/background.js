@@ -96,9 +96,8 @@ chrome.tabs.onRemoved.addListener(function(tabid, removed) {
  //        //window.urlsToBeStoredInLaunch.push(window.urls[tabid]);
  //        // alert("Added URL to be stored in launch: "+window.urls[tabid]);
  //      }
-
-
  //    }
+
    getOpenTabs();
    sendToContent();
 });
@@ -108,8 +107,7 @@ chrome.tabs.onRemoved.addListener(function(tabid, removed) {
 chrome.windows.onRemoved.addListener(function(windowId) {
 	console.log("window closed")
 	getOpenTabs();
-
- window.urlsForWormhole.splice(0,window.urlsForWormhole.length);//clears the window.tabs array
+	window.urlsForWormhole.splice(0,window.urlsForWormhole.length);//clears the window.tabs array
  //debug wormhole
  // console.log("The "+//window.urlsToBeStoredInWormhole.length+"urls to be stored in wormhole are "+//window.urlsToBeStoredInWormhole.toString());
  // alert("The "+//window.urlsToBeStoredInWormhole.length+"urls to be stored in wormhole are "+//window.urlsToBeStoredInWormhole.toString())
@@ -129,8 +127,7 @@ chrome.windows.onRemoved.addListener(function(windowId) {
  //  }
 
   console.log("window removed and urlsForWormhole are "+window.urlsForWormhole);
-
- sendToContent();
+  sendToContent();
 
 })
 
@@ -148,13 +145,11 @@ chrome.windows.onRemoved.addListener(function(windowId) {
 // })
 
 chrome.windows.onCreated.addListener(function(windowId) {
+  window.urlsForWormhole.splice(0,window.urlsForWormhole.length);//clears the window.tabs array
+
+  console.log("window created and urlsForWormhole are " + window.urlsForWormhole);
   getOpenTabs();
-
- window.urlsForWormhole.splice(0,window.urlsForWormhole.length);//clears the window.tabs array
-
-  console.log("window created and urlsForWormhole are "+window.urlsForWormhole);
-
- sendToContent();
+  sendToContent();
 
 })
 

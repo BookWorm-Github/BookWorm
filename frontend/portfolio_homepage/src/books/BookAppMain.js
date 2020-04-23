@@ -5,8 +5,9 @@ import AddBookUI from '../AddBookUI/AddBookUI'
 import './bookStyles.css'
 import SortBooks from '../sortItems/SortBooks'
 import Hotkeys from 'react-hot-keys';
-import {deleteBook, deLinkBookfromWindow, storeBook} from "../firebase/firestore/db_functions";
+import {deleteBook, deLinkBookfromWindow, storeBook, updateBookLW} from "../firebase/firestore/db_functions";
 //added hotkeys: https://github.com/jaywcjlove/react-hotkeys#readme
+
 class BookAppMain extends Component {
 
 	constructor(props){
@@ -37,6 +38,7 @@ class BookAppMain extends Component {
 			const filteredBook = this.state.bookshelf.map(book => {//find the linked book and then update the Launch for the book
 				if( book.key === this.state.linkedBook){
 					book.Launch = message.urlsForLaunch;
+					updateBookLW(book, this.props.user.uid).then(() => console.log("launch in db successfully updated"));
 				}
 				return book;
 			})
@@ -56,6 +58,7 @@ class BookAppMain extends Component {
 			const filteredBook = this.state.bookshelf.map(book => {//find the linked book and then update the WormHole for the book
 				if( book.key === this.state.linkedBook){
 					book.WormHole = message.urlsForWormhole;
+					updateBookLW(book, this.props.user.uid).then(() => console.log("wormhole in db successfully updated"));
 				}
 				return book;
 			})

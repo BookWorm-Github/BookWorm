@@ -1,4 +1,4 @@
-import {bw_auth, bw_db} from "../init";
+import {bw_db} from "../init";
 
 export const storeBook = async (book, user_id) => {//takes in a book object and a users special uid to create a book under the uid.
 	const bookDataRef = bw_db.collection(`users/${user_id}/bookData`).doc(book.key.toString())
@@ -24,6 +24,23 @@ export const storeBook = async (book, user_id) => {//takes in a book object and 
 			console.log("Error getting from storing book: " + e)
 			return false
 		})
+}
+
+export const updateBookLW = async (book, user_id) => {
+	const bookDataRef = bw_db.collection(`users/${user_id}/bookData`).doc(book.key.toString())
+
+	await bookDataRef.get().then(async snapshot => {
+		if(snapshot.exists){
+			await bookDataRef.update({
+				Launch: book.Launch,
+				WormHole: book.WormHole
+			})
+		}
+		else{
+			console.log("book doesn't exist in database...")
+		}
+	}).catch(e => console.log(e));
+
 }
 
 
@@ -60,15 +77,20 @@ export const deleteBook = async (bk, user_id) => {
 export const deLinkBookfromWindow = async (bk, currWindowId, user_id) => {//update the book with the linked window id
 	if (bk.linkedWindowId === currWindowId) {
 		let bookDataRef = bw_db.doc(`users/${user_id}/bookData/${bk.key.toString()}`);
-		await bookDataRef.update({
-			// Launch: null,
-			// WormHole: null,
-			linkedWindowId: -132
-		}).then(() => {
-			console.log("Delinked successful for " + bk.title + " and window " + currWindowId);
-		}).catch(error => {
-			console.error("error updating book with delinking: ", error);
+		bookDataRef.get().then(async snapshot => {
+			if(snapshot.exists){
+				await bookDataRef.update({
+					// Launch: null,
+					// WormHole: null,
+					linkedWindowId: -132
+				}).then(() => {
+					console.log("Delinked successful for " + bk.title + " and window " + currWindowId);
+				}).catch(error => {
+					console.error("error updating book with delinking: ", error);
+				})
+			}
 		})
+
 	}
 }
 

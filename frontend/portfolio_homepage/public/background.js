@@ -127,7 +127,7 @@ chrome.windows.onRemoved.addListener(function(windowId) {
  //  }
 
   console.log("window removed and urlsForWormhole are "+window.urlsForWormhole);
-  sendToContent();
+  //sendToContent();
 
 })
 
@@ -182,14 +182,14 @@ function sendToContent(){
       tabs =>{
         if(tabs[0]!==undefined)
         chrome.tabs.sendMessage(tabs[0].id, 
-        {urlsForLaunch:window.tabs});
+        {urlsForLaunch:window.tabs, urlsForWormhole: window.urlsForWormhole});
     });
-  chrome.tabs.query({active: true, currentWindow: true},
-      tabs =>{
-        if(tabs[0]!=undefined)
-        chrome.tabs.sendMessage(tabs[0].id,
-        {urlsForWormhole:window.urlsForWormhole});
-    });
+  // chrome.tabs.query({active: true, currentWindow: true},
+  //     tabs =>{
+  //       if(tabs[0]!=undefined)
+  //       chrome.tabs.sendMessage(tabs[0].id,
+  //       {urlsForWormhole:window.urlsForWormhole});
+  //   });
 }
 
 function openHomePage(){

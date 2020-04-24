@@ -53,7 +53,7 @@ class BookShelf extends Component {
 				<div key={_book.key}>
 					{/*<BookNavbar book ={_book} deleteBook = {this.deleteBook} />*/}
 					<button onClick={() => this.deleteBook(_book)}>...</button>
-					<Book book ={_book} toggleWormhole = {this.toggleWormhole}
+					<Book book ={_book} updateBook = {this.props.updateBook} toggleWormhole = {this.toggleWormhole}
 					  isShowingWormhole = {this.state.isShowingWormhole} />
 				</div>
 			}
@@ -143,7 +143,9 @@ BookShelf.propTypes = {
 	    Launch: PropTypes.array.isRequired,
 	    WormHole: PropTypes.object.isRequired
     })),
-	deleteBook: PropTypes.func.isRequired
+	deleteBook: PropTypes.func.isRequired,
+
+	updateBook: PropTypes.func.isRequired
   };
 
 export default (BookShelf);

@@ -17,6 +17,7 @@ class Book extends Component{
   constructor(props){
     super(props);
     this.state = {
+    	linkedWindowId:-100,
     	book: null,
       title:'',
       isHovered: false,
@@ -26,13 +27,14 @@ class Book extends Component{
   }
   componentDidMount=() =>{
 		this.setState({
+			linkedWindowId: this.props.book.linkedWindowId,
 			book: this.props.book,
 			title: this.props.book.title
 		});
 	}
 	  createHoverMenu() {
 	    return <div className ='hover-menu'>
-				<Launcher urls = {this.props.book.Launch}/>
+				<Launcher updateWindow = {this.setLinkedWindow} urls = {this.props.book.Launch}/>
 				<div className = 'wormhole' 
 						onClick = {() => this.props.toggleWormhole(true)}>Wormhole
 				</div>
@@ -75,20 +77,29 @@ class Book extends Component{
 		);
 	}
 
+	setLinkedWindow = (windowId) =>{
+
+
+		this.setState({
+			linkedWindowId: windowId
+		})
+		this.props.updateBook(this.props.book,windowId,this.state.launchURLs,this.state.wormholeURLs);
+	}
 	setLaunchURLs = (newURL) => {
 		this.setState(
 	      {
 	        launchURLs: [...this.state.launchURLs,newURL],
 	        wormholeURLs:[...this.state.wormholeURLs,newURL]
-	      }
+	      }, ()=>(this.props.updateBook(this.props.book,this.state.linkedWindowId,this.state.launchURLs,this.state.wormholeURLs))
 	    );
+
 	}
 
 	setWormholeURLs = (newURL) =>{
 		this.setState(
 	      {
 	        wormholeURLs: [...this.state.wormholeURLs,newURL],
-	      }
+	      },()=>(this.props.updateBook(this.props.book,this.state.linkedWindowId,this.state.launchURLs,this.state.wormholeURLs))
 	    );
 	}
 
@@ -106,7 +117,8 @@ Book.propTypes = {
 		WormHole: PropTypes.object.isRequired
 	}),
 		toggleWormhole: PropTypes.func.isRequired,
-		isShowingWormhole: PropTypes.bool.isRequired
+		isShowingWormhole: PropTypes.bool.isRequired,
+		updateBook: PropTypes.func.isRequired
 	};
 
 

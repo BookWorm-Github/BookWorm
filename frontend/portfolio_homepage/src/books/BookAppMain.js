@@ -61,7 +61,7 @@ class BookAppMain extends Component {
 					updateBookLW(book, this.props.user.uid).then(() => console.log("wormhole in db successfully updated"));
 				}
 				return book;
-			})
+			});
 
 			console.log("updating books after Wormhole: ")
 			console.log(filteredBook)
@@ -101,6 +101,21 @@ class BookAppMain extends Component {
 		//console.log("Adding book");
 		this.setState({addingBook:!this.state.addingBook});
 	}
+	//updates teh linkedWindow, launch and wormhole of a book in database
+	updateBook = (bookToBeUpdated, linkedWindow, launch, wormhole) =>{
+		const updatedBooks = this.state.bookshelf.map(book => {//find the linked book and then update the WormHole for the book
+			if( book.key === bookToBeUpdated.key){
+				book.linkedWindowId = linkedWindow;
+				book.WormHole = wormhole;
+				book.Launch = launch;
+				updateBookLW(book, this.props.user.uid).then(() => console.log("data in db successfully updated"));
+			}
+			return book;
+		});
+		this.setState({
+				bookshelf: updatedBooks
+			})
+	}
 
 	addBook = (newBook)=> {//gets the newBook from addBookUI /*Every book has title and key, which is the date and linkedwindowId*/
 		// deLinking books that may have already linked with this window
@@ -112,7 +127,7 @@ class BookAppMain extends Component {
 				.then(() => {//delinks the book from window in the database
 					// book.Launch = null;
 					// book.WormHole = null;
-					book.linkedWindowId = -1001;
+					// book.linkedWindowId = -1001;
 				});
 
 			return book;
@@ -171,7 +186,7 @@ class BookAppMain extends Component {
 					<div id = 'blurrable' className = 'book-shelf'>
 						<SortBooks books = {this.state.bookshelf} setBooks = {this.setBooks} isBlurred = {this.state.addingBook}/>
 						<div className = {this.state.addingBook?'blur-bg':'clear-bg'}>
-							<BookShelf bks = {this.state.bookshelf} deleteBook = {this.deleteBook}/>
+							<BookShelf bks = {this.state.bookshelf} updateBook = {this.updateBook} deleteBook = {this.deleteBook}/>
 						</div>
 					</div>
 

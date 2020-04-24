@@ -22,7 +22,6 @@ class Launcher extends Component{
   			urls: this.props.urls
   		});
 
-		// chrome.runtime.onMessage.addListener(this._cbWindow.bind(this));
   	}
 
 	render(){
@@ -49,6 +48,7 @@ class Launcher extends Component{
 
 	_cbWindow = (response) => {
 		alert("Window "+response.windowId+" was just created");
+		this.props.updateWindow(response.windowId);
 	}
 
 	
@@ -59,7 +59,8 @@ class Launcher extends Component{
 
 
 Launcher.propTypes = {
-    urls: PropTypes.arrayOf(PropTypes.string)
+    urls: PropTypes.arrayOf(PropTypes.string),
+    updateWindow: PropTypes.func.isRequired
   };
 
 export default Launcher;

@@ -32,12 +32,16 @@ export const updateBookLW = async (book, user_id) => {
 	await bookDataRef.get().then(async snapshot => {
 		if(snapshot.exists){
 			await bookDataRef.update({
-				Launch: book.Launch,
-				WormHole: book.WormHole
+					linkedWindowId: book.linkedWindowId,
+					Launch: book.Launch,
+					WormHole: book.WormHole
 			})
+			 alert("db function received book linked window id  "+book.linkedWindowId);
+			return true;
 		}
 		else{
 			console.log("book doesn't exist in database...")
+			return false;
 		}
 	}).catch(e => console.log(e));
 

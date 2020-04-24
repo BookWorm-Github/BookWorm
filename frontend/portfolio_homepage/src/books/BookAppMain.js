@@ -104,10 +104,12 @@ class BookAppMain extends Component {
 	//updates teh linkedWindow, launch and wormhole of a book in database
 	updateBook = (bookToBeUpdated, linkedWindow, launch, wormhole) =>{
 		const updatedBooks = this.state.bookshelf.map(book => {//find the linked book and then update the WormHole for the book
-			if( book.key === bookToBeUpdated.key){
+			if( book.key == bookToBeUpdated.key){
 				book.linkedWindowId = linkedWindow;
 				book.WormHole = wormhole;
 				book.Launch = launch;
+
+				alert("updating book "+book.title+" with window "+book.linkedWindowId);
 				updateBookLW(book, this.props.user.uid).then(() => console.log("data in db successfully updated"));
 			}
 			return book;

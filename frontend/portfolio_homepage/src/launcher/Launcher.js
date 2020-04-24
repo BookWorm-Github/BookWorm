@@ -41,13 +41,13 @@ class Launcher extends Component{
 		if(this.props.urls==null)
 			alert("No urls to open");
 		else{
-			alert("Opening "+this.props.urls.toString())
+			// alert("Opening "+this.props.urls.toString())
 			chrome.runtime.sendMessage({rq: "openWindowOfTabs", urlsToLaunch: this.props.urls},this._cbWindow.bind(this));
 		}
 	}
 
 	_cbWindow = (response) => {
-		alert("Window "+response.windowId+" was just created");
+		//alert("Window "+response.windowId+" was just created");
 		this.props.updateWindow(response.windowId);
 	}
 

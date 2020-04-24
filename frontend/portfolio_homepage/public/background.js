@@ -12,6 +12,7 @@ window.urlsForWormhole=[];
 // Check whether extension has been reloaded
 chrome.runtime.onInstalled.addListener(function(details){
 	console.log("Welcome to BookWorm :3 Thank you for installing!!! ")
+  window.urlsForWormhole=[];
     getOpenTabs();
 });
 
@@ -39,7 +40,11 @@ chrome.runtime.onMessage.addListener(
 				getOpenTabs();
 				sendResponse({windowId: sender.tab.windowId});
 	        break;
-
+          case("openWindowOfTabs"):
+            chrome.windows.create({url:msg.urlsToLaunch}, sendResponse);
+            getOpenTabs();
+            sendResponse({openTabs: window.tabs});
+          break;
 		    default://console.log("unknown message")
 			    return true;
 		}

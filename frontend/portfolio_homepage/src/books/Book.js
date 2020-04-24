@@ -17,6 +17,7 @@ class Book extends Component{
   constructor(props){
     super(props);
     this.state = {
+    	book: null,
       title:'',
       isHovered: false,
       // launchURLs: ['https://www.github.com/'],
@@ -25,6 +26,7 @@ class Book extends Component{
   }
   componentDidMount=() =>{
 		this.setState({
+			book: this.props.book,
 			title: this.props.book.title
 		});
 	}
@@ -49,7 +51,6 @@ class Book extends Component{
 			<div className = 'book'
 				onMouseEnter = {()=>this.setState({isHovered:true})}
 				onMouseLeave = {()=>this.setState({isHovered:false})}>
-
 				{
 
 					this.state.isHovered?

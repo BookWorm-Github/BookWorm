@@ -1,4 +1,4 @@
-
+/*global chrome*/
 //The container that holds the books
 import React, {Component} from 'react'
 import './launcher.css'
@@ -11,43 +11,46 @@ import TitleFetcher from '../urlTitleFetcher/TitleFetcher'
 // import { withStyles } from '@material-ui/core/styles';
 //npm i react-simple-flex-grid
 class Launcher extends Component{
-
+	constructor(props){
+		super(props);
+		this.state = {
+    		urls: []
+    	};
+  	}
+  	componentDidMount(){
+  		this.setState({
+  			urls: this.props.urls
+  		})
+  	}
 
 	render(){
 
 		return (
 				<div className = 'launcher' onClick = {this.openURLs}>
 					Launcher
-					<TitleFetcher urls = {this.props.urls} />
 				</div>
 		);
+
 	}
 
 	openURLs = (e) =>{
 
 		e.preventDefault();
-		for(let i = 0; i<this.props.urls.length; i++){
-			window.open(this.props.urls[i], '_blank', 'width=1000');
+		
+		if(this.props.urls==null)
+			alert("No urls to open");
+		else{
+			alert("Opening "+this.props.urls.toString())
+			chrome.runtime.sendMessage({rq: "openWindowOfTabs", urlsToLaunch: this.props.urls},this._cbWindow.bind(this));
 		}
-
 	}
 
-	// getTitle(url){
-	// 		var title = "";
-	// 		var xhr = new XMLHttpRequest();
-	// 		xhr.open("GET", url, true);
-	// 		xhr.onreadystatechange = function() { 
-	// 		  if (xhr.readyState == 4) {
-	// 		    var fetchTitle = (/<title>(.*?)<\/title>/m).exec(xhr.responseText);
-	// 		    if(fetchTitle!=null){ //if the title could be fetched per cors policy
-	// 			    title = fetchTitle[1];
-	// 			    alert(title);
-	// 			}
-	// 		  }
-	// 		}
-	// 		xhr.send();
-	// 		return title;
-	// 	}
+	_cbWindow = (window) => {
+		alert("Window "+window.id+" was created");
+	}
+
+	
+
 
 
 }

@@ -41,13 +41,20 @@ chrome.runtime.onMessage.addListener(
 				sendResponse({windowId: sender.tab.windowId});
 	        break;
           case("openWindowOfTabs"):
-            chrome.windows.create({url:msg.urlsToLaunch}, sendResponse);
-            getOpenTabs();
-            sendResponse({openTabs: window.tabs});
+          var winId = -1;
+            function retWinId(createdWindow){
+              console.log("retWinId has window "+createdWindow.id);
+              winId = createdWindow.id;
+
+              sendResponse({windowId: winId});
+            }
+            chrome.windows.create({url:msg.urlsToLaunch}, 
+              retWinId); 
           break;
 		    default://console.log("unknown message")
 			    return true;
 		}
+    return true;
 	});
 
 
@@ -149,10 +156,10 @@ chrome.windows.onRemoved.addListener(function(windowId) {
 
 // })
 
-chrome.windows.onCreated.addListener(function(windowId) {
-  window.urlsForWormhole.splice(0,window.urlsForWormhole.length);//clears the window.tabs array
-
-  console.log("window created and urlsForWormhole are " + window.urlsForWormhole);
+chrome.windows.onCreated.addListener(function(window) {
+  // window.urlsForWormhole.splice(0,window.urlsForWormhole.length);//clears the window.tabs array
+  window.urlsForWormhole = [];
+  console.log("window "+window.id+" was created and urlsForWormhole are " + window.urlsForWormhole);
   getOpenTabs();
   sendToContent();
 

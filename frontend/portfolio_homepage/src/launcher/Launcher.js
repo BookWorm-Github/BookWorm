@@ -20,7 +20,9 @@ class Launcher extends Component{
   	componentDidMount(){
   		this.setState({
   			urls: this.props.urls
-  		})
+  		});
+
+		// chrome.runtime.onMessage.addListener(this._cbWindow.bind(this));
   	}
 
 	render(){
@@ -45,8 +47,8 @@ class Launcher extends Component{
 		}
 	}
 
-	_cbWindow = (window) => {
-		alert("Window "+window.id+" was created");
+	_cbWindow = (response) => {
+		alert("Window "+response.windowId+" was just created");
 	}
 
 	

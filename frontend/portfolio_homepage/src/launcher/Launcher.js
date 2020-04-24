@@ -48,7 +48,7 @@ class Launcher extends Component{
 
 	_cbWindow = (response) => {
 		//alert("Window "+response.windowId+" was just created");
-		this.props.updateWindow(response.windowId);
+		this.props.updateWindow(this.props.book,response.windowId,this.props.book.Launch,this.props.book.WormHole);
 	}
 
 	

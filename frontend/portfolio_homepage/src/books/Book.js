@@ -34,7 +34,7 @@ class Book extends Component{
 	}
 	  createHoverMenu() {
 	    return <div className ='hover-menu'>
-				<Launcher updateWindow = {this.setLinkedWindow} urls = {this.props.book.Launch}/>
+				<Launcher updateWindow = {this.props.updateBook} urls = {this.props.book.Launch}/>
 				<div className = 'wormhole' 
 						onClick = {() => this.props.toggleWormhole(true)}>Wormhole
 				</div>
@@ -82,8 +82,8 @@ class Book extends Component{
 
 		this.setState({
 			linkedWindowId: windowId
-		})
-		this.props.updateBook(this.props.book,windowId,this.state.launchURLs,this.state.wormholeURLs);
+		}, () =>{
+		this.props.updateBook(this.props.book,windowId,this.state.launchURLs,this.state.wormholeURLs)})
 	}
 	setLaunchURLs = (newURL) => {
 		this.setState(

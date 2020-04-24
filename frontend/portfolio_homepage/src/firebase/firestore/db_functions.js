@@ -36,7 +36,7 @@ export const updateBookLW = async (book, user_id) => {
 					Launch: book.Launch,
 					WormHole: book.WormHole
 			})
-			 alert("db function received book linked window id  "+book.linkedWindowId);
+			alert("database updated book"+book.title+" linked window to be "+bookDataRef.linkedWindowId);
 			return true;
 		}
 		else{
@@ -44,7 +44,7 @@ export const updateBookLW = async (book, user_id) => {
 			return false;
 		}
 	}).catch(e => console.log(e));
-
+	return true;
 }
 
 

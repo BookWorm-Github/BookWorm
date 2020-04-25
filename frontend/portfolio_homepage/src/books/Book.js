@@ -24,7 +24,7 @@ class Book extends Component{
       // launchURLs: ['https://www.github.com/'],
       // wormholeURLs:['https://www.github.com/','https://www.google.com/search?sxsrf=ALeKk03xO56CXGouNmYNfOx9L3LEpIKKrQ%3A1585511879738&ei=x_2AXofVLMusytMPvui78AI&q=when+will+coronavirus+end&oq=when+will+&gs_lcp=CgZwc3ktYWIQAxgAMgQIIxAnMgQIIxAnMgUIABCDATIFCAAQgwEyAggAMgIIADICCAAyAggAMgIIADICCAA6BAgAEEc6BggAEBYQHjoFCAAQzQI6BwgAEBQQhwI6BwgjEOoCECc6BQgAEJECOgQIABBDUOcpWM1kYPBsaARwAngDgAGJAogBrCqSAQczMi4xOC4zmAEAoAEBqgEHZ3dzLXdperABCg&sclient=psy-ab']
     };
-    // this.handleMessage.bind(this);
+     this.handleMessage.bind(this);
   }
   componentDidMount=() =>{
 		this.setState({
@@ -36,6 +36,14 @@ class Book extends Component{
 		if(this.props.book.linkedWindowId>=0){
 			chrome.runtime.sendMessage({rq: "urlsForLaunch", winId: this.props.book.linkedWindowId}, this._cbForLaunchResponse);
 			chrome.runtime.sendMessage({rq: "urlsForWormhole", winId: this.props.book.linkedWindowId}, this._cbForWormholeResponse);
+		}
+		
+		chrome.runtime.onMessage.addListener(this.handleMessage.bind(this));
+	}
+	handleMessage(message, sender, sendResponse){
+		if(message.winId==this.props.book.linkedWindowId){
+			this._cbForLaunchResponse(message);
+			this._cbForWormholeResponse(message);
 		}
 	}
 	//for initial book setups

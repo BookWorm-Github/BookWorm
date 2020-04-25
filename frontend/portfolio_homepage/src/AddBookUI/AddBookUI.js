@@ -103,10 +103,10 @@ class AddBookUI extends Component {
             console.log(checkbox, "is selected.");
             if(checkbox =='Link book to window'){
                 linkToWindow = windowId;
-                alert('Checkbox '+checkbox +' is selected. This book will be linked to current window');
+                // alert('Checkbox '+checkbox +' is selected. This book will be linked to current window');
             }
           });
-          alert('Book is linked to window'+linkToWindow);
+          // alert('Book is linked to window'+linkToWindow);
 		const nb = {//what a book should contain
 			key: Date.now(),
 			title: this._inputTitle.value,

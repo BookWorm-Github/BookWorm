@@ -206,7 +206,7 @@ function sendToContent(){
       tabs =>{
         if(tabs[0]!==undefined)
         chrome.tabs.sendMessage(tabs[0].id, 
-        {urlsForLaunch:window.tabs, urlsForWormhole: window.urlsForWormhole, winId:chrome.windows.WINDOW_ID_CURRENT});
+        {urlsForLaunch:window.tabs, urlsForWormhole: window.urlsForWormhole, winId:tabs[0].windowId});
     });
   // chrome.tabs.query({active: true, currentWindow: true},
   //     tabs =>{

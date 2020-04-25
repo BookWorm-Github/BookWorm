@@ -24,7 +24,7 @@ class App extends Component{
 
 	componentDidMount(){
 	
-		chrome.runtime.onMessage.addListener(this.handleMessage.bind(this));
+		// chrome.runtime.onMessage.addListener(this.handleMessage.bind(this));
 	}
 	
 	handleMessage(message, sender, sendResponse){

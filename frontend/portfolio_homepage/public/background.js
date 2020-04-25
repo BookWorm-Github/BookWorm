@@ -28,7 +28,19 @@ chrome.runtime.onMessage.addListener(
 			    break;
 
 		    case ("urlsForLaunch"):
-			    sendResponse({urlsForLaunch: window.tabs});
+        var launchurls = [];
+          function sendBackLaunch(retTabs){
+            retTabs.forEach(function(tab){ 
+              if(!launchurls.includes(tab.url)&&tab.url!==undefined&&!tab.url.includes('chrome://newtab'))
+              {
+                  launchurls.push(tab.url);
+              }
+            }
+          )
+            console.log("Launch urls are "+launchurls.toString());
+          sendResponse({urlsForLaunch: launchurls});
+          }
+          chrome.tabs.query({windowId: msg.winId},sendBackLaunch)
 			    break;
 
 		    case ("urlsForWormhole"):
@@ -194,7 +206,7 @@ function sendToContent(){
       tabs =>{
         if(tabs[0]!==undefined)
         chrome.tabs.sendMessage(tabs[0].id, 
-        {urlsForLaunch:window.tabs, urlsForWormhole: window.urlsForWormhole});
+        {urlsForLaunch:window.tabs, urlsForWormhole: window.urlsForWormhole, winId:chrome.windows.WINDOW_ID_CURRENT});
     });
   // chrome.tabs.query({active: true, currentWindow: true},
   //     tabs =>{

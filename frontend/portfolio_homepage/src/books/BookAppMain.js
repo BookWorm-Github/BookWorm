@@ -20,15 +20,15 @@ class BookAppMain extends Component {
 			urlsForWormhole:[]
 		};
 
-		//TODO move the chrome runtime stuff and their callback fns to somewhere more suitable
-		chrome.runtime.sendMessage({rq: "urlsForLaunch"}, this._cbForLaunchResponse);
-		chrome.runtime.sendMessage({rq: "urlsForWormhole"}, this._cbForWormholeResponse);
-		this.handleMessage.bind(this);
+		// //TODO move the chrome runtime stuff and their callback fns to somewhere more suitable
+		// chrome.runtime.sendMessage({rq: "urlsForLaunch"}, this._cbForLaunchResponse);
+		// chrome.runtime.sendMessage({rq: "urlsForWormhole"}, this._cbForWormholeResponse);
+		// this.handleMessage.bind(this);
 	}
 
 	componentDidMount = () => {//updating the user's personal books
 		this.setState({bookshelf: this.props.books})
-		chrome.runtime.onMessage.addListener(this.handleMessage.bind(this));
+		// chrome.runtime.onMessage.addListener(this.handleMessage.bind(this));
 	}
 
 	handleMessage(message, sender, sendResponse){
@@ -36,7 +36,7 @@ class BookAppMain extends Component {
 			console.log("App.js got launch urls from background")
 
 			const filteredBook = this.state.bookshelf.map(book => {//find the linked book and then update the Launch for the book
-				if( book.key === this.state.linkedBook){
+				if( book.linkedWindowId === message.winId){
 					book.Launch = message.urlsForLaunch;
 					updateBookLW(book, this.props.user.uid).then(() => console.log("launch in db successfully updated"));
 				}
@@ -56,7 +56,7 @@ class BookAppMain extends Component {
 			console.log("App.js got launch wormhole from background")
 
 			const filteredBook = this.state.bookshelf.map(book => {//find the linked book and then update the WormHole for the book
-				if( book.key === this.state.linkedBook){
+				if( book.linkedWindowId === message.winId){
 					book.WormHole = message.urlsForWormhole;
 					updateBookLW(book, this.props.user.uid).then(() => console.log("wormhole in db successfully updated"));
 				}
@@ -118,7 +118,7 @@ class BookAppMain extends Component {
 
 
 		updateBookLW(bookToBeUpdated, this.props.user.uid).then(e => {
-			alert("finished putting "+bookToBeUpdated.title+" in database with window"+bookToBeUpdated.linkedWindowId);
+			console.log("finished putting "+bookToBeUpdated.title+" in database with window"+bookToBeUpdated.linkedWindowId);
 		});
 		this.setState({
 			bookshelf:updatedBooks

@@ -17,8 +17,8 @@ class App extends Component{
 		};
 
 		// //TODO move the chrome runtime stuff and their callback fns to somewhere more suitable
-		chrome.runtime.sendMessage({rq: "urlsForLaunch"}, this._cbForLaunchResponse);
-		chrome.runtime.sendMessage({rq: "urlsForWormhole"}, this._cbForWormholeResponse);
+		// chrome.runtime.sendMessage({rq: "urlsForLaunch"}, this._cbForLaunchResponse);
+		// chrome.runtime.sendMessage({rq: "urlsForWormhole"}, this._cbForWormholeResponse);
 		this.handleMessage.bind(this);
 	}
 

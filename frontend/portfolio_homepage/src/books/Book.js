@@ -1,4 +1,4 @@
-
+/*global chrome*/
 //The container that holds the books
 import React, {Component} from 'react'
 
@@ -24,6 +24,7 @@ class Book extends Component{
       // launchURLs: ['https://www.github.com/'],
       // wormholeURLs:['https://www.github.com/','https://www.google.com/search?sxsrf=ALeKk03xO56CXGouNmYNfOx9L3LEpIKKrQ%3A1585511879738&ei=x_2AXofVLMusytMPvui78AI&q=when+will+coronavirus+end&oq=when+will+&gs_lcp=CgZwc3ktYWIQAxgAMgQIIxAnMgQIIxAnMgUIABCDATIFCAAQgwEyAggAMgIIADICCAAyAggAMgIIADICCAA6BAgAEEc6BggAEBYQHjoFCAAQzQI6BwgAEBQQhwI6BwgjEOoCECc6BQgAEJECOgQIABBDUOcpWM1kYPBsaARwAngDgAGJAogBrCqSAQczMi4xOC4zmAEAoAEBqgEHZ3dzLXdperABCg&sclient=psy-ab']
     };
+    // this.handleMessage.bind(this);
   }
   componentDidMount=() =>{
 		this.setState({
@@ -31,7 +32,28 @@ class Book extends Component{
 			book: this.props.book,
 			title: this.props.book.title
 		});
+
+		if(this.props.book.linkedWindowId>=0){
+			chrome.runtime.sendMessage({rq: "urlsForLaunch", winId: this.props.book.linkedWindowId}, this._cbForLaunchResponse);
+			chrome.runtime.sendMessage({rq: "urlsForWormhole", winId: this.props.book.linkedWindowId}, this._cbForWormholeResponse);
+		}
 	}
+	//for initial book setups
+	_cbForLaunchResponse = (response) => {
+		if(response.urlsForLaunch&&response.urlsForLaunch.length){//if launch urls are not empty
+			this.props.updateBook(this.props.book,this.props.book.linkedWindowId,response.urlsForLaunch,this.props.book.WormHole);
+		}
+	}
+
+	_cbForWormholeResponse = (response) => {
+		if(response.urlsForWormhole&&response.urlsForWormhole.length){//if launch urls are not empty
+			this.props.updateBook(this.props.book,this.props.book.linkedWindowId,this.props.book.Launch,response.urlsForWormhole);
+		}
+
+	}
+
+
+
 	  createHoverMenu() {
 	    return <div className ='hover-menu'>
 				<Launcher book = {this.props.book} updateWindow = {this.props.updateBook} urls = {this.props.book.Launch}/>
@@ -85,23 +107,23 @@ class Book extends Component{
 		}, () =>{
 		this.props.updateBook(this.props.book,windowId,this.state.launchURLs,this.state.wormholeURLs)})
 	}
-	setLaunchURLs = (newURL) => {
-		this.setState(
-	      {
-	        launchURLs: [...this.state.launchURLs,newURL],
-	        wormholeURLs:[...this.state.wormholeURLs,newURL]
-	      }, ()=>(this.props.updateBook(this.props.book,this.state.linkedWindowId,this.state.launchURLs,this.state.wormholeURLs))
-	    );
+	// setLaunchURLs = (newURL) => {
+	// 	this.setState(
+	//       {
+	//         launchURLs: [...this.state.launchURLs,newURL],
+	//         wormholeURLs:[...this.state.wormholeURLs,newURL]
+	//       }, ()=>(this.props.updateBook(this.props.book,this.state.linkedWindowId,this.state.launchURLs,this.state.wormholeURLs))
+	//     );
 
-	}
+	// }
 
-	setWormholeURLs = (newURL) =>{
-		this.setState(
-	      {
-	        wormholeURLs: [...this.state.wormholeURLs,newURL],
-	      },()=>(this.props.updateBook(this.props.book,this.state.linkedWindowId,this.state.launchURLs,this.state.wormholeURLs))
-	    );
-	}
+	// setWormholeURLs = (newURL) =>{
+	// 	this.setState(
+	//       {
+	//         wormholeURLs: [...this.state.wormholeURLs,newURL],
+	//       },()=>(this.props.updateBook(this.props.book,this.state.linkedWindowId,this.state.launchURLs,this.state.wormholeURLs))
+	//     );
+	// }
 
 
 

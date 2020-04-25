@@ -28,7 +28,7 @@ export const storeBook = async (book, user_id) => {//takes in a book object and 
 
 export const updateBookLW = async (book, user_id) => {
 	const bookDataRef = bw_db.collection(`users/${user_id}/bookData`).doc(book.key.toString())
-
+	alert("updating bk "+book.title+" in database");
 	await bookDataRef.get().then(async snapshot => {
 		if(snapshot.exists){
 			await bookDataRef.update({

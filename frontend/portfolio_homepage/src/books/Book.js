@@ -34,7 +34,7 @@ class Book extends Component{
 	}
 	  createHoverMenu() {
 	    return <div className ='hover-menu'>
-				<Launcher updateWindow = {this.props.updateBook} urls = {this.props.book.Launch}/>
+				<Launcher book = {this.props.book} updateWindow = {this.props.updateBook} urls = {this.props.book.Launch}/>
 				<div className = 'wormhole' 
 						onClick = {() => this.props.toggleWormhole(true)}>Wormhole
 				</div>

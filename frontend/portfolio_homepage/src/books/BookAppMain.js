@@ -102,21 +102,28 @@ class BookAppMain extends Component {
 		this.setState({addingBook:!this.state.addingBook});
 	}
 	//updates teh linkedWindow, launch and wormhole of a book in database
-	updateBook = (bookToBeUpdated, linkedWindow, launch, wormhole) =>{
-		const updatedBooks = this.state.bookshelf.map(async function(book) {//find the linked book and then update the WormHole for the book
+	updateBook = (bookToBeUpdated, linkedWindowId, launch, wormhole) =>{
+		
+		let updatedBooks = this.state.bookshelf.map(function(book, putInDataBase) {//find the linked book and then update the WormHole for the book
 			if( book.key == bookToBeUpdated.key){
-				book.linkedWindowId = linkedWindow;
+				book.linkedWindowId = linkedWindowId;
 				book.WormHole = wormhole;
 				book.Launch = launch;
-
-				//alert("updating book "+book.title+" with window "+book.linkedWindowId);
-				await updateBookLW(book, this.props.user.uid).then(() => console.log("data in db successfully updated"));
 			}
 			return book;
 		});
+		bookToBeUpdated.linkedWindowId = linkedWindowId;
+		bookToBeUpdated.WormHole = wormhole;
+		bookToBeUpdated.Launch = launch;
+
+
+		updateBookLW(bookToBeUpdated, this.props.user.uid).then(e => {
+			alert("finished putting "+bookToBeUpdated.title+" in database with window"+bookToBeUpdated.linkedWindowId);
+		});
 		this.setState({
-				bookshelf: updatedBooks
-			})
+			bookshelf:updatedBooks
+		})
+
 	}
 
 	addBook = (newBook)=> {//gets the newBook from addBookUI /*Every book has title and key, which is the date and linkedwindowId*/

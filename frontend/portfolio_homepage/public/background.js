@@ -44,8 +44,20 @@ chrome.runtime.onMessage.addListener(
 			    break;
 
 		    case ("urlsForWormhole"):
-			    console.log("Background received request for wormhole urls and is sending back " + window.urlsForWormhole.toString());
-			    sendResponse({urlsForWormhole: window.urlsForWormhole});
+
+        var wormurls = [];
+          function sendBackWormhole(retTabs){
+            retTabs.forEach(function(tab){ 
+              if(!wormurls.includes(tab.url)&&tab.url!==undefined&&!tab.url.includes('chrome://newtab'))
+              {
+                  wormurls.push(tab.url);
+              }
+            }
+          )
+            console.log("Launch urls are "+wormurls.toString());
+          sendResponse({urlsForWormhole: wormurls});
+          }
+          chrome.tabs.query({windowId: msg.winId},sendBackWormhole)
 			    break;
 	        case("getCurrWindowId"):
 				console.log("Background received request for current window id and is sending back "+sender.tab.windowId);

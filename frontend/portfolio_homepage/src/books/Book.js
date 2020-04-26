@@ -7,6 +7,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import './bookStyles.css'
 import '../wormhole/wormhole.css'
+import '../launcher/launcher.css'
 import Wormhole from '../wormhole/Wormhole'
 import Launcher from '../launcher/Launcher'
 import ManualEntryOfURL from '../addURL/ManualEntryOfURL'
@@ -30,6 +31,10 @@ class Book extends Component{
 	  createHoverMenu() {
 	    return <div className ='hover-menu'>
 				<Launcher urls = {this.state.launchURLs}/>
+				<div className = 'line'>
+					<p></p>
+
+				</div>
 				<div className = 'wormhole' 
 						onClick = {() => this.props.toggleWormhole(true)}>Wormhole
 				</div>

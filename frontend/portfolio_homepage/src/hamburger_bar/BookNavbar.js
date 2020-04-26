@@ -28,24 +28,26 @@ render() {
   return (
     <Router>
       <MDBContainer>
-        <MDBNavbar color="amber lighten-4" style={{float: 'fixed-top'}} light>
+        <navbar style={{float: 'fixed-top'}}>
           <MDBContainer>
-            <MDBHamburgerToggler color="#d3531a" id={this.props.book.key.toString()} onClick={()=> this.toggleSingleCollapse('collapse1')} />
+            
               <MDBCollapse isOpen={this.state.collapse1} navbar>
                 <MDBNavbarNav left>
                   <MDBNavItem active>
                     <MDBNavLink to="#!" onClick={() => this.props.deleteBook(this.props.book)}>Delete</MDBNavLink>
                   </MDBNavItem>
+                  <MDBNavLink to="#!">Link to book</MDBNavLink>
                   <MDBNavItem>
-                    {/*<MDBNavLink to="#!">Link</MDBNavLink>*/}
+                  <MDBNavLink to="#!">Rename</MDBNavLink>
                   </MDBNavItem>
                   <MDBNavItem>
                     {/*<MDBNavLink to="#!">Profile</MDBNavLink>*/}
                   </MDBNavItem>
                 </MDBNavbarNav>
               </MDBCollapse>
+              <button id={this.props.book.key.toString()} onClick={()=> this.toggleSingleCollapse('collapse1')}>...</button>
           </MDBContainer>
-        </MDBNavbar>
+        </navbar>
       </MDBContainer>
     </Router>
     );

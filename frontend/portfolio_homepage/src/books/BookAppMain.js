@@ -30,8 +30,15 @@ class BookAppMain extends Component {
       <div className = 'main-container-center'>
 
         <div id = 'blurrable' className = 'book-shelf'>
+          <ul id = 'topLine'>
 	        <SortBooks books = {this.state.bookshelf} setBooks = {this.setBooks} isBlurred = {this.state.addingBook}/>
-	        <div className = {this.state.addingBook?'blur-bg':'clear-bg'}>
+          <span className = 'add-btn-container'>
+            <h6 id = 'add'>Add book: </h6>
+            <button className = 'add-bk-btn' onClick={this.toggleAddBook}><h2>+</h2></button>
+          </span>
+          </ul>
+          <div className = {this.state.addingBook?'blur-bg':'clear-bg'}>
+            
             <BookShelf bks = {this.state.bookshelf} deleteBook = {this.deleteBook}/>
 
           </div>
@@ -53,7 +60,7 @@ class BookAppMain extends Component {
             </div>            
           }
 
-          <button className = 'add-bk-btn' onClick={this.toggleAddBook}><h2>+</h2></button>
+          
     
       </div>
       </div>

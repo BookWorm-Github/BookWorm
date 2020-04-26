@@ -1,12 +1,40 @@
 .sort-btn-container{
 	display: inline-flex;
-	border-radius: 5px;
-	background-color: #fff176;
+  border-radius: 25px;
+  border: 1px solid black;
+  background-color: #fff176;
+  margin: 10px;
 	padding: 3px;
-	
   align-items: center;
+  width: 300px;
+  height: 75px;
 }
 
+.sort {
+  margin: auto;
+  padding-left: 10px;
+}
+
+.add {
+    margin: auto;
+    padding-left: 10px;
+    padding-right: 20px;
+}
+
+.add-btn-container{
+	display: inline-flex;
+  border-radius: 25px;
+  border: 1px solid black;
+  background-color: #fff176;
+	padding: 3px;
+  align-items: center;
+  width: 200px;
+  height: 75px;
+}
+
+#topLine {
+  display: inline-block;
+}
 .blur-bg {
 
   /* Add the blur effect */

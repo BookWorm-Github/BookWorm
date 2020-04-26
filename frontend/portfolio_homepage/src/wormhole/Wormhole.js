@@ -11,6 +11,10 @@ class Wormhole extends Component{
       searchResults:[]
     };
   }
+  componentDidMount =() =>{
+    console.log("Wormhole for book "+this.props.book.title+" is "+this.props.book.WormHole.toString());
+    
+  }
 
 
 	render(){

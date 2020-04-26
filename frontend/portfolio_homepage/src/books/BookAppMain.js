@@ -49,7 +49,7 @@ class BookAppMain extends Component {
 			}
 			if(message.urlsForWormhole&&message.urlsForWormhole.length){//if launch urls are not empty
 				this.updateBook(currBook,currBook.linkedWindowId,currBook.Launch,message.urlsForWormhole);
-				console.log("book "+currBook.title+"updated launch to be "+message.urlsForWormhole);
+				console.log("book "+currBook.title+"updated wormhole to be "+message.urlsForWormhole);
 			}
 
 

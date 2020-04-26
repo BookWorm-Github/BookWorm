@@ -37,6 +37,8 @@ class Book extends Component{
 			chrome.runtime.sendMessage({rq: "urlsForLaunch", winId: this.props.book.linkedWindowId}, this._cbForLaunchResponse);
 			chrome.runtime.sendMessage({rq: "urlsForWormhole", winId: this.props.book.linkedWindowId}, this._cbForWormholeResponse);
 		}
+		//book is getting the right wormholes in log
+		//console.log("Wormhole for book "+this.props.book.title+" is "+this.props.book.WormHole.toString());
 		
 		// chrome.runtime.onMessage.addListener(this.handleMessage.bind(this));
 	}

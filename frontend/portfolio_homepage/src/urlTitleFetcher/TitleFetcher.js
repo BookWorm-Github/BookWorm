@@ -33,7 +33,7 @@ class TitleFetcher extends Component{
 				  const matches = data.match(/<title(.*?)<\/title>/);
 				  //alert(matches[0]);
 			    titles = [...titles,matches[0]];
-			    	console.log("Titles inside is "+titles.toString());
+			    	//console.log("Titles inside is "+titles.toString());
 			    cb(state,matches[0]);
 			  }   
 			});
@@ -49,7 +49,7 @@ class TitleFetcher extends Component{
 
 
   		
-  		console.log("Titles outside is "+this.state.titles.toString());
+  		//console.log("Titles outside is "+this.state.titles.toString());
 
   		
 
@@ -63,7 +63,7 @@ class TitleFetcher extends Component{
 		//         titles: [...this.state.titles, doc.title]
 		//       }
 		//     );
-		//     console.log("State in getHTML is "+this.state.titles.toString());
+		//     //console.log("State in getHTML is "+this.state.titles.toString());
 			
 
 		// }
@@ -71,7 +71,7 @@ class TitleFetcher extends Component{
   	}
 
   	callback = (state,t) => {
-			console.log("Param in callback is "+t.toString());
+			//console.log("Param in callback is "+t.toString());
 			//state.push(t);
 			function stripHTMLTags(str) {
 				// var s1 = str.replace('<title>', '');
@@ -83,7 +83,7 @@ class TitleFetcher extends Component{
 			var title = stripHTMLTags(t);
 			
 			this.setState({titles: [...this.state.titles,title]})
-			console.log("In callback state is "+this.state.titles.toString());
+			//console.log("In callback state is "+this.state.titles.toString());
 
 		}
 	render(){
@@ -98,7 +98,7 @@ class TitleFetcher extends Component{
 	}
 
 	// getTitles = () =>{
-	// 	console.log("titlefetcher has "+this.props.urls.length+" urls");
+	// 	//console.log("titlefetcher has "+this.props.urls.length+" urls");
 	// 	for(var i = 0; i<this.props.urls.length; i++){
 			
 	// 		this.getHTML(this.props.urls[i])
@@ -116,7 +116,7 @@ class TitleFetcher extends Component{
 	//         titles: [...this.state.titles, doc.title]
 	//       }
 	//     );
-	//     console.log("State in getHTML is "+this.state.titles.toString());
+	//     //console.log("State in getHTML is "+this.state.titles.toString());
 		
 	// }
 

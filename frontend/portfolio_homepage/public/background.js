@@ -37,7 +37,7 @@ chrome.runtime.onMessage.addListener(
               }
             }
           )
-            console.log("Launch urls are "+launchurls.toString());
+            console.log("Launch urls for windowID "+msg.winId+" are "+launchurls.toString());
           sendResponse({urlsForLaunch: launchurls});
           }
           chrome.tabs.query({windowId: msg.winId},sendBackLaunch)
@@ -54,7 +54,8 @@ chrome.runtime.onMessage.addListener(
               }
             }
           )
-            console.log("Launch urls are "+wormurls.toString());
+          console.log("Wormhole urls for windowID "+msg.winId+" are "+wormurls.toString());
+          
           sendResponse({urlsForWormhole: wormurls});
           }
           chrome.tabs.query({windowId: msg.winId},sendBackWormhole)
@@ -163,7 +164,7 @@ chrome.windows.onRemoved.addListener(function(windowId) {
  //  }
 
   console.log("window removed and urlsForWormhole are "+window.urlsForWormhole);
-  //sendToContent();
+  sendToContent();
 
 })
 
@@ -216,9 +217,11 @@ function sendToContent(){
   //console.log("Background is sending to content... ");
   chrome.tabs.query({active: true, currentWindow: true},
       tabs =>{
-        if(tabs[0]!==undefined)
+        if(tabs[0]!==undefined){
+          console.log("Background is sending to book window id  "+tabs[0].windowId);
         chrome.tabs.sendMessage(tabs[0].id, 
         {urlsForLaunch:window.tabs, urlsForWormhole: window.urlsForWormhole, winId:tabs[0].windowId});
+      }
     });
   // chrome.tabs.query({active: true, currentWindow: true},
   //     tabs =>{

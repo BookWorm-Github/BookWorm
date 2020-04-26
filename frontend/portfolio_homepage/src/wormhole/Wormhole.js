@@ -61,7 +61,7 @@ class Wormhole extends Component{
 		// If the search bar isn't empty
     if (e.target.value !== "") {
 			// Assign the original list to currentList
-      currentList = this.props.urls;
+      currentList = this.props.book.WormHole;
 
 			// Use .filter() to determine which items should be displayed
 			// based on the search terms
@@ -77,9 +77,9 @@ class Wormhole extends Component{
       });
     } else {
 			// If the search bar is empty, set newList to original task list: do we want this effect?
-      newList = this.props.urls;
+      newList = this.props.book.WormHole;
     }
-    console.log("newList in wormhole is "+newList.toString());
+    //console.log("filtered List in book "+this.props.book.title+" wormhole is "+newList);
 		// Set the filtered state based on what our rules added to newList
     this.setState({
       searchResults: newList
@@ -91,7 +91,13 @@ class Wormhole extends Component{
 
 
 Wormhole.propTypes = {
-    urls: PropTypes.arrayOf(PropTypes.string).isRequired,
+    book: PropTypes.shape({
+      key: PropTypes.number.isRequired,
+      title: PropTypes.string.isRequired,
+      linkedWindowId: PropTypes.number.isRequired,
+      Launch: PropTypes.array.isRequired,
+      WormHole: PropTypes.array.isRequired
+    })
   };
 
 

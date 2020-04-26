@@ -18,11 +18,12 @@ class BookShelf extends Component {
 
 	create2DArrayOfBooks(bookList){
 	const numShelves = Math.ceil(bookList.length/this.state.numBksPerShelf);
-
+	if(numShelves>=0){
 	  const shelfOfBooks = new Array(numShelves);
 	  for (let k = 0; k < shelfOfBooks.length; k++) {
 	    shelfOfBooks[k] = new Array(this.state.numBksPerShelf);
-	}
+		}
+
 
 	// Loop to initialize 2D array elements (books).
 	  let debugString = "";
@@ -38,9 +39,11 @@ class BookShelf extends Component {
 	        debugString+=("Shelf ("+i+","+j+") is "+shelfOfBooks[i][j]+"\n");
 	    }
 	}
-	// console.log("DEBUG SHELF PARSE of bookList len: "+bookList.length+": "+debugString);
+	// //console.log("DEBUG SHELF PARSE of bookList len: "+bookList.length+": "+debugString);
 	// this.printShelf(shelfOfBooks);
 	return shelfOfBooks;
+	}
+	else return [];
 
 	}
 
@@ -75,7 +78,7 @@ class BookShelf extends Component {
 	}
 
 	deleteBook = (_book) =>{
-		console.log(_book.title+" Key is "+_book.key);
+		//console.log(_book.title+" Key is "+_book.key);
 		this.props.deleteBook(_book)
 	}
 
@@ -110,7 +113,7 @@ class BookShelf extends Component {
 
 	//print methods for debug
 	printBkList(bookList){
-		console.log("Printing Book List");
+		//console.log("Printing Book List");
 		for(let x = 0; x<bookList.length; x++){
 		    const jsonObj = bookList[x];
 		    this.printBook(x,jsonObj);
@@ -125,11 +128,11 @@ class BookShelf extends Component {
 		    }
 		    else{strBuilder.push("Null")}
 		}
-		console.log(strBuilder.join(""));
+		//console.log(strBuilder.join(""));
 	}
 
 	toggleWormhole = (bool) =>{
-		//console.log("Adding book");
+		////console.log("Adding book");
 		this.setState({isShowingWormhole:bool});
 	}
 
@@ -141,7 +144,7 @@ BookShelf.propTypes = {
         title: PropTypes.string.isRequired,
 		linkedWindowId: PropTypes.number,
 	    Launch: PropTypes.array.isRequired,
-	    WormHole: PropTypes.object.isRequired
+	    WormHole: PropTypes.array.isRequired
     })),
 	deleteBook: PropTypes.func.isRequired,
 

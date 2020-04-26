@@ -80,7 +80,7 @@ class AddBookUI extends Component {
         let isDuplicate = false;
         if (this.props.bks.length !== 0) {//no books yet so can't have duplicates
             for (const books of this.props.bks) {
-                // console.log(books);
+                // //console.log(books);
                 if (books.title === new_book_name) {
                     alert(new_book_name + " already exists!");
                     isDuplicate = true;
@@ -100,7 +100,7 @@ class AddBookUI extends Component {
         Object.keys(this.state.checkboxes)
           .filter(checkbox => this.state.checkboxes[checkbox])
           .forEach(checkbox => {
-            console.log(checkbox, "is selected.");
+            //console.log(checkbox, "is selected.");
             if(checkbox =='Link book to window'){
                 linkToWindow = windowId;
                 // alert('Checkbox '+checkbox +' is selected. This book will be linked to current window');
@@ -116,7 +116,7 @@ class AddBookUI extends Component {
 			WormHole: this.props.urlsForWormhole
 		};
 
-		console.log("Linking current window " + windowId.toString() + " to book: "+nb.title +" so nb linked window is "+nb.linkedWindowId);
+		//console.log("Linking current window " + windowId.toString() + " to book: "+nb.title +" so nb linked window is "+nb.linkedWindowId);
         this.props.addBook(nb);//calls this.props.addBook function so that we can add the newly created book and go back to portfolio homepage clearing the addBookUI
 		this._inputTitle.value = "";
         this.setState({newBook: null})

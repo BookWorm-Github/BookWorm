@@ -28,77 +28,107 @@ class BookAppMain extends Component {
 
 	componentDidMount = () => {//updating the user's personal books
 		this.setState({bookshelf: this.props.books})
-		// chrome.runtime.onMessage.addListener(this.handleMessage.bind(this));
+		chrome.runtime.onMessage.addListener(this.handleMessage.bind(this));
 	}
 
 	handleMessage(message, sender, sendResponse){
-		if(message.urlsForLaunch != null){
-			console.log("App.js got launch urls from background")
+		console.log("BookAppMain received msg from bckgrnd with winID"+message.winId);
+		var i; var currBook = null;
+		for (i = 0; i < this.state.bookshelf.length; i++) {
+		  if(message.winId==this.state.bookshelf[i].linkedWindowId){
+			
+			currBook = this.state.bookshelf[i];
+			console.log("handled msg for "+currBook.title);
+			}
+		}
+		if(currBook!==null){ //if there is bk to b updated
+			//update lauch
+			if(message.urlsForLaunch&&message.urlsForLaunch.length){//if launch urls are not empty
+				this.updateBook(currBook,currBook.linkedWindowId,message.urlsForLaunch,currBook.WormHole);
+				console.log("book "+currBook.title+"updated launch to be "+message.urlsForLaunch);
+			}
+			if(message.urlsForWormhole&&message.urlsForWormhole.length){//if launch urls are not empty
+				this.updateBook(currBook,currBook.linkedWindowId,currBook.Launch,message.urlsForWormhole);
+				console.log("book "+currBook.title+"updated launch to be "+message.urlsForWormhole);
+			}
 
-			const filteredBook = this.state.bookshelf.map(book => {//find the linked book and then update the Launch for the book
-				if( book.linkedWindowId === message.winId){
-					book.Launch = message.urlsForLaunch;
-					updateBookLW(book, this.props.user.uid).then(() => console.log("launch in db successfully updated"));
-				}
-				return book;
-			})
 
-			console.log("updating books after launch: ")
-			console.log(filteredBook)
-
-			this.setState({
-				bookshelf: filteredBook,
-				urlsForLaunch: message.urlsForLaunch
-			})
 
 		}
-		if(message.urlsForWormhole != null){
-			console.log("App.js got launch wormhole from background")
-
-			const filteredBook = this.state.bookshelf.map(book => {//find the linked book and then update the WormHole for the book
-				if( book.linkedWindowId === message.winId){
-					book.WormHole = message.urlsForWormhole;
-					updateBookLW(book, this.props.user.uid).then(() => console.log("wormhole in db successfully updated"));
-				}
-				return book;
-			});
-
-			console.log("updating books after Wormhole: ")
-			console.log(filteredBook)
-
-			this.setState({
-				bookshelf: filteredBook,
-				urlsForWormhole: message.urlsForWormhole
-			})
-
+		else{
+			console.log("bkappmain: no linkld book with id "+message.winId+ "found");
 		}
-
-		console.log(this.state.bookshelf);
+		
 	}
 
+	// handleMessage(message, sender, sendResponse){
+	// 	if(message.urlsForLaunch != null){
+	// 		//console.log("App.js got launch urls from background")
 
-	_cbForLaunchResponse = (response) => {
-		this.setState({
-			urlsForLaunch: response.urlsForLaunch
-		})
+	// 		const filteredBook = this.state.bookshelf.map(book => {//find the linked book and then update the Launch for the book
+	// 			if( book.linkedWindowId === message.winId){
+	// 				book.Launch = message.urlsForLaunch;
+	// 				updateBookLW(book, this.props.user.uid).then(() => //console.log("launch in db successfully updated"));
+	// 			}
+	// 			return book;
+	// 		})
 
-		console.log("state of book after LAUNCH update from background:")
+	// 		//console.log("updating books after launch: ")
+	// 		//console.log(filteredBook)
 
-	}
+	// 		this.setState({
+	// 			bookshelf: filteredBook,
+	// 			urlsForLaunch: message.urlsForLaunch
+	// 		})
 
-	_cbForWormholeResponse = (response) => {
-		this.setState({
-			urlsForWormhole: response.urlsForWormhole
-		})
+	// 	}
+	// 	if(message.urlsForWormhole != null){
+	// 		//console.log("App.js got launch wormhole from background")
 
-		console.log("state of book after WORMHOLE update from background:")
-		console.log(this.state.bookshelf);
+	// 		const filteredBook = this.state.bookshelf.map(book => {//find the linked book and then update the WormHole for the book
+	// 			if( book.linkedWindowId === message.winId){
+	// 				book.WormHole = message.urlsForWormhole;
+	// 				updateBookLW(book, this.props.user.uid).then(() => //console.log("wormhole in db successfully updated"));
+	// 			}
+	// 			return book;
+	// 		});
 
-	}
+	// 		//console.log("updating books after Wormhole: ")
+	// 		//console.log(filteredBook)
+
+	// 		this.setState({
+	// 			bookshelf: filteredBook,
+	// 			urlsForWormhole: message.urlsForWormhole
+	// 		})
+
+	// 	}
+
+	// 	//console.log(this.state.bookshelf);
+	// }
+
+
+	// _cbForLaunchResponse = (response) => {
+	// 	this.setState({
+	// 		urlsForLaunch: response.urlsForLaunch
+	// 	})
+
+	// 	//console.log("state of book after LAUNCH update from background:")
+
+	// }
+
+	// _cbForWormholeResponse = (response) => {
+	// 	this.setState({
+	// 		urlsForWormhole: response.urlsForWormhole
+	// 	})
+
+	// 	//console.log("state of book after WORMHOLE update from background:")
+	// 	//console.log(this.state.bookshelf);
+
+	// }
 
 	/*Methods for adding and deleting books*/
 	toggleAddBook = () =>{
-		//console.log("Adding book");
+		////console.log("Adding book");
 		this.setState({addingBook:!this.state.addingBook});
 	}
 	//updates teh linkedWindow, launch and wormhole of a book in database
@@ -118,7 +148,7 @@ class BookAppMain extends Component {
 
 
 		updateBookLW(bookToBeUpdated, this.props.user.uid).then(e => {
-			console.log("finished putting "+bookToBeUpdated.title+" in database with window"+bookToBeUpdated.linkedWindowId);
+			
 		});
 		this.setState({
 			bookshelf:updatedBooks
@@ -149,7 +179,7 @@ class BookAppMain extends Component {
 				bookshelf: [...filteredBooks, newBook],
 				addingBook: false//this clears the addBookUI
 			}));
-			console.log("Adding book success!")
+			//console.log("Adding book success!")
 		});
 	}
 
@@ -171,12 +201,12 @@ class BookAppMain extends Component {
 	}
 
 	debugBkShelf = () => {
-		console.log("BookAppMain State is now "+this.state.bookshelf);
-		this.state.bookshelf.map((_book, _key) => {
-	        return(
-	          console.log("Book ("+_book.title+","+_book.key+")")
-	        );
-		})
+		//console.log("BookAppMain State is now "+this.state.bookshelf);
+		// this.state.bookshelf.map((_book, _key) => {
+	 //        return(
+	 //          //console.log("Book ("+_book.title+","+_book.key+")")
+	 //        );
+		// })
 	}
 
 
@@ -189,8 +219,8 @@ class BookAppMain extends Component {
 				{/*<button onClick = {this.getURLS}>Get Open Windows</button>*/}
 				<div className = 'main-container-center'>
 
-					{/*{console.log("books are: ")};*/}
-					{/*{console.log(this.state.bookshelf)};*/}
+					{/*{//console.log("books are: ")};*/}
+					{/*{//console.log(this.state.bookshelf)};*/}
 
 					<div id = 'blurrable' className = 'book-shelf'>
 						<SortBooks books = {this.state.bookshelf} setBooks = {this.setBooks} isBlurred = {this.state.addingBook}/>

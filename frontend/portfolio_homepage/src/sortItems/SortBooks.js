@@ -92,7 +92,7 @@ class SortBooks extends Component{
 		function compareTitle(a, b, order = ASC) {
 		    const diff = a.title.toLowerCase().localeCompare(b.title.toLowerCase());
 
-		console.log("Diff is "+diff+", and order is "+order);
+		//console.log("Diff is "+diff+", and order is "+order);
 		    if (order === ASC) {
 		        return diff;
 		    }
@@ -108,7 +108,7 @@ class SortBooks extends Component{
 	sortByDateCreated = () =>{
 		this.setState({sortCriteria: sortBy.DATE_CREATED})
 		var books = [...this.props.books];
-		console.log("Sort by date created has not been implemented")
+		//console.log("Sort by date created has not been implemented")
 
 		function compareDates(a, b, order = ASC) {
 		    const diff = a.key - b.key;
@@ -128,7 +128,7 @@ class SortBooks extends Component{
 
 	sortByLastAccessed = () =>{
 		this.setState({sortCriteria: sortBy.LAST_ACCESSED})
-		console.log("Sort by last accessed has not been implemented")
+		//console.log("Sort by last accessed has not been implemented")
 
 		alert("Sort by last accessed has not been implemented")
 	}

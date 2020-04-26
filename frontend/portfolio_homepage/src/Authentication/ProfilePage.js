@@ -24,11 +24,11 @@ const ProfilePage = (props) => {
 			        onClick = {() => {
 				        bw_auth.signOut().then(
 					        () => {
-						        console.log("Logged out successful")
+						        //console.log("Logged out successful")
 					        },
 					        onRejected => {
-						        console.log("log out unsuccessful")
-						        console.log(onRejected)
+						        //console.log("log out unsuccessful")
+						        //console.log(onRejected)
 					        }
 				        )
 			        }

@@ -21,8 +21,8 @@ const provider = new firebase.auth.GoogleAuthProvider();
 export const signInWithGoogle = () => {
 	bw_auth.signInWithPopup(provider)
 		.then(cred => {
-			console.log("Google login success!:")
-			console.log(cred)
+			//console.log("Google login success!:")
+			//console.log(cred)
 		});
 };
 

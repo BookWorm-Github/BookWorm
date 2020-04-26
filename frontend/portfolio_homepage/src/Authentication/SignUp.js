@@ -76,7 +76,7 @@ const SignUp = () => {
 							setError(null)
 							createUserWithEmailAndPasswordHandler(event, email, password)
 								.catch(e => {
-									console.log(e)
+									//console.log(e)
 								})
 						}}
 					>

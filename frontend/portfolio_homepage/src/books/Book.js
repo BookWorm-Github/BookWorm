@@ -24,7 +24,7 @@ class Book extends Component{
       // launchURLs: ['https://www.github.com/'],
       // wormholeURLs:['https://www.github.com/','https://www.google.com/search?sxsrf=ALeKk03xO56CXGouNmYNfOx9L3LEpIKKrQ%3A1585511879738&ei=x_2AXofVLMusytMPvui78AI&q=when+will+coronavirus+end&oq=when+will+&gs_lcp=CgZwc3ktYWIQAxgAMgQIIxAnMgQIIxAnMgUIABCDATIFCAAQgwEyAggAMgIIADICCAAyAggAMgIIADICCAA6BAgAEEc6BggAEBYQHjoFCAAQzQI6BwgAEBQQhwI6BwgjEOoCECc6BQgAEJECOgQIABBDUOcpWM1kYPBsaARwAngDgAGJAogBrCqSAQczMi4xOC4zmAEAoAEBqgEHZ3dzLXdperABCg&sclient=psy-ab']
     };
-     this.handleMessage.bind(this);
+     // this.handleMessage.bind(this);
   }
   componentDidMount=() =>{
 		this.setState({
@@ -38,24 +38,41 @@ class Book extends Component{
 			chrome.runtime.sendMessage({rq: "urlsForWormhole", winId: this.props.book.linkedWindowId}, this._cbForWormholeResponse);
 		}
 		
-		chrome.runtime.onMessage.addListener(this.handleMessage.bind(this));
+		// chrome.runtime.onMessage.addListener(this.handleMessage.bind(this));
 	}
-	handleMessage(message, sender, sendResponse){
-		if(message.winId==this.props.book.linkedWindowId){
-			this._cbForLaunchResponse(message);
-			this._cbForWormholeResponse(message);
-		}
-	}
+	// handleMessage(message, sender, sendResponse){
+	// 	console.log("Book"+this.props.book.title+
+	// 		" linkedID: "+this.props.book.linkedWindowId+
+	// 		" received winID from background: "+message.winId);
+	// 	if(message.winId==this.props.book.linkedWindowId){
+	// 		console.log("updated wormhole n launch");
+	// 		this._cbForLaunchResponse(message);
+	// 		this._cbForWormholeResponse(message);
+	// 	}
+	// 	else{
+	// 		console.log("no need update wormhole n launch");
+	// 	}
+	// }
 	//for initial book setups
 	_cbForLaunchResponse = (response) => {
 		if(response.urlsForLaunch&&response.urlsForLaunch.length){//if launch urls are not empty
 			this.props.updateBook(this.props.book,this.props.book.linkedWindowId,response.urlsForLaunch,this.props.book.WormHole);
+			console.log("book "+this.props.book.title+"updated launch to be "+response.urlsForLaunch);
+		
+		}
+		else{
+
+			console.log("book "+this.props.book.title+" received empty for launch");
 		}
 	}
 
 	_cbForWormholeResponse = (response) => {
 		if(response.urlsForWormhole&&response.urlsForWormhole.length){//if launch urls are not empty
 			this.props.updateBook(this.props.book,this.props.book.linkedWindowId,this.props.book.Launch,response.urlsForWormhole);
+			console.log("book "+this.props.book.title+"updated wormhole to be "+response.urlsForWormhole);
+		}
+		else{
+			console.log("book "+this.props.book.title+" received empty for wormhole");
 		}
 
 	}
@@ -97,7 +114,7 @@ class Book extends Component{
 				{
 					this.props.isShowingWormhole? 
 					<div>
-						<Wormhole urls = {this.props.book.WormHole} toggleWormhole = {this.props.toggleWormhole}/>
+						<Wormhole book = {this.props.book} toggleWormhole = {this.props.toggleWormhole}/>
 					</div> : <div/>
 				}
 				
@@ -144,7 +161,7 @@ Book.propTypes = {
 		title: PropTypes.string.isRequired,
 		linkedWindowId: PropTypes.number.isRequired,
 		Launch: PropTypes.array.isRequired,
-		WormHole: PropTypes.object.isRequired
+		WormHole: PropTypes.array.isRequired
 	}),
 		toggleWormhole: PropTypes.func.isRequired,
 		isShowingWormhole: PropTypes.bool.isRequired,

@@ -4,27 +4,28 @@ import Book from './Book'
 import PropTypes from 'prop-types'
 import './bookStyles.css'
 import BookNavbar from '../hamburger_bar/BookNavbar';
+import WindowResizer from '../WindowResizer/WindowResizer'
 
 class BookShelf extends Component {
 
 	constructor(props){
-	super(props);
-	this.state = {
-
-	  isShowingWormhole:false,
-	  books:[],
-	  numBksPerShelf:4
-	};
+		super(props);
+		this.state = {
+			isShowingWormhole:false,
+			// books:[],
+			numBksPerShelf:4
+		};
 	}
 
 
 	create2DArrayOfBooks(bookList){
 	const numShelves = Math.ceil(bookList.length/this.state.numBksPerShelf);
-
+	if(numShelves>=0){
 	  const shelfOfBooks = new Array(numShelves);
 	  for (let k = 0; k < shelfOfBooks.length; k++) {
 	    shelfOfBooks[k] = new Array(this.state.numBksPerShelf);
-	}
+		}
+
 
 	// Loop to initialize 2D array elements (books).
 	  let debugString = "";
@@ -40,9 +41,11 @@ class BookShelf extends Component {
 	        debugString+=("Shelf ("+i+","+j+") is "+shelfOfBooks[i][j]+"\n");
 	    }
 	}
-	console.log("DEBUG SHELF PARSE of bookList len: "+bookList.length+": "+debugString);
+	// //console.log("DEBUG SHELF PARSE of bookList len: "+bookList.length+": "+debugString);
 	// this.printShelf(shelfOfBooks);
 	return shelfOfBooks;
+	}
+	else return [];
 
 	}
 
@@ -55,7 +58,7 @@ class BookShelf extends Component {
 				<div key={_book.key}>
 					<BookNavbar book ={_book} deleteBook = {this.deleteBook} />
 					{/*<BookNavbar />*/}
-					<Book book ={_book} toggleWormhole = {this.toggleWormhole}
+					<Book book ={_book} updateBook = {this.props.updateBook} toggleWormhole = {this.toggleWormhole}
 					  isShowingWormhole = {this.state.isShowingWormhole} />
 				</div>
 			}
@@ -64,10 +67,12 @@ class BookShelf extends Component {
 
 	createShelf =(_bookshelf,_index) => {
 
-	const space = 5;
-	return <Grid key = {_index} container spacing={space}>
-	              {_bookshelf.map(this.createBook)}
-	            </Grid>
+		const space = this.state.numBksPerShelf;
+		return (
+			<Grid key = {_index} container spacing={space}>
+				{_bookshelf.map(this.createBook)}
+			</Grid>
+		)
 	}
 
 	separateBooksIntoShelves = (shelfOfBooks,numBooks) =>{
@@ -75,7 +80,7 @@ class BookShelf extends Component {
 	}
 
 	deleteBook = (_book) =>{
-		console.log(_book.title+" Key is "+_book.key);
+		//console.log(_book.title+" Key is "+_book.key);
 		this.props.deleteBook(_book)
 	}
 
@@ -91,18 +96,26 @@ class BookShelf extends Component {
 
 
 		return (
+			<div>
+			<WindowResizer setNumBksPerShelf = {this.setNumBooksPerShelf} />
 		    <div className='book-shelf'>
-
 		        {books}
-		      </div>
+		    </div>
+		    </div>
 
 		);
+	}
+
+	setNumBooksPerShelf = (num) =>{
+		this.setState({
+			numBksPerShelf:num
+		});
 	}
 
 
 	//print methods for debug
 	printBkList(bookList){
-		console.log("Printing Book List");
+		//console.log("Printing Book List");
 		for(let x = 0; x<bookList.length; x++){
 		    const jsonObj = bookList[x];
 		    this.printBook(x,jsonObj);
@@ -117,11 +130,11 @@ class BookShelf extends Component {
 		    }
 		    else{strBuilder.push("Null")}
 		}
-		console.log(strBuilder.join(""));
+		//console.log(strBuilder.join(""));
 	}
 
 	toggleWormhole = (bool) =>{
-		//console.log("Adding book");
+		////console.log("Adding book");
 		this.setState({isShowingWormhole:bool});
 	}
 
@@ -131,9 +144,13 @@ BookShelf.propTypes = {
     bks: PropTypes.arrayOf(PropTypes.shape({
         key: PropTypes.number.isRequired,
         title: PropTypes.string.isRequired,
-		linkedWindowId: PropTypes.number
+		linkedWindowId: PropTypes.number,
+	    Launch: PropTypes.array.isRequired,
+	    WormHole: PropTypes.array.isRequired
     })),
-	deleteBook: PropTypes.func.isRequired
+	deleteBook: PropTypes.func.isRequired,
+
+	updateBook: PropTypes.func.isRequired
   };
 
 export default (BookShelf);

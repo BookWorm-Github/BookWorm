@@ -39,3 +39,11 @@ body {background-color: white;}
     transform: rotate(360deg);
   }
 }
+
+.ph_title{
+    font-size: 50px;
+}
+
+/*body{*/
+/*    font-family: "Font Awesome\ 5 Free", sans-serif;*/
+/*}*/

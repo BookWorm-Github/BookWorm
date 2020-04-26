@@ -18,8 +18,8 @@ class User extends Component {
 	componentDidMount = async () => {
 		await bw_auth.onAuthStateChanged(async user => {
 			if(user) {//if it exists, grab user bookData from the database into app
-				// console.log(userAuth.providerData)
-				// console.log(userAuth.providerId)
+				// //console.log(userAuth.providerData)
+				// //console.log(userAuth.providerId)
 
 				//TEST FUNCTIONS FOR UPDATING THE DATABASE
 				// await storeBook({
@@ -30,7 +30,7 @@ class User extends Component {
 
 				await populatePortfolioHomepage(user.uid)
 					.then(async books => {
-						console.log(books)
+						//console.log(books)
 						this.setState({
 							user: await generateUserDocument(user),
 							books: [...books]
@@ -50,14 +50,14 @@ class User extends Component {
 					<button className = "w-full py-3 bg-red-600 mt-4 text-white"
 					        onClick = {() => {
 						        bw_auth.signOut().then(() => {
-								        console.log("Logged out successful")
+								        //console.log("Logged out successful")
 								        this.setState({
 									        user: null
 								        })
 							        },
 							        onRejected => {
-								        console.log("log out unsuccessful")
-								        console.log(onRejected)
+								        //console.log("log out unsuccessful")
+								        //console.log(onRejected)
 							        }
 						        )
 					        }

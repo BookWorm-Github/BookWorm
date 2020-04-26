@@ -17,7 +17,7 @@ const SignIn = () => {
 		bw_auth.signInWithEmailAndPassword(email, password).catch(error => {
 			setError("Error signing in with password and email!");
 			console.error("Error signing in with password and email", error);
-		});
+		})
 	};
 
 	const onChangeHandler = (event) => {

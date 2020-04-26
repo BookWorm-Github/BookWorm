@@ -20,7 +20,7 @@ class BookShelf extends Component {
 	const numShelves = Math.ceil(bookList.length/this.state.numBksPerShelf);
 	if(numShelves>=0){
 	  const shelfOfBooks = new Array(numShelves);
-	  for (let k = 0; k < shelfOfBooks.length; k++) {
+	  for (let k = 0; k < numShelves; k++) {
 	    shelfOfBooks[k] = new Array(this.state.numBksPerShelf);
 		}
 

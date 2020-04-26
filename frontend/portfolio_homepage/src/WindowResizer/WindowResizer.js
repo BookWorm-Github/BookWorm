@@ -22,7 +22,7 @@ class WindowResizer extends Component {
       let update_width  = window.innerWidth-100;
       let update_height = Math.round(update_width/4.4);
       this.setState({ width: update_width, height: update_height });
-      this.props.setNumBksPerShelf(Math.round(update_width/this.state.bookSize));
+      this.props.setNumBksPerShelf(Math.max(Math.round(update_width/this.state.bookSize),1));
       
   }
 

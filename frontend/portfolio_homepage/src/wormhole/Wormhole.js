@@ -66,7 +66,7 @@ class Wormhole extends Component{
     if (e.target.value !== "") {
 			// Assign the original list to currentList
       currentList = this.props.book.WormHole;
-
+      console.log("In filter urls for book"+this.props.book.title+", the wormhole is "+currentList.toString)
 			// Use .filter() to determine which items should be displayed
 			// based on the search terms
       newList = currentList.filter(item => {

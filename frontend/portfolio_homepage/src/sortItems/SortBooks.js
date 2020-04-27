@@ -30,13 +30,13 @@ class SortBooks extends Component{
 	render(){
 
 		return (
-			<div className = {this.props.isBlurred? 'blur-bg':'clear-bg'}>
+			<span className = {this.props.isBlurred? 'blur-bg':'clear-bg'}>
 				<MDBBtnGroup className="sort-btn-container">
-				Sort By:
+				<h6 id = 'sort'>  Sort By: </h6>
 
 				      <MDBDropdown size = "sm">
 
-				        <MDBDropdownToggle caret color = "info">
+				        <MDBDropdownToggle caret color = 'white'>
 				          {this.state.sortCriteria}
 				        </MDBDropdownToggle>
 
@@ -55,12 +55,12 @@ class SortBooks extends Component{
 				        </MDBDropdownMenu>
 				        
 				      </MDBDropdown>
-				      <MDBBtn size="sm" onClick = {this.toggleOrder}>
+				      <MDBBtn size="sm" color = 'white' onClick = {this.toggleOrder}>
 				      		{this.state.order===ASC? <div>&#9650;</div> : <div>&#9660;</div>}
 				      </MDBBtn>
 				  </MDBBtnGroup>
 
-			</div>
+			</span>
 		);
 	}
 

@@ -7,11 +7,13 @@ for optimization*/
 
   display: flex;
 
+  background :white; /*for allowing users to customzize background color later*/
 }
 .book-shelf{
 
   width: 95%;
   padding: 10px;
+  background: white;
 }
 
 /*Circular add-book-button*/
@@ -21,7 +23,8 @@ for optimization*/
     height: 50px;
     width: 50px;  /*The Width must be the same as the height*/
     border-radius:100px; /*borderRadius must b 2*width*/   
-    background-color:#405B9B;
+    background-color:rgb(38, 54, 92);
+    color: white;
     
 }
 .container {
@@ -30,13 +33,15 @@ for optimization*/
 
   }
 .paper {
-    padding: theme.spacing(1);
+    /*padding: theme.spacing(1); commented this because it showed up as a problem*/
     margin: auto;
-    maxWidth: 500;
+    max-width: 500px;
+    background-color: aqua;
   }
 .book {
-    border: 10px solid black;
-    background-color: #ffffff;/*#3391AF;*/
+    border-right: 5px solid #dddddc;
+    border-bottom: 5px solid #dddddc;
+    background-color: #e7cc34;/*#3391AF;*/
   	border-radius: 15px;
   	height: 200px;
     width: 100%;
@@ -53,10 +58,12 @@ for optimization*/
 
 /*The hover menu which contains the launcher and wormhole*/
 .hover-menu{
-   width: 100%;
-   height:100%;
-  border-radius: 15px;
-
+  margin-top: 5px;
+  margin-left: 5px;
+   width: 101%;
+   height:102%;
+   border: 5px solid #e7cc34;
+   border-radius: 15px;
   display: flex;  
   justify-content: center;
   align-items: left;
@@ -75,6 +82,9 @@ for optimization*/
   filter:none;
 }
 
+.line {
+  border-left: 1px solid black;
+}
 .ph_title{
     font-size: 70px;
 }

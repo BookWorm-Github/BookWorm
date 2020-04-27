@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import './wormhole.css'
 import PropTypes from 'prop-types'
 
+
 /*Full list of URLs in a book. When you click on the URL, it opens that link??*/
 class Wormhole extends Component{
 
@@ -17,7 +18,7 @@ class Wormhole extends Component{
       book: this.props.book
     })
     console.log("Wormhole for book "+this.props.book.title+" is "+this.props.book.WormHole.toString());
-    
+
   }
 
 
@@ -28,8 +29,11 @@ class Wormhole extends Component{
 				<div className = 'popup'>
 				<div>
 					<h3>Wormhole</h3>
-					<form className="input" >
-					<input type="text" onChange={this.filterURLs} placeholder="Search..." />
+					<form>
+            <div className="forma">
+          <img src = "/search.svg" alt="search icon" height="28" width="28" className="logo"></img>
+					<input className="input" type="text" onChange={this.filterURLs} placeholder="Search..." />
+          </div>
                     </form>
                     <ul className = 'wormhole-list'>
                         {this.state.searchResults.map(item => (

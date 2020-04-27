@@ -36,7 +36,7 @@ class BookAppMain extends Component {
 		var i; var currBook = null;
 		for (i = 0; i < this.state.bookshelf.length; i++) {
 		  if(message.winId==this.state.bookshelf[i].linkedWindowId){
-			
+
 			currBook = this.state.bookshelf[i];
 			console.log("handled msg for "+currBook.title);
 			}
@@ -58,7 +58,7 @@ class BookAppMain extends Component {
 		else{
 			console.log("bkappmain: no linkld book with id "+message.winId+ "found");
 		}
-		
+
 	}
 
 	// handleMessage(message, sender, sendResponse){
@@ -133,7 +133,7 @@ class BookAppMain extends Component {
 	}
 	//updates teh linkedWindow, launch and wormhole of a book in database
 	updateBook = (bookToBeUpdated, linkedWindowId, launch, wormhole) =>{
-		
+
 		let updatedBooks = this.state.bookshelf.map(function(book, putInDataBase) {//find the linked book and then update the WormHole for the book
 			if( book.key == bookToBeUpdated.key){
 				book.linkedWindowId = linkedWindowId;
@@ -148,7 +148,7 @@ class BookAppMain extends Component {
 
 
 		updateBookLW(bookToBeUpdated, this.props.user.uid).then(e => {
-			
+
 		});
 		this.setState({
 			bookshelf:updatedBooks
@@ -219,15 +219,18 @@ class BookAppMain extends Component {
 				{/*<button onClick = {this.getURLS}>Get Open Windows</button>*/}
 				<div className = 'main-container-center'>
 
-					{/*{//console.log("books are: ")};*/}
-					{/*{//console.log(this.state.bookshelf)};*/}
-
-					<div id = 'blurrable' className = 'book-shelf'>
-						<SortBooks books = {this.state.bookshelf} setBooks = {this.setBooks} isBlurred = {this.state.addingBook}/>
-						<div className = {this.state.addingBook?'blur-bg':'clear-bg'}>
-							<BookShelf bks = {this.state.bookshelf} updateBook = {this.updateBook} deleteBook = {this.deleteBook}/>
-						</div>
-					</div>
+        <div id = 'blurrable' className = 'book-shelf'>
+          <ul id = 'topLine'>
+	          <SortBooks books = {this.state.bookshelf} setBooks = {this.setBooks} isBlurred = {this.state.addingBook}/>
+	          <span className = 'add-btn-container'>
+            <h6 id = 'add'>Add book: </h6>
+            <button className = 'add-bk-btn' onClick={this.toggleAddBook}><h2>+</h2></button>
+          </span>
+          </ul>
+	        <div className = {this.state.addingBook?'blur-bg':'clear-bg'}>
+		        <BookShelf bks = {this.state.bookshelf} updateBook = {this.updateBook} deleteBook = {this.deleteBook}/>
+	        </div>
+        </div>
 
 					{this.state.addingBook?
 						<div>

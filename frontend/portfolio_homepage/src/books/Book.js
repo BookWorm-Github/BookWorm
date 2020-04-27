@@ -7,6 +7,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import './bookStyles.css'
 import '../wormhole/wormhole.css'
+import '../launcher/launcher.css'
 import Wormhole from '../wormhole/Wormhole'
 import Launcher from '../launcher/Launcher'
 import ManualEntryOfURL from '../addURL/ManualEntryOfURL'
@@ -38,7 +39,7 @@ class Book extends Component{
 			chrome.runtime.sendMessage({rq: "urlsForWormhole", winId: this.props.book.linkedWindowId}, this._cbForWormholeResponse);
 		}
 		//console.log("Wormhole for book "+this.props.book.title+" is "+this.props.book.WormHole.toString());
-		
+
 		// chrome.runtime.onMessage.addListener(this.handleMessage.bind(this));
 	}
 	// handleMessage(message, sender, sendResponse){
@@ -59,7 +60,7 @@ class Book extends Component{
 		if(response.urlsForLaunch&&response.urlsForLaunch.length){//if launch urls are not empty
 			this.props.updateBook(this.props.book,this.props.book.linkedWindowId,response.urlsForLaunch,this.props.book.WormHole);
 			console.log("book "+this.props.book.title+"updated launch to be "+response.urlsForLaunch);
-		
+
 		}
 		else{
 
@@ -83,7 +84,11 @@ class Book extends Component{
 	  createHoverMenu() {
 	    return <div className ='hover-menu'>
 				<Launcher book = {this.props.book} updateWindow = {this.props.updateBook} urls = {this.props.book.Launch}/>
-				<div className = 'wormhole' 
+				<div className = 'line'>
+					<p></p>
+
+				</div>
+					<div className = 'wormhole'
 						onClick = {() => this.props.toggleWormhole(this.props.book.key)}>Wormhole
 				</div>
 			</div>
@@ -113,7 +118,7 @@ class Book extends Component{
 			</div>
 
 				{
-					this.props.isShowingWormhole==this.props.book.key? 
+					this.props.isShowingWormhole==this.props.book.key?
 					<div>
 						<Wormhole book = {this.props.book} toggleWormhole = {this.props.toggleWormhole}/>
 					</div> : <div/>

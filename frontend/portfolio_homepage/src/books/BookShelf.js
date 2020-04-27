@@ -3,7 +3,9 @@ import Grid from '@material-ui/core/Grid';
 import Book from './Book'
 import PropTypes from 'prop-types'
 import './bookStyles.css'
+import BookNavbar from '../hamburger_bar/BookNavbar';
 import WindowResizer from '../WindowResizer/WindowResizer'
+
 class BookShelf extends Component {
 
 	constructor(props){
@@ -56,8 +58,8 @@ class BookShelf extends Component {
 		return <Grid key = {_index} item xs zeroMinWidth>
 			{_book===null?null:
 				<div key={_book.key}>
-					{/*<BookNavbar book ={_book} deleteBook = {this.deleteBook} />*/}
-					<button onClick={() => this.deleteBook(_book)}>...</button>
+					<BookNavbar book ={_book} deleteBook = {this.deleteBook} />
+					{/*<BookNavbar />*/}
 					<Book book ={_book} updateBook = {this.props.updateBook} toggleWormhole = {this.toggleWormhole}
 					  isShowingWormhole = {this.state.isShowingWormhole} />
 				</div>

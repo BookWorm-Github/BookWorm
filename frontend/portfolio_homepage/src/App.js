@@ -23,32 +23,32 @@ class App extends Component{
 	}
 
 	componentDidMount(){
-	
+
 		// chrome.runtime.onMessage.addListener(this.handleMessage.bind(this));
 	}
-	
+
 	handleMessage(message, sender, sendResponse){
 		if(message.urlsForLaunch != null){
-	
+
 			this.setState({urlsForLaunch: message.urlsForLaunch})
 		}
 		if(message.urlsForWormhole != null){
 			this.setState({urlsForWormhole: message.urlsForWormhole})
-	
+
 		}
 	}
-	
-	
+
+
 	_cbForLaunchResponse = (response) => {
-	
+
 		this.setState({urlsForLaunch: response.urlsForLaunch})
-	
+
 	}
-	
+
 	_cbForWormholeResponse = (response) => {
-	
+
 		this.setState({urlsForWormhole: response.urlsForWormhole})
-	
+
 	}
 
 
@@ -64,7 +64,7 @@ class App extends Component{
 			<ul>
 				{ this.state.urlsForLaunch.map(title => <li>{title}</li>)}
 			</ul>
-			<BgColor />
+			{/*<BgColor />*/}
 		</div>
 	}
 }

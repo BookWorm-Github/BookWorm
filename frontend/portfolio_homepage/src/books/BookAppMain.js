@@ -132,10 +132,10 @@ class BookAppMain extends Component {
 		this.setState({addingBook:!this.state.addingBook});
 	}
 	//updates teh linkedWindow, launch and wormhole of a book in database
-	updateBook = (bookToBeUpdated, linkedWindowId, launch, wormhole) =>{
+	updateBook = (bookToBeUpdated, linkedWindowId, launch, wormhole) => {
 
-		let updatedBooks = this.state.bookshelf.map(function(book, putInDataBase) {//find the linked book and then update the WormHole for the book
-			if( book.key == bookToBeUpdated.key){
+		let updatedBooks = this.state.bookshelf.map(function (book, putInDataBase) {//find the linked book and then update the WormHole for the book
+			if (book.key == bookToBeUpdated.key) {
 				book.linkedWindowId = linkedWindowId;
 				book.WormHole = wormhole;
 				book.Launch = launch;
@@ -151,9 +151,27 @@ class BookAppMain extends Component {
 
 		});
 		this.setState({
-			bookshelf:updatedBooks
+			bookshelf: updatedBooks
 		})
 
+	}
+
+	delinkBook = (currWindowId) => {//delinks all the books in bookshelf that have the same windowId as the current one
+		//TODO: delink doesn't work on the last book in the bookshelf...
+		const filteredBooks = this.state.bookshelf.map((book, index, array) => {
+			deLinkBookfromWindow(book, currWindowId, this.props.user.uid)
+				.then(() => {//delinks the book from window in the database
+					// book.Launch = null;
+					// book.WormHole = null;
+					// book.linkedWindowId = -1001;
+				});
+
+			return book;
+		});
+
+		this.setState({
+			bookshelf: filteredBooks
+		})
 	}
 
 	addBook = (newBook)=> {//gets the newBook from addBookUI /*Every book has title and key, which is the date and linkedwindowId*/
@@ -168,7 +186,6 @@ class BookAppMain extends Component {
 					// book.WormHole = null;
 					// book.linkedWindowId = -1001;
 				});
-
 			return book;
 		});
 
@@ -219,34 +236,32 @@ class BookAppMain extends Component {
 				{/*<button onClick = {this.getURLS}>Get Open Windows</button>*/}
 				<div className = 'main-container-center'>
 
-        <div id = 'blurrable' className = 'book-shelf'>
-          <ul id = 'topLine'>
-	          <SortBooks books = {this.state.bookshelf} setBooks = {this.setBooks} isBlurred = {this.state.addingBook}/>
-	          <span className = 'add-btn-container'>
-            <h6 id = 'add'>Add book: </h6>
-            <button className = 'add-bk-btn' onClick={this.toggleAddBook}><h2>+</h2></button>
-          </span>
-          </ul>
-	        <div className = {this.state.addingBook?'blur-bg':'clear-bg'}>
-		        <BookShelf bks = {this.state.bookshelf} updateBook = {this.updateBook} deleteBook = {this.deleteBook}/>
-	        </div>
-        </div>
+		        <div id = 'blurrable' className = 'book-shelf'>
+		          <ul id = 'topLine'>
+			          <SortBooks books = {this.state.bookshelf} setBooks = {this.setBooks} isBlurred = {this.state.addingBook}/>
+			          <span className = 'add-btn-container'>
+		            <h6 id = 'add'>Add book: </h6>
+		            <button className = 'add-bk-btn' onClick={this.toggleAddBook}><h2>+</h2></button>
+		          </span>
+		          </ul>
+			        <div className = {this.state.addingBook?'blur-bg':'clear-bg'}>
+				        <BookShelf bks = {this.state.bookshelf} updateBook = {this.updateBook} deleteBook = {this.deleteBook} delinkBook={this.delinkBook}/>
+			        </div>
+		        </div>
 
-					{this.state.addingBook?
-						<div>
-							<AddBookUI
-								addBook = {this.addBook}
-								closePopup={this.toggleAddBook}
-								bks = {this.state.bookshelf}
-								urlsForLaunch={this.state.urlsForLaunch}
-								urlsForWormhole={this.state.urlsForWormhole}
-							/>
-						</div>
-						:
-						<div/>
-					}
-
-					<button className = 'add-bk-btn' onClick={this.toggleAddBook}><h2>+</h2></button>
+				{this.state.addingBook?
+					<div>
+						<AddBookUI
+							addBook = {this.addBook}
+							closePopup={this.toggleAddBook}
+							bks = {this.state.bookshelf}
+							urlsForLaunch={this.state.urlsForLaunch}
+							urlsForWormhole={this.state.urlsForWormhole}
+						/>
+					</div>
+					:
+					<div/>
+				}
 
 					{/*<h2>URLs for Wormhole</h2>*/}
 					{/*<ul>*/}

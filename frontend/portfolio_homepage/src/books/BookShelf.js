@@ -12,8 +12,6 @@ class BookShelf extends Component {
 		super(props);
 		this.state = {
 			isShowingWormhole:-1, //isShowingWormhole is the ID of the book from which the wormhole is toggled
-			// books:[],
-
       		searchResults:[],
 			numBksPerShelf:4
 		};
@@ -58,9 +56,8 @@ class BookShelf extends Component {
 		return <Grid key = {_index} item xs zeroMinWidth>
 			{_book===null?null:
 				<div key={_book.key}>
-					<BookNavbar book ={_book} deleteBook = {this.deleteBook} />
-					{/*<BookNavbar />*/}
-					<Book book ={_book} updateBook = {this.props.updateBook} toggleWormhole = {this.toggleWormhole}
+					{/*<BookNavbar book = {_book} deleteBook = {this.deleteBook} updateBook = {this.props.updateBook} delinkBook={this.props.delinkBook}/>*/}
+					<Book book ={_book} deleteBook = {this.deleteBook} updateBook = {this.props.updateBook} delinkBook={this.props.delinkBook} toggleWormhole = {this.toggleWormhole}
 					  isShowingWormhole = {this.state.isShowingWormhole} />
 				</div>
 			}
@@ -86,7 +83,6 @@ class BookShelf extends Component {
 		this.props.deleteBook(_book)
 	}
 
-
 	render(){
 		const bookList = this.props.bks;//array of all books
 
@@ -99,10 +95,10 @@ class BookShelf extends Component {
 
 		return (
 			<div>
-			<WindowResizer setNumBksPerShelf = {this.setNumBooksPerShelf} />
-		    <div className='book-shelf'>
-		        {books}
-		    </div>
+				<WindowResizer setNumBksPerShelf = {this.setNumBooksPerShelf} />
+			    <div className='book-shelf'>
+			        {books}
+			    </div>
 		    </div>
 
 		);

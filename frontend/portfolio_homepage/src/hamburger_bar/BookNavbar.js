@@ -1,7 +1,9 @@
-  import React, { Component } from 'react';
+/*global chrome*/
+import React, { Component } from 'react';
 import { MDBNavbar, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBCollapse, MDBContainer,
 MDBHamburgerToggler } from 'mdbreact';
 import { BrowserRouter as Router } from 'react-router-dom';
+import {deLinkBookfromWindow} from "../firebase/firestore/db_functions";
 
 class BookNavbar extends Component {
   constructor(props) {
@@ -24,6 +26,26 @@ toggleSingleCollapse = collapseId => {
   });
 }
 
+_cbWindowIdResponse(response) {
+	let windowId = response.windowId;//this gets the current windowId
+	if (windowId == null)
+		alert('window id is null');
+	this.setLinkedWindow(windowId);
+}
+
+setLinkedWindow = (windowId) =>{
+	this.setState({
+		linkedWindowId: windowId
+	}, () =>{
+		this.props.delinkBook(windowId)
+		// this.props.updateBook(this.props.book,windowId,this.state.launchURLs,this.state.wormholeURLs)})
+		this.props.updateBook(this.props.book, windowId, this.props.book.Launch, this.props.book.WormHole)
+	})
+
+
+}
+
+
 render() {
   return (
     <Router>
@@ -36,7 +58,7 @@ render() {
                   <MDBNavItem active>
                     <MDBNavLink to="#!" onClick={() => this.props.deleteBook(this.props.book)}>Delete</MDBNavLink>
                   </MDBNavItem>
-                  <MDBNavLink to="#!">Link to book</MDBNavLink>
+                    <MDBNavLink to="#!" onClick={() => chrome.runtime.sendMessage({rq: "getCurrWindowId"}, this._cbWindowIdResponse.bind(this))}>Link to book</MDBNavLink>
                   <MDBNavItem>
                   <MDBNavLink to="#!">Rename</MDBNavLink>
                   </MDBNavItem>

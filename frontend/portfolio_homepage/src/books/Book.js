@@ -12,22 +12,23 @@ import Wormhole from '../wormhole/Wormhole'
 import Launcher from '../launcher/Launcher'
 import ManualEntryOfURL from '../addURL/ManualEntryOfURL'
 import WindowId from '../debug/WindowId'
+import BookNavbar from "../hamburger_bar/BookNavbar";
 
 class Book extends Component{
 
-  constructor(props){
-    super(props);
-    this.state = {
-    	linkedWindowId:-100,
-    	book: null,
-      title:'',
-      isHovered: false,
-      // launchURLs: ['https://www.github.com/'],
-      // wormholeURLs:['https://www.github.com/','https://www.google.com/search?sxsrf=ALeKk03xO56CXGouNmYNfOx9L3LEpIKKrQ%3A1585511879738&ei=x_2AXofVLMusytMPvui78AI&q=when+will+coronavirus+end&oq=when+will+&gs_lcp=CgZwc3ktYWIQAxgAMgQIIxAnMgQIIxAnMgUIABCDATIFCAAQgwEyAggAMgIIADICCAAyAggAMgIIADICCAA6BAgAEEc6BggAEBYQHjoFCAAQzQI6BwgAEBQQhwI6BwgjEOoCECc6BQgAEJECOgQIABBDUOcpWM1kYPBsaARwAngDgAGJAogBrCqSAQczMi4xOC4zmAEAoAEBqgEHZ3dzLXdperABCg&sclient=psy-ab']
-    };
-     // this.handleMessage.bind(this);
-  }
-  componentDidMount=() =>{
+	constructor(props){
+		super(props);
+		this.state = {
+		    linkedWindowId:-100,
+		    book: null,
+			title:'',
+			isHovered: false
+			// launchURLs: ['https://www.github.com/'],
+			// wormholeURLs:['https://www.github.com/','https://www.google.com/search?sxsrf=ALeKk03xO56CXGouNmYNfOx9L3LEpIKKrQ%3A1585511879738&ei=x_2AXofVLMusytMPvui78AI&q=when+will+coronavirus+end&oq=when+will+&gs_lcp=CgZwc3ktYWIQAxgAMgQIIxAnMgQIIxAnMgUIABCDATIFCAAQgwEyAggAMgIIADICCAAyAggAMgIIADICCAA6BAgAEEc6BggAEBYQHjoFCAAQzQI6BwgAEBQQhwI6BwgjEOoCECc6BQgAEJECOgQIABBDUOcpWM1kYPBsaARwAngDgAGJAogBrCqSAQczMi4xOC4zmAEAoAEBqgEHZ3dzLXdperABCg&sclient=psy-ab']
+		};
+	 // this.handleMessage.bind(this);
+	}
+	componentDidMount=() =>{
 		this.setState({
 			linkedWindowId: this.props.book.linkedWindowId,
 			book: this.props.book,
@@ -81,8 +82,8 @@ class Book extends Component{
 
 
 
-	  createHoverMenu() {
-	    return <div className ='hover-menu'>
+	createHoverMenu() {
+		return <div className ='hover-menu'>
 				<Launcher book = {this.props.book} updateWindow = {this.props.updateBook} urls = {this.props.book.Launch}/>
 				<div className = 'line'>
 					<p></p>
@@ -93,7 +94,7 @@ class Book extends Component{
 				</div>
 			</div>
 
-	  }
+	}
 	  
 
 
@@ -102,42 +103,46 @@ class Book extends Component{
 		const hoverMenu = this.createHoverMenu();
 		return (
 			<div>
-			<div> <WindowId linkedWindowId = {this.props.book.linkedWindowId} /> </div>
-			<div className = 'book'
-				onMouseEnter = {()=>this.setState({isHovered:true})}
-				onMouseLeave = {()=>this.setState({isHovered:false})}>
-				{
+				<BookNavbar book = {this.props.book} deleteBook = {this.props.deleteBook} updateBook = {this.props.updateBook} delinkBook={this.props.delinkBook}/>
+				<div>
+					<WindowId linkedWindowId = {this.props.book.linkedWindowId}/>
+				</div>
+				<div className = 'book'
+					onMouseEnter = {()=>this.setState({isHovered:true})}
+					onMouseLeave = {()=>this.setState({isHovered:false})}>
+					{
 
-					this.state.isHovered?
-						hoverMenu
-					:
+						this.state.isHovered?
+							hoverMenu
+						:
 
-					<div className = 'bk_title' ><h1>{this.state.title}</h1></div>
-				}
+						<div className = 'bk_title' ><h1>{this.state.title}</h1></div>
+					}
 
-			</div>
+				</div>
 
-				{
-					this.props.isShowingWormhole==this.props.book.key?
-					<div>
-						<Wormhole book = {this.props.book} toggleWormhole = {this.props.toggleWormhole}/>
-					</div> : <div/>
-				}
-				
-					{/*<ManualEntryOfURL setWormholeURLs = {this.setWormholeURLs} setLaunchURLs = {this.setLaunchURLs}/>*/}
+					{
+						this.props.isShowingWormhole==this.props.book.key?
+						<div>
+							<Wormhole book = {this.props.book} toggleWormhole = {this.props.toggleWormhole}/>
+						</div> : <div/>
+					}
+
+						{/*<ManualEntryOfURL setWormholeURLs = {this.setWormholeURLs} setLaunchURLs = {this.setLaunchURLs}/>*/}
 
 			</div>
 		);
 	}
 
 	setLinkedWindow = (windowId) =>{
-
-
 		this.setState({
 			linkedWindowId: windowId
 		}, () =>{
-		this.props.updateBook(this.props.book,windowId,this.state.launchURLs,this.state.wormholeURLs)})
+		// this.props.updateBook(this.props.book,windowId,this.state.launchURLs,this.state.wormholeURLs)})
+			this.props.updateBook(this.props.book, windowId, this.props.book.Launch, this.props.book.WormHole)
+		})
 	}
+
 	// setLaunchURLs = (newURL) => {
 	// 	this.setState(
 	//       {
@@ -171,7 +176,9 @@ Book.propTypes = {
 	}),
 		toggleWormhole: PropTypes.func.isRequired,
 		isShowingWormhole: PropTypes.number.isRequired,
-		updateBook: PropTypes.func.isRequired
+		updateBook: PropTypes.func.isRequired,
+		deleteBook: PropTypes.func.isRequired,
+		delinkBook: PropTypes.func.isRequired
 	};
 
 

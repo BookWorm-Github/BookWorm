@@ -11,6 +11,8 @@ class BookShelf extends Component {
 		this.state = {
 			isShowingWormhole:false,
 			// books:[],
+
+      		searchResults:[],
 			numBksPerShelf:4
 		};
 	}

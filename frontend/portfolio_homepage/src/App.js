@@ -55,15 +55,15 @@ class App extends Component{
 	render(){
 		return <div className="App">
 				<User/>
-			<h2>URLs for Wormhole</h2>
-			<ul>
-				{ this.state.urlsForWormhole.map(title => <li>{title}</li>)}
-			</ul>
+			{/*<h2>URLs for Wormhole</h2>*/}
+			{/*<ul>*/}
+			{/*	{ this.state.urlsForWormhole.map(title => <li>{title}</li>)}*/}
+			{/*</ul>*/}
 
-			<h2>URLs for Launch</h2>
-			<ul>
-				{ this.state.urlsForLaunch.map(title => <li>{title}</li>)}
-			</ul>
+			{/*<h2>URLs for Launch</h2>*/}
+			{/*<ul>*/}
+			{/*	{ this.state.urlsForLaunch.map(title => <li>{title}</li>)}*/}
+			{/*</ul>*/}
 			{/*<BgColor />*/}
 		</div>
 	}

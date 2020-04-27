@@ -45,23 +45,10 @@ class User extends Component {
 		return (
 			this.state.user ?
 				<div className="users_portfolio_homepage">
-					{/*<h1 className={"ph_title"}>BookWorm</h1>*/}
+				
+					
 					<BookAppMain user={this.state.user} books={this.state.books}/>
-					<button className = "w-full py-3 bg-red-600 mt-4 text-white"
-					        onClick = {() => {
-						        bw_auth.signOut().then(() => {
-								        //console.log("Logged out successful")
-								        this.setState({
-									        user: null
-								        })
-							        },
-							        onRejected => {
-								        //console.log("log out unsuccessful")
-								        //console.log(onRejected)
-							        }
-						        )
-					        }
-					        }>Sign out</button>
+					
 				</div>
 				:
 				<Router>

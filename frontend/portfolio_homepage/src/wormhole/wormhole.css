@@ -12,6 +12,7 @@
   margin: auto;  
   border-radius: 15px;
   border: solid 2px #000000;
+  overflow: scroll;
 
 
 }  
@@ -20,18 +21,27 @@
   margin: 5px;
   display: flex;
 }
+
+.h2 {
+  font-weight: 300;
+}
+
 .img {
   margin-left: 5px;
 }
 .input{
   overflow: hidden;
   width: 90%;
-  background-color: #e7cc34;
+  background-color: white;
   height: 30px;
 }
 
 .logo {
-  background-color: #e7cc34;
+  background-color: white;
+}
+
+.title {
+  height: 60px;
 }
 .wormhole{
 

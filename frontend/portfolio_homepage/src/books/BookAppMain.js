@@ -4,6 +4,7 @@ import BookShelf from './BookShelf'
 import AddBookUI from '../AddBookUI/AddBookUI'
 import './bookStyles.css'
 import SortBooks from '../sortItems/SortBooks'
+import { bw_auth, generateUserDocument } from "../firebase/init.js";
 import Hotkeys from 'react-hot-keys';
 import {deleteBook, deLinkBookfromWindow, storeBook, updateBookLW} from "../firebase/firestore/db_functions";
 //added hotkeys: https://github.com/jaywcjlove/react-hotkeys#readme
@@ -221,11 +222,27 @@ class BookAppMain extends Component {
 
         <div id = 'blurrable' className = 'book-shelf'>
           <ul id = 'topLine'>
+			
 	          <SortBooks books = {this.state.bookshelf} setBooks = {this.setBooks} isBlurred = {this.state.addingBook}/>
 	          <span className = 'add-btn-container'>
             <h6 id = 'add'>Add book: </h6>
             <button className = 'add-bk-btn' onClick={this.toggleAddBook}><h2>+</h2></button>
-          </span>
+			</span>
+			<button className = 'signoutbutton'  onClick = {() => {
+						        bw_auth.signOut().then(() => {
+								        //console.log("Logged out successful")
+								        this.setState({
+									        user: null
+								        })
+							        },
+							        onRejected => {
+								        //console.log("log out unsuccessful")
+								        //console.log(onRejected)
+							        }
+						        )
+					        }
+					        }>Sign Out</button>
+         
           </ul>
 	        <div className = {this.state.addingBook?'blur-bg':'clear-bg'}>
 		        <BookShelf bks = {this.state.bookshelf} updateBook = {this.updateBook} deleteBook = {this.deleteBook}/>
@@ -246,7 +263,7 @@ class BookAppMain extends Component {
 						<div/>
 					}
 
-					<button className = 'add-bk-btn' onClick={this.toggleAddBook}><h2>+</h2></button>
+				
 
 					{/*<h2>URLs for Wormhole</h2>*/}
 					{/*<ul>*/}

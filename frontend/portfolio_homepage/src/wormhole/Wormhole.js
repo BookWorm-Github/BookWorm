@@ -8,7 +8,8 @@ class Wormhole extends Component{
   constructor(props){
     super(props);
     this.state = {
-      book: null
+      book: null,
+      searchResults:[]
     };
   }
   componentDidMount =() =>{
@@ -28,10 +29,10 @@ class Wormhole extends Component{
 				<div>
 					<h3>Wormhole</h3>
 					<form className="input" >
-					<input type="text" onChange={this.props.filterURLs} placeholder="Search..." />
+					<input type="text" onChange={this.filterURLs} placeholder="Search..." />
                     </form>
                     <ul className = 'wormhole-list'>
-                        {this.props.searchResults.map(item => (
+                        {this.state.searchResults.map(item => (
                           <li>
                           {/*<li  key={item} style={{listStyleImage: 'url('+this.getBaseUrl(item)+'/favicon.ico)'}}>*/}
                             <span>
@@ -45,7 +46,7 @@ class Wormhole extends Component{
                     </ul>
 
 
-          			<button onClick={()=>this.props.toggleWormhole(false)}>Back</button>
+          			<button onClick={()=>this.props.toggleWormhole(-1)}>Back</button>
                     </div>
 				</div>
 		);
@@ -59,6 +60,39 @@ class Wormhole extends Component{
 
 
 
+	filterURLs = (e) =>{
+				// Variable to hold the original version of the list
+    let currentList = [];
+		// Variable to hold the filtered list before putting into state
+    let newList = [];
+
+		// If the search bar isn't empty
+    if (e.target.value !== "") {
+			// Assign the original list to currentList
+      currentList = this.state.book.WormHole;
+      console.log("In filter urls for book"+this.props.book.title+", the wormhole is "+currentList.toString())
+			// Use .filter() to determine which items should be displayed
+			// based on the search terms
+      newList = currentList.filter(item => {
+				// change current item to lowercase
+        const lc = item.toLowerCase();
+				// change search term to lowercase
+        const filter = e.target.value.toLowerCase();
+				// check to see if the current list item includes the search term
+				// If it does, it will be added to newList. Using lowercase eliminates
+				// issues with capitalization in search terms and search content
+        return lc.includes(filter);
+      });
+    } else {
+			// If the search bar is empty, set newList to original task list: do we want this effect?
+      newList = this.props.book.WormHole;
+    }
+    //console.log("filtered List in book "+this.props.book.title+" wormhole is "+newList);
+		// Set the filtered state based on what our rules added to newList
+    this.setState({
+      searchResults: newList
+    });
+	}
 
 
 }
@@ -71,9 +105,7 @@ Wormhole.propTypes = {
       linkedWindowId: PropTypes.number.isRequired,
       Launch: PropTypes.array.isRequired,
       WormHole: PropTypes.array.isRequired
-    }),
-    filterURLs: PropTypes.func.isRequired,
-    searchResults: PropTypes.func.isRequired,
+    })
   };
 
 

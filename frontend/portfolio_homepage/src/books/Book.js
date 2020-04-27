@@ -19,10 +19,8 @@ class Book extends Component{
     this.state = {
     	linkedWindowId:-100,
     	book: null,
-    	searchResults:[],
       title:'',
       isHovered: false,
-      wormholeURLs:[]
       // launchURLs: ['https://www.github.com/'],
       // wormholeURLs:['https://www.github.com/','https://www.google.com/search?sxsrf=ALeKk03xO56CXGouNmYNfOx9L3LEpIKKrQ%3A1585511879738&ei=x_2AXofVLMusytMPvui78AI&q=when+will+coronavirus+end&oq=when+will+&gs_lcp=CgZwc3ktYWIQAxgAMgQIIxAnMgQIIxAnMgUIABCDATIFCAAQgwEyAggAMgIIADICCAAyAggAMgIIADICCAA6BAgAEEc6BggAEBYQHjoFCAAQzQI6BwgAEBQQhwI6BwgjEOoCECc6BQgAEJECOgQIABBDUOcpWM1kYPBsaARwAngDgAGJAogBrCqSAQczMi4xOC4zmAEAoAEBqgEHZ3dzLXdperABCg&sclient=psy-ab']
     };
@@ -32,15 +30,13 @@ class Book extends Component{
 		this.setState({
 			linkedWindowId: this.props.book.linkedWindowId,
 			book: this.props.book,
-			title: this.props.book.title,
-			wormholeURLs: this.props.book.WormHole
+			title: this.props.book.title
 		});
 
 		if(this.props.book.linkedWindowId>=0){
 			chrome.runtime.sendMessage({rq: "urlsForLaunch", winId: this.props.book.linkedWindowId}, this._cbForLaunchResponse);
 			chrome.runtime.sendMessage({rq: "urlsForWormhole", winId: this.props.book.linkedWindowId}, this._cbForWormholeResponse);
 		}
-		//book is getting the right wormholes in log
 		//console.log("Wormhole for book "+this.props.book.title+" is "+this.props.book.WormHole.toString());
 		
 		// chrome.runtime.onMessage.addListener(this.handleMessage.bind(this));
@@ -75,7 +71,6 @@ class Book extends Component{
 		if(response.urlsForWormhole&&response.urlsForWormhole.length){//if launch urls are not empty
 			this.props.updateBook(this.props.book,this.props.book.linkedWindowId,this.props.book.Launch,response.urlsForWormhole);
 			console.log("book "+this.props.book.title+"updated wormhole to be "+response.urlsForWormhole);
-			this.setState({wormholeURLs: response.urlsForWormhole});
 		}
 		else{
 			console.log("book "+this.props.book.title+" received empty for wormhole");
@@ -89,10 +84,8 @@ class Book extends Component{
 	    return <div className ='hover-menu'>
 				<Launcher book = {this.props.book} updateWindow = {this.props.updateBook} urls = {this.props.book.Launch}/>
 				<div className = 'wormhole' 
-						onClick = {() => this.props.toggleWormhole(true)}>Wormhole
-						{console.log("Hovermenu is activated at book "+this.props.book.title)}
+						onClick = {() => this.props.toggleWormhole(this.props.book.key)}>Wormhole
 				</div>
-
 			</div>
 
 	  }
@@ -120,32 +113,9 @@ class Book extends Component{
 			</div>
 
 				{
-					this.props.isShowingWormhole? 
+					this.props.isShowingWormhole==this.props.book.key? 
 					<div>
-					<div className = 'popup'>
-				<div>
-					<h3>Wormhole</h3>
-					<form className="input" >
-					<input type="text" onChange={this.filterURLs} placeholder="Search..." />
-                    </form>
-                    <ul className = 'wormhole-list'>
-                        {this.state.searchResults.map(item => (
-                          <li>
-                          {/*<li  key={item} style={{listStyleImage: 'url('+this.getBaseUrl(item)+'/favicon.ico)'}}>*/}
-                            <span>
-                            <a>
-                                {item} &nbsp;                        
-                            </a>
-                            </span>
-                            
-                            </li>
-                        ))}
-                    </ul>
-
-
-          			<button onClick={()=>this.props.toggleWormhole(false)}>Back</button>
-                    </div>
-				</div>
+						<Wormhole book = {this.props.book} toggleWormhole = {this.props.toggleWormhole}/>
 					</div> : <div/>
 				}
 				
@@ -182,40 +152,6 @@ class Book extends Component{
 	// }
 
 
-	filterURLs=(e)=>{
-				// Variable to hold the original version of the list
-    let currentList = [];
-		// Variable to hold the filtered list before putting into state
-    let newList = [];
-
-		// If the search bar isn't empty
-    if (e.target.value !== "") {
-			// Assign the original list to currentList
-      currentList = this.state.wormholeURLs;
-      console.log("In filter urls for book"+this.props.book.title+", the wormhole is "+currentList.toString())
-			// Use .filter() to determine which items should be displayed
-			// based on the search terms
-      newList = currentList.filter(item => {
-				// change current item to lowercase
-        const lc = item.toLowerCase();
-				// change search term to lowercase
-        const filter = e.target.value.toLowerCase();
-				// check to see if the current list item includes the search term
-				// If it does, it will be added to newList. Using lowercase eliminates
-				// issues with capitalization in search terms and search content
-        return lc.includes(filter);
-      });
-    } else {
-			// If the search bar is empty, set newList to original task list: do we want this effect?
-      newList = this.props.book.WormHole;
-    }
-    //console.log("filtered List in book "+this.props.book.title+" wormhole is "+newList);
-		// Set the filtered state based on what our rules added to newList
-    this.setState({
-      searchResults: newList
-    });
-	}
-
 
 
 }
@@ -229,7 +165,7 @@ Book.propTypes = {
 		WormHole: PropTypes.array.isRequired
 	}),
 		toggleWormhole: PropTypes.func.isRequired,
-		isShowingWormhole: PropTypes.bool.isRequired,
+		isShowingWormhole: PropTypes.number.isRequired,
 		updateBook: PropTypes.func.isRequired
 	};
 

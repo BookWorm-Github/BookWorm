@@ -9,7 +9,7 @@ class BookShelf extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			isShowingWormhole:false,
+			isShowingWormhole:-1, //isShowingWormhole is the ID of the book from which the wormhole is toggled
 			// books:[],
 
       		searchResults:[],
@@ -133,9 +133,9 @@ class BookShelf extends Component {
 		//console.log(strBuilder.join(""));
 	}
 
-	toggleWormhole = (bool) =>{
+	toggleWormhole = (book_key) =>{
 		////console.log("Adding book");
-		this.setState({isShowingWormhole:bool});
+		this.setState({isShowingWormhole:book_key});
 	}
 
 }

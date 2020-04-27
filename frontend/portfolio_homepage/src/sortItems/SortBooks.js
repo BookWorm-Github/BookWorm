@@ -32,7 +32,7 @@ class SortBooks extends Component{
 		return (
 			<span className = {this.props.isBlurred? 'blur-bg':'clear-bg'}>
 				<MDBBtnGroup className="sort-btn-container">
-				<h6 id = 'sort'>  Sort By: </h6>
+				<h6 id = 'sort'>Sort By:</h6>
 
 				      <MDBDropdown size = "sm">
 

@@ -110,8 +110,12 @@ for optimization*/
   margin: 10px;
       padding: 3px;
   align-items: center;
-  width: 120px;
+  width: 100px;
   height: 40px;
+}
+
+.topbutton {
+  margin: auto;
 }
 
 .topline {

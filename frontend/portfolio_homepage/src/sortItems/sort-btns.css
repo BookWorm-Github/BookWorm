@@ -11,14 +11,12 @@
 }
 
 .sort {
-  margin: auto;
-  padding-left: 10px;
+  padding-left: 20px;
 }
 
 .add {
-    margin: auto;
-    padding-left: 10px;
-    padding-right: 20px;
+    margin-left: 25px;
+    margin-right: 5px;
 }
 
 .add-btn-container{

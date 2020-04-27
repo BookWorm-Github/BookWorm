@@ -57,7 +57,7 @@ class User extends Component {
 								//console.log(onRejected)
 							}
 						)}}>
-						Sign Out
+						<p className ="topbutton">Sign Out</p>
 					</button>
 					
 					<BookAppMain user={this.state.user} books={this.state.books}/>

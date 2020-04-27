@@ -230,7 +230,7 @@ function sendToContent(){
       console.log("sendToContent current window is "+winId);
       chrome.tabs.query({},function(tabs){
         for(var i = 0; i<tabs.length; i++){
-          if(tabs[i]!==undefined&&tabs[i].url.includes('chrome://newtab')){
+          if(tabs[i]!==undefined){
             console.log("Background is sending to book window id  "+tabs[i].windowId);
             chrome.tabs.sendMessage(tabs[i].id, 
             {urlsForLaunch:window.tabs, urlsForWormhole: window.urlsForWormhole, winId:createdWindow.id});

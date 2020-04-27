@@ -37,7 +37,8 @@
 
 In portfolio homepage there will be:
 *album/project*:
-   - WormHole: Window Search History (for each project/album in Portfolio): you can order history search by tags, number of clicks, time spent on webpages, latest clicked on, etc.
+   - WormHole: Window Search History (for each project/album in Portfolio): A search history for each window where all visited urls get stored for a specified window...
+         - you can order history search by tags, number of clicks, time spent on webpages, latest clicked on, etc.
    - When looking into an album, new websites for further research will be suggested. A preview of those websites will be displayed.
    - User clicks on album and it has options to open up the webpages in the album. 
    - Albums can be merged together

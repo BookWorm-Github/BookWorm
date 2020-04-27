@@ -9,8 +9,16 @@ class Wormhole extends Component{
   constructor(props){
     super(props);
     this.state = {
+      book: null,
       searchResults:[]
     };
+  }
+  componentDidMount =() =>{
+    this.setState({
+      book: this.props.book
+    })
+    console.log("Wormhole for book "+this.props.book.title+" is "+this.props.book.WormHole.toString());
+
   }
 
 
@@ -29,7 +37,8 @@ class Wormhole extends Component{
                     </form>
                     <ul className = 'wormhole-list'>
                         {this.state.searchResults.map(item => (
-                          <li  key={item} style={{listStyleImage: 'url('+this.getBaseUrl(item)+'/favicon.ico)'}}>
+                          <li>
+                          {/*<li  key={item} style={{listStyleImage: 'url('+this.getBaseUrl(item)+'/favicon.ico)'}}>*/}
                             <span>
                             <a>
                                 {item} &nbsp;                        
@@ -41,7 +50,7 @@ class Wormhole extends Component{
                     </ul>
 
 
-          			<button onClick={()=>this.props.toggleWormhole(false)}>Back</button>
+          			<button onClick={()=>this.props.toggleWormhole(-1)}>Back</button>
                     </div>
 				</div>
 		);
@@ -64,8 +73,8 @@ class Wormhole extends Component{
 		// If the search bar isn't empty
     if (e.target.value !== "") {
 			// Assign the original list to currentList
-      currentList = this.props.urls;
-
+      currentList = this.state.book.WormHole;
+      console.log("In filter urls for book"+this.props.book.title+", the wormhole is "+currentList.toString())
 			// Use .filter() to determine which items should be displayed
 			// based on the search terms
       newList = currentList.filter(item => {
@@ -80,9 +89,9 @@ class Wormhole extends Component{
       });
     } else {
 			// If the search bar is empty, set newList to original task list: do we want this effect?
-     // newList = this.props.urls;
+      newList = this.props.book.WormHole;
     }
-    console.log("newList in wormhole is "+newList.toString());
+    //console.log("filtered List in book "+this.props.book.title+" wormhole is "+newList);
 		// Set the filtered state based on what our rules added to newList
     this.setState({
       searchResults: newList
@@ -94,7 +103,13 @@ class Wormhole extends Component{
 
 
 Wormhole.propTypes = {
-    urls: PropTypes.arrayOf(PropTypes.string).isRequired,
+    book: PropTypes.shape({
+      key: PropTypes.number.isRequired,
+      title: PropTypes.string.isRequired,
+      linkedWindowId: PropTypes.number.isRequired,
+      Launch: PropTypes.array.isRequired,
+      WormHole: PropTypes.array.isRequired
+    })
   };
 
 

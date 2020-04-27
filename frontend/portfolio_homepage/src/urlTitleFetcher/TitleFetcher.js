@@ -3,7 +3,7 @@
 import React, {Component} from 'react'
 
 import PropTypes from 'prop-types'
-import axios from 'axios'
+// import axios from 'axios'
 import $ from 'jquery'
 //https://urlmeta.org/
 //import $ from 'jquery'
@@ -22,34 +22,34 @@ class TitleFetcher extends Component{
   	}
   	componentDidUpdate(){
   		// this.getTitles();
-  		var titles = [];
-  		
+	    let titles = [];
 
-		function fetchHTML(externalUrl,state,cb){
+
+	    function fetchHTML(externalUrl,state,cb){
 			$.ajax({
 			  url: externalUrl,
 			  async: true,
 			  success: function(data) {
-			    var matches = data.match(/<title(.*?)<\/title>/);
-			    //alert(matches[0]);
+				  const matches = data.match(/<title(.*?)<\/title>/);
+				  //alert(matches[0]);
 			    titles = [...titles,matches[0]];
-			    	console.log("Titles inside is "+titles.toString());
+			    	//console.log("Titles inside is "+titles.toString());
 			    cb(state,matches[0]);
 			  }   
 			});
 		}
 
-		
-		
-		for(var i = 0; i<this.props.urls.length; i++){
+		if(this.props.urls!=null){
+			for(let i = 0; i<this.props.urls.length; i++){
 
-				fetchHTML(this.props.urls[i],this.state.titles,this.callback);
+					fetchHTML(this.props.urls[i],this.state.titles,this.callback);
+			}
 		}
 
 
 
   		
-  		console.log("Titles outside is "+this.state.titles.toString());
+  		//console.log("Titles outside is "+this.state.titles.toString());
 
   		
 
@@ -63,7 +63,7 @@ class TitleFetcher extends Component{
 		//         titles: [...this.state.titles, doc.title]
 		//       }
 		//     );
-		//     console.log("State in getHTML is "+this.state.titles.toString());
+		//     //console.log("State in getHTML is "+this.state.titles.toString());
 			
 
 		// }
@@ -71,19 +71,19 @@ class TitleFetcher extends Component{
   	}
 
   	callback = (state,t) => {
-			console.log("Param in callback is "+t.toString());
+			//console.log("Param in callback is "+t.toString());
 			//state.push(t);
 			function stripHTMLTags(str) {
 				// var s1 = str.replace('<title>', '');
 
 				// var s2 = s1.replace('</title>', '');
-				var stripedHtml = $("<div>").html(str).text();
+				const stripedHtml = $("<div>").html(str).text();
 				return stripedHtml;
 			}
 			var title = stripHTMLTags(t);
 			
 			this.setState({titles: [...this.state.titles,title]})
-			console.log("In callback state is "+this.state.titles.toString());
+			//console.log("In callback state is "+this.state.titles.toString());
 
 		}
 	render(){
@@ -98,7 +98,7 @@ class TitleFetcher extends Component{
 	}
 
 	// getTitles = () =>{
-	// 	console.log("titlefetcher has "+this.props.urls.length+" urls");
+	// 	//console.log("titlefetcher has "+this.props.urls.length+" urls");
 	// 	for(var i = 0; i<this.props.urls.length; i++){
 			
 	// 		this.getHTML(this.props.urls[i])
@@ -116,7 +116,7 @@ class TitleFetcher extends Component{
 	//         titles: [...this.state.titles, doc.title]
 	//       }
 	//     );
-	//     console.log("State in getHTML is "+this.state.titles.toString());
+	//     //console.log("State in getHTML is "+this.state.titles.toString());
 		
 	// }
 

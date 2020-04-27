@@ -45,7 +45,20 @@ class User extends Component {
 		return (
 			this.state.user ?
 				<div className="users_portfolio_homepage">
-				
+					<button className = 'signoutbutton'  onClick = {() => {
+						bw_auth.signOut().then(() => {
+								//console.log("Logged out successful")
+								this.setState({
+									user: null
+								})
+							},
+							onRejected => {
+								//console.log("log out unsuccessful")
+								//console.log(onRejected)
+							}
+						)}}>
+						Sign Out
+					</button>
 					
 					<BookAppMain user={this.state.user} books={this.state.books}/>
 					

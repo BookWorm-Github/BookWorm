@@ -244,17 +244,6 @@ class BookAppMain extends Component {
 		            <h6 id = 'add'>Add book: </h6>
 		            <button className = 'add-bk-btn' onClick={this.toggleAddBook}><h2>+</h2></button>
 		          </span>
-			          <button className = 'signoutbutton'  onClick = {() => {
-				          bw_auth.signOut().then(() => {
-						          //console.log("Logged out successful")
-					          },
-					          onRejected => {
-						          //console.log("log out unsuccessful")
-						          //console.log(onRejected)
-					          }
-				          )}}>
-				          Sign Out
-			          </button>
 		          </ul>
 			        <div className = {this.state.addingBook?'blur-bg':'clear-bg'}>
 				        <BookShelf bks = {this.state.bookshelf} updateBook = {this.updateBook} deleteBook = {this.deleteBook} delinkBook={this.delinkBook}/>

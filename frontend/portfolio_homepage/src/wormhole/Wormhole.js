@@ -28,13 +28,16 @@ class Wormhole extends Component{
 
 				<div className = 'popup'>
 				<div>
-					<h3>Wormhole</h3>
+          <div class="title">
+					<h2>Wormhole</h2>
+          </div>
 					<form>
             <div className="forma">
           <img src = "/search.svg" alt="search icon" height="28" width="28" className="logo"></img>
 					<input className="input" type="text" onChange={this.filterURLs} placeholder="Search..." />
           </div>
                     </form>
+                    <button onClick={()=>this.props.toggleWormhole(-1)}>Back</button>
                     <ul className = 'wormhole-list'>
                         {this.state.searchResults.map(item => (
                           <li>
@@ -50,7 +53,7 @@ class Wormhole extends Component{
                     </ul>
 
 
-          			<button onClick={()=>this.props.toggleWormhole(-1)}>Back</button>
+          			
                     </div>
 				</div>
 		);

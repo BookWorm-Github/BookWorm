@@ -215,14 +215,31 @@ chrome.tabs.onActivated.addListener(function(TabInfo) {
 
 function sendToContent(){
   //console.log("Background is sending to content... ");
-  chrome.tabs.query({active: true, currentWindow: true},
-      tabs =>{
-        if(tabs[0]!==undefined){
-          console.log("Background is sending to book window id  "+tabs[0].windowId);
-        chrome.tabs.sendMessage(tabs[0].id, 
-        {urlsForLaunch:window.tabs, urlsForWormhole: window.urlsForWormhole, winId:tabs[0].windowId});
-      }
-    });
+  // chrome.tabs.query({active: true, currentWindow: true},
+  //     function(tabs){
+  //       if(tabs[0]!==undefined){
+  //         console.log("Background is sending to book window id  "+tabs[0].windowId);
+  //       chrome.tabs.sendMessage(tabs[0].id, 
+  //       {urlsForLaunch:window.tabs, urlsForWormhole: window.urlsForWormhole, winId:tabs[0].windowId});
+  //     }
+  //   });
+
+   var winId = -1;
+    function retWinId(createdWindow){
+      winId = createdWindow.id;
+      console.log("sendToContent current window is "+winId);
+      chrome.tabs.query({},function(tabs){
+        for(var i = 0; i<tabs.length; i++){
+          if(tabs[i]!==undefined&&tabs[i].url.includes('chrome://newtab')){
+            console.log("Background is sending to book window id  "+tabs[i].windowId);
+            chrome.tabs.sendMessage(tabs[i].id, 
+            {urlsForLaunch:window.tabs, urlsForWormhole: window.urlsForWormhole, winId:createdWindow.id});
+          }
+        }
+      })
+    }
+    chrome.windows.getCurrent({}, 
+              retWinId); 
   // chrome.tabs.query({active: true, currentWindow: true},
   //     tabs =>{
   //       if(tabs[0]!=undefined)

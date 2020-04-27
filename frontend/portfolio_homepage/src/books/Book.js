@@ -125,14 +125,14 @@ class Book extends Component{
 		);
 	}
 
-	setLinkedWindow = (windowId) =>{
+	// setLinkedWindow = (windowId) =>{
 
 
-		this.setState({
-			linkedWindowId: windowId
-		}, () =>{
-		this.props.updateBook(this.props.book,windowId,this.state.launchURLs,this.state.wormholeURLs)})
-	}
+	// 	this.setState({
+	// 		linkedWindowId: windowId
+	// 	}, () =>{
+	// 	this.props.updateBook(this.props.book,windowId,this.state.launchURLs,this.state.wormholeURLs)})
+	// }
 	// setLaunchURLs = (newURL) => {
 	// 	this.setState(
 	//       {

@@ -29,7 +29,7 @@ class Wormhole extends Component{
 				<div className = 'popup'>
 				<div>
           <div class="title">
-					<h2>Wormhole</h2>
+					<p className="titlep">Wormhole</p>
           </div>
 					<form>
             <div className="forma">

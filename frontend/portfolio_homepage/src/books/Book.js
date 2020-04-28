@@ -43,19 +43,6 @@ class Book extends Component{
 
 		// chrome.runtime.onMessage.addListener(this.handleMessage.bind(this));
 	}
-	// handleMessage(message, sender, sendResponse){
-	// 	console.log("Book"+this.props.book.title+
-	// 		" linkedID: "+this.props.book.linkedWindowId+
-	// 		" received winID from background: "+message.winId);
-	// 	if(message.winId==this.props.book.linkedWindowId){
-	// 		console.log("updated wormhole n launch");
-	// 		this._cbForLaunchResponse(message);
-	// 		this._cbForWormholeResponse(message);
-	// 	}
-	// 	else{
-	// 		console.log("no need update wormhole n launch");
-	// 	}
-	// }
 	//for initial book setups
 	_cbForLaunchResponse = (response) => {
 		if(response.urlsForLaunch&&response.urlsForLaunch.length){//if launch urls are not empty
@@ -64,12 +51,12 @@ class Book extends Component{
 				response.urlsForLaunch,
 				this.props.book.WormHole,
 				false);
-			console.log("book "+this.props.book.title+"updated launch to be "+response.urlsForLaunch);
+			// console.log("book "+this.props.book.title+"updated launch to be "+response.urlsForLaunch);
 
 		}
 		else{
 
-			console.log("book "+this.props.book.title+" received empty for launch");
+			// console.log("book "+this.props.book.title+" received empty for launch");
 		}
 	}
 
@@ -111,10 +98,13 @@ class Book extends Component{
 		const hoverMenu = this.createHoverMenu();
 		return (
 			<div>
-				<BookNavbar book = {this.props.book} deleteBook = {this.props.deleteBook} updateBook = {this.props.updateBook} delinkBook={this.props.delinkBook}/>
-				<div>
-					<WindowId linkedWindowId = {this.props.book.linkedWindowId}/>
+			<div>
+					{this.props.isCurrentWindow? 
+					<div>Current Window</div>
+					:<br/>}
 				</div>
+				<BookNavbar book = {this.props.book} deleteBook = {this.props.deleteBook} updateBook = {this.props.updateBook} delinkBook={this.props.delinkBook}/>
+				
 				<div className = 'book'
 					onMouseEnter = {()=>this.setState({isHovered:true})}
 					onMouseLeave = {()=>this.setState({isHovered:false})}>
@@ -186,7 +176,8 @@ Book.propTypes = {
 		isShowingWormhole: PropTypes.number.isRequired,
 		updateBook: PropTypes.func.isRequired,
 		deleteBook: PropTypes.func.isRequired,
-		delinkBook: PropTypes.func.isRequired
+		delinkBook: PropTypes.func.isRequired,
+		isCurrentWindow: PropTypes.bool.isRequired
 	};
 
 

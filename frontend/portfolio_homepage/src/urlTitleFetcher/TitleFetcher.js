@@ -23,7 +23,7 @@ class TitleFetcher extends Component{
   	componentDidUpdate(){
   		// this.getTitles();
 	    let titles = [];
-
+	    console.log("Titlefetcher was called with urls "+this.props.urls);
 
 	    function fetchHTML(externalUrl,state,cb){
 			$.ajax({

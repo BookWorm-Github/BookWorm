@@ -24,11 +24,12 @@ class BookAppMain extends Component {
 
 		chrome.runtime.sendMessage({rq: "getCurrWindowId"}, this.setCurWindow);
 	}
-	setCurWindow = (response) =>{
+	setCurWindow = async (response) =>{
 		console.log("BookAppMain setCurWindow received winID:"+response.windowId);
-		this.setState({
-			curWinId: response.windowId
+		await this.setState({
+			curWinID: response.windowId
 		})
+		console.log("CurWinID is set to be "+this.state.curWinId);
 	}
 
 	componentDidMount = () => {//updating the user's personal books

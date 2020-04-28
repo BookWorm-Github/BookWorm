@@ -42,9 +42,9 @@ for optimization*/
   }
 .current-book {
     border-style:solid;
-    border-color: #000000;
+    border-color: rgb(38, 54, 92);
     border-radius:5px;
-    border-width: 5px;
+    border-width: 3px;
 
 
 }

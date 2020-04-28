@@ -61,10 +61,13 @@ chrome.runtime.onMessage.addListener(
           chrome.tabs.query({windowId: msg.winId},sendBackWormhole)
 			    break;
 	        case("getCurrWindowId"):
-				console.log("Background received request for current window id and is sending back "+sender.tab.windowId);
-				getOpenTabs();
-				sendResponse({windowId: sender.tab.windowId});
+				    console.log("Background received request for current window id and is sending back "+sender.tab.windowId);
+				    getOpenTabs();
+				    sendResponse({windowId: sender.tab.windowId});
 	        break;
+          case("closeCurrentTab"):
+            sender.tab ? chrome.tabs.remove(sender.tab.id): console.log("Sender has no tab to be removed");
+          break;
           case("openWindowOfTabs"):
           var winId = -1;
             function retWinId(createdWindow){
@@ -73,7 +76,7 @@ chrome.runtime.onMessage.addListener(
 
               sendResponse({windowId: winId});
             }
-            chrome.windows.create({url:msg.urlsToLaunch}, 
+            chrome.windows.create({url:msg.urlsToLaunch, type:"normal", width: msg.winWidth, height: msg.winHeight}, 
               retWinId); 
           break;
 		    default://console.log("unknown message")
@@ -142,7 +145,7 @@ chrome.tabs.onRemoved.addListener(function(tabid, removed) {
 
 
 chrome.windows.onRemoved.addListener(function(windowId) {
-	console.log("window closed")
+	//console.log("window closed")
 	getOpenTabs();
 	window.urlsForWormhole.splice(0,window.urlsForWormhole.length);//clears the window.tabs array
  //debug wormhole
@@ -163,7 +166,7 @@ chrome.windows.onRemoved.addListener(function(windowId) {
  //   //window.urlsToBeStoredInLaunch.splice(0,//window.urlsToBeStoredInLaunch.length);
  //  }
 
-  console.log("window removed and urlsForWormhole are "+window.urlsForWormhole);
+  //console.log("window removed and urlsForWormhole are "+window.urlsForWormhole);
   sendToContent();
 
 })
@@ -227,11 +230,11 @@ function sendToContent(){
    var winId = -1;
     function retWinId(createdWindow){
       winId = createdWindow.id;
-      console.log("sendToContent current window is "+winId);
+      //console.log("sendToContent current window is "+winId);
       chrome.tabs.query({},function(tabs){
         for(var i = 0; i<tabs.length; i++){
-          if(tabs[i]!==undefined&&tabs[i].url.includes('chrome://newtab')){
-            console.log("Background is sending to book window id  "+tabs[i].windowId);
+          if(tabs[i]!==undefined){
+            //console.log("Background is sending to book window id  "+tabs[i].windowId);
             chrome.tabs.sendMessage(tabs[i].id, 
             {urlsForLaunch:window.tabs, urlsForWormhole: window.urlsForWormhole, winId:createdWindow.id});
           }

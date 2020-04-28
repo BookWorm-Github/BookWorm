@@ -59,7 +59,7 @@ class Wormhole extends Component{
     var title = stripHTMLTags(t)+regex+url;
 
     
-    this.setState({titles: [...this.state.titles,title]})
+    this.setState({titles: [...this.state.titles,title]}, this.setState({searchResults:this.state.titles}))
     console.log("Wormhole.js In callback state is "+this.state.titles.toString());
 
   }
@@ -133,7 +133,7 @@ class Wormhole extends Component{
       });
     } else {
 			// If the search bar is empty, set newList to original task list: do we want this effect?
-      //newList = this.props.book.WormHole;
+      newList = this.props.book.WormHole;
     }
     //console.log("filtered List in book "+this.props.book.title+" wormhole is "+newList);
 		// Set the filtered state based on what our rules added to newList

@@ -14,12 +14,23 @@ class Launcher extends Component{
 	constructor(props){
 		super(props);
 		this.state = {
-    		urls: []
+    		urls: [],
+    		winWidth:0,
+    		winHeight:0
     	};
   	}
   	componentDidMount(){
+
+    var w = window.outerWidth
+          || document.documentElement.clientWidth
+          || document.body.clientWidth;
+    var h = window.outerHeight
+          || document.documentElement.clientHeight
+          || document.body.clientHeight;
   		this.setState({
-  			urls: this.props.urls
+  			urls: this.props.urls,
+  			winWidth: w,
+  			winHeight: h
   		});
 
   	}
@@ -42,7 +53,7 @@ class Launcher extends Component{
 			alert("No urls to open");
 		else{
 			// alert("Opening "+this.props.urls.toString())
-			chrome.runtime.sendMessage({rq: "openWindowOfTabs", urlsToLaunch: this.props.urls},this._cbWindow.bind(this));
+			chrome.runtime.sendMessage({rq: "openWindowOfTabs", urlsToLaunch: this.props.urls, winWidth: this.state.winWidth, winHeight: this.state.winHeight},this._cbWindow.bind(this));
 		}
 	}
 

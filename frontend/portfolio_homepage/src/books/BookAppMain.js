@@ -94,7 +94,7 @@ class BookAppMain extends Component {
 
 		updateBookLW(bookToBeUpdated, this.props.user.uid).then(e => {
 			if(shouldCloseWindow){
-				// window.close();
+				window.close();
 			}
 		});
 		
@@ -128,7 +128,7 @@ class BookAppMain extends Component {
 				.then(() => {//delinks the book from window in the database
 					// book.Launch = null;
 					// book.WormHole = null;
-					book.linkedWindowId = -1;
+					// book.linkedWindowId = -1;
 				});
 			return book;
 		});

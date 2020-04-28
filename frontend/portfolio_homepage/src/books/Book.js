@@ -60,6 +60,8 @@ class Book extends Component{
 		}
 	}
 
+	//uncomment below and the above chrome runtime if u want wormhole reset every time the component mounts
+	//ideally but unimplemented: wormhole will only be reset when new WINDOW (not tab) opens for only the book that has the current linked window
 	// _cbForWormholeResponse = (response) => {
 	// 	if(response.urlsForWormhole&&response.urlsForWormhole.length){//if launch urls are not empty
 	// 		this.props.updateBook(this.props.book,
@@ -106,7 +108,7 @@ class Book extends Component{
 
 				<div className = {this.props.isCurrentWindow? 'current-book':'nonexistent-class'}>
 				<BookNavbar book = {this.props.book} deleteBook = {this.props.deleteBook} updateBook = {this.props.updateBook} delinkBook={this.props.delinkBook}/>
-				
+				<WindowId linkedWindowId = {this.props.book.linkedWindowId} />
 				<div className = 'book'
 					onMouseEnter = {()=>this.setState({isHovered:true})}
 					onMouseLeave = {()=>this.setState({isHovered:false})}>

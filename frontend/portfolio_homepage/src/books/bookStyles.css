@@ -40,6 +40,14 @@ for optimization*/
     max-width: 500px;
     background-color: aqua;
   }
+.current-book {
+    border-style:solid;
+    border-color: #f4b890;
+    border-radius:5px;
+    border-width: 5px;
+
+
+}
 .book {
     border-right: 5px solid #dddddc;
     border-bottom: 5px solid #dddddc;

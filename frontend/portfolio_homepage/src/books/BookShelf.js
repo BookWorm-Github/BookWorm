@@ -14,7 +14,15 @@ class BookShelf extends Component {
 			isShowingWormhole:-1, //isShowingWormhole is the ID of the book from which the wormhole is toggled
       		searchResults:[],
 			numBksPerShelf:4,
+			spaceBtwnBooks: 9,
 		};
+	}
+	componentDidMount(){
+		this.setState(
+		{
+			spaceBtwnBooks: this.state.numBksPerShelf+5
+		}
+		)
 	}
 
 
@@ -67,9 +75,8 @@ class BookShelf extends Component {
 
 	createShelf =(_bookshelf,_index) => {
 
-		const space = this.state.numBksPerShelf;
 		return (
-			<Grid key = {_index} container spacing={space}>
+			<Grid key = {_index} container spacing={this.state.spaceBtwnBooks}>
 				{_bookshelf.map(this.createBook)}
 			</Grid>
 		)

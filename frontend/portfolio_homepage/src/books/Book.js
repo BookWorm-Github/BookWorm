@@ -98,11 +98,13 @@ class Book extends Component{
 		const hoverMenu = this.createHoverMenu();
 		return (
 			<div>
-			<div>
+				<div>
 					{this.props.isCurrentWindow? 
 					<div>Current Window</div>
 					:<br/>}
 				</div>
+
+				<div className = {this.props.isCurrentWindow? 'current-book':'nonexistent-class'}>
 				<BookNavbar book = {this.props.book} deleteBook = {this.props.deleteBook} updateBook = {this.props.updateBook} delinkBook={this.props.delinkBook}/>
 				
 				<div className = 'book'
@@ -127,7 +129,7 @@ class Book extends Component{
 					}
 
 						{/*<ManualEntryOfURL setWormholeURLs = {this.setWormholeURLs} setLaunchURLs = {this.setLaunchURLs}/>*/}
-
+				</div>
 			</div>
 		);
 	}

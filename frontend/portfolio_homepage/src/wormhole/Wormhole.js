@@ -133,7 +133,7 @@ class Wormhole extends Component{
       });
     } else {
 			// If the search bar is empty, set newList to original task list: do we want this effect?
-      newList = this.props.book.WormHole;
+      newList = this.state.titles
     }
     //console.log("filtered List in book "+this.props.book.title+" wormhole is "+newList);
 		// Set the filtered state based on what our rules added to newList

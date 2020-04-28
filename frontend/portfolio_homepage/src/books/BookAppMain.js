@@ -166,7 +166,7 @@ class BookAppMain extends Component {
 				.then(() => {//delinks the book from window in the database
 					// book.Launch = null;
 					// book.WormHole = null;
-					// book.linkedWindowId = -1001;
+					 book.linkedWindowId = -1;
 				});
 
 			return book;

@@ -13,8 +13,16 @@ class BookShelf extends Component {
 		this.state = {
 			isShowingWormhole:-1, //isShowingWormhole is the ID of the book from which the wormhole is toggled
       		searchResults:[],
-			numBksPerShelf:4
+			numBksPerShelf:4,
+			spaceBtwnBooks: 9,
 		};
+	}
+	componentDidMount(){
+		this.setState(
+		{
+			spaceBtwnBooks: 10
+		}
+		)
 	}
 
 
@@ -52,13 +60,14 @@ class BookShelf extends Component {
 	createBook =(_book,_index) => {
 
 	// this.printBook(_index,_book);
-
+	console.log("CurWinID in bkshelf is "+this.props.curWinID
+)
 		return <Grid key = {_index} item xs zeroMinWidth>
 			{_book===null?null:
 				<div key={_book.key}>
 					{/*<BookNavbar book = {_book} deleteBook = {this.deleteBook} updateBook = {this.props.updateBook} delinkBook={this.props.delinkBook}/>*/}
 					<Book book ={_book} deleteBook = {this.deleteBook} updateBook = {this.props.updateBook} delinkBook={this.props.delinkBook} toggleWormhole = {this.toggleWormhole}
-					  isShowingWormhole = {this.state.isShowingWormhole} />
+					  isShowingWormhole = {this.state.isShowingWormhole} isCurrentWindow = {this.props.curWinID===_book.linkedWindowId} />
 				</div>
 			}
 			</Grid>
@@ -66,9 +75,8 @@ class BookShelf extends Component {
 
 	createShelf =(_bookshelf,_index) => {
 
-		const space = this.state.numBksPerShelf;
 		return (
-			<Grid key = {_index} container spacing={space}>
+			<Grid key = {_index} container spacing={this.state.spaceBtwnBooks}>
 				{_bookshelf.map(this.createBook)}
 			</Grid>
 		)
@@ -148,7 +156,8 @@ BookShelf.propTypes = {
     })),
 	deleteBook: PropTypes.func.isRequired,
 
-	updateBook: PropTypes.func.isRequired
+	updateBook: PropTypes.func.isRequired,
+	curWinID: PropTypes.number.isRequired
   };
 
 export default (BookShelf);

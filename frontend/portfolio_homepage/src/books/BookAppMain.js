@@ -110,7 +110,6 @@ class BookAppMain extends Component {
 					// book.WormHole = null;
 					// book.linkedWindowId = -1;
 				});
-
 			return book;
 		});
 
@@ -124,12 +123,12 @@ class BookAppMain extends Component {
 
 		const currWindowId = newBook.linkedWindowId;
 
-		const filteredBooks = this.state.bookshelf.map((book, index, array) => {
+		let filteredBooks = this.state.bookshelf.map((book, index, array) => {
 			deLinkBookfromWindow(book, currWindowId, this.props.user.uid)
 				.then(() => {//delinks the book from window in the database
 					// book.Launch = null;
 					// book.WormHole = null;
-					// book.linkedWindowId = -1001;
+					book.linkedWindowId = -1;
 				});
 			return book;
 		});

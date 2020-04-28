@@ -20,7 +20,7 @@ class BookShelf extends Component {
 	componentDidMount(){
 		this.setState(
 		{
-			spaceBtwnBooks: this.state.numBksPerShelf+5
+			spaceBtwnBooks: 10
 		}
 		)
 	}

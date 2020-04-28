@@ -59,7 +59,11 @@ class Book extends Component{
 	//for initial book setups
 	_cbForLaunchResponse = (response) => {
 		if(response.urlsForLaunch&&response.urlsForLaunch.length){//if launch urls are not empty
-			this.props.updateBook(this.props.book,this.props.book.linkedWindowId,response.urlsForLaunch,this.props.book.WormHole);
+			this.props.updateBook(this.props.book,
+				this.props.book.linkedWindowId,
+				response.urlsForLaunch,
+				this.props.book.WormHole,
+				false);
 			console.log("book "+this.props.book.title+"updated launch to be "+response.urlsForLaunch);
 
 		}
@@ -71,7 +75,11 @@ class Book extends Component{
 
 	_cbForWormholeResponse = (response) => {
 		if(response.urlsForWormhole&&response.urlsForWormhole.length){//if launch urls are not empty
-			this.props.updateBook(this.props.book,this.props.book.linkedWindowId,this.props.book.Launch,response.urlsForWormhole);
+			this.props.updateBook(this.props.book,
+				this.props.book.linkedWindowId,
+				this.props.book.Launch,
+				response.urlsForWormhole,
+				false);
 			console.log("book "+this.props.book.title+"updated wormhole to be "+response.urlsForWormhole);
 		}
 		else{
@@ -134,14 +142,14 @@ class Book extends Component{
 		);
 	}
 
-	setLinkedWindow = (windowId) =>{
-		this.setState({
-			linkedWindowId: windowId
-		}, () =>{
-		// this.props.updateBook(this.props.book,windowId,this.state.launchURLs,this.state.wormholeURLs)})
-			this.props.updateBook(this.props.book, windowId, this.props.book.Launch, this.props.book.WormHole)
-		})
-	}
+	// setLinkedWindow = (windowId) =>{
+	// 	this.setState({
+	// 		linkedWindowId: windowId
+	// 	}, () =>{
+	// 	// this.props.updateBook(this.props.book,windowId,this.state.launchURLs,this.state.wormholeURLs)})
+	// 		this.props.updateBook(this.props.book, windowId, this.props.book.Launch, this.props.book.WormHole)
+	// 	})
+	// }
 
 	// setLaunchURLs = (newURL) => {
 	// 	this.setState(

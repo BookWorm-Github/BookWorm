@@ -133,7 +133,7 @@ class BookAppMain extends Component {
 		this.setState({addingBook:!this.state.addingBook});
 	}
 	//updates teh linkedWindow, launch and wormhole of a book in database
-	updateBook = (bookToBeUpdated, linkedWindowId, launch, wormhole) => {
+	updateBook = (bookToBeUpdated, linkedWindowId, launch, wormhole,shouldCloseWindow) => {
 
 		let updatedBooks = this.state.bookshelf.map(function (book, putInDataBase) {//find the linked book and then update the WormHole for the book
 			if (book.key == bookToBeUpdated.key) {
@@ -147,13 +147,16 @@ class BookAppMain extends Component {
 		bookToBeUpdated.WormHole = wormhole;
 		bookToBeUpdated.Launch = launch;
 
-
-		updateBookLW(bookToBeUpdated, this.props.user.uid).then(e => {
-
-		});
 		this.setState({
 			bookshelf: updatedBooks
 		})
+
+		updateBookLW(bookToBeUpdated, this.props.user.uid).then(e => {
+			if(shouldCloseWindow){
+				window.close();
+			}
+		});
+		
 
 	}
 

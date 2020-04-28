@@ -61,10 +61,13 @@ chrome.runtime.onMessage.addListener(
           chrome.tabs.query({windowId: msg.winId},sendBackWormhole)
 			    break;
 	        case("getCurrWindowId"):
-				console.log("Background received request for current window id and is sending back "+sender.tab.windowId);
-				getOpenTabs();
-				sendResponse({windowId: sender.tab.windowId});
+				    console.log("Background received request for current window id and is sending back "+sender.tab.windowId);
+				    getOpenTabs();
+				    sendResponse({windowId: sender.tab.windowId});
 	        break;
+          case("closeCurrentTab"):
+            sender.tab ? chrome.tabs.remove(sender.tab.id): console.log("Sender has no tab to be removed");
+          break;
           case("openWindowOfTabs"):
           var winId = -1;
             function retWinId(createdWindow){

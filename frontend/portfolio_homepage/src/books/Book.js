@@ -37,7 +37,7 @@ class Book extends Component{
 
 		if(this.props.book.linkedWindowId>=0){
 			chrome.runtime.sendMessage({rq: "urlsForLaunch", winId: this.props.book.linkedWindowId}, this._cbForLaunchResponse);
-			chrome.runtime.sendMessage({rq: "urlsForWormhole", winId: this.props.book.linkedWindowId}, this._cbForWormholeResponse);
+			// chrome.runtime.sendMessage({rq: "urlsForWormhole", winId: this.props.book.linkedWindowId}, this._cbForWormholeResponse);
 		}
 		//console.log("Wormhole for book "+this.props.book.title+" is "+this.props.book.WormHole.toString());
 
@@ -60,20 +60,20 @@ class Book extends Component{
 		}
 	}
 
-	_cbForWormholeResponse = (response) => {
-		if(response.urlsForWormhole&&response.urlsForWormhole.length){//if launch urls are not empty
-			this.props.updateBook(this.props.book,
-				this.props.book.linkedWindowId,
-				this.props.book.Launch,
-				response.urlsForWormhole,
-				false);
-			console.log("book "+this.props.book.title+"updated wormhole to be "+response.urlsForWormhole);
-		}
-		else{
-			console.log("book "+this.props.book.title+" received empty for wormhole");
-		}
+	// _cbForWormholeResponse = (response) => {
+	// 	if(response.urlsForWormhole&&response.urlsForWormhole.length){//if launch urls are not empty
+	// 		this.props.updateBook(this.props.book,
+	// 			this.props.book.linkedWindowId,
+	// 			this.props.book.Launch,
+	// 			response.urlsForWormhole,
+	// 			false);
+	// 		console.log("book "+this.props.book.title+"updated wormhole to be "+response.urlsForWormhole);
+	// 	}
+	// 	else{
+	// 		console.log("book "+this.props.book.title+" received empty for wormhole");
+	// 	}
 
-	}
+	// }
 
 
 

@@ -5,6 +5,7 @@ import TitleFetcher from '../urlTitleFetcher/TitleFetcher'
 import $ from 'jquery'
 
 /*Full list of URLs in a book. When you click on the URL, it opens that link??*/
+const regex = "%=";
 class Wormhole extends Component{
 
   constructor(props){
@@ -13,7 +14,7 @@ class Wormhole extends Component{
       book: null,
       searchResults:[], 
       wormhole: [],
-      titles:[]
+      titles:[]//an entry of titles is in this format : title%=url where title is page title and url is the url of the page
     };
   }
   componentDidMount =() =>{
@@ -30,7 +31,7 @@ class Wormhole extends Component{
           const matches = data.match(/<title(.*?)<\/title>/);
           
             //console.log("Titles inside is "+titles.toString());
-          cb(state,matches[0]);
+          cb(externalUrl,matches[0]);
         }   
       });
     }
@@ -45,7 +46,7 @@ class Wormhole extends Component{
 
   }
 
-  callback = (state,t) => {
+  callback = (url,t) => {
     //console.log("Param in callback is "+t.toString());
     //state.push(t);
     function stripHTMLTags(str) {
@@ -55,7 +56,8 @@ class Wormhole extends Component{
       const stripedHtml = $("<div>").html(str).text();
       return stripedHtml;
     }
-    var title = stripHTMLTags(t);
+    var title = stripHTMLTags(t)+regex+url;
+
     
     this.setState({titles: [...this.state.titles,title]})
     console.log("Wormhole.js In callback state is "+this.state.titles.toString());
@@ -84,8 +86,8 @@ class Wormhole extends Component{
                           <li>
                           {/*<li  key={item} style={{listStyleImage: 'url('+this.getBaseUrl(item)+'/favicon.ico)'}}>*/}
                             <span>
-                            <a href = {item} target = '_blank'>
-                                {item} &nbsp;                        
+                            <a href = {item.toLowerCase().split(regex)[1]} target = '_blank'>
+                                {item.toLowerCase().split(regex)[0]} &nbsp;                        
                             </a>
                             </span>
                             
@@ -93,8 +95,7 @@ class Wormhole extends Component{
                         ))}
                     </ul>
 
-                    {console.log("Wormhole.js calling title fetcher with urls "+this.state.searchResults)}
-          		</div>
+              </div>
 				</div>
 		);
 	}
@@ -121,8 +122,8 @@ class Wormhole extends Component{
 			// Use .filter() to determine which items should be displayed
 			// based on the search terms
       newList = currentList.filter(item => {
-				// change current item to lowercase
-        const lc = item.toLowerCase();
+				// change current item to lowercase and searh only the part before the regex
+        const lc = item.toLowerCase().split(regex)[0];
 				// change search term to lowercase
         const filter = e.target.value.toLowerCase();
 				// check to see if the current list item includes the search term

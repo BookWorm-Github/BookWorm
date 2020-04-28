@@ -94,7 +94,7 @@ class BookAppMain extends Component {
 
 		updateBookLW(bookToBeUpdated, this.props.user.uid).then(e => {
 			if(shouldCloseWindow){
-				window.close();
+				// window.close();
 			}
 		});
 		

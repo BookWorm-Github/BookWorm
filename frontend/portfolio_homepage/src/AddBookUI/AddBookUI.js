@@ -6,7 +6,7 @@ import './pop-up.css'
 import Checkbox from "./Checkbox";
 
 const OPTIONS = ["Link book to window"];
-
+const fullHeight = {height:'100%'}
 class AddBookUI extends Component {
 
     handleFocus = (event) => event.target.select();
@@ -31,7 +31,7 @@ class AddBookUI extends Component {
             <div>
                 <div className='popup'>
 
-                    <div className='book'>
+                    <div className='book' style = {fullHeight}>
                         <h2>Name of the book: </h2>
                         <div>
 

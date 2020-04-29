@@ -7,7 +7,7 @@
   cursor: pointer;
   display: table-cell;
   vertical-align: center;
-  background-color:  #e7cc34;
+  /*background-color:  #e7cc34;*/
 }
 
 .launcher button{ /*no button implemented yet*/

@@ -1,18 +1,18 @@
 
 
 .popup {  
-  position: fixed;  
-  width: 60%;  
-  height: 60%;  
-  border-radius: 15px;
-  top: 0;  
-  left: 0;  
-  right: 0;  
-  bottom: 0;  
-  margin: auto;  
-  border-radius: 15px;
-  border: solid 2px #000000;
-  overflow: scroll;
+    position: fixed;  
+    width: 60%;  
+    height: 60%;  
+    border-radius: 15px;
+    top: 0;  
+    left: 0;  
+    right: 0;  
+    bottom: 0;  
+    margin: auto;  
+    border-radius: 15px;
+    border: solid 2px #000000;
+    overflow: scroll;
 
 
 }  

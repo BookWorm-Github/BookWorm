@@ -13,16 +13,16 @@
 
 .popup {
   position: fixed;  
-  width: 45%;  
-  height: 45%;  
+  width: 60%;  
+  height: 60%;  
   border-radius: 30px;
   top: 0;  
-  left: -20;  
+  left: 0;  
   right: 0;  
   bottom: 0;  
   margin: auto;  
-  background-color:#e7cc34;
-  border: 1px solid #e7cc34;
+  background-color: white;
+  border: 1px solid black;
 }
 
 

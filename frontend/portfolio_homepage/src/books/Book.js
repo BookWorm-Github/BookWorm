@@ -116,7 +116,7 @@ class Book extends Component{
 							hoverMenu
 						:
 
-						<div className = 'bk_title' ><h1>{this.state.title}</h1></div>
+						<div className = 'bk_title' ><h1 className = 'booktitle'>{this.state.title}</h1></div>
 					}
 
 				</div>

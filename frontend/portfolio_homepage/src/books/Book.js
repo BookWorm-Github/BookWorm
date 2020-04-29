@@ -35,7 +35,7 @@ class Book extends Component{
 			title: this.props.book.title
 		});
 
-		if(this.props.book.linkedWindowId>=0){
+		if(this.props.isCurrentWindow){
 			chrome.runtime.sendMessage({rq: "urlsForLaunch", winId: this.props.book.linkedWindowId}, this._cbForLaunchResponse);
 			chrome.runtime.sendMessage({rq: "urlsForWormhole", winId: this.props.book.linkedWindowId}, this._cbForWormholeResponse);
 		}

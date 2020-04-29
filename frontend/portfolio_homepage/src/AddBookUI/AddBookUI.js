@@ -33,24 +33,28 @@ class AddBookUI extends Component {
 
                     <div className='book' style = {fullHeight}>
                         <h2>Name of the book: </h2>
+                    {/*<div>*/}
+                    {/*    <h2 id="inputtitle">Name of the book: </h2>*/}
+                    {/*  */}
                         <div>
 
                             <form onSubmit={this.createBook}>
 
-                                <input ref={(t) => this._inputTitle = t}
+                                <input className="inputbox" ref={(t) => this._inputTitle = t}
                                        placeholder="Enter Title Here" defaultValue="Title" autoFocus
                                        onFocus={this.handleFocus}>
                                 </input>
                                 
                                 {this.createCheckboxes()}
 
-                                <span>
+                                <div>
 									<button type="submit">Add</button>
-								</span>
+								</div>
+                                <button onClick={this.props.closePopup}>Cancel</button>
 
                             </form>
 
-                            <button onClick={this.props.closePopup}>Cancel</button>
+
 
                         </div>
 

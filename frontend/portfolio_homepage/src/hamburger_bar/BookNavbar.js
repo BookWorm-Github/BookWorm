@@ -4,6 +4,7 @@ import { MDBNavbar, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBCollapse, MDBContai
 MDBHamburgerToggler } from 'mdbreact';
 import { BrowserRouter as Router } from 'react-router-dom';
 import {deLinkBookfromWindow} from "../firebase/firestore/db_functions";
+import './BookNavbar.css';
 
 
 class BookNavbar extends Component {
@@ -50,7 +51,7 @@ render() {
   return (
     <Router>
       <MDBContainer>
-        <navbar style={{float: 'fixed-top'}}>
+        <navbar  style={{float: 'fixed-top'}}>
           <MDBContainer>
             
               <MDBCollapse isOpen={this.state.collapse1} navbar>
@@ -68,6 +69,7 @@ render() {
                 </MDBNavbarNav>
               </MDBCollapse>
               <button className = 'nav-bar' id={this.props.book.key.toString()} onClick={()=> this.toggleSingleCollapse('collapse1')}><i class="fas fa-ellipsis-h"></i></button>
+              {/*<button className="dots" id={this.props.book.key.toString()} onClick={()=> this.toggleSingleCollapse('collapse1')}>...</button>*/}
           </MDBContainer>
         </navbar>
       </MDBContainer>

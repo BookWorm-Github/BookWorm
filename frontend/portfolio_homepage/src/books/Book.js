@@ -86,6 +86,9 @@ class Book extends Component{
 					<p></p>
 
 				</div>
+				<br></br>
+           		 <br></br>
+           		 <br></br>
 					<div className = 'wormhole'
 						onClick = {() => this.props.toggleWormhole(this.props.book.key)}>Wormhole
 				</div>
@@ -118,7 +121,7 @@ class Book extends Component{
 							hoverMenu
 						:
 
-						<div className = 'bk_title' ><h1>{this.state.title}</h1></div>
+						<div className = 'bk_title' ><h1 className = 'booktitle'>{this.state.title}</h1></div>
 					}
 
 				</div>

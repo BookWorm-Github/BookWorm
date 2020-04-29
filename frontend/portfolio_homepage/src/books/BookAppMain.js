@@ -185,7 +185,7 @@ class BookAppMain extends Component {
 			          <SortBooks books = {this.state.bookshelf} setBooks = {this.setBooks} isBlurred = {this.state.addingBook}/>
 			          <span className = 'add-btn-container'>
 		            <h6 id = 'add'>Add book: </h6>
-		            <button className = 'add-bk-btn' onClick={this.toggleAddBook}><h2>+</h2></button>
+		            <button className = 'add-bk-btn' onClick={this.toggleAddBook}><h1 className='Plus'>+</h1></button>
 		          </span>
 		          </ul>
 			        <div className = {this.state.addingBook?'blur-bg':'clear-bg'}>

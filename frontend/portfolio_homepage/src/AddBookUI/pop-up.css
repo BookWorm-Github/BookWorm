@@ -15,14 +15,14 @@
   position: fixed;  
   width: 60%;  
   height: 60%;  
-  border-radius: 30px;
+  border-radius: 15px;
   top: 0;  
   left: 0;  
   right: 0;  
   bottom: 0;  
   margin: auto;  
-  background-color: white;
-  border: 1px solid black;
+  border-color: #000000;
+  background-color: #ffffff;
 }
 
 

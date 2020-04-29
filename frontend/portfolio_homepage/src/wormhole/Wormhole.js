@@ -59,25 +59,25 @@ class Wormhole extends Component{
     var title = stripHTMLTags(t)+regex+url;
 
     
-    this.setState({titles: [...this.state.titles,title]})
+    this.setState({titles: [...this.state.titles,title]}, this.setState({searchResults:this.state.titles}))
     console.log("Wormhole.js In callback state is "+this.state.titles.toString());
 
   }
 
 
-	render(){
+  render(){
 
-		return (
+    return (
 
-				<div className = 'popup'>
-				<div>
+        <div className = 'popup'>
+        <div>
           <div class="title">
-					<h2>Wormhole</h2>
+          <h2>Wormhole</h2>
           </div>
-					<form>
+          <form>
             <div className="forma">
             <img src = "/search.svg" alt="search icon" height="28" width="28" className="logo"></img>
-  					<input className="input" type="text" onChange={this.filterURLs} placeholder="Search..." />
+            <input className="input" type="text" onChange={this.filterURLs} placeholder="Search..." />
             </div>
           </form>
               <button onClick={()=>this.props.toggleWormhole(-1)}>Back</button>
@@ -96,9 +96,9 @@ class Wormhole extends Component{
                     </ul>
 
               </div>
-				</div>
-		);
-	}
+        </div>
+    );
+  }
 
   getBaseUrl = (url) => {
     var re = new RegExp(/^.*\//);
@@ -108,39 +108,39 @@ class Wormhole extends Component{
 
 
 
-	filterURLs = (e) =>{
-				// Variable to hold the original version of the list
+  filterURLs = (e) =>{
+        // Variable to hold the original version of the list
     let currentList = [];
-		// Variable to hold the filtered list before putting into state
+    // Variable to hold the filtered list before putting into state
     let newList = [];
 
-		// If the search bar isn't empty
+    // If the search bar isn't empty
     if (e.target.value !== "") {
-			// Assign the original list to currentList
+      // Assign the original list to currentList
       currentList = this.state.titles;
       // console.log("In filter urls for book"+this.props.book.title+", the wormhole is "+currentList.toString())
-			// Use .filter() to determine which items should be displayed
-			// based on the search terms
+      // Use .filter() to determine which items should be displayed
+      // based on the search terms
       newList = currentList.filter(item => {
-				// change current item to lowercase and searh only the part before the regex
+        // change current item to lowercase and searh only the part before the regex
         const lc = item.toLowerCase().split(regex)[0];
-				// change search term to lowercase
+        // change search term to lowercase
         const filter = e.target.value.toLowerCase();
-				// check to see if the current list item includes the search term
-				// If it does, it will be added to newList. Using lowercase eliminates
-				// issues with capitalization in search terms and search content
+        // check to see if the current list item includes the search term
+        // If it does, it will be added to newList. Using lowercase eliminates
+        // issues with capitalization in search terms and search content
         return lc.includes(filter);
       });
     } else {
-			// If the search bar is empty, set newList to original task list: do we want this effect?
-      //newList = this.props.book.WormHole;
+      // If the search bar is empty, set newList to original task list: do we want this effect?
+      newList = this.state.titles
     }
     //console.log("filtered List in book "+this.props.book.title+" wormhole is "+newList);
-		// Set the filtered state based on what our rules added to newList
+    // Set the filtered state based on what our rules added to newList
     this.setState({
       searchResults: newList
     });
-	}
+  }
 
 
 }

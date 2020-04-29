@@ -31,13 +31,18 @@ class AddBookUI extends Component {
             <div>
                 <div className='popup'>
 
-                    <div className='book'>
-                        <h2>Name of the book: </h2>
+                    <div>
+                        <h2 id="inputtitle">Name of the book: </h2>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <br></br>
                         <div>
 
                             <form onSubmit={this.createBook}>
 
-                                <input ref={(t) => this._inputTitle = t}
+                                <input className="inputbox" ref={(t) => this._inputTitle = t}
                                        placeholder="Enter Title Here" defaultValue="Title" autoFocus
                                        onFocus={this.handleFocus}>
                                 </input>
@@ -46,11 +51,12 @@ class AddBookUI extends Component {
 
                                 <span>
 									<button type="submit">Add</button>
+                                    <button onClick={this.props.closePopup}>Cancel</button>
 								</span>
 
                             </form>
 
-                            <button onClick={this.props.closePopup}>Cancel</button>
+                            
 
                         </div>
 

@@ -42,24 +42,22 @@ chrome.runtime.onMessage.addListener(
           }
           chrome.tabs.query({windowId: msg.winId},sendBackLaunch)
 			    break;
-
-		    case ("urlsForWormhole"):
-
-        var wormurls = [];
-          function sendBackWormhole(retTabs){
-            retTabs.forEach(function(tab){ 
-              if(!wormurls.includes(tab.url)&&tab.url!==undefined&&!tab.url.includes('chrome://newtab'))
-              {
-                  wormurls.push(tab.url);
-              }
-            }
-          )
-          console.log("Wormhole urls for windowID "+msg.winId+" are "+wormurls.toString());
-          
-          sendResponse({urlsForWormhole: wormurls});
-          }
-          chrome.tabs.query({windowId: msg.winId},sendBackWormhole)
-			    break;
+              case ("urlsForWormhole"):
+              var wormurls = [];
+                function sendBackWormhole(retTabs){
+                  retTabs.forEach(function(tab){ 
+                    if(!wormurls.includes(tab.url)&&tab.url!==undefined&&!tab.url.includes('chrome://newtab'))
+                    {
+                        wormurls.push(tab.url);
+                    }
+                  }
+                )
+                console.log("Wormhole urls for windowID "+msg.winId+" are "+wormurls.toString());
+                
+                sendResponse({urlsForWormhole: wormurls});
+                }
+                chrome.tabs.query({windowId: msg.winId},sendBackWormhole)
+          break;
 	        case("getCurrWindowId"):
 				console.log("Background received request for current window id and is sending back "+sender.tab.windowId);
 				getOpenTabs();
@@ -230,7 +228,7 @@ function sendToContent(){
       console.log("sendToContent current window is "+winId);
       chrome.tabs.query({},function(tabs){
         for(var i = 0; i<tabs.length; i++){
-          if(tabs[i]!==undefined&&tabs[i].url.includes('chrome://newtab')){
+          if(tabs[i]!==undefined){
             console.log("Background is sending to book window id  "+tabs[i].windowId);
             chrome.tabs.sendMessage(tabs[i].id, 
             {urlsForLaunch:window.tabs, urlsForWormhole: window.urlsForWormhole, winId:createdWindow.id});

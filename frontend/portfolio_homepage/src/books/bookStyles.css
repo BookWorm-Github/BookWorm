@@ -45,7 +45,7 @@ for optimization*/
     background-color: aqua;
   }
 .book {
-    box-shadow: 1px 1px 5px #dddddc;
+    box-shadow: 5px 4px 5px;
     /*border-right: 5px solid #dddddc;
     border-bottom: 5px solid #dddddc;*/
     background-color:#e7cc34;/*#3391AF;*/
@@ -135,13 +135,12 @@ for optimization*/
   align-items: center;
   width: 100px;
   height: 40px;
-  box-shadow: 0px 0px 10px grey;
+  box-shadow: 1px 2px 5px;
 }
 
 .topbutton {
   margin: auto;
   font-family: "Font Awesome\ 5 Free",sans-serif;
-  box-shadow: 0px 0px 10px grey;
 }
 
 .topline {

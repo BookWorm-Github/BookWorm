@@ -89,6 +89,9 @@ class Book extends Component{
 					<p></p>
 
 				</div>
+				<br></br>
+           		 <br></br>
+           		 <br></br>
 					<div className = 'wormhole'
 						onClick = {() => this.props.toggleWormhole(this.props.book.key)}>Wormhole
 				</div>

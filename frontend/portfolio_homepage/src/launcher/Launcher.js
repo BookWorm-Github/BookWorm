@@ -27,9 +27,14 @@ class Launcher extends Component{
 	render(){
 
 		return (
+			
 				<div className = 'launcher' onClick = {this.openURLs}>
+					 <br></br>
+					 <br></br>
+					 <br></br>
 					Launcher
 				</div>
+			
 		);
 
 	}

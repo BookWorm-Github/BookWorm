@@ -53,20 +53,22 @@ chrome.runtime.onMessage.addListener(
           chrome.tabs.query({windowId: msg.winId},sendBackLaunch)
 			    break;
               case ("urlsForWormhole"):
-              var wormurls = [];
-                function sendBackWormhole(retTabs){
-                  retTabs.forEach(function(tab){ 
-                    if(!wormurls.includes(tab.url)&&tab.url!==undefined&&!tab.url.includes('chrome://newtab'))
-                    {
-                        wormurls.push(tab.url);
-                    }
-                  }
-                )
-                console.log("Wormhole urls for windowID "+msg.winId+" are "+wormurls.toString());
+              getOpenTabs(winId);
+              sendResponse({urlsForWormhole: window.urlsForWormhole});
+              // var wormurls = [];
+              //   function sendBackWormhole(retTabs){
+              //     retTabs.forEach(function(tab){ 
+              //       if(!wormurls.includes(tab.url)&&tab.url!==undefined&&!tab.url.includes('chrome://newtab'))
+              //       {
+              //           wormurls.push(tab.url);
+              //       }
+              //     }
+              //   )
+              //   console.log("Wormhole urls for windowID "+msg.winId+" are "+wormurls.toString());
                 
-                sendResponse({urlsForWormhole: wormurls});
-                }
-                chrome.tabs.query({windowId: msg.winId},sendBackWormhole)
+              //   sendResponse({urlsForWormhole: wormurls});
+              //   }
+              //   chrome.tabs.query({windowId: msg.winId},sendBackWormhole)
           break;
 	        case("getCurrWindowId"):
             // function retWinId(curWindow){

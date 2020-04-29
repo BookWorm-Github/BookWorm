@@ -108,7 +108,7 @@ class Book extends Component{
 
 				<div className = {this.props.isCurrentWindow? 'current-book':'nonexistent-class'}>
 				<BookNavbar book = {this.props.book} deleteBook = {this.props.deleteBook} updateBook = {this.props.updateBook} delinkBook={this.props.delinkBook}/>
-				<WindowId linkedWindowId = {this.props.book.linkedWindowId} />
+				{/*<WindowId linkedWindowId = {this.props.book.linkedWindowId} />*/}
 				<div className = 'book'
 					onMouseEnter = {()=>this.setState({isHovered:true})}
 					onMouseLeave = {()=>this.setState({isHovered:false})}>

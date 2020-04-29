@@ -50,9 +50,9 @@ setLinkedWindow = (windowId) =>{
 render() {
   return (
     <Router>
-      <MDBContainer className="dadots">
+      <MDBContainer>
         <navbar  style={{float: 'fixed-top'}}>
-          <MDBContainer className="dadots">
+          <MDBContainer>
             
               <MDBCollapse isOpen={this.state.collapse1} navbar>
                 <MDBNavbarNav left>
@@ -69,6 +69,7 @@ render() {
                 </MDBNavbarNav>
               </MDBCollapse>
               <button className = 'nav-bar' id={this.props.book.key.toString()} onClick={()=> this.toggleSingleCollapse('collapse1')}><i class="fas fa-ellipsis-h"></i></button>
+              {/*<button className="dots" id={this.props.book.key.toString()} onClick={()=> this.toggleSingleCollapse('collapse1')}>...</button>*/}
           </MDBContainer>
         </navbar>
       </MDBContainer>

@@ -26,9 +26,9 @@ for optimization*/
 .add-bk-btn{
   float: left;
     margin: 10px 10px;
-    height: 50px;
-    width: 50px;  /*The Width must be the same as the height*/
-    border-radius:100px; /*borderRadius must b 2*width*/   
+    height: 55px;
+    width: 55px;  /*The Width must be the same as the height*/
+    border-radius:110px; /*borderRadius must b 2*width*/
     background-color:rgb(0, 0, 0);
     color: white;
     
@@ -53,12 +53,17 @@ for optimization*/
 
 }
 .book {
-    border-right: 5px solid #dddddc;
-    border-bottom: 5px solid #dddddc;
+    box-shadow: 5px 4px 5px;
+    /*border-right: 5px solid #dddddc;
+    border-bottom: 5px solid #dddddc;*/
     background-color:#e7cc34;/*#3391AF;*/
   	border-radius: 15px;
   	height: 200px;
     width: 100%;
+  }
+
+  .booktitle {
+    margin: 70px auto;
   }
 
   .book:hover .add-bk-btn
@@ -75,6 +80,19 @@ for optimization*/
     height: 100%;
     overflow: hidden;
     font-size: xx-large;
+}
+
+
+
+/*The blur effect of background when popup occurs*/
+.blur-bg {
+
+  /* Add the blur effect */
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
+}
+.clear-bg{
+  filter:none;
 }
 
 /*The hover menu which contains the launcher and wormhole*/
@@ -96,19 +114,16 @@ for optimization*/
           }
 
 
-/*The blur effect of background when popup occurs*/
-.blur-bg {
-
-  /* Add the blur effect */
-  filter: blur(8px);
-  -webkit-filter: blur(8px);
-}
-.clear-bg{
-  filter:none;
-}
-
 .line {
   border-left: 1px solid black;
+}
+
+.Plus{
+  margin-top: 10px;
+  margin-bottom: 20px;
+  font-size: x-large;
+  font-weight: 900;
+  line-height: 1.0;
 }
 .ph_title{
     font-size: 70px;
@@ -128,6 +143,7 @@ for optimization*/
   align-items: center;
   width: 100px;
   height: 40px;
+  box-shadow: 1px 2px 5px;
 }
 
 .topbutton {

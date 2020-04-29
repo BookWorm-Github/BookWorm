@@ -33,6 +33,9 @@ class AddBookUI extends Component {
 
                     <div className='book' style = {fullHeight}>
                         <h2>Name of the book: </h2>
+                    {/*<div>*/}
+                    {/*    <h2 id="inputtitle">Name of the book: </h2>*/}
+                    {/*  */}
                         <div>
 
                             <form onSubmit={this.createBook}>
@@ -44,10 +47,10 @@ class AddBookUI extends Component {
                                 
                                 {this.createCheckboxes()}
 
-                                <span>
+                                <div>
 									<button type="submit">Add</button>
-                                    <button onClick={this.props.closePopup}>Cancel</button>
-								</span>
+								</div>
+                                <button onClick={this.props.closePopup}>Cancel</button>
 
                             </form>
 

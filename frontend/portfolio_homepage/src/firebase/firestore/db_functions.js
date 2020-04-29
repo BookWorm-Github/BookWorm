@@ -94,6 +94,7 @@ export const deLinkBookfromWindow = async (bk, currWindowId, user_id) => {//upda
 				})
 			}
 		})
+		bk.linkedWindowId = -132;
 
 	}
 }

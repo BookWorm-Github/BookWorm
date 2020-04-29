@@ -5,6 +5,7 @@ MDBHamburgerToggler } from 'mdbreact';
 import { BrowserRouter as Router } from 'react-router-dom';
 import {deLinkBookfromWindow} from "../firebase/firestore/db_functions";
 
+
 class BookNavbar extends Component {
   constructor(props) {
     super(props);
@@ -13,7 +14,6 @@ class BookNavbar extends Component {
       collapseID: ''
     }
   }
-
 
 toggleCollapse = collapseID => () => {
   this.setState(prevState => ({ collapseID: (prevState.collapseID !== collapseID ? collapseID : '') }));
@@ -67,7 +67,7 @@ render() {
                   </MDBNavItem>
                 </MDBNavbarNav>
               </MDBCollapse>
-              <button id={this.props.book.key.toString()} onClick={()=> this.toggleSingleCollapse('collapse1')}>...</button>
+              <button className = 'nav-bar' id={this.props.book.key.toString()} onClick={()=> this.toggleSingleCollapse('collapse1')}><i class="fas fa-ellipsis-h"></i></button>
           </MDBContainer>
         </navbar>
       </MDBContainer>

@@ -59,13 +59,17 @@ class Book extends Component{
 	//for initial book setups
 	_cbForLaunchResponse = (response) => {
 		if(response.urlsForLaunch&&response.urlsForLaunch.length){//if launch urls are not empty
-			this.props.updateBook(this.props.book,this.props.book.linkedWindowId,response.urlsForLaunch,this.props.book.WormHole);
-			console.log("book "+this.props.book.title+"updated launch to be "+response.urlsForLaunch);
+			this.props.updateBook(this.props.book,
+				this.props.book.linkedWindowId,
+				response.urlsForLaunch,
+				this.props.book.WormHole,
+				false);
+			// console.log("book "+this.props.book.title+"updated launch to be "+response.urlsForLaunch);
 
 		}
 		else{
 
-			console.log("book "+this.props.book.title+" received empty for launch");
+			// console.log("book "+this.props.book.title+" received empty for launch");
 		}
 	}
 
@@ -105,9 +109,16 @@ class Book extends Component{
 		const hoverMenu = this.createHoverMenu();
 		return (
 			<div>
+				<div>
+					{this.props.isCurrentWindow?
+						<div>Current Window</div>
+						:<br/>}
+				</div>
+				<div className = {this.props.isCurrentWindow? 'current-book':'nonexistent-class'}>
+
 				<BookNavbar book = {this.props.book} deleteBook = {this.props.deleteBook} updateBook = {this.props.updateBook} delinkBook={this.props.delinkBook}/>
 				<div>
-					<WindowId linkedWindowId = {this.props.book.linkedWindowId}/>
+					{/*<WindowId linkedWindowId = {this.props.book.linkedWindowId}/>*/}
 				</div>
 				<div className = 'book'
 					onMouseEnter = {()=>this.setState({isHovered:true})}
@@ -132,7 +143,7 @@ class Book extends Component{
 					}
 
 						{/*<ManualEntryOfURL setWormholeURLs = {this.setWormholeURLs} setLaunchURLs = {this.setLaunchURLs}/>*/}
-
+				</div>
 			</div>
 		);
 	}
@@ -181,8 +192,9 @@ Book.propTypes = {
 		isShowingWormhole: PropTypes.number.isRequired,
 		updateBook: PropTypes.func.isRequired,
 		deleteBook: PropTypes.func.isRequired,
-		delinkBook: PropTypes.func.isRequired
-	};
+		delinkBook: PropTypes.func.isRequired,
+		isCurrentWindow: PropTypes.bool.isRequired
+};
 
 
 export default Book;

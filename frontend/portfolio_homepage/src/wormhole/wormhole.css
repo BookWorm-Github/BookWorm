@@ -43,6 +43,12 @@
 .title {
   height: 60px;
 }
+
+.titlep{
+    font-size: x-large;
+    font-weight: 700;
+}
+
 .wormhole{
 
     cursor: pointer;

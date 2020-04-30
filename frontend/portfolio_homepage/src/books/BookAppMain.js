@@ -39,10 +39,13 @@ class BookAppMain extends Component {
 
 	handleMessage(message, sender, sendResponse){
 		console.log("BookAppMain received msg from bckgrnd with winID"+message.winId);
+		console.log("urls from wormhole: ");
+		console.log(message.urlsForWormhole);
+		console.log(this.state.urlsForWormhole);
 		var i; var currBook = null;
-		this.setState({curWinID:message.winId})
+		// this.setState({curWinID:message.winId})
 		for (i = 0; i < this.state.bookshelf.length; i++) {
-		  if(message.winId==this.state.bookshelf[i].linkedWindowId){
+		  if(message.winId===this.state.bookshelf[i].linkedWindowId){//if message window id matches book window id
 
 			currBook = this.state.bookshelf[i];
 			console.log("handled msg for "+currBook.title);
@@ -129,6 +132,7 @@ class BookAppMain extends Component {
 					// book.Launch = null;
 					// book.WormHole = null;
 					// book.linkedWindowId = -1;
+
 				});
 			return book;
 		});

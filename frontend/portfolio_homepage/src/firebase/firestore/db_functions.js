@@ -93,8 +93,7 @@ export const deLinkBookfromWindow = async (bk, currWindowId, user_id) => {//upda
 					console.error("error updating book with delinking: ", error);
 				})
 			}
-		})
-		bk.linkedWindowId = -132;
+		});
 
 	}
 }

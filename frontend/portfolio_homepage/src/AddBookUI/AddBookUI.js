@@ -31,7 +31,7 @@ class AddBookUI extends Component {
             <div>
                 <div className='popup'>
 
-                    <div style = {fullHeight}>
+                    <div className='book' style = {fullHeight}>
                         <h2>Name of the book: </h2>
                     {/*<div>*/}
                     {/*    <h2 id="inputtitle">Name of the book: </h2>*/}

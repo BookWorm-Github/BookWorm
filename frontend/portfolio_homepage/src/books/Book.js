@@ -35,7 +35,7 @@ class Book extends Component{
 			title: this.props.book.title
 		});
 
-		if(this.props.isCurrentWindow){
+		if(this.props.book.linkedWindowId>=0){
 			chrome.runtime.sendMessage({rq: "urlsForLaunch", winId: this.props.book.linkedWindowId}, this._cbForLaunchResponse);
 			chrome.runtime.sendMessage({rq: "urlsForWormhole", winId: this.props.book.linkedWindowId}, this._cbForWormholeResponse);
 		}
@@ -43,32 +43,35 @@ class Book extends Component{
 
 		// chrome.runtime.onMessage.addListener(this.handleMessage.bind(this));
 	}
+	// handleMessage(message, sender, sendResponse){
+	// 	console.log("Book"+this.props.book.title+
+	// 		" linkedID: "+this.props.book.linkedWindowId+
+	// 		" received winID from background: "+message.winId);
+	// 	if(message.winId==this.props.book.linkedWindowId){
+	// 		console.log("updated wormhole n launch");
+	// 		this._cbForLaunchResponse(message);
+	// 		this._cbForWormholeResponse(message);
+	// 	}
+	// 	else{
+	// 		console.log("no need update wormhole n launch");
+	// 	}
+	// }
 	//for initial book setups
 	_cbForLaunchResponse = (response) => {
 		if(response.urlsForLaunch&&response.urlsForLaunch.length){//if launch urls are not empty
-			this.props.updateBook(this.props.book,
-				this.props.book.linkedWindowId,
-				response.urlsForLaunch,
-				this.props.book.WormHole,
-				false);
-			// console.log("book "+this.props.book.title+"updated launch to be "+response.urlsForLaunch);
+			this.props.updateBook(this.props.book,this.props.book.linkedWindowId,response.urlsForLaunch,this.props.book.WormHole);
+			console.log("book "+this.props.book.title+"updated launch to be "+response.urlsForLaunch);
 
 		}
 		else{
 
-			// console.log("book "+this.props.book.title+" received empty for launch");
+			console.log("book "+this.props.book.title+" received empty for launch");
 		}
 	}
 
-	//uncomment below and the above chrome runtime if u want wormhole reset every time the component mounts
-	//ideally but unimplemented: wormhole will only be reset when new WINDOW (not tab) opens for only the book that has the current linked window
 	_cbForWormholeResponse = (response) => {
 		if(response.urlsForWormhole&&response.urlsForWormhole.length){//if launch urls are not empty
-			this.props.updateBook(this.props.book,
-				this.props.book.linkedWindowId,
-				this.props.book.Launch,
-				response.urlsForWormhole,
-				false);
+			this.props.updateBook(this.props.book,this.props.book.linkedWindowId,this.props.book.Launch,response.urlsForWormhole);
 			console.log("book "+this.props.book.title+"updated wormhole to be "+response.urlsForWormhole);
 		}
 		else{
@@ -84,13 +87,12 @@ class Book extends Component{
 				<Launcher book = {this.props.book} updateWindow = {this.props.updateBook} urls = {this.props.book.Launch}/>
 				<div className = 'line'>
 					<p></p>
-
 				</div>
-				<br></br>
-           		 <br></br>
-           		 <br></br>
 					<div className = 'wormhole'
-						onClick = {() => this.props.toggleWormhole(this.props.book.key)}>Wormhole
+						onClick = {() => this.props.toggleWormhole(this.props.book.key)}>
+							<br></br>
+							<br></br>
+							<br></br>Wormhole
 				</div>
 			</div>
 
@@ -103,15 +105,10 @@ class Book extends Component{
 		const hoverMenu = this.createHoverMenu();
 		return (
 			<div>
-				<div>
-					{this.props.isCurrentWindow? 
-					<div>Current Window</div>
-					:<br/>}
-				</div>
-
-				<div className = {this.props.isCurrentWindow? 'current-book':'nonexistent-class'}>
 				<BookNavbar book = {this.props.book} deleteBook = {this.props.deleteBook} updateBook = {this.props.updateBook} delinkBook={this.props.delinkBook}/>
-				{/*<WindowId linkedWindowId = {this.props.book.linkedWindowId} />*/}
+				<div>
+					<WindowId linkedWindowId = {this.props.book.linkedWindowId}/>
+				</div>
 				<div className = 'book'
 					onMouseEnter = {()=>this.setState({isHovered:true})}
 					onMouseLeave = {()=>this.setState({isHovered:false})}>
@@ -129,24 +126,25 @@ class Book extends Component{
 					{
 						this.props.isShowingWormhole==this.props.book.key?
 						<div>
+							
 							<Wormhole book = {this.props.book} toggleWormhole = {this.props.toggleWormhole}/>
 						</div> : <div/>
 					}
 
 						{/*<ManualEntryOfURL setWormholeURLs = {this.setWormholeURLs} setLaunchURLs = {this.setLaunchURLs}/>*/}
-				</div>
+
 			</div>
 		);
 	}
 
-	// setLinkedWindow = (windowId) =>{
-	// 	this.setState({
-	// 		linkedWindowId: windowId
-	// 	}, () =>{
-	// 	// this.props.updateBook(this.props.book,windowId,this.state.launchURLs,this.state.wormholeURLs)})
-	// 		this.props.updateBook(this.props.book, windowId, this.props.book.Launch, this.props.book.WormHole)
-	// 	})
-	// }
+	setLinkedWindow = (windowId) =>{
+		this.setState({
+			linkedWindowId: windowId
+		}, () =>{
+		// this.props.updateBook(this.props.book,windowId,this.state.launchURLs,this.state.wormholeURLs)})
+			this.props.updateBook(this.props.book, windowId, this.props.book.Launch, this.props.book.WormHole)
+		})
+	}
 
 	// setLaunchURLs = (newURL) => {
 	// 	this.setState(
@@ -183,8 +181,7 @@ Book.propTypes = {
 		isShowingWormhole: PropTypes.number.isRequired,
 		updateBook: PropTypes.func.isRequired,
 		deleteBook: PropTypes.func.isRequired,
-		delinkBook: PropTypes.func.isRequired,
-		isCurrentWindow: PropTypes.bool.isRequired
+		delinkBook: PropTypes.func.isRequired
 	};
 
 

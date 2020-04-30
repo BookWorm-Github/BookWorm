@@ -39,6 +39,9 @@ class BookAppMain extends Component {
 
 	handleMessage(message, sender, sendResponse){
 		console.log("BookAppMain received msg from bckgrnd with winID"+message.winId);
+		console.log("urls from wormhole: ");
+		console.log(message.urlsForWormhole);
+		console.log(this.state.urlsForWormhole);
 		var i; var currBook = null;
 		// this.setState({curWinID:message.winId})
 		for (i = 0; i < this.state.bookshelf.length; i++) {

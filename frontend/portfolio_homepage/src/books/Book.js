@@ -37,7 +37,7 @@ class Book extends Component{
 
 		if(this.props.book.linkedWindowId>=0){
 			chrome.runtime.sendMessage({rq: "urlsForLaunch", winId: this.props.book.linkedWindowId}, this._cbForLaunchResponse);
-			chrome.runtime.sendMessage({rq: "urlsForWormhole", winId: this.props.book.linkedWindowId}, this._cbForWormholeResponse);
+			// chrome.runtime.sendMessage({rq: "urlsForWormhole", winId: this.props.book.linkedWindowId}, this._cbForWormholeResponse);
 		}
 		//console.log("Wormhole for book "+this.props.book.title+" is "+this.props.book.WormHole.toString());
 

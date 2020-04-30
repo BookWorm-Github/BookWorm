@@ -94,10 +94,14 @@ chrome.runtime.onMessage.addListener(
           case("openWindowOfTabs"):
           var winId = -1;
             function retWinId(createdWindow){
-              console.log("retWinId has window "+createdWindow.id);
-              winId = createdWindow.id;
+              if(createdWindow !== undefined){
+	              console.log("retWinId has window "+createdWindow.id);
+	              winId = createdWindow.id;
 
-              sendResponse({windowId: winId});
+	              sendResponse({windowId: winId});
+              }
+
+
             }
             chrome.windows.create({url:msg.urlsToLaunch}, 
               retWinId); 

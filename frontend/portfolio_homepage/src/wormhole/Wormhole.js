@@ -5,7 +5,7 @@ import TitleFetcher from '../urlTitleFetcher/TitleFetcher'
 import $ from 'jquery'
 
 /*Full list of URLs in a book. When you click on the URL, it opens that link??*/
-const regex = "%=";
+const regex = "3289ie,wdsj%=";
 class Wormhole extends Component{
 
   constructor(props){
@@ -23,15 +23,18 @@ class Wormhole extends Component{
       wormhole: this.props.book.WormHole
     });
 
-       function fetchHTML(externalUrl,state,cb){
+       function fetchHTML(externalUrl,state,cb){//externalUrl is being obtained from the wormhole props
       $.ajax({
         url: externalUrl,
         async: true,
         success: function(data) {
-          const matches = data.match(/<title(.*?)<\/title>/);
+          const matches = data.match(/<title(.*?)<\/title>/);//this grabs the page title in html of the website
           
             //console.log("Titles inside is "+titles.toString());
-          cb(externalUrl,matches[0]);
+	        if (matches){
+		        cb(externalUrl,matches[0]);
+	        }
+
         }   
       });
     }
@@ -39,30 +42,41 @@ class Wormhole extends Component{
     if(this.props.book.WormHole!=null){
       for(let i = 0; i<this.props.book.WormHole.length; i++){
           if(!this.props.book.WormHole[i].includes('chrome://')&&!this.props.book.WormHole[i].includes('chrome-extension://'))
-          fetchHTML(this.props.book.WormHole[i],this.state.titles,this.callback);
+            fetchHTML(this.props.book.WormHole[i],this.state.titles,this.callback);
       }
     }
     console.log("Wormhole for book "+this.props.book.title+" is "+this.props.book.WormHole.toString());
 
   }
 
-  callback = (url,t) => {
-    //console.log("Param in callback is "+t.toString());
-    //state.push(t);
-    function stripHTMLTags(str) {
-      // var s1 = str.replace('<title>', '');
+	callback = (url,t) => {
+		//console.log("Param in callback is "+t.toString());
+		//state.push(t);
+		function stripHTMLTags(str) {
+			// var s1 = str.replace('<title>', '');
 
-      // var s2 = s1.replace('</title>', '');
-      const stripedHtml = $("<div>").html(str).text();
-      return stripedHtml;
-    }
-    var title = stripHTMLTags(t)+regex+url;
+			// var s2 = s1.replace('</title>', '');
+			const stripedHtml = $("<div>").html(str).text();
+			return stripedHtml;
+		}
+		var title = stripHTMLTags(t)+regex+url;
 
-    
-    this.setState({titles: [...this.state.titles,title]}, this.setState({searchResults:this.state.titles}))
-    console.log("Wormhole.js In callback state is "+this.state.titles.toString());
 
-  }
+		this.setState(prevState => ({
+			titles: [...prevState.titles, title]
+		}), this.setState({//THIS LOOKS RANDOM BUT WE NEED THIS SECOND SETSTATE HERE TO GET ALL THE TABS PROPERLY
+			searchResults:this.state.titles
+		}))
+
+		//works if u uncomment below and comment the async callback of setstate above....
+		this.setState({
+			searchResults:this.state.titles
+		})
+
+
+		console.log("Wormhole.js In callback state is "+this.state.titles.toString());
+
+	}
 
 
   render(){

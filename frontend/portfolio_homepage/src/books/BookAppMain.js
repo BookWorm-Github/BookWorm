@@ -33,7 +33,9 @@ class BookAppMain extends Component {
 	}
 
 	componentDidMount = () => {//updating the user's personal books
-		this.setState({bookshelf: this.props.books});
+		this.setState({
+			bookshelf: this.props.books
+		});
 		chrome.runtime.onMessage.addListener(this.handleMessage.bind(this));
 	}
 
@@ -76,6 +78,7 @@ class BookAppMain extends Component {
 		////console.log("Adding book");
 		this.setState({addingBook:!this.state.addingBook});
 	}
+
 	//updates teh linkedWindow, launch and wormhole of a book in database
 	updateBook = (bookToBeUpdated, linkedWindowId, launch, wormhole,shouldCloseWindow) => {
 

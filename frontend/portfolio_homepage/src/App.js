@@ -54,7 +54,7 @@ class App extends Component{
 
 	render(){
 		return <div className="App">
-				<User/>
+				<User urlsForWormhole={this.state.urlsForWormhole}/>
 			{/*<h2>URLs for Wormhole</h2>*/}
 			{/*<ul>*/}
 			{/*	{ this.state.urlsForWormhole.map(title => <li>{title}</li>)}*/}

@@ -213,7 +213,7 @@ chrome.windows.onRemoved.addListener(function(windowId) {
 
 chrome.windows.onCreated.addListener(function(window) {
   // window.urlsForWormhole.splice(0,window.urlsForWormhole.length);//clears the window.tabs array
-  window.urlsForWormhole[window.id] = [];
+  // window.urlsForWormhole[window.id] = [];
   console.log("window "+window.id+" was created and urlsForWormhole are " + window.urlsForWormhole);
   getOpenTabs(window.id);
   sendToContent(window.id);

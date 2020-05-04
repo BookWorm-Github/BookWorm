@@ -1,9 +1,11 @@
 # BookWorm
 
+![Thumbnail for BookWorm](https://github.com/BookWorm-Github/BookWorm/blob/master/frontend/portfolio_homepage/public/bookworm.png)
+
+
 Mission Statement:
 BookWorm helps productivity hackers increase efficiency by making webpages distraction free and interactive with a portfolio homepage organizer to allow for better research history and tab management.
 
-![Thumbnail for BookWorm](https://github.com/BookWorm-Github/BookWorm/blob/master/frontend/portfolio_homepage/public/bookworm.png)
 
 
 BookWorm currently has a Chrome Extension, written using Javascript, CSS, and HTML, that is used to implement features for active reading. After being set off by a pop-up that appears, the extension goes through phases that censor parts of the text and summarize passages, for example. This allows the user to go through a more efficient process of looking at a passage and understanding the main points. Overall, the importance of his project lies in how it can assist those with learning disabilities. While it may initially be overwhelming to see [seemingly] endless paragraphs of text, BookWorm breaks them down to provide you with a more user-friendly, understandable series of text. <br>

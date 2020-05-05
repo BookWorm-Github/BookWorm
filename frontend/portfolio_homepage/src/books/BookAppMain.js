@@ -29,7 +29,7 @@ class BookAppMain extends Component {
 		await this.setState({
 			curWinID: response.windowId
 		})
-		console.log("CurWinID is set to be "+this.state.curWinId);
+		console.log("CurWinID is set to be "+this.state.curWinID);
 	}
 
 	componentDidMount = () => {//updating the user's personal books
@@ -44,7 +44,8 @@ class BookAppMain extends Component {
 		console.log("urls from wormhole: ");
 		console.log(message.urlsForWormhole);
 		console.log(this.state.urlsForWormhole);
-		var i; var currBook = null;
+		let i;
+		let currBook = null;
 		// this.setState({curWinID:message.winId})
 		for (i = 0; i < this.state.bookshelf.length; i++) {
 		  if(message.winId===this.state.bookshelf[i].linkedWindowId){//if message window id matches book window id
@@ -83,7 +84,7 @@ class BookAppMain extends Component {
 	updateBook = (bookToBeUpdated, linkedWindowId, launch, wormhole,shouldCloseWindow) => {
 
 		let updatedBooks = this.state.bookshelf.map(function (book, putInDataBase) {//find the linked book and then update the WormHole for the book
-			if (book.key == bookToBeUpdated.key) {
+			if (book.key === bookToBeUpdated.key) {
 				book.linkedWindowId = linkedWindowId;
 				book.WormHole = wormhole;
 				book.Launch = launch;

@@ -22,10 +22,10 @@ class BookAppMain extends Component {
 			curWinID: -2 //random number to denote impossible winID
 		};
 
-		chrome.runtime.sendMessage({rq: "getCurrWindowId"}, this.setCurWindow);
+
 	}
 	setCurWindow = async (response) =>{
-		console.log("BookAppMain setCurWindow received winID:"+response.windowId);
+		console.log("BookAppMain setCurWindow received winID:" + response.windowId);
 		await this.setState({
 			curWinID: response.windowId
 		})
@@ -36,11 +36,18 @@ class BookAppMain extends Component {
 		this.setState({
 			bookshelf: this.props.books
 		});
+		chrome.runtime.sendMessage({rq: "getCurrWindowId"}, this.setCurWindow);
+		chrome.runtime.sendMessage({rq: "getOpenWindows"});
 		chrome.runtime.onMessage.addListener(this.handleMessage.bind(this));
 	}
 
 	handleMessage(message, sender, sendResponse){
-		console.log("BookAppMain received msg from bckgrnd with winID"+message.winId);
+		console.log("BookAppMain received msg from background with winID"+message.winId);
+
+		if(message.ID === "getOpenWindows"){
+			console.log(message.allWindows);
+		}
+
 		console.log("urls from wormhole: ");
 		console.log(message.urlsForWormhole);
 		console.log(this.state.urlsForWormhole);
@@ -55,7 +62,7 @@ class BookAppMain extends Component {
 			}
 		}
 		if(currBook!==null){ //if there is bk to b updated
-			//update lauch
+			//update launch
 			if(message.urlsForLaunch&&message.urlsForLaunch.length){//if launch urls are not empty
 				this.updateBook(currBook,currBook.linkedWindowId,message.urlsForLaunch,currBook.WormHole);
 				console.log("book "+currBook.title+"updated launch to be "+message.urlsForLaunch);
@@ -81,7 +88,7 @@ class BookAppMain extends Component {
 	}
 
 	//updates teh linkedWindow, launch and wormhole of a book in database
-	updateBook = (bookToBeUpdated, linkedWindowId, launch, wormhole,shouldCloseWindow) => {
+	updateBook = (bookToBeUpdated, linkedWindowId, launch, wormhole, shouldClosePortal) => {
 
 		let updatedBooks = this.state.bookshelf.map(function (book, putInDataBase) {//find the linked book and then update the WormHole for the book
 			if (book.key === bookToBeUpdated.key) {
@@ -100,7 +107,7 @@ class BookAppMain extends Component {
 		})
 
 		updateBookLW(bookToBeUpdated, this.props.user.uid).then(e => {
-			if(shouldCloseWindow){
+			if(shouldClosePortal){
 				window.close();
 			}
 		});

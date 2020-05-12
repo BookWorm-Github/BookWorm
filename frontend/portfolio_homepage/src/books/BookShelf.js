@@ -25,52 +25,48 @@ class BookShelf extends Component {
 		)
 	}
 
-
 	create2DArrayOfBooks(bookList){
-	const numShelves = Math.ceil(bookList.length/this.state.numBksPerShelf);
-	if(numShelves>=0){
-	  const shelfOfBooks = new Array(numShelves);
-	  for (let k = 0; k < numShelves; k++) {
-	    shelfOfBooks[k] = new Array(this.state.numBksPerShelf);
-		}
+		const numShelves = Math.ceil(bookList.length/this.state.numBksPerShelf);
+			if(numShelves>=0){
+				const shelfOfBooks = new Array(numShelves);
+				for (let k = 0; k < numShelves; k++) {
+					shelfOfBooks[k] = new Array(this.state.numBksPerShelf);
+				}
 
-
-	// Loop to initialize 2D array elements (books).
-	  let debugString = "";
-	  for (let i = 0; i < numShelves; i++) {
-	    for (let j = 0; j < this.state.numBksPerShelf; j++) {
-	        const n = i * this.state.numBksPerShelf + j;
-	        if(n<bookList.length){
-	          shelfOfBooks[i][j] = bookList[n];
-	        }
-	        else{
-	          shelfOfBooks[i][j] = null;
-	        }
-	        debugString+=("Shelf ("+i+","+j+") is "+shelfOfBooks[i][j]+"\n");
-	    }
-	}
-	// //console.log("DEBUG SHELF PARSE of bookList len: "+bookList.length+": "+debugString);
-	// this.printShelf(shelfOfBooks);
-	return shelfOfBooks;
-	}
-	else return [];
-
+				// Loop to initialize 2D array elements (books).
+				let debugString = "";
+				for (let i = 0; i < numShelves; i++) {
+					for (let j = 0; j < this.state.numBksPerShelf; j++) {
+					    const n = i * this.state.numBksPerShelf + j;
+					    if(n<bookList.length){
+					      shelfOfBooks[i][j] = bookList[n];
+					    }
+					    else{
+					      shelfOfBooks[i][j] = null;
+					    }
+					    debugString+=("Shelf ("+i+","+j+") is "+shelfOfBooks[i][j]+"\n");
+					}
+				}
+				// //console.log("DEBUG SHELF PARSE of bookList len: "+bookList.length+": "+debugString);
+				// this.printShelf(shelfOfBooks);
+				return shelfOfBooks;
+			}
+			else return [];
 	}
 
 	createBook =(_book,_index) => {
 
-	// this.printBook(_index,_book);
-	console.log("CurWinID in bkshelf is "+this.props.curWinID
-)
-		return <Grid key = {_index} item xs zeroMinWidth>
-			{_book===null?null:
-				<div key={_book.key}>
-					{/*<BookNavbar book = {_book} deleteBook = {this.deleteBook} updateBook = {this.props.updateBook} delinkBook={this.props.delinkBook}/>*/}
-					<Book book ={_book} deleteBook = {this.deleteBook} updateBook = {this.props.updateBook} delinkBook={this.props.delinkBook} toggleWormhole = {this.toggleWormhole}
-					  isShowingWormhole = {this.state.isShowingWormhole} isCurrentWindow = {this.props.curWinID===_book.linkedWindowId} />
-				</div>
-			}
-			</Grid>
+		// this.printBook(_index,_book);
+		console.log("CurWinID in BookShelf is "+this.props.curWinID)
+			return <Grid key = {_index} item xs zeroMinWidth>
+				{_book===null?null:
+					<div key={_book.key}>
+						{/*<BookNavbar book = {_book} deleteBook = {this.deleteBook} updateBook = {this.props.updateBook} delinkBook={this.props.delinkBook}/>*/}
+						<Book book ={_book} deleteBook = {this.deleteBook} updateBook = {this.props.updateBook} delinkBook={this.props.delinkBook} toggleWormhole = {this.toggleWormhole}
+						  isShowingWormhole = {this.state.isShowingWormhole} isCurrentWindow = {this.props.curWinID===_book.linkedWindowId} />
+					</div>
+				}
+				</Grid>
 	}
 
 	createShelf =(_bookshelf,_index) => {
@@ -83,7 +79,7 @@ class BookShelf extends Component {
 	}
 
 	separateBooksIntoShelves = (shelfOfBooks,numBooks) =>{
-	  return <div>{shelfOfBooks.map(this.createShelf)}</div>
+		return <div>{shelfOfBooks.map(this.createShelf)}</div>
 	}
 
 	deleteBook = (_book) =>{
@@ -140,7 +136,7 @@ class BookShelf extends Component {
 	}
 
 	toggleWormhole = (book_key) =>{
-		////console.log("Adding book");
+		//console.log("Adding book");
 		this.setState({isShowingWormhole:book_key});
 	}
 

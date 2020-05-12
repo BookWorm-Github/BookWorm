@@ -14,7 +14,7 @@
   },
 
   "browser_action": {
-        "default_title": "Book Worm",
+        "default_title": "BookWorm",
         "default_popup": "auth/credentials.html"
     },
 

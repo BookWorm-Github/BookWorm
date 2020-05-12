@@ -90,7 +90,7 @@ class Wormhole extends Component{
           </div>
           <form>
             <div className="forma">
-            <img src = "/search.svg" alt="search icon" height="28" width="28" className="logo"></img>
+            <img src = "/search.svg" alt="search icon" height="28" width="28" className="logo"/>
             <input className="input" type="text" onChange={this.filterURLs} placeholder="Search..." />
             </div>
           </form>

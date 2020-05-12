@@ -10,8 +10,7 @@ import '../wormhole/wormhole.css'
 import '../launcher/launcher.css'
 import Wormhole from '../wormhole/Wormhole'
 import Launcher from '../launcher/Launcher'
-import ManualEntryOfURL from '../addURL/ManualEntryOfURL'
-import WindowId from '../debug/WindowId'
+// import WindowId from '../debug/WindowId'
 import BookNavbar from "../hamburger_bar/BookNavbar";
 
 class Book extends Component{
@@ -87,18 +86,20 @@ class Book extends Component{
 
 
 	createHoverMenu() {
-		return <div className ='hover-menu'>
+		return (
+			<div className ='hover-menu'>
 				<Launcher book = {this.props.book} updateWindow = {this.props.updateBook} urls = {this.props.book.Launch}/>
 				<div className = 'line'>
-					<p></p>
+					<p/>
 				</div>
 					<div className = 'wormhole'
 						onClick = {() => this.props.toggleWormhole(this.props.book.key)}>
-							<br></br>
-							<br></br>
-							<br></br>Wormhole
+							<br/>
+							<br/>
+							<br/>Wormhole
 				</div>
 			</div>
+		)
 
 	}
 	  
@@ -135,7 +136,7 @@ class Book extends Component{
 				</div>
 
 					{
-						this.props.isShowingWormhole==this.props.book.key?
+						this.props.isShowingWormhole===this.props.book.key?
 						<div>
 							
 							<Wormhole book = {this.props.book} toggleWormhole = {this.props.toggleWormhole}/>

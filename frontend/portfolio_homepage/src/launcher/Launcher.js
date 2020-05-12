@@ -1,9 +1,8 @@
 /*global chrome*/
-//The container that holds the books
 import React, {Component} from 'react'
 import './launcher.css'
 import PropTypes from 'prop-types'
-import TitleFetcher from '../urlTitleFetcher/TitleFetcher'
+// import TitleFetcher from '../urlTitleFetcher/TitleFetcher'
 //https://urlmeta.org/
 //import $ from 'jquery'
 //import WebTitleFetcher from '../experiments/webtitlefetcher.php'
@@ -28,12 +27,12 @@ class Launcher extends Component{
 
 		return (
 			
-				<div className = 'launcher' onClick = {this.openURLs}>
-					 <br></br>
-					 <br></br>
-					 <br></br>
-					Launcher
-				</div>
+			<div className = 'launcher' onClick = {this.openURLs}>
+				 <br/>
+				 <br/>
+				 <br/>
+				Launcher
+			</div>
 			
 		);
 
@@ -59,7 +58,6 @@ class Launcher extends Component{
 	_cbWindow = (response) => {
 		//alert("Window "+response.windowId+" was just created");
 		this.props.updateWindow(this.props.book,response.windowId,this.props.book.Launch,this.props.book.WormHole,true);
-
 		// window.close();
 	}
 

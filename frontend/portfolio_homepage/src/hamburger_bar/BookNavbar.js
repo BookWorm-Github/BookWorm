@@ -1,9 +1,8 @@
 /*global chrome*/
 import React, { Component } from 'react';
-import { MDBNavbar, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBCollapse, MDBContainer,
-MDBHamburgerToggler } from 'mdbreact';
-import { BrowserRouter as Router } from 'react-router-dom';
-import {deLinkBookfromWindow} from "../firebase/firestore/db_functions";
+import { MDBNavbarNav, MDBNavItem, MDBNavLink, MDBCollapse, MDBContainer} from 'mdbreact';
+import { BrowserRouter as Router } from 'react-router-dom';//Not too sure if this is even needed
+// import {deLinkBookfromWindow} from "../firebase/firestore/db_functions";
 import './BookNavbar.css';
 
 

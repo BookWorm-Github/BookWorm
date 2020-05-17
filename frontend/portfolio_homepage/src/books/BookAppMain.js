@@ -4,7 +4,7 @@ import BookShelf from './BookShelf'
 import AddBookUI from '../AddBookUI/AddBookUI'
 import './bookStyles.css'
 import SortBooks from '../sortItems/SortBooks'
-import { bw_auth, generateUserDocument } from "../firebase/init.js";
+// import { bw_auth, generateUserDocument } from "../firebase/init.js";
 import Hotkeys from 'react-hot-keys';
 import {deleteBook, deLinkBookfromWindow, storeBook, updateBookLW} from "../firebase/firestore/db_functions";
 //added hotkeys: https://github.com/jaywcjlove/react-hotkeys#readme

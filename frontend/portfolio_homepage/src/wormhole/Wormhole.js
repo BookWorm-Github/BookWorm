@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import './wormhole.css'
 import PropTypes from 'prop-types'
-import TitleFetcher from '../urlTitleFetcher/TitleFetcher'
 import $ from 'jquery'
+// import TitleFetcher from '../urlTitleFetcher/TitleFetcher'
 
 /*Full list of URLs in a book. When you click on the URL, it opens that link??*/
 const regex = "3289ie,wdsj%=";

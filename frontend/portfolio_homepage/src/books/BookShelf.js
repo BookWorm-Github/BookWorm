@@ -3,8 +3,8 @@ import Grid from '@material-ui/core/Grid';
 import Book from './Book'
 import PropTypes from 'prop-types'
 import './bookStyles.css'
-import BookNavbar from '../hamburger_bar/BookNavbar';
 import WindowResizer from '../WindowResizer/WindowResizer'
+// import BookNavbar from '../hamburger_bar/BookNavbar';
 
 class BookShelf extends Component {
 
@@ -34,7 +34,7 @@ class BookShelf extends Component {
 				}
 
 				// Loop to initialize 2D array elements (books).
-				let debugString = "";
+				// let debugString = "";
 				for (let i = 0; i < numShelves; i++) {
 					for (let j = 0; j < this.state.numBksPerShelf; j++) {
 					    const n = i * this.state.numBksPerShelf + j;
@@ -44,7 +44,7 @@ class BookShelf extends Component {
 					    else{
 					      shelfOfBooks[i][j] = null;
 					    }
-					    debugString+=("Shelf ("+i+","+j+") is "+shelfOfBooks[i][j]+"\n");
+					    // debugString+=("Shelf ("+i+","+j+") is "+shelfOfBooks[i][j]+"\n");
 					}
 				}
 				// //console.log("DEBUG SHELF PARSE of bookList len: "+bookList.length+": "+debugString);

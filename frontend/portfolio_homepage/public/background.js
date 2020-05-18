@@ -1,5 +1,7 @@
 //TODO currently clumsy way of getting tabs (recomputing all opened tabs when tab opened/closed)
 //TODO: LEARN TO USE PORT RATHER THAN USING OUR ONE TIME MESSAGING SYSTEM FOR OPTIMIZATION
+//TODO: OPTIMIZATION, SHOULD STORE EVERYTHING USING CHROME.STORAGE AND PUT BACKGROUND SCRIPT TO PERSISTENT == FALSE... LOOK BELOW
+//https://levelup.gitconnected.com/how-to-use-background-script-to-fetch-data-in-chrome-extension-ef9d7f69625d
 
 // import {storeBook} from "../src/firebase/firestore/db_functions";
 // urlsToBeStoredInLaunch=[]; //the urls of the most recently closed window
@@ -17,11 +19,13 @@ const sessionInfo = function() {
 		chrome.windows.getAll(windows => {
 			windows.map(windowInfo => {
 				browserWindowsOfTabs[windowInfo.id] = {
-					windowInfo: windowInfo
+					windowInfo: windowInfo,
+					wormHole: []
 				}
-				chrome.tabs.query({windowId: windowInfo.id}, tabs => {
+				chrome.tabs.query({windowId: windowInfo.id}, tabs => {//the tabs being stored here are going to be used in the Launcher.
 					tabs.map(tabInfo => {
 						browserWindowsOfTabs[windowInfo.id][tabInfo.id] = tabInfo
+						browserWindowsOfTabs[windowInfo.id].wormHole.push(tabInfo);
 					})
 				})
 			})
@@ -116,6 +120,10 @@ const sessionInfo = function() {
 			console.error("window id doesn't exist, something went wrong");
 		}
 		sessionInfo.browserWindowsOfTabs[tabInfo.windowId][tabInfo.id] = tabInfo
+	}
+
+	function updateToWormHole(tabInfo){//gets called whenever a new tab gets
+
 	}
 
 	return{

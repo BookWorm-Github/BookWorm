@@ -150,7 +150,7 @@ class AddBookUI extends Component {
         />
       );
 
-      createCheckboxes = () => OPTIONS.map(this.createCheckbox);
+    createCheckboxes = () => OPTIONS.map(this.createCheckbox);
 
 
 }

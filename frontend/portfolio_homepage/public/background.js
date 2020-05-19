@@ -25,7 +25,7 @@ const sessionInfo = function() {
 				chrome.tabs.query({windowId: windowInfo.id}, tabs => {//the tabs being stored here are going to be used in the Launcher.
 					tabs.map(tabInfo => {
 						browserWindowsOfTabs[windowInfo.id][tabInfo.id] = tabInfo
-						browserWindowsOfTabs[windowInfo.id].wormHole.push(tabInfo);
+						updateToWormHole(tabInfo)
 					})
 				})
 			})
@@ -63,8 +63,19 @@ const sessionInfo = function() {
 		Object.assign(browserWindowsOfTabs[windowId], newWindowInfo);//to use Object.assign, both the parameters (target and source respectively) need to be objects and not undefined/null...
 	}
 
+	function deleteWindow(windowId){//deletes the window object being stored,  returns true if deleted and false if couldn't be deleted. Note that if the window id doesn't exist in object then deleting will return true
+		let isDelete = delete browserWindowsOfTabs[windowId]
+		if(isDelete){
+			console.log("deleting window id: " + windowId + " was successful");
+		}
+		else{
+			console.error("something went wrong with deleting WINDOW id " + windowId)
+		}
+		return isDelete;
+	}
+
 	function addTab(windowId, tabInfo){//adds a new tab into the object browserWindowsOfTabs. Should occur when user opens a new tab
-		if(!browserWindowsOfTabs[windowId].hasOwnProperty([tabInfo.id])){//if windowId is undefined as a key in browserWindowsOfTabs
+		if(!browserWindowsOfTabs[windowId].hasOwnProperty([tabInfo.id])){//if tabInfo.id is undefined as a key in browserWindowsOfTabs, create empty object for the tab
 			console.log("initializing tabInfo.id in windOfTabs")
 			browserWindowsOfTabs[windowId][tabInfo.id] = {};
 		}
@@ -90,6 +101,9 @@ const sessionInfo = function() {
 		// 		browserWindowsOfTabs[windowId][tabInfo.id][tabInfo] = tabInfo
 		// 	}
 		// }
+
+		updateToWormHole(tabInfo);
+
 	}
 
 	function deleteTab(windowId, tabId){//deletes the tab object being stored,  returns true if deleted and false if couldn't be deleted. Note that if the tab id doesn't exist in object then deleting will return true
@@ -100,30 +114,57 @@ const sessionInfo = function() {
 		else{
 			console.error("something went wrong with deleting TAB id " + tabId);
 		}
+
 		return isDelete;
 	}
-
-	function deleteWindow(windowId){//deletes the window object being stored,  returns true if deleted and false if couldn't be deleted. Note that if the window id doesn't exist in object then deleting will return true
-		let isDelete = delete browserWindowsOfTabs[windowId]
-		if(isDelete){
-			console.log("deleting window id: " + windowId + " was successful");
-		}
-		else{
-			console.error("something went wrong with deleting WINDOW id " + windowId)
-		}
-		return isDelete;
-	}
-
 
 	function updateTab(tabInfo){
 		if(tabInfo.windowId === undefined){
 			console.error("window id doesn't exist, something went wrong");
 		}
-		sessionInfo.browserWindowsOfTabs[tabInfo.windowId][tabInfo.id] = tabInfo
+		sessionInfo.browserWindowsOfTabs[tabInfo.windowId][tabInfo.id] = tabInfo;
+		updateToWormHole(tabInfo);
 	}
 
-	function updateToWormHole(tabInfo){//gets called whenever a new tab gets
 
+	function updateToWormHole(tabInfo){//gets called whenever a new url gets inputted or a newtab is found, if its chrome://newtab/ then or anything that starts with chrome:// should not be saved in wormHole.
+		let isAddedToWormHole = false;
+
+		if(tabInfo.status === "complete"){//we only store urls that are completed in the tab...
+			if(tabInfo.url.includes("chrome://newtab/")){//if the url contains ANY of these cases of elements inside their url, then we ditch it.
+				console.log("new tab not adding to chrome");
+			}
+			else if(existInWormHole(tabInfo.windowId, tabInfo)){//if the link already exists in the wormhole, then we ditch it.
+				console.log(tabInfo.url + " already exists in wormhole");
+			}
+			else{
+				console.log("adding to wormhole");
+				browserWindowsOfTabs[tabInfo.windowId].wormHole.push(tabInfo);
+				isAddedToWormHole = true;
+			}
+		}
+
+		return isAddedToWormHole;
+	}
+
+	function existInWormHole(windowId, tabInfo){//returns true if the windowId with the specified url is within the wormhole. returns false if no duplicates found in the specified wormhole
+		if(!browserWindowsOfTabs[windowId].hasOwnProperty("wormHole")){//in case the wormHole is undefined/wasn't created, then create an empty array.
+			browserWindowsOfTabs[windowId].wormHole = [];
+		}
+
+		let isDup = false;
+		for (let i = 0; i < browserWindowsOfTabs[windowId].wormHole.length; i++) {
+			if(tabInfo.url === browserWindowsOfTabs[windowId].wormHole[i].url){
+				moveUrlToTopWormHole(windowId, tabInfo, i);
+				isDup = true;
+			}
+		}
+		return isDup;
+	}
+
+	function moveUrlToTopWormHole(windowId, tabInfo, indexOfUrl){ //shifts the specified url up to the top of the wormHole
+		browserWindowsOfTabs[windowId].wormHole.splice(indexOfUrl, 1);
+		browserWindowsOfTabs[windowId].wormHole.push(tabInfo);
 	}
 
 	return{
@@ -151,6 +192,12 @@ chrome.runtime.onInstalled.addListener(function(details){
     chrome.windows.getCurrent({}, retWinId);
 });
 
+chrome.runtime.onStartup.addListener(callback => {
+	console.log("Welcome back");
+	sessionInfo.initBrowserSession();
+})
+
+
 chrome.runtime.onMessage.addListener(//every time the background script receives a message, this method gets called
 	function(msg, sender, sendResponse) {
 		switch(msg.rq) {
@@ -164,9 +211,9 @@ chrome.runtime.onMessage.addListener(//every time the background script receives
 		        // window.contentPort = port;
 			    // port.postMessage({openTabs:tabs});
 			    break;
-			case ("linkToSenderWindow"):
-				sessionInfo.browserWindowsOfTabs[sender.tab.windowId].linkedBook = msg.linkedBookId;//TODO: create the message for this case and specify the message to have linkdebookid
-
+			// case ("linkToSenderWindow"):
+			// 	sessionInfo.browserWindowsOfTabs[sender.tab.windowId].linkedBook = msg.linkedBookId;//TODO: create the message for this case and specify the message to have linkdebookid
+			// 	break;
 		    case ("urlsForLaunch"):
 			    const launchurls = [];
 			    function sendBackLaunch(retTabs){
@@ -390,7 +437,6 @@ chrome.windows.onCreated.addListener(function(window) {
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {//when a newtab is created, get info on how many tabs in current opened window
 	//TODO: listener is fired twice: when the page has started loading, and when the page has finished. So we need to check the tab status.
 
-	console.log("changes to tabId: " + tabId );
 	console.log(changeInfo);
 	sessionInfo.setTab(tab);
 

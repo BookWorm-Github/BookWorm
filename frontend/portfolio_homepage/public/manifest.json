@@ -3,7 +3,7 @@
   "short_name": "BookWorm",
   "name": "BookWorm",
 
-  "version": "1.0.2",
+  "version": "1.0.3",
   "permissions": ["contextMenus","tabs","storage","activeTab","declarativeContent",
     "background","identity", "contentSettings", "<all_urls>","http://*/*","https://*/*"
         ], 

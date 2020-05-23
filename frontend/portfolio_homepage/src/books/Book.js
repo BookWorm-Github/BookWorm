@@ -18,14 +18,10 @@ class Book extends Component{
 	constructor(props){
 		super(props);
 		this.state = {
-		    linkedWindowId:-100,
 		    book: null,
 			title:'',
 			isHovered: false
-			// launchURLs: ['https://www.github.com/'],
-			// wormholeURLs:['https://www.github.com/','https://www.google.com/search?sxsrf=ALeKk03xO56CXGouNmYNfOx9L3LEpIKKrQ%3A1585511879738&ei=x_2AXofVLMusytMPvui78AI&q=when+will+coronavirus+end&oq=when+will+&gs_lcp=CgZwc3ktYWIQAxgAMgQIIxAnMgQIIxAnMgUIABCDATIFCAAQgwEyAggAMgIIADICCAAyAggAMgIIADICCAA6BAgAEEc6BggAEBYQHjoFCAAQzQI6BwgAEBQQhwI6BwgjEOoCECc6BQgAEJECOgQIABBDUOcpWM1kYPBsaARwAngDgAGJAogBrCqSAQczMi4xOC4zmAEAoAEBqgEHZ3dzLXdperABCg&sclient=psy-ab']
 		};
-	 // this.handleMessage.bind(this);
 	}
 	componentDidMount=() =>{
 		this.setState({
@@ -36,26 +32,13 @@ class Book extends Component{
 
 		if(this.props.book.linkedWindowId>=0){
 			chrome.runtime.sendMessage({rq: "urlsForLaunch", winId: this.props.book.linkedWindowId}, this._cbForLaunchResponse);
-			chrome.runtime.sendMessage({rq: "urlsForWormhole", winId: this.props.book.linkedWindowId}, this._cbForWormholeResponse);
+			chrome.runtime.sendMessage({rq: "urlsForWormhole", linkedWindowId: this.props.book.linkedWindowId}, this._cbForWormholeResponse);
 		}
 		//console.log("Wormhole for book "+this.props.book.title+" is "+this.props.book.WormHole.toString());
 
 		// chrome.runtime.onMessage.addListener(this.handleMessage.bind(this));
 	}
-	// handleMessage(message, sender, sendResponse){
-	// 	console.log("Book"+this.props.book.title+
-	// 		" linkedID: "+this.props.book.linkedWindowId+
-	// 		" received winID from background: "+message.winId);
-	// 	if(message.winId==this.props.book.linkedWindowId){
-	// 		console.log("updated wormhole n launch");
-	// 		this._cbForLaunchResponse(message);
-	// 		this._cbForWormholeResponse(message);
-	// 	}
-	// 	else{
-	// 		console.log("no need update wormhole n launch");
-	// 	}
-	// }
-	//for initial book setups
+
 	_cbForLaunchResponse = (response) => {
 		if(response.urlsForLaunch&&response.urlsForLaunch.length){//if launch urls are not empty
 			this.props.updateBook(this.props.book,
@@ -63,27 +46,32 @@ class Book extends Component{
 				response.urlsForLaunch,
 				this.props.book.WormHole,
 				false);
-			// console.log("book "+this.props.book.title+"updated launch to be "+response.urlsForLaunch);
-
+			console.log("book "+this.props.book.title+" updated launch to be "+response.urlsForLaunch);
 		}
 		else{
-
-			// console.log("book "+this.props.book.title+" received empty for launch");
+			console.log("book "+this.props.book.title+" received empty for launch");
 		}
 	}
 
 	_cbForWormholeResponse = (response) => {
-		if(response.urlsForWormhole&&response.urlsForWormhole.length){//if launch urls are not empty
-			this.props.updateBook(this.props.book,this.props.book.linkedWindowId,this.props.book.Launch,response.urlsForWormhole);
-			console.log("book "+this.props.book.title+"updated wormhole to be "+response.urlsForWormhole);
+		console.log("WORMHOLE INFO:");
+		console.log(response.WormholeInfo)
+		let worm = [];
+		response.WormholeInfo.forEach(tabInfo => {//parse the information given to us, taking out the tabs specifically for each urlInfo we get
+			worm.push(tabInfo.url);
+		})
+
+		console.log(worm);
+
+		if(!(response.WormholeInfo === undefined || response.WormholeInfo === 0)){//checks if the WormholeInfo is empty, if not then we can update the book using prop method below.
+			this.props.updateBook(this.props.book,this.props.book.linkedWindowId,this.props.book.Launch, worm);
+			console.log("book " + this.props.book.title + " updated wormhole to be " + worm);
 		}
 		else{
-			console.log("book "+this.props.book.title+" received empty for wormhole");
+			console.log("book " + this.props.book.title + " received empty for wormhole");
 		}
 
 	}
-
-
 
 	createHoverMenu() {
 		return (
@@ -118,9 +106,6 @@ class Book extends Component{
 				<div className = {this.props.isCurrentWindow? 'current-book':'nonexistent-class'}>
 
 				<BookNavbar book = {this.props.book} deleteBook = {this.props.deleteBook} updateBook = {this.props.updateBook} delinkBook={this.props.delinkBook}/>
-				<div>
-					{/*<WindowId linkedWindowId = {this.props.book.linkedWindowId}/>*/}
-				</div>
 				<div className = 'book'
 					onMouseEnter = {()=>this.setState({isHovered:true})}
 					onMouseLeave = {()=>this.setState({isHovered:false})}>
@@ -142,43 +127,10 @@ class Book extends Component{
 							<Wormhole book = {this.props.book} toggleWormhole = {this.props.toggleWormhole}/>
 						</div> : <div/>
 					}
-
-						{/*<ManualEntryOfURL setWormholeURLs = {this.setWormholeURLs} setLaunchURLs = {this.setLaunchURLs}/>*/}
 				</div>
 			</div>
 		);
 	}
-
-	setLinkedWindow = (windowId) =>{
-		this.setState({
-			linkedWindowId: windowId
-		}, () =>{
-		// this.props.updateBook(this.props.book,windowId,this.state.launchURLs,this.state.wormholeURLs)})
-			this.props.updateBook(this.props.book, windowId, this.props.book.Launch, this.props.book.WormHole)
-		})
-	}
-
-	// setLaunchURLs = (newURL) => {
-	// 	this.setState(
-	//       {
-	//         launchURLs: [...this.state.launchURLs,newURL],
-	//         wormholeURLs:[...this.state.wormholeURLs,newURL]
-	//       }, ()=>(this.props.updateBook(this.props.book,this.state.linkedWindowId,this.state.launchURLs,this.state.wormholeURLs))
-	//     );
-
-	// }
-
-	// setWormholeURLs = (newURL) =>{
-	// 	this.setState(
-	//       {
-	//         wormholeURLs: [...this.state.wormholeURLs,newURL],
-	//       },()=>(this.props.updateBook(this.props.book,this.state.linkedWindowId,this.state.launchURLs,this.state.wormholeURLs))
-	//     );
-	// }
-
-
-
-
 }
 
 Book.propTypes = {

@@ -19,11 +19,10 @@ class BookAppMain extends Component {
 			linkedBook: "", //the current book that is linked to the window
 			urlsForLaunch:[],
 			urlsForWormhole:[],
-			curWinID: -2 //random number to denote impossible winID
+			curWinID: -2 //negative random number to denote impossible winID
 		};
-
-
 	}
+
 	setCurWindow = async (response) =>{
 		console.log("BookAppMain setCurWindow received winID:" + response.windowId);
 		await this.setState({
@@ -37,24 +36,26 @@ class BookAppMain extends Component {
 			bookshelf: this.props.books
 		});
 		chrome.runtime.sendMessage({rq: "getCurrWindowId"}, this.setCurWindow);
-		chrome.runtime.sendMessage({rq: "getOpenWindows"});
 		chrome.runtime.onMessage.addListener(this.handleMessage.bind(this));
 	}
 
 	handleMessage(message, sender, sendResponse){
-		console.log("BookAppMain received msg from background with winID"+message.winId);
+		switch (message.ID) {
+			case "urlsForWormhole":
+				console.log("urls from wormhole: ");
+				console.log(message.urlsForWormhole);
+				console.log(this.state.urlsForWormhole);
+				break;
+				//TODO: NEED to sort out the messages received in the BookAppMain from background script into cases.
+			default:
+				break;
 
-		if(message.ID === "getOpenWindows"){
-			console.log(message.allWindows);
 		}
 
-		console.log("urls from wormhole: ");
-		console.log(message.urlsForWormhole);
-		console.log(this.state.urlsForWormhole);
-		let i;
+
 		let currBook = null;
 		// this.setState({curWinID:message.winId})
-		for (i = 0; i < this.state.bookshelf.length; i++) {
+		for (let i = 0; i < this.state.bookshelf.length; i++) {
 		  if(message.winId===this.state.bookshelf[i].linkedWindowId){//if message window id matches book window id
 
 			currBook = this.state.bookshelf[i];
@@ -87,7 +88,7 @@ class BookAppMain extends Component {
 		this.setState({addingBook:!this.state.addingBook});
 	}
 
-	//updates teh linkedWindow, launch and wormhole of a book in database
+	//updates the linkedWindow, launch and wormhole of a book in database
 	updateBook = (bookToBeUpdated, linkedWindowId, launch, wormhole, shouldClosePortal) => {
 
 		let updatedBooks = this.state.bookshelf.map(function (book, putInDataBase) {//find the linked book and then update the WormHole for the book
@@ -176,14 +177,14 @@ class BookAppMain extends Component {
 		});
 	}
 
-	debugBkShelf = () => {
+	// debugBkShelf = () => {
 		//console.log("BookAppMain State is now "+this.state.bookshelf);
 		// this.state.bookshelf.map((_book, _key) => {
 	 //        return(
 	 //          //console.log("Book ("+_book.title+","+_book.key+")")
 	 //        );
 		// })
-	}
+	// }
 
 
 	render(){

@@ -60,7 +60,7 @@ class User extends Component {
 						<p className ="topbutton">Sign Out</p>
 					</button>
 					
-					<BookAppMain user={this.state.user} books={this.state.books} urlsForWormhole={this.props.urlsForWormhole}/>
+					<BookAppMain user={this.state.user} books={this.state.books}/>
 					
 				</div>
 				:

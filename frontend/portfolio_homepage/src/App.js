@@ -11,59 +11,13 @@ class App extends Component{
 		super(props);
 		this.state = {
 			linkedBook: "", //the current book that is linked to the window
-			urlsForLaunch:[],
-			urlsForWormhole:[]
+			urlsForLaunch:[]
 		};
-
-		// //TODO move the chrome runtime stuff and their callback fns to somewhere more suitable
-		// chrome.runtime.sendMessage({rq: "urlsForLaunch"}, this._cbForLaunchResponse);
-		// chrome.runtime.sendMessage({rq: "urlsForWormhole"}, this._cbForWormholeResponse);
-		this.handleMessage.bind(this);
 	}
-
-	componentDidMount(){
-
-		// chrome.runtime.onMessage.addListener(this.handleMessage.bind(this));
-	}
-
-	handleMessage(message, sender, sendResponse){
-		if(message.urlsForLaunch != null){
-
-			this.setState({urlsForLaunch: message.urlsForLaunch})
-		}
-		if(message.urlsForWormhole != null){
-			this.setState({urlsForWormhole: message.urlsForWormhole})
-
-		}
-	}
-
-
-	_cbForLaunchResponse = (response) => {
-
-		this.setState({urlsForLaunch: response.urlsForLaunch})
-
-	}
-
-	_cbForWormholeResponse = (response) => {
-
-		this.setState({urlsForWormhole: response.urlsForWormhole})
-
-	}
-
 
 	render(){
 		return <div className="App">
-				<User urlsForWormhole={this.state.urlsForWormhole}/>
-			{/*<h2>URLs for Wormhole</h2>*/}
-			{/*<ul>*/}
-			{/*	{ this.state.urlsForWormhole.map(title => <li>{title}</li>)}*/}
-			{/*</ul>*/}
-
-			{/*<h2>URLs for Launch</h2>*/}
-			{/*<ul>*/}
-			{/*	{ this.state.urlsForLaunch.map(title => <li>{title}</li>)}*/}
-			{/*</ul>*/}
-			{/*<BgColor />*/}
+			<User />
 		</div>
 	}
 }

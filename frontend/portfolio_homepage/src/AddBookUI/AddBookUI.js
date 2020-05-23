@@ -66,8 +66,7 @@ class AddBookUI extends Component {
         );
     }
 
-    createBook = (e) => {//receiving the value in the form onSubmit.
-	    //check to see if the newBook added with title this._inputTitle.value already exists
+    createBook = (e) => {//check to see if the newBook added with title this._inputTitle.value already exists
 	    let isDup = this.checkDuplicates(this._inputTitle.value);
 	    if (!isDup) {
 		    chrome.runtime.sendMessage({rq: "getCurrWindowId"}, this._cbWindowIdResponse.bind(this));
@@ -96,6 +95,7 @@ class AddBookUI extends Component {
     }
 
 	_cbWindowIdResponse(response) {
+    	console.log("response is " + response);
         let windowId = response.windowId;//this gets the current windowId
         if(windowId==null)
             alert('window id is null');
@@ -105,10 +105,10 @@ class AddBookUI extends Component {
 		Object.keys(this.state.checkboxes)
           .filter(checkbox => this.state.checkboxes[checkbox])
           .forEach(checkbox => {
-            //console.log(checkbox, "is selected.");
+            console.log(checkbox, "is selected.");
             if(checkbox ==='Link book to window'){
                 linkToWindow = windowId;
-                // alert('Checkbox '+checkbox +' is selected. This book will be linked to current window');
+                alert('Checkbox '+checkbox +' is selected. This book will be linked to current window');
             }
           });
           // alert('Book is linked to window'+linkToWindow);
@@ -130,23 +130,23 @@ class AddBookUI extends Component {
 
     /*link window questionaire*/
 
-      handleCheckboxChange = changeEvent => {
-        const { name } = changeEvent.target;
+	handleCheckboxChange = changeEvent => {
+		const { name } = changeEvent.target;
 
-        this.setState(prevState => ({
-          checkboxes: {
-            ...prevState.checkboxes,
-            [name]: !prevState.checkboxes[name]
-          }
-        }));
-      };
+		this.setState(prevState => ({
+			checkboxes: {
+				...prevState.checkboxes,
+				[name]: !prevState.checkboxes[name]
+			}
+		}));
+	};
 
     createCheckbox = option => (
         <Checkbox
-          label={option}
-          isSelected={this.state.checkboxes[option]}
-          onCheckboxChange={this.handleCheckboxChange}
-          key={option}
+	        label={option}
+	        isSelected={this.state.checkboxes[option]}
+            onCheckboxChange={this.handleCheckboxChange}
+	        key={option}
         />
       );
 

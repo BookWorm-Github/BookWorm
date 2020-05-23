@@ -184,21 +184,6 @@ chrome.runtime.onInstalled.addListener(function(details){
 chrome.runtime.onMessage.addListener(//every time the background script receives a message, this method gets called
 	function(msg, sender, sendResponse) {
 		switch(msg.rq) {
-		    case "Tabs":
-		    	//console.log("Background received request for tabs");
-		        function retOpenTabs(curWindow){
-		        	let currWindowOfTabs = [];
-		        	for (const [key, tabInfo] of Object.entries(sessionInfo.browserWindowsOfTabs[curWindow.id])){
-		        	    if(key !== "windowInfo" || key !== "wormHole"){
-		        	    	currWindowOfTabs.push(tabInfo);//pushing the tabInfo object into the array to be sent to content script.
-			            }
-			        }
-	                sendResponse({ID: "Tabs", openTabs: currWindowOfTabs});
-		        }
-		        chrome.windows.getCurrent({}, retOpenTabs);
-		        // window.contentPort = port;
-			    // port.postMessage({openTabs:tabs});
-			    break;
 			// case ("linkToSenderWindow"):
 			// 	sessionInfo.browserWindowsOfTabs[sender.tab.windowId].linkedBook = msg.linkedBookId;//TODO: create the message for this case and specify the message to have linkedBookId
 			// 	break;
@@ -248,7 +233,7 @@ chrome.runtime.onMessage.addListener(//every time the background script receives
 		    default:
 		    	console.error("unknown message");
 		    	console.error(msg)
-			    return true;
+			    break;
 		}
 		return true;
 	});

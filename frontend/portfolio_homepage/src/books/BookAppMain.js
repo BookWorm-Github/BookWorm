@@ -4,9 +4,9 @@ import BookShelf from './BookShelf'
 import AddBookUI from '../AddBookUI/AddBookUI'
 import './bookStyles.css'
 import SortBooks from '../sortItems/SortBooks'
-// import { bw_auth, generateUserDocument } from "../firebase/init.js";
 import Hotkeys from 'react-hot-keys';
 import {deleteBook, deLinkBookfromWindow, storeBook, updateBookLW} from "../firebase/firestore/db_functions";
+// import { bw_auth, generateUserDocument } from "../firebase/init.js";
 //added hotkeys: https://github.com/jaywcjlove/react-hotkeys#readme
 
 class BookAppMain extends Component {
@@ -27,80 +27,77 @@ class BookAppMain extends Component {
 		console.log("BookAppMain setCurWindow received winID:" + response.windowId);
 		await this.setState({
 			curWinID: response.windowId
-		})
+		});
 		console.log("CurWinID is set to be "+this.state.curWinID);
-	}
+	};
 
 	componentDidMount = () => {//updating the user's personal books
 		this.setState({
 			bookshelf: this.props.books
 		});
 		chrome.runtime.sendMessage({rq: "getCurrWindowId"}, this.setCurWindow);
-		chrome.runtime.onMessage.addListener(this.handleMessage.bind(this));
-	}
+		// chrome.runtime.onMessage.addListener(this.handleMessage.bind(this));
+	};
 
-	handleMessage(message, sender, sendResponse){
-		let wormUrl = [];
-		let launchUrl = [];
-		switch (message.ID) {
-			case "urlsForWormhole":
-				console.log("message for wormhole: ");
-				console.log(message.WormholeInfo);
-				console.log(this.state.urlsForWormhole);
-				message.WormholeInfo.forEach(tabInfo => {//parse the information given to us, taking out the tabs specifically for each urlInfo we get
-					wormUrl.push(tabInfo.url);
-				})
-				break;
-			case "urlsForLaunch":
-				console.log("message for launch: ");
-				console.log(message.urlsForLaunch);
-				console.log(this.state.urlsForLaunch);
-				//TODO: NEED to sort out the messages received in the BookAppMain from background script into cases.
-				break;
-			default:
-				console.error("unknown message in content");
-				console.error(message);
-				break;
-
-		}
-
-		let currBook = null;
-		// this.setState({curWinID:message.winId})
-		for (let i = 0; i < this.state.bookshelf.length; i++) {
-		  if(message.winId===this.state.bookshelf[i].linkedWindowId){//if message window id matches book window id
-
-			currBook = this.state.bookshelf[i];
-			console.log("handled msg for "+currBook.title);
-			}
-		}
-		if(currBook!==null){ //if there is bk to be updated
-			if(message.urlsForLaunch&&message.urlsForLaunch.length){//update launch if launch urls are not empty
-				this.updateBook(currBook,currBook.linkedWindowId,message.urlsForLaunch,currBook.WormHole);
-				console.log("book "+currBook.title+"updated launch to be "+message.urlsForLaunch);
-			}
-			if(message.urlsForWormhole&&message.urlsForWormhole.length){//update wormhole if wormhole urls are not empty
-				this.updateBook(currBook,currBook.linkedWindowId,currBook.Launch,wormUrl);
-				console.log("book "+currBook.title+"updated wormhole to be "+message.urlsForWormhole);
-			}
-
-
-
-		}
-		else{
-			console.log("bkappmain: no linkld book with id "+message.winId+ "found");
-		}
-
-	}
+	// handleMessage(message, sender, sendResponse){
+	// 	let wormUrl = [];
+	// 	let launchUrl = [];
+	// 	switch (message.ID) {
+	// 		case "urlsForWormhole":
+	// 			console.log("message for wormhole: ");
+	// 			console.log(message.WormholeInfo);
+	// 			console.log(this.state.urlsForWormhole);
+	// 			message.WormholeInfo.forEach(tabInfo => {//parse the information given to us, taking out the tabs specifically for each urlInfo we get
+	// 				wormUrl.push(tabInfo.url);
+	// 			});
+	// 			break;
+	// 		case "urlsForLaunch":
+	// 			console.log("message for launch: ");
+	// 			console.log(message.urlsForLaunch);
+	// 			console.log(this.state.urlsForLaunch);
+	// 			break;
+	//
+	// 		default:
+	// 			console.log("unknown message in content");
+	// 			console.log(message);
+	// 			break;
+	// 	}
+	//
+	// 	let currBook = null;
+	// 	// this.setState({curWinID:message.winId})
+	// 	for (let i = 0; i < this.state.bookshelf.length; i++) {
+	// 	  if(message.winId===this.state.bookshelf[i].linkedWindowId){//if message window id matches book window id
+	//
+	// 		currBook = this.state.bookshelf[i];
+	// 		console.log("handled msg for "+currBook.title);
+	// 		}
+	// 	}
+	// 	if(currBook!==null){ //if there is bk to be updated
+	// 		if(message.urlsForLaunch&&message.urlsForLaunch.length){//update launch if launch urls are not empty
+	// 			this.updateBook(currBook,currBook.linkedWindowId,message.urlsForLaunch,currBook.WormHole);
+	// 			console.log("book "+currBook.title+"updated launch to be "+message.urlsForLaunch);
+	// 		}
+	// 		if(message.urlsForWormhole&&message.urlsForWormhole.length){//update wormhole if wormhole urls are not empty
+	// 			this.updateBook(currBook,currBook.linkedWindowId,currBook.Launch,wormUrl);
+	// 			console.log("book "+currBook.title+"updated wormhole to be "+message.urlsForWormhole);
+	// 		}
+	//
+	//
+	//
+	// 	}
+	// 	else{
+	// 		console.log("bkappmain: no linkld book with id "+message.winId+ "found");
+	// 	}
+	// }
 
 	/*Methods for adding and deleting books*/
 	toggleAddBook = () =>{
-		////console.log("Adding book");
+		//console.log("Adding book");
 		this.setState({addingBook:!this.state.addingBook});
-	}
+	};
 
 	//updates the linkedWindow, launch and wormhole of a book in database
 	updateBook = (bookToBeUpdated, linkedWindowId, launch, wormhole, shouldClosePortal) => {
-
 		let updatedBooks = this.state.bookshelf.map(function (book, putInDataBase) {//find the linked book and then update the WormHole for the book
 			if (book.key === bookToBeUpdated.key) {
 				book.linkedWindowId = linkedWindowId;
@@ -115,7 +112,7 @@ class BookAppMain extends Component {
 
 		this.setState({
 			bookshelf: updatedBooks
-		})
+		});
 
 		updateBookLW(bookToBeUpdated, this.props.user.uid).then(e => {
 			if(shouldClosePortal){
@@ -124,7 +121,7 @@ class BookAppMain extends Component {
 		});
 		
 
-	}
+	};
 
 	delinkBook = (currWindowId) => {//delinks all the books in bookshelf that have the same windowId as the current one
 		//TODO: delink doesn't work on the last book in the bookshelf...
@@ -141,7 +138,7 @@ class BookAppMain extends Component {
 		this.setState({
 			bookshelf: filteredBooks
 		})
-	}
+	};
 
 	addBook = (newBook)=> {//gets the newBook from addBookUI /*Every book has title and key, which is the date and linkedwindowId*/
 		// deLinking books that may have already linked with this window
@@ -168,7 +165,7 @@ class BookAppMain extends Component {
 			}));
 			//console.log("Adding book success!")
 		});
-	}
+	};
 
 	deleteBook = (book) => {
 		deleteBook(book, this.props.user.uid).then(() => {
@@ -179,23 +176,13 @@ class BookAppMain extends Component {
 			    bookshelf: filteredBooks
 		    });
 		});
-	}
+	};
 
 	setBooks = (books) => {
 		this.setState({
 		  bookshelf: books
 		});
-	}
-
-	// debugBkShelf = () => {
-		//console.log("BookAppMain State is now "+this.state.bookshelf);
-		// this.state.bookshelf.map((_book, _key) => {
-	 //        return(
-	 //          //console.log("Book ("+_book.title+","+_book.key+")")
-	 //        );
-		// })
-	// }
-
+	};
 
 	render(){
 
@@ -206,45 +193,31 @@ class BookAppMain extends Component {
 				{/*<button onClick = {this.getURLS}>Get Open Windows</button>*/}
 				<div className = 'main-container-center'>
 
-		        <div id = 'blurrable' className = 'book-shelf'>
-		          <ul id = 'topLine'>
-			          <SortBooks books = {this.state.bookshelf} setBooks = {this.setBooks} isBlurred = {this.state.addingBook}/>
-			          <span className = 'add-btn-container'>
-		            <h6 id = 'add'>Add book: </h6>
-		            <button className = 'add-bk-btn' onClick={this.toggleAddBook}><h1 className='Plus'>+</h1></button>
-		          </span>
-		          </ul>
-			        <div className = {this.state.addingBook?'blur-bg':'clear-bg'}>
-				        <BookShelf curWinID={this.state.curWinID} bks = {this.state.bookshelf} updateBook = {this.updateBook} deleteBook = {this.deleteBook} delinkBook={this.delinkBook}/>
+			        <div id = 'blurrable' className = 'book-shelf'>
+						<ul id = 'topLine'>
+							<SortBooks books = {this.state.bookshelf} setBooks = {this.setBooks} isBlurred = {this.state.addingBook}/>
+							<span className = 'add-btn-container'>
+								<h6 id = 'add'>Add book: </h6>
+								<button className = 'add-bk-btn' onClick={this.toggleAddBook}><h1 className='Plus'>+</h1></button>
+							</span>
+						</ul>
+						<div className = {this.state.addingBook?'blur-bg':'clear-bg'}>
+						    <BookShelf curWinID={this.state.curWinID} bks = {this.state.bookshelf} updateBook = {this.updateBook} deleteBook = {this.deleteBook} delinkBook={this.delinkBook}/>
+						</div>
 			        </div>
-		        </div>
-
-				{this.state.addingBook?
-					<div>
-						<AddBookUI
-							addBook = {this.addBook}
-							closePopup={this.toggleAddBook}
-							bks = {this.state.bookshelf}
-							urlsForLaunch={this.state.urlsForLaunch}
-							urlsForWormhole={this.state.urlsForWormhole}
-						/>
-					</div>
-					:
-					<div/>
-				}
-
-
-
-					{/*<h2>URLs for Wormhole</h2>*/}
-					{/*<ul>*/}
-					{/*	{ this.state.urlsForWormhole.map(title => <li>{title}</li>)}*/}
-					{/*</ul>*/}
-
-					{/*<h2>URLs for Launch</h2>*/}
-					{/*<ul>*/}
-					{/*	{ this.state.urlsForLaunch.map(title => <li>{title}</li>)}*/}
-					{/*</ul>*/}
-
+					{this.state.addingBook?
+						<div>
+							<AddBookUI
+								addBook = {this.addBook}
+								closePopup={this.toggleAddBook}
+								bks = {this.state.bookshelf}
+								urlsForLaunch={this.state.urlsForLaunch}
+								urlsForWormhole={this.state.urlsForWormhole}
+							/>
+						</div>
+						:
+						<div/>
+					}
 				</div>
 			</div>
 		);

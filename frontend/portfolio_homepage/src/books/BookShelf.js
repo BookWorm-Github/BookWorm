@@ -57,7 +57,7 @@ class BookShelf extends Component {
 	createBook =(_book,_index) => {
 
 		// this.printBook(_index,_book);
-		console.log("CurWinID in BookShelf is "+this.props.curWinID)
+		console.log("CurWinID in BookShelf is "+this.props.curWinID);
 			return <Grid key = {_index} item xs zeroMinWidth>
 				{_book===null?null:
 					<div key={_book.key}>
@@ -67,25 +67,24 @@ class BookShelf extends Component {
 					</div>
 				}
 				</Grid>
-	}
+	};
 
 	createShelf =(_bookshelf,_index) => {
-
 		return (
 			<Grid key = {_index} container spacing={this.state.spaceBtwnBooks}>
 				{_bookshelf.map(this.createBook)}
 			</Grid>
 		)
-	}
+	};
 
 	separateBooksIntoShelves = (shelfOfBooks,numBooks) =>{
 		return <div>{shelfOfBooks.map(this.createShelf)}</div>
-	}
+	};
 
 	deleteBook = (_book) =>{
 		//console.log(_book.title+" Key is "+_book.key);
 		this.props.deleteBook(_book)
-	}
+	};
 
 	render(){
 		const bookList = this.props.bks;//array of all books
@@ -112,7 +111,7 @@ class BookShelf extends Component {
 		this.setState({
 			numBksPerShelf:num
 		});
-	}
+	};
 
 
 	//print methods for debug

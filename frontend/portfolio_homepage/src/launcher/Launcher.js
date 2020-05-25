@@ -41,11 +41,9 @@ class Launcher extends Component{
 	openURLs = (e) =>{
 
 		e.preventDefault();
-		
-		if(this.props.urls==null)
-			alert("No urls to open");
-		else if (this.props.urls&&!this.props.urls.length){//there are no urls in prop
-			let newTab = 'chrome://newtab'
+
+		if (this.props.urls&&!this.props.urls.length){//there are no urls in prop
+			let newTab = 'chrome://newtab';
 
 			chrome.runtime.sendMessage({rq: "openWindowOfTabs", urlsToLaunch: newTab},this._cbWindow.bind(this));
 		}
@@ -53,24 +51,19 @@ class Launcher extends Component{
 			// alert("Opening "+this.props.urls.toString())
 			chrome.runtime.sendMessage({rq: "openWindowOfTabs", urlsToLaunch: this.props.urls},this._cbWindow.bind(this));
 		}
-	}
+	};
 
 	_cbWindow = (response) => {
 		//alert("Window "+response.windowId+" was just created");
-		this.props.updateWindow(this.props.book,response.windowId,this.props.book.Launch,this.props.book.WormHole,true);
+		this.props.updateBook(this.props.book,response.windowId,this.props.book.Launch,this.props.book.WormHole,true);
 		// window.close();
 	}
-
-	
-
-
-
 }
 
 
 Launcher.propTypes = {
     urls: PropTypes.arrayOf(PropTypes.string),
-    updateWindow: PropTypes.func.isRequired
+    updateBook: PropTypes.func.isRequired
   };
 
 export default Launcher;

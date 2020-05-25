@@ -1,17 +1,17 @@
 /*global chrome*/
-//The container that holds the books
 import React, {Component} from 'react'
 
 // import { withStyles } from '@material-ui/core/styles';
 //npm i react-simple-flex-grid
+// import WindowId from '../debug/WindowId'
 import PropTypes from 'prop-types'
 import './bookStyles.css'
 import '../wormhole/wormhole.css'
 import '../launcher/launcher.css'
 import Wormhole from '../wormhole/Wormhole'
 import Launcher from '../launcher/Launcher'
-// import WindowId from '../debug/WindowId'
 import BookNavbar from "../hamburger_bar/BookNavbar";
+import isEmpty from "validator/es/lib/isEmpty";
 
 class Book extends Component{
 
@@ -31,52 +31,60 @@ class Book extends Component{
 		});
 
 		if(this.props.book.linkedWindowId>=0){
-			chrome.runtime.sendMessage({rq: "urlsForLaunch", winId: this.props.book.linkedWindowId}, this._cbForLaunchResponse);
-			chrome.runtime.sendMessage({rq: "urlsForWormhole", linkedWindowId: this.props.book.linkedWindowId}, this._cbForWormholeResponse);
+			chrome.runtime.sendMessage({rq: "LaunchInfo", winId: this.props.book.linkedWindowId}, this._cbForLaunchResponse);
+			chrome.runtime.sendMessage({rq: "WormholeInfo", linkedWindowId: this.props.book.linkedWindowId}, this._cbForWormholeResponse);
 		}
-		//console.log("Wormhole for book "+this.props.book.title+" is "+this.props.book.WormHole.toString());
-
-		// chrome.runtime.onMessage.addListener(this.handleMessage.bind(this));
-	}
+	};
 
 	_cbForLaunchResponse = (response) => {
-		if(response.urlsForLaunch&&response.urlsForLaunch.length){//if launch urls are not empty
+		if(response.LaunchInfo&&response.LaunchInfo.length){//if launch urls are not empty
 			this.props.updateBook(this.props.book,
 				this.props.book.linkedWindowId,
-				response.urlsForLaunch,
+				response.LaunchInfo,
 				this.props.book.WormHole,
 				false);
-			console.log("book "+this.props.book.title+" updated launch to be "+response.urlsForLaunch);
+			console.log("book "+this.props.book.title+" updated launch to be "+response.LaunchInfo);
 		}
 		else{
 			console.log("book "+this.props.book.title+" received empty for launch");
 		}
-	}
+	};
 
 	_cbForWormholeResponse = (response) => {
 		console.log("WORMHOLE INFO:");
-		console.log(response.WormholeInfo)
-		let worm = [];
-		response.WormholeInfo.forEach(tabInfo => {//parse the information given to us, taking out the tabs specifically for each urlInfo we get
-			worm.push(tabInfo.url);
-		})
-
-		console.log(worm);
-
-		if(!(response.WormholeInfo === undefined || response.WormholeInfo === 0)){//checks if the WormholeInfo is empty, if not then we can update the book using prop method below.
-			this.props.updateBook(this.props.book,this.props.book.linkedWindowId,this.props.book.Launch, worm);
-			console.log("book " + this.props.book.title + " updated wormhole to be " + worm);
+		if(this.isEmpty(response.WormholeInfo)){
+			console.log("no wormhole response");
 		}
 		else{
-			console.log("book " + this.props.book.title + " received empty for wormhole");
+			console.log(response.WormholeInfo);
+			let wormUrl = [];
+			response.WormholeInfo.forEach(tabInfo => {//parse the information given to us, taking out the tabs specifically for each urlInfo we get
+				wormUrl.push(tabInfo.url);
+			});
+			console.log(wormUrl);
+			if(!this.isEmpty(response.WormholeInfo)){//checks if the WormholeInfo is empty, if not then we can update the book using prop method below.
+				this.props.updateBook(this.props.book,this.props.book.linkedWindowId,this.props.book.Launch, wormUrl);
+				console.log("book " + this.props.book.title + " updated wormhole to be " + wormUrl);
+			}
+			else{
+				console.log("book " + this.props.book.title + " received empty for wormhole");
+			}
 		}
+	};
 
+	isEmpty(obj) {//checks if the object parameter obj is empty.
+		for (const prop in obj) {
+			if (obj.hasOwnProperty(prop)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	createHoverMenu() {
 		return (
 			<div className ='hover-menu'>
-				<Launcher book = {this.props.book} updateWindow = {this.props.updateBook} urls = {this.props.book.Launch}/>
+				<Launcher book = {this.props.book} updateBook = {this.props.updateBook} urls = {this.props.book.Launch}/>
 				<div className = 'line'>
 					<p/>
 				</div>
@@ -90,8 +98,6 @@ class Book extends Component{
 		)
 
 	}
-	  
-
 
 	render(){
 

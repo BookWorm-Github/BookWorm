@@ -16,5 +16,6 @@
     <orderEntry type="library" name="@types/firebase-client" level="application" />
     <orderEntry type="library" name="materialize" level="application" />
     <orderEntry type="library" name="@types/chrome" level="application" />
+    <orderEntry type="library" name="@types/react" level="application" />
   </component>
 </module>

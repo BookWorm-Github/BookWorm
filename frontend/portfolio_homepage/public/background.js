@@ -6,7 +6,6 @@
 // import {storeBook} from "../src/firebase/firestore/db_functions";
 // urlsToBeStoredInLaunch=[]; //the urls of the most recently closed window
 // urlTitles = []; //urlTitles[url] stores the title of the webpage with the given url
-let tabs = [];//list of all open urls in the window
 let urls = []; //urls[tabid] returns the url for the tab with ID: tabid
 
 const sessionInfo = function() {
@@ -241,15 +240,15 @@ chrome.runtime.onMessage.addListener(//every time the background script receives
 	});
 
 chrome.tabs.onCreated.addListener(function(tab) {
-	let tabURL;//gives us the correct tab URL whether using url if defined or pendingUrl if not
-	if(tab.url!==undefined) {
-		tabURL = tab.url;
-		urls[tab.id] = tab.url; //update the url of a tab
-	}
-	else{
-		console.log("url for tab is undefined... using tab.pendingUrl");
-		tabURL = tab.pendingUrl
-	}
+	// let tabURL;//gives us the correct tab URL whether using url if defined or pendingUrl if not
+	// if(tab.url!==undefined) {
+	// 	tabURL = tab.url;
+	// 	urls[tab.id] = tab.url; //update the url of a tab
+	// }
+	// else{
+	// 	console.log("url for tab is undefined... using tab.pendingUrl");
+	// 	tabURL = tab.pendingUrl
+	// }
 
 	sessionInfo.storeTab(tab.windowId, tab);
 
@@ -264,26 +263,13 @@ chrome.tabs.onRemoved.addListener(function(tabId, removed) {
 	sessionInfo.removeTab(removed.windowId, tabId);
 });
 
-chrome.windows.onRemoved.addListener(function(windowId) {
-	console.log("window closed");
-	sendToContent(windowId);
-	sessionInfo.removeWindow(windowId);
-});
-
-chrome.windows.onCreated.addListener(function(window) {
-	console.log(window);
-
-	sendToContent(window.id);
-	sessionInfo.storeWindow( window.id, window);
-});
-
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {//when a newtab is created, get info on how many tabs in current opened window
 	//TODO: listener is fired twice: when the page has started loading, and when the page has finished. So we need to check the tab status.
 
 	console.log(changeInfo);
 	sessionInfo.setTab(tab);
 
-	if (changeInfo.url) { //if url in tabid has changed, update the url to the changed url
+	if (changeInfo.url) { //if url in tabId has changed, update the url to the changed url
 		if(tab.url!==undefined)
 		  urls[tabId] = changeInfo.url;
 		if(changeInfo.url===undefined)
@@ -295,6 +281,24 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {//when a ne
 
 chrome.tabs.onActivated.addListener(function(activeInfo) {
 
+});
+
+chrome.tabs.onMoved.addListener((tabId, moveInfo) => {
+	console.log(tabId);
+	console.log("moved in windowId: " + moveInfo.windowId + " from index: " + moveInfo.fromIndex + " to index: " + moveInfo.toIndex);
+});
+
+chrome.windows.onRemoved.addListener(function(windowId) {
+	console.log("window closed");
+	sendToContent(windowId);
+	sessionInfo.removeWindow(windowId);
+});
+
+chrome.windows.onCreated.addListener(function(window) {
+	console.log(window);
+
+	sendToContent(window.id);
+	sessionInfo.storeWindow( window.id, window);
 });
 
 function sendToContent(windowID){//param: window id of the updated content

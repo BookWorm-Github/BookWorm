@@ -10,6 +10,7 @@ let urls = []; //urls[tabid] returns the url for the tab with ID: tabid
 
 const sessionInfo = function() {
 	let browserWindowsOfTabs = {}; //stores all the opened/existing windows in a key value pair key = windowId and value = tabIds for current windowId
+	let launchOrder = {}; //An array that stores the specific order of a window's Launch. launchOrder[windowId] returns an array that contains the tabId of the tabs inside the specified windowId.
 	function init(){//initialize the browserWindowsOfTabs with the currently opened windows of tabs.
 		console.log("initializing dem tabs");
 		chrome.windows.getAll(windows => {
@@ -18,9 +19,11 @@ const sessionInfo = function() {
 					windowInfo: windowInfo,
 					wormHole: []
 				};
+				launchOrder[windowInfo.id] = [];
 				chrome.tabs.query({windowId: windowInfo.id}, tabs => {//the tabs being stored here are going to be used in the Launcher.
 					tabs.map(tabInfo => {
 						browserWindowsOfTabs[windowInfo.id][tabInfo.id] = tabInfo;
+						launchOrder[windowInfo.id][tabInfo.index] = tabInfo.id;
 						updateToWormHole(tabInfo)
 					})
 				})
@@ -36,9 +39,9 @@ const sessionInfo = function() {
 		return browserWindowsOfTabs[windowId][tabId]
 	}
 
-	function isEmpty() {
-		for (let key in browserWindowsOfTabs){
-			if(browserWindowsOfTabs.hasOwnProperty(key)){
+	function isEmpty(obj) {
+		for (let key in obj){
+			if(obj.hasOwnProperty(key)){
 				return false;
 			}
 		}
@@ -54,50 +57,46 @@ const sessionInfo = function() {
 		};
 		if(!browserWindowsOfTabs.hasOwnProperty(windowId)){
 			browserWindowsOfTabs[windowId] = {};
-		}
 
+		}
+		if(!launchOrder.hasOwnProperty(windowId)){
+			launchOrder[windowId] = [];
+		}
 		Object.assign(browserWindowsOfTabs[windowId], newWindowInfo);//to use Object.assign, both the parameters (target and source respectively) need to be objects and not undefined/null...
 	}
 
 	function deleteWindow(windowId){//deletes the window object being stored,  returns true if deleted and false if couldn't be deleted. Note that if the window id doesn't exist in object then deleting will return true
 		let isDelete = delete browserWindowsOfTabs[windowId];
-		if(isDelete){
+		let isLaunchOrderDeleted = delete launchOrder[windowId];
+		if(isDelete && isLaunchOrderDeleted){
 			console.log("deleting window id: " + windowId + " was successful");
 		}
 		else{
 			console.error("something went wrong with deleting WINDOW id " + windowId)
+			console.error("launchOrder: ");
+			console.error(launchOrder);
+			console.error("browserWindowsOfTabs: ");
+			console.error(browserWindowsOfTabs);
 		}
-		return isDelete;
+		return isDelete && isLaunchOrderDeleted;
 	}
 
 	function addTab(windowId, tabInfo){//adds a new tab into the object browserWindowsOfTabs. Should occur when user opens a new tab
 		if(!browserWindowsOfTabs[windowId].hasOwnProperty([tabInfo.id])){//if tabInfo.id is undefined as a key in browserWindowsOfTabs, create empty object for the tab
 			console.log("initializing tabInfo.id in windOfTabs");
 			browserWindowsOfTabs[windowId][tabInfo.id] = {};
+
 		}
+		// if(!launchOrder.hasOwnProperty(windowId)){ //window is created first so we should already have created an instance of the launch.
+		// 	launchOrder[windowId] = [];
+		// }
 		console.log("windowId: " + windowId);
 		console.log("tabInfo: ");
 		console.log(tabInfo);
 		Object.assign(browserWindowsOfTabs[windowId][tabInfo.id], tabInfo); //does the same thing as the commented code below
 
-		// if(!browserWindowsOfTabs.hasOwnProperty(windowId)){//naive way of checking for whether the object has the id property and then using obj literal or assignments as necessary...
-		// 	browserWindowsOfTabs[windowId]= {
-		// 		[tabInfo.id]: {
-		// 			tabInfo: tabInfo
-		// 		}
-		// 	}
-		// }
-		// else{
-		// 	if(!browserWindowsOfTabs[windowId].hasOwnProperty(tabInfo.id)){
-		// 		browserWindowsOfTabs[windowId][tabInfo.id] = {
-		// 			tabInfo: tabInfo
-		// 		}
-		// 	}
-		// 	else{
-		// 		browserWindowsOfTabs[windowId][tabInfo.id][tabInfo] = tabInfo
-		// 	}
-		// }
 
+		launchOrder[windowId][tabInfo.index] = tabInfo.id;
 		updateToWormHole(tabInfo);
 	}
 

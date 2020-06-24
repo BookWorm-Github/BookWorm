@@ -339,6 +339,7 @@ chrome.windows.onCreated.addListener(function(window) {
 	sessionInfo.storeWindow( window.id, window);
 });
 
+//TODO: fix sendToContent
 function sendToContent(windowID){//param: window id of the updated content
 	console.log('sending to content from background script about window '+windowID)
 

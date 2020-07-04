@@ -6,7 +6,7 @@
 // import {storeBook} from "../src/firebase/firestore/db_functions";
 // urlsToBeStoredInLaunch=[]; //the urls of the most recently closed window
 // urlTitles = []; //urlTitles[url] stores the title of the webpage with the given url
-let urls = []; //urls[tabid] returns the url for the tab with ID: tabid
+// let urls = []; //urls[tabid] returns the url for the tab with ID: tabid
 
 const sessionInfo = function() {
 	let browserWindowsOfTabs = {}; //stores all the opened/existing windows in a key value pair key = windowId and value = tabIds for current windowId
@@ -24,7 +24,7 @@ const sessionInfo = function() {
 					tabs.map(tabInfo => {
 						browserWindowsOfTabs[windowInfo.id][tabInfo.id] = tabInfo;
 						launchOrder[windowInfo.id][tabInfo.index] = tabInfo.id;
-						updateToWormHole(tabInfo)
+						updateToWormHole(tabInfo);
 					})
 				})
 			})
@@ -49,11 +49,11 @@ const sessionInfo = function() {
 	}
 
 	function addWindow(windowId, windowInfo){//adds new window into the object browserWindowsOfTabs. Occurs when user opens a new window,
-		//TODO: Should only be called on linked windows after MVP is set up.
 		console.log("windowInfo is ");
 		console.log(windowInfo);
 		const newWindowInfo = {
-			windowInfo: windowInfo
+			windowInfo: windowInfo,
+			wormHole: []
 		};
 		if(!browserWindowsOfTabs.hasOwnProperty(windowId)){
 			browserWindowsOfTabs[windowId] = {};
@@ -268,12 +268,12 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {//when a ne
 	console.log(changeInfo);
 	sessionInfo.setTab(tab);
 
-	if (changeInfo.url) { //if url in tabId has changed, update the url to the changed url
-		if(tab.url!==undefined)
-		  urls[tabId] = changeInfo.url;
-		if(changeInfo.url===undefined)
-		  alert("Undefined url in background")
-	}
+	// if (changeInfo.url) { //if url in tabId has changed, update the url to the changed url
+	// 	if(tab.url!==undefined)
+	// 	  urls[tabId] = changeInfo.url;
+	// 	if(changeInfo.url===undefined)
+	// 	  alert("Undefined url in background")
+	// }
 
     sendToContent(tab.windowId);
 });

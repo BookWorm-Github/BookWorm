@@ -3,6 +3,7 @@
 //TODO: OPTIMIZATION, SHOULD STORE EVERYTHING USING CHROME.STORAGE AND PUT BACKGROUND SCRIPT TO PERSISTENT == FALSE... LOOK BELOW
 //https://levelup.gitconnected.com/how-to-use-background-script-to-fetch-data-in-chrome-extension-ef9d7f69625d
 
+
 // import {storeBook} from "../src/firebase/firestore/db_functions";
 // urlsToBeStoredInLaunch=[]; //the urls of the most recently closed window
 // urlTitles = []; //urlTitles[url] stores the title of the webpage with the given url
@@ -30,6 +31,16 @@ const sessionInfo = function() {
 			})
 		})
 	}
+
+	function updateLaunchOrder(windowId) {
+		chrome.tabs.query({windowId: windowId}, tabs => {//the tabs being stored here are going to be used in the Launcher.
+			tabs.map(tabInfo => {
+				browserWindowsOfTabs[windowId][tabInfo.id] = tabInfo;
+				launchOrder[windowId][tabInfo.index] = tabInfo.id;
+			})
+		})
+	}
+
 
 	function getWindowInfo(windowId) {//returns an object of tab ids including windowInfo and the wormhole under the windowId.
 		return browserWindowsOfTabs[windowId]
@@ -101,14 +112,18 @@ const sessionInfo = function() {
 	}
 
 	function deleteTab(windowId, tabId){//deletes the tab object being stored,  returns true if deleted and false if couldn't be deleted. Note that if the tab id doesn't exist in object then deleting will return true
+
+		const removedTabIndex = launchOrder[windowId].indexOf(tabId);
 		let isDelete = delete browserWindowsOfTabs[windowId][tabId];
-		if(isDelete){
+		let isDeleteLO = launchOrder[windowId].splice(removedTabIndex,1)
+		if(isDelete && isDeleteLO){
 			console.log("deleting tab id: " + tabId + " was successful");
 		}
 		else{
 			console.error("something went wrong with deleting TAB id " + tabId);
 		}
 		return isDelete;
+		return isDeleteLO;
 	}
 
 	function updateTab(tabInfo){
@@ -169,8 +184,10 @@ const sessionInfo = function() {
 		removeTab: deleteTab,
 		removeWindow: deleteWindow,
 		setTab: updateTab,
-		browserWindowsOfTabs: browserWindowsOfTabs
-	}
+		updateLaunchOrder: updateLaunchOrder,
+		browserWindowsOfTabs: browserWindowsOfTabs,
+		launchOrder: launchOrder
+	};
 }();
 
 
@@ -187,19 +204,25 @@ chrome.runtime.onMessage.addListener(//every time the background script receives
 			// 	sessionInfo.browserWindowsOfTabs[sender.tab.windowId].linkedBook = msg.linkedBookId;//TODO: create the message for this case and specify the message to have linkedBookId
 			// 	break;
 		    case ("LaunchInfo"):
-			    const launchUrl = [];
-			    function sendBackLaunch(retTabs){
+				const launchUrl = [];
+
+				/*
+				function sendBackLaunch(retTabs){
 		            retTabs.forEach(function(tab){
 		              if(!launchUrl.includes(tab.url)&&tab.url!==undefined&&!tab.url.includes('chrome://newtab'))
 		              {
-		                  launchUrl.push(tab.url);
+		                  launchOrder.push(tab.url);
 		              }
 		            });
 		            // console.log("Launch urls for windowID "+msg.winId+" are "+launchurls.toString());
-		          sendResponse({ID: "LaunchInfo", LaunchInfo: launchUrl});
+		          sendResponse({ID: "LaunchInfo", LaunchInfo: launchOrder});
 			    }
 			    chrome.tabs.query({windowId: msg.winId},sendBackLaunch);
-			    break;
+				break;
+				*/
+
+				sendResponse({ID: "LaunchInfo", LaunchInfo: sessionInfo.launchOrder});
+
 
 			case ("WormholeInfo"): //should be called when the content script is linking to currently active window.
 		    	console.log("sending message of wormhole from windowId: " + msg.linkedWindowId);
@@ -239,6 +262,8 @@ chrome.runtime.onMessage.addListener(//every time the background script receives
 	});
 
 chrome.tabs.onCreated.addListener(function(tab) {
+
+
 	// let tabURL;//gives us the correct tab URL whether using url if defined or pendingUrl if not
 	// if(tab.url!==undefined) {
 	// 	tabURL = tab.url;
@@ -247,8 +272,7 @@ chrome.tabs.onCreated.addListener(function(tab) {
 	// else{
 	// 	console.log("url for tab is undefined... using tab.pendingUrl");
 	// 	tabURL = tab.pendingUrl
-	// }
-
+	//}
 	sessionInfo.storeTab(tab.windowId, tab);
 
 
@@ -256,10 +280,22 @@ chrome.tabs.onCreated.addListener(function(tab) {
 	// window.contentPort.postMessage({openTabs:tabs});
 });
 
+chrome.tabs.onAttached.addListener(function(tabId,attachInfo) {
+	chrome.tabs.get(tabId, tab => sessionInfo.storeTab(attachInfo.newWindowId,tab));
+	sendToContent(attachInfo.newWindowId);
+});
+
+
 chrome.tabs.onRemoved.addListener(function(tabId, removed) {
-	console.log(removed.windowId+" is the removed window id");
+	console.log(tabId+" is the removed tab id");
 	sendToContent(removed.windowId);
 	sessionInfo.removeTab(removed.windowId, tabId);
+});
+
+chrome.tabs.onDetached.addListener(function(tabId, detachInfo) {
+	console.log(tabId+" from "+ detachInfo.oldWindowID+ " is the removed tab id");
+	sendToContent(detachInfo.oldWindowId);
+	sessionInfo.removeTab(detachInfo.oldWindowId, tabId);
 });
 
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {//when a newtab is created, get info on how many tabs in current opened window
@@ -285,6 +321,7 @@ chrome.tabs.onActivated.addListener(function(activeInfo) {
 chrome.tabs.onMoved.addListener((tabId, moveInfo) => {
 	console.log(tabId);
 	console.log("moved in windowId: " + moveInfo.windowId + " from index: " + moveInfo.fromIndex + " to index: " + moveInfo.toIndex);
+	sessionInfo.updateLaunchOrder(moveInfo.windowId);
 });
 
 chrome.windows.onRemoved.addListener(function(windowId) {
@@ -300,6 +337,7 @@ chrome.windows.onCreated.addListener(function(window) {
 	sessionInfo.storeWindow( window.id, window);
 });
 
+//TODO: fix sendToContent
 function sendToContent(windowID){//param: window id of the updated content
 	console.log('sending to content from background script about window '+windowID)
 

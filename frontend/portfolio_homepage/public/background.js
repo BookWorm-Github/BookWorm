@@ -2,13 +2,6 @@
 //TODO: LEARN TO USE PORT RATHER THAN USING OUR ONE TIME MESSAGING SYSTEM FOR OPTIMIZATION
 //TODO: OPTIMIZATION, SHOULD STORE EVERYTHING USING CHROME.STORAGE AND PUT BACKGROUND SCRIPT TO PERSISTENT == FALSE... LOOK BELOW
 //https://levelup.gitconnected.com/how-to-use-background-script-to-fetch-data-in-chrome-extension-ef9d7f69625d
-
-
-// import {storeBook} from "../src/firebase/firestore/db_functions";
-// urlsToBeStoredInLaunch=[]; //the urls of the most recently closed window
-// urlTitles = []; //urlTitles[url] stores the title of the webpage with the given url
-// let urls = []; //urls[tabid] returns the url for the tab with ID: tabid
-
 const sessionInfo = function() {
 	let browserWindowsOfTabs = {}; //stores all the opened/existing windows in a key value pair key = windowId and value = tabIds for current windowId
 	let launchOrder = {}; //An array that stores the specific order of a window's Launch. launchOrder[windowId] returns an array that contains the tabId of the tabs inside the specified windowId.
@@ -40,7 +33,6 @@ const sessionInfo = function() {
 			})
 		})
 	}
-
 
 	function getWindowInfo(windowId) {//returns an object of tab ids including windowInfo and the wormhole under the windowId.
 		return browserWindowsOfTabs[windowId]
@@ -204,25 +196,8 @@ chrome.runtime.onMessage.addListener(//every time the background script receives
 			// 	sessionInfo.browserWindowsOfTabs[sender.tab.windowId].linkedBook = msg.linkedBookId;//TODO: create the message for this case and specify the message to have linkedBookId
 			// 	break;
 		    case ("LaunchInfo"):
-				const launchUrl = [];
-
-				/*
-				function sendBackLaunch(retTabs){
-		            retTabs.forEach(function(tab){
-		              if(!launchUrl.includes(tab.url)&&tab.url!==undefined&&!tab.url.includes('chrome://newtab'))
-		              {
-		                  launchOrder.push(tab.url);
-		              }
-		            });
-		            // console.log("Launch urls for windowID "+msg.winId+" are "+launchurls.toString());
-		          sendResponse({ID: "LaunchInfo", LaunchInfo: launchOrder});
-			    }
-			    chrome.tabs.query({windowId: msg.winId},sendBackLaunch);
-				break;
-				*/
-
 				sendResponse({ID: "LaunchInfo", LaunchInfo: sessionInfo.launchOrder});
-
+				break;
 
 			case ("WormholeInfo"): //should be called when the content script is linking to currently active window.
 		    	console.log("sending message of wormhole from windowId: " + msg.linkedWindowId);
@@ -262,22 +237,8 @@ chrome.runtime.onMessage.addListener(//every time the background script receives
 	});
 
 chrome.tabs.onCreated.addListener(function(tab) {
-
-
-	// let tabURL;//gives us the correct tab URL whether using url if defined or pendingUrl if not
-	// if(tab.url!==undefined) {
-	// 	tabURL = tab.url;
-	// 	urls[tab.id] = tab.url; //update the url of a tab
-	// }
-	// else{
-	// 	console.log("url for tab is undefined... using tab.pendingUrl");
-	// 	tabURL = tab.pendingUrl
-	//}
 	sessionInfo.storeTab(tab.windowId, tab);
-
-
 	sendToContent(tab.windowId);
-	// window.contentPort.postMessage({openTabs:tabs});
 });
 
 chrome.tabs.onAttached.addListener(function(tabId,attachInfo) {
@@ -299,18 +260,9 @@ chrome.tabs.onDetached.addListener(function(tabId, detachInfo) {
 });
 
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {//when a newtab is created, get info on how many tabs in current opened window
-	//TODO: listener is fired twice: when the page has started loading, and when the page has finished. So we need to check the tab status.
-
+	//NOTE: listener is fired twice: when the page has started loading, and when the page has finished. So we need to check the tab status.
 	console.log(changeInfo);
 	sessionInfo.setTab(tab);
-
-	// if (changeInfo.url) { //if url in tabId has changed, update the url to the changed url
-	// 	if(tab.url!==undefined)
-	// 	  urls[tabId] = changeInfo.url;
-	// 	if(changeInfo.url===undefined)
-	// 	  alert("Undefined url in background")
-	// }
-
     sendToContent(tab.windowId);
 });
 
@@ -340,7 +292,6 @@ chrome.windows.onCreated.addListener(function(window) {
 //TODO: fix sendToContent
 function sendToContent(windowID){//param: window id of the updated content
 	console.log('sending to content from background script about window '+windowID)
-
 	let windowInfo = sessionInfo.queryWindowInfo(windowID);
 }
 

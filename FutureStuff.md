@@ -80,6 +80,8 @@ Rants/Food for thought:
 
 - **Automatic tab organizer, using AI and NLP? to match the relevant tabs in a session based on their similarity. Group them together and suggest groupings based on key words and tags
 
+- Temporary tabs - line in the open tabs, any tab after the line can be "cleaned" from launch 
+
 - See Grammarly functionalities. BUT if under quotation, don't highlight the errors/grammar mistakes.
    - - Highlighting automatically defines word? Like grammarly
 

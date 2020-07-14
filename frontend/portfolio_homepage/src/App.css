@@ -29,7 +29,9 @@
   color: #61dafb;
 }
 
-body {background-color: white;}
+body{
+    background-color: #22223B;
+}
 
 @keyframes App-logo-spin {
   from {

@@ -1,4 +1,3 @@
- // /*global chrome*/
 import React, { Component } from 'react';
 import './App.css';
 import User from "./Authentication/User";

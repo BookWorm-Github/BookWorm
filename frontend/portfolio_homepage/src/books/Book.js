@@ -116,11 +116,9 @@ class Book extends Component{
 					onMouseEnter = {()=>this.setState({isHovered:true})}
 					onMouseLeave = {()=>this.setState({isHovered:false})}>
 					{
-
 						this.state.isHovered?
 							hoverMenu
 						:
-
 						<div className = 'bk_title' ><h1 className = 'booktitle'>{this.state.title}</h1></div>
 					}
 
@@ -129,7 +127,7 @@ class Book extends Component{
 					{
 						this.props.isShowingWormhole===this.props.book.key?
 						<div>
-							
+
 							<Wormhole book = {this.props.book} toggleWormhole = {this.props.toggleWormhole}/>
 						</div> : <div/>
 					}

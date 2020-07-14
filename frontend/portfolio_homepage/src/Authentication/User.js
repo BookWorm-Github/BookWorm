@@ -4,7 +4,7 @@ import BookAppMain from "../books/BookAppMain";
 import {Router} from "react-chrome-extension-router";
 import SignIn from "./SignIn";
 import { populatePortfolioHomepage} from "../firebase/firestore/db_functions";
-import './User.css'
+import Desktop from "../Desktop/Desktop";
 
 class User extends Component {
 	constructor(props) {
@@ -59,9 +59,10 @@ class User extends Component {
 						)}}>
 						<p className ="topbutton">Sign Out</p>
 					</button>
-					
-					<BookAppMain user={this.state.user} books={this.state.books}/>
-					
+
+					<Desktop/>
+					{/*<BookAppMain user={this.state.user} books={this.state.books}/>*/}
+
 				</div>
 				:
 				<Router>

@@ -98,6 +98,7 @@ Unlooked benefits of a portfolio homepage:
 
 - Integration with other services
 
+- "Super Search" - the abilty to search in webpages and not just thorugh titles 
 
 ### Implementation Details:
 

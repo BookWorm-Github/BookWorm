@@ -6,6 +6,7 @@ import './bookStyles.css'
 import SortBooks from '../sortItems/SortBooks'
 import Hotkeys from 'react-hot-keys';
 import {deleteBook, deLinkBookfromWindow, storeBook, updateBookLW} from "../firebase/firestore/db_functions";
+import header from  '../Images/Header.png';
 // import { bw_auth, generateUserDocument } from "../firebase/init.js";
 //added hotkeys: https://github.com/jaywcjlove/react-hotkeys#readme
 
@@ -19,7 +20,9 @@ class BookAppMain extends Component {
 			linkedBook: "", //the current book that is linked to the window
 			urlsForLaunch:[],
 			urlsForWormhole:[],
-			curWinID: -2 //negative random number to denote impossible winID
+			curWinID: -2, //negative random number to denote impossible winID
+			searchResults: []
+		
 		};
 	}
 
@@ -33,7 +36,8 @@ class BookAppMain extends Component {
 
 	componentDidMount = () => {//updating the user's personal books
 		this.setState({
-			bookshelf: this.props.books
+			bookshelf: this.props.books,
+			searchResults: this.props.books
 		});
 		chrome.runtime.sendMessage({rq: "getCurrWindowId"}, this.setCurWindow);
 		// chrome.runtime.onMessage.addListener(this.handleMessage.bind(this));
@@ -184,6 +188,36 @@ class BookAppMain extends Component {
 		});
 	};
 
+
+	
+filterBooks = (searchTerm) =>{
+	// Variable to hold the original version of the list
+	let currentList = [];
+	// Variable to hold the filtered list before putting into state
+	let newList = [];
+	
+	// If the search bar isn't empty
+	if (searchTerm !== "") {
+		// Assign the original list to currentList
+		currentList = this.state.bookshelf;
+		// Use .filter() to determine which items should be displayed
+		// based on the search terms
+		newList = currentList.filter(item => {
+			// change current item to lowercase and searh only the part before the regex
+			const filter = searchTerm;
+			return item.title.includes(filter) 	
+		});
+	} else {
+		// If the search bar is empty, set newList to original task list: do we want this effect?
+		newList = this.state.bookshelf
+	}
+	//console.log("filtered List in book "+this.props.book.title+" wormhole is "+newList);
+	// Set the filtered state based on what our rules added to newList
+	this.setState({
+		searchResults: newList
+	});
+}
+
 	render(){
 
 		return (
@@ -191,20 +225,20 @@ class BookAppMain extends Component {
 				{/*Hotkey for dev only, when lots of experimental books are added. take away from final product.*/}
 				<Hotkeys keyName = "shift+a" onKeyUp = {this.toggleAddBook}/>
 				{/*<button onClick = {this.getURLS}>Get Open Windows</button>*/}
-				<div className = 'main-container-center'>
-
-			        <div id = 'blurrable' className = 'book-shelf'>
+				<div id= 'header'>
+						<img src ={header} alt = "header" id = "headerlogo" />x	
+				</div>
+					
+						<div className = {this.state.addingBook?'blur-bg':'clear-bg'}>
+						    <BookShelf curWinID={this.state.curWinID} bks = {this.state.bookshelf} results = {this.state.searchResults} updateBook = {this.updateBook} deleteBook = {this.deleteBook} delinkBook={this.delinkBook} toggleAddBook={this.toggleAddBook} filterBooks={this.filterBooks} />
+						</div>
 						<ul id = 'topLine'>
 							<SortBooks books = {this.state.bookshelf} setBooks = {this.setBooks} isBlurred = {this.state.addingBook}/>
 							<span className = 'add-btn-container'>
-								<h6 id = 'add'>Add book: </h6>
 								<button className = 'add-bk-btn' onClick={this.toggleAddBook}><h1 className='Plus'>+</h1></button>
 							</span>
 						</ul>
-						<div className = {this.state.addingBook?'blur-bg':'clear-bg'}>
-						    <BookShelf curWinID={this.state.curWinID} bks = {this.state.bookshelf} updateBook = {this.updateBook} deleteBook = {this.deleteBook} delinkBook={this.delinkBook}/>
-						</div>
-			        </div>
+			      
 					{this.state.addingBook?
 						<div>
 							<AddBookUI
@@ -218,7 +252,8 @@ class BookAppMain extends Component {
 						:
 						<div/>
 					}
-				</div>
+
+					<book />
 			</div>
 		);
 	}

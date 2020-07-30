@@ -1,7 +1,9 @@
 import React, {Component} from 'react'
 import Grid from '@material-ui/core/Grid';
-import Book from './Book'
-import PropTypes from 'prop-types'
+import Book from './Book';
+import PropTypes from 'prop-types';
+import Search from '../Images/search.png';
+import hamburger from '../Images/filter.png';
 import './bookStyles.css'
 import WindowResizer from '../WindowResizer/WindowResizer'
 // import BookNavbar from '../hamburger_bar/BookNavbar';
@@ -12,47 +14,11 @@ class BookShelf extends Component {
 		super(props);
 		this.state = {
 			isShowingWormhole:-1, //isShowingWormhole is the ID of the book from which the wormhole is toggled
-      		searchResults:[],
-			numBksPerShelf:4,
-			spaceBtwnBooks: 9,
+			  titles:[]
 		};
 	}
-	componentDidMount(){
-		this.setState(
-		{
-			spaceBtwnBooks: 10
-		}
-		)
-	}
+	
 
-	create2DArrayOfBooks(bookList){
-		const numShelves = Math.ceil(bookList.length/this.state.numBksPerShelf);
-			if(numShelves>=0){
-				const shelfOfBooks = new Array(numShelves);
-				for (let k = 0; k < numShelves; k++) {
-					shelfOfBooks[k] = new Array(this.state.numBksPerShelf);
-				}
-
-				// Loop to initialize 2D array elements (books).
-				// let debugString = "";
-				for (let i = 0; i < numShelves; i++) {
-					for (let j = 0; j < this.state.numBksPerShelf; j++) {
-					    const n = i * this.state.numBksPerShelf + j;
-					    if(n<bookList.length){
-					      shelfOfBooks[i][j] = bookList[n];
-					    }
-					    else{
-					      shelfOfBooks[i][j] = null;
-					    }
-					    // debugString+=("Shelf ("+i+","+j+") is "+shelfOfBooks[i][j]+"\n");
-					}
-				}
-				// //console.log("DEBUG SHELF PARSE of bookList len: "+bookList.length+": "+debugString);
-				// this.printShelf(shelfOfBooks);
-				return shelfOfBooks;
-			}
-			else return [];
-	}
 
 	createBook =(_book,_index) => {
 
@@ -69,49 +35,102 @@ class BookShelf extends Component {
 				</Grid>
 	};
 
-	createShelf =(_bookshelf,_index) => {
-		return (
-			<Grid key = {_index} container spacing={this.state.spaceBtwnBooks}>
-				{_bookshelf.map(this.createBook)}
-			</Grid>
-		)
-	};
-
-	separateBooksIntoShelves = (shelfOfBooks,numBooks) =>{
-		return <div>{shelfOfBooks.map(this.createShelf)}</div>
-	};
 
 	deleteBook = (_book) =>{
 		//console.log(_book.title+" Key is "+_book.key);
 		this.props.deleteBook(_book)
 	};
 
-	render(){
-		const bookList = this.props.bks;//array of all books
+	filterBooks = (e) =>{
 
-		const shelfOfBooks = this.create2DArrayOfBooks(bookList);
+		var searchTerm = e.target.value;
+		this.props.filterBooks(searchTerm);
+		e.preventDefault();
+	};
+
+	render(){
+	
 		// this.printBkList(bookList);
 		// var books = bookList.map(this.createBook);
-		const books = this.separateBooksIntoShelves(shelfOfBooks, bookList.length);
+		//const books = this.separateBooksIntoShelves(shelfOfBooks, bookList.length);
 		// var books = this.divideBooksIntoRows(bookList,bookList.length);
-
-
 		return (
 			<div>
-				<WindowResizer setNumBksPerShelf = {this.setNumBooksPerShelf} />
+				<div className='mybooks'>
+					<h1 id='bkshlf-h1'>My books</h1>
+				<form id="searchTerm" >
+					
+        		    <input className="search" type="text" onChange={this.filterBooks} placeholder="Search" />
+					<img src = {Search} alt="search icon" height="20" width="20" className="searchicon"/>
+					<input type='image' src={hamburger} alt="filter button" height="30px" width="30px" id = "hamburger"/>
+					
+          		</form>
+				
 			    <div className='book-shelf'>
-			        {books}
+					<div className='scrolled'>
+					<ul>
+					{this.props.results.map((bookListItem) => <li>{bookListItem.title} </li>)}
+					</ul>
+					</div>
+					<br></br>
+					<br></br>
+					<button className = 'add-bk-btn' onClick={this.props.toggleAddBook}><h1 className='Plus'>+</h1></button>
 			    </div>
+				</div>
 		    </div>
 
 		);
 	}
 
-	setNumBooksPerShelf = (num) =>{
-		this.setState({
-			numBksPerShelf:num
-		});
-	};
+	filterBooks2 = (e) => {
+		let newBookList = [];
+		let oldBookList = [];
+		oldBookList = this.props.bks.titles;	
+		var searchTerm = e.target.value;
+		console.log("searchTerm: " + {searchTerm});
+		newBookList = oldBookList.filter(item => {
+			const lc = item.toLowerCase();
+			return lc.includes(searchTerm)});
+		console.log("newBookList: " + {newBookList});
+	}
+
+
+
+
+	/*filterBooks = (e) =>{
+		//function borrrowed from wormhole.js, see wormhole.js for more information
+		//Variable to hold the original version of the list
+    let currentList = [];
+	// Variable to hold the filtered list before putting into state
+	let newList = [];
+
+    // If the search bar isn't empty
+    if (e.target.value !== "") {
+      // Assign the original list to currentList
+      currentList = this.props.bks.titles;
+      console.log("currentList: " + {currentList});
+      // Use .filter() to determine which items should be displayed
+      // based on the search terms
+      newList = currentList.filter(item => {
+        // change current item to lowercase, took out searh only the part before the regex
+        const lc = item.toLowerCase();
+        // change search term to lowercase
+        const filter = e.target.value.toLowerCase();
+        // check to see if the current list item includes the search term
+        // If it does, it will be added to newList. Using lowercase eliminates
+        // issues with capitalization in search terms and search content
+        return lc.includes(filter);
+      });
+    } else {
+      // If the search bar is empty, set newList to original task list: do we want this effect?
+      newList = currentList
+    }
+    //TODO: Add console message
+	
+	return newList;
+  }*/
+  
+
 
 
 	//print methods for debug

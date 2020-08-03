@@ -22,7 +22,6 @@ class BookAppMain extends Component {
 			urlsForWormhole:[],
 			curWinID: -2, //negative random number to denote impossible winID
 			searchResults: []
-		
 		};
 	}
 
@@ -123,7 +122,7 @@ class BookAppMain extends Component {
 				window.close();
 			}
 		});
-		
+
 
 	};
 
@@ -189,71 +188,67 @@ class BookAppMain extends Component {
 	};
 
 
-	
-filterBooks = (searchTerm) =>{
-	// Variable to hold the original version of the list
-	let currentList = [];
-	// Variable to hold the filtered list before putting into state
-	let newList = [];
-	
-	// If the search bar isn't empty
-	if (searchTerm !== "") {
-		// Assign the original list to currentList
-		currentList = this.state.bookshelf;
-		// Use .filter() to determine which items should be displayed
-		// based on the search terms
-		newList = currentList.filter(item => {
-			// change current item to lowercase and searh only the part before the regex
-			const filter = searchTerm;
-			return item.title.includes(filter) 	
+
+	filterBooks = (searchTerm) =>{
+		// Variable to hold the original version of the list
+		let currentList = [];
+		// Variable to hold the filtered list before putting into state
+		let newList = [];
+
+		// If the search bar isn't empty
+		if (searchTerm !== "") {
+			// Assign the original list to currentList
+			currentList = this.state.bookshelf;
+			// Use .filter() to determine which items should be displayed
+			// based on the search terms
+			newList = currentList.filter(item => {
+				// change current item to lowercase and searh only the part before the regex
+				const filter = searchTerm;
+				return item.title.includes(filter)
+			});
+		} else {
+			// If the search bar is empty, set newList to original task list: do we want this effect?
+			newList = this.state.bookshelf
+		}
+		//console.log("filtered List in book "+this.props.book.title+" wormhole is "+newList);
+		// Set the filtered state based on what our rules added to newList
+		this.setState({
+			searchResults: newList
 		});
-	} else {
-		// If the search bar is empty, set newList to original task list: do we want this effect?
-		newList = this.state.bookshelf
 	}
-	//console.log("filtered List in book "+this.props.book.title+" wormhole is "+newList);
-	// Set the filtered state based on what our rules added to newList
-	this.setState({
-		searchResults: newList
-	});
-}
 
 	render(){
-
 		return (
 			<div>
 				{/*Hotkey for dev only, when lots of experimental books are added. take away from final product.*/}
 				<Hotkeys keyName = "shift+a" onKeyUp = {this.toggleAddBook}/>
 				{/*<button onClick = {this.getURLS}>Get Open Windows</button>*/}
 				<div id= 'header'>
-						<img src ={header} alt = "header" id = "headerlogo" />x	
+						<img src ={header} alt = "header" id = "headerlogo" />x
 				</div>
-					
-						<div className = {this.state.addingBook?'blur-bg':'clear-bg'}>
-						    <BookShelf curWinID={this.state.curWinID} bks = {this.state.bookshelf} results = {this.state.searchResults} updateBook = {this.updateBook} deleteBook = {this.deleteBook} delinkBook={this.delinkBook} toggleAddBook={this.toggleAddBook} filterBooks={this.filterBooks} />
-						</div>
-						<ul id = 'topLine'>
-							<SortBooks books = {this.state.bookshelf} setBooks = {this.setBooks} isBlurred = {this.state.addingBook}/>
-							<span className = 'add-btn-container'>
-								<button className = 'add-bk-btn' onClick={this.toggleAddBook}><h1 className='Plus'>+</h1></button>
-							</span>
-						</ul>
-			      
-					{this.state.addingBook?
-						<div>
-							<AddBookUI
-								addBook = {this.addBook}
-								closePopup={this.toggleAddBook}
-								bks = {this.state.bookshelf}
-								urlsForLaunch={this.state.urlsForLaunch}
-								urlsForWormhole={this.state.urlsForWormhole}
-							/>
-						</div>
-						:
-						<div/>
-					}
-
-					<book />
+				<div className = {this.state.addingBook?'blur-bg':'clear-bg'}>
+				    <BookShelf curWinID={this.state.curWinID} bks = {this.state.bookshelf} results = {this.state.searchResults} updateBook = {this.updateBook} deleteBook = {this.deleteBook} delinkBook={this.delinkBook} toggleAddBook={this.toggleAddBook} filterBooks={this.filterBooks} />
+				</div>
+				<ul id = 'topLine'>
+					<SortBooks books = {this.state.bookshelf} setBooks = {this.setBooks} isBlurred = {this.state.addingBook}/>
+					<span className = 'add-btn-container'>
+						<button className = 'add-bk-btn' onClick={this.toggleAddBook}><h1 className='Plus'>+</h1></button>
+					</span>
+				</ul>
+				{this.state.addingBook?
+					<div>
+						<AddBookUI
+							addBook = {this.addBook}
+							closePopup={this.toggleAddBook}
+							bks = {this.state.bookshelf}
+							urlsForLaunch={this.state.urlsForLaunch}
+							urlsForWormhole={this.state.urlsForWormhole}
+						/>
+					</div>
+					:
+					<div/>
+				}
+				<book/>
 			</div>
 		);
 	}

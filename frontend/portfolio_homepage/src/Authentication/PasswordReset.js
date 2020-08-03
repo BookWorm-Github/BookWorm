@@ -3,7 +3,7 @@ import {bw_auth} from "../firebase/init.js";
 import SignIn from "./SignIn";
 import {Link} from "react-chrome-extension-router";
 
-class PasswordReset extends Component{
+class PasswordReset extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -68,7 +68,7 @@ class PasswordReset extends Component{
 	}
 
 	onChangeHandler = event => {
-		const { name, value } = event.currentTarget;
+		const {name, value} = event.currentTarget;
 
 		if (name === "userEmail") {
 			this.setState({
@@ -84,10 +84,11 @@ class PasswordReset extends Component{
 				this.setState({
 					emailHasBeenSent: true
 				});
-		setTimeout(() => {
-			this.setState({
-				emailHasBeenSent: false
-			})}, 3000);
+				setTimeout(() => {
+					this.setState({
+						emailHasBeenSent: false
+					})
+				}, 3000);
 			})
 			.catch(() => {
 				this.setState({

@@ -15,7 +15,7 @@
 //         //console.log("content got that Message was null")
 //       }
 // });
-  //put the creation of url-list here
+//put the creation of url-list here
 
 //adds button
 // var button = document.createElement("button");
@@ -41,7 +41,7 @@
 
 //creates div for url-list
 const div = document.createElement('div');
-div.setAttribute("style","height: 50%");
+div.setAttribute("style", "height: 50%");
 div.setAttribute("id", "url-list");
 
 document.body.appendChild(div);
@@ -67,7 +67,7 @@ document.body.appendChild(div);
 
 //   });
 
-function createListOfURLs (openTabs){
+function createListOfURLs(openTabs) {
 	let ul;
 	if (document.getElementById('url-list')) {
 
@@ -101,7 +101,7 @@ function createListOfURLs (openTabs){
 	} else {
 		//console.log("ERROR: URL-list does not exist");
 	}
-    // //console.log("Content got response from background now: "+response.farewell[1])
-  }
+	// //console.log("Content got response from background now: "+response.farewell[1])
+}
 
 

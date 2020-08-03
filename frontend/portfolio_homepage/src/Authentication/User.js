@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import { bw_auth, generateUserDocument } from "../firebase/init.js";
+import React, {Component} from "react";
+import {bw_auth, generateUserDocument} from "../firebase/init.js";
 import BookAppMain from "../books/BookAppMain";
 import {Router} from "react-chrome-extension-router";
 import SignIn from "./SignIn";
-import { populatePortfolioHomepage} from "../firebase/firestore/db_functions";
+import {populatePortfolioHomepage} from "../firebase/firestore/db_functions";
 import './User.css'
 
 class User extends Component {
@@ -17,7 +17,7 @@ class User extends Component {
 
 	componentDidMount = async () => {
 		await bw_auth.onAuthStateChanged(async user => {
-			if(user) {//if it exists, grab user bookData from the database into app
+			if (user) {//if it exists, grab user bookData from the database into app
 				// //console.log(userAuth.providerData)
 				// //console.log(userAuth.providerId)
 
@@ -45,7 +45,7 @@ class User extends Component {
 		return (
 			this.state.user ?
 				<div className="users_portfolio_homepage">
-					<button className = 'signoutbutton'  onClick = {() => {
+					<button className='signoutbutton' onClick={() => {
 						bw_auth.signOut().then(() => {
 								//console.log("Logged out successful")
 								this.setState({
@@ -56,16 +56,17 @@ class User extends Component {
 								//console.log("log out unsuccessful")
 								//console.log(onRejected)
 							}
-						)}}>
-						<p className ="topbutton">Sign Out</p>
+						)
+					}}>
+						<p className="topbutton">Sign Out</p>
 					</button>
-					
+
 					<BookAppMain user={this.state.user} books={this.state.books}/>
-					
+
 				</div>
 				:
 				<Router>
-					<SignIn />
+					<SignIn/>
 				</Router>
 
 		);

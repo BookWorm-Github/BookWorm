@@ -1,36 +1,34 @@
 
-
-
-#inputtitle{
-  height: 30px;
-  font-size: large;
-  font-weight: bold;
+#inputtitle {
+    height: 30px;
+    font-size: large;
+    font-weight: bold;
 }
 
 .popup {
-  position: fixed;  
-  width: 60%;  
-  height: 60%;  
-  border-radius: 15px;
-  top: 0;  
-  left: 0;  
-  right: 0;  
-  bottom: 0;  
-  margin: auto;  
-  border-color: #000000;
-  background-color: #ffffff;
+    position: fixed;
+    width: 60%;
+    height: 60%;
+    border-radius: 15px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    border-color: #000000;
+    background-color: #ffffff;
 }
-
 
 
 .popup .add_book_page form {
-  display: flex;
-  /*border: solid red;*//*For debug*/
+    display: flex;
+    /*border: solid red;*//*For debug*/
 
-  align-items: center;
-  flex-direction: column;
+    align-items: center;
+    flex-direction: column;
 
 }
+
 /*.popup .add_book_page form button{
   background: #ffffff;
   border: 3px solid black;
@@ -39,30 +37,31 @@
 } */
 .popup .add_book_page input {
 
-  width: 80%;
-  height: 100%;
-  padding: 12px 10px;
-  margin: 8px 0;
-  box-sizing: border-box;
-  border: 6px solid black;
-  border-radius: 10px;
-  font-size:24px;
-}  
+    width: 80%;
+    height: 100%;
+    padding: 12px 10px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 6px solid black;
+    border-radius: 10px;
+    font-size: 24px;
+}
+
 /*for future if want to style box input*/
 .popup .add_book_page input:focus {
-background-color: white;
+    background-color: white;
 }
 
 .popup .button {
-  margin: 5px;
+    margin: 5px;
 }
 
-.title-input h1{
-  position: absolute; 
-  left: 25%;   
-  top: 35%;   
-  margin: auto;  
-  width: 50%;
-  height: 50%;
+.title-input h1 {
+    position: absolute;
+    left: 25%;
+    top: 35%;
+    margin: auto;
+    width: 50%;
+    height: 50%;
 }
 

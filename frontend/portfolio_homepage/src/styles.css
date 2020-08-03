@@ -578,7 +578,7 @@ video {
     height: auto;
 }
 
-.btn{
+.btn {
     padding-left: 2.5rem;
     padding-right: 2.5rem;
     padding-top: 0.5rem;
@@ -587,7 +587,7 @@ video {
     border-radius: 0.25rem;
 }
 
-.btn.btn-primary{
+.btn.btn-primary {
     background-color: #38a169;
     @apply bg-green-600;
 }

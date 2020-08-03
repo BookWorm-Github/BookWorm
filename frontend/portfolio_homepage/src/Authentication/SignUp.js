@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { bw_auth, signInWithGoogle, generateUserDocument } from "../firebase/init.js";
+import React, {useState} from "react";
+import {bw_auth, signInWithGoogle, generateUserDocument} from "../firebase/init.js";
 import SignIn from "./SignIn";
 import {Link} from "react-chrome-extension-router";
 
@@ -12,14 +12,16 @@ const SignUp = () => {
 		event.preventDefault();
 		const result = await bw_auth.createUserWithEmailAndPassword(email, password)
 			.then(async userCredential => {
-				await generateUserDocument(userCredential.user);
+					await generateUserDocument(userCredential.user);
 
-			},
-			error => {
-				setError('Error Signing up with email and password');
-				setTimeout(() => {setError(null)}, 3000);
-				return error
-			});
+				},
+				error => {
+					setError('Error Signing up with email and password');
+					setTimeout(() => {
+						setError(null)
+					}, 3000);
+					return error
+				});
 
 		setEmail("");
 		setPassword("");
@@ -27,7 +29,7 @@ const SignUp = () => {
 	};
 
 	const onChangeHandler = event => {
-		const { name, value } = event.currentTarget;
+		const {name, value} = event.currentTarget;
 
 		if (name === "userEmail") {
 			setEmail(value);

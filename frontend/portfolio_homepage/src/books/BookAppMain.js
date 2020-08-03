@@ -6,31 +6,31 @@ import './bookStyles.css'
 import SortBooks from '../sortItems/SortBooks'
 import Hotkeys from 'react-hot-keys';
 import {deleteBook, deLinkBookfromWindow, storeBook, updateBookLW} from "../firebase/firestore/db_functions";
-import header from  '../Images/Header.png';
+import header from '../Images/Header.png';
 // import { bw_auth, generateUserDocument } from "../firebase/init.js";
 //added hotkeys: https://github.com/jaywcjlove/react-hotkeys#readme
 
 class BookAppMain extends Component {
 
-	constructor(props){
+	constructor(props) {
 		super(props);
 		this.state = {
 			bookshelf: [],
 			addingBook: false,
 			linkedBook: "", //the current book that is linked to the window
-			urlsForLaunch:[],
-			urlsForWormhole:[],
+			urlsForLaunch: [],
+			urlsForWormhole: [],
 			curWinID: -2, //negative random number to denote impossible winID
 			searchResults: []
 		};
 	}
 
-	setCurWindow = async (response) =>{
+	setCurWindow = async (response) => {
 		console.log("BookAppMain setCurWindow received winID:" + response.windowId);
 		await this.setState({
 			curWinID: response.windowId
 		});
-		console.log("CurWinID is set to be "+this.state.curWinID);
+		console.log("CurWinID is set to be " + this.state.curWinID);
 	};
 
 	componentDidMount = () => {//updating the user's personal books
@@ -94,9 +94,9 @@ class BookAppMain extends Component {
 	// }
 
 	/*Methods for adding and deleting books*/
-	toggleAddBook = () =>{
+	toggleAddBook = () => {
 		//console.log("Adding book");
-		this.setState({addingBook:!this.state.addingBook});
+		this.setState({addingBook: !this.state.addingBook});
 	};
 
 	//updates the linkedWindow, launch and wormhole of a book in database
@@ -118,7 +118,7 @@ class BookAppMain extends Component {
 		});
 
 		updateBookLW(bookToBeUpdated, this.props.user.uid).then(e => {
-			if(shouldClosePortal){
+			if (shouldClosePortal) {
 				window.close();
 			}
 		});
@@ -143,7 +143,7 @@ class BookAppMain extends Component {
 		})
 	};
 
-	addBook = (newBook)=> {//gets the newBook from addBookUI /*Every book has title and key, which is the date and linkedwindowId*/
+	addBook = (newBook) => {//gets the newBook from addBookUI /*Every book has title and key, which is the date and linkedwindowId*/
 		// deLinking books that may have already linked with this window
 
 		const currWindowId = newBook.linkedWindowId;
@@ -172,24 +172,23 @@ class BookAppMain extends Component {
 
 	deleteBook = (book) => {
 		deleteBook(book, this.props.user.uid).then(() => {
-		    const filteredBooks = this.state.bookshelf.filter((bk) => {
-				    return (bk.title !== book.title);
-		    });
-		    this.setState({ //This will update the state and trigger a rerender of the components
-			    bookshelf: filteredBooks
-		    });
+			const filteredBooks = this.state.bookshelf.filter((bk) => {
+				return (bk.title !== book.title);
+			});
+			this.setState({ //This will update the state and trigger a rerender of the components
+				bookshelf: filteredBooks
+			});
 		});
 	};
 
 	setBooks = (books) => {
 		this.setState({
-		  bookshelf: books
+			bookshelf: books
 		});
 	};
 
 
-
-	filterBooks = (searchTerm) =>{
+	filterBooks = (searchTerm) => {
 		// Variable to hold the original version of the list
 		let currentList = [];
 		// Variable to hold the filtered list before putting into state
@@ -217,30 +216,33 @@ class BookAppMain extends Component {
 		});
 	}
 
-	render(){
+	render() {
 		return (
 			<div>
 				{/*Hotkey for dev only, when lots of experimental books are added. take away from final product.*/}
-				<Hotkeys keyName = "shift+a" onKeyUp = {this.toggleAddBook}/>
+				<Hotkeys keyName="shift+a" onKeyUp={this.toggleAddBook}/>
 				{/*<button onClick = {this.getURLS}>Get Open Windows</button>*/}
-				<div id= 'header'>
-						<img src ={header} alt = "header" id = "headerlogo" />x
+				<div id='header'>
+					<img src={header} alt="header" id="headerlogo"/>x
 				</div>
-				<div className = {this.state.addingBook?'blur-bg':'clear-bg'}>
-				    <BookShelf curWinID={this.state.curWinID} bks = {this.state.bookshelf} results = {this.state.searchResults} updateBook = {this.updateBook} deleteBook = {this.deleteBook} delinkBook={this.delinkBook} toggleAddBook={this.toggleAddBook} filterBooks={this.filterBooks} />
+				<div className={this.state.addingBook ? 'blur-bg' : 'clear-bg'}>
+					<BookShelf curWinID={this.state.curWinID} bks={this.state.bookshelf}
+					           results={this.state.searchResults} updateBook={this.updateBook}
+					           deleteBook={this.deleteBook} delinkBook={this.delinkBook}
+					           toggleAddBook={this.toggleAddBook} filterBooks={this.filterBooks}/>
 				</div>
-				<ul id = 'topLine'>
-					<SortBooks books = {this.state.bookshelf} setBooks = {this.setBooks} isBlurred = {this.state.addingBook}/>
-					<span className = 'add-btn-container'>
-						<button className = 'add-bk-btn' onClick={this.toggleAddBook}><h1 className='Plus'>+</h1></button>
+				<ul id='topLine'>
+					<SortBooks books={this.state.bookshelf} setBooks={this.setBooks} isBlurred={this.state.addingBook}/>
+					<span className='add-btn-container'>
+						<button className='add-bk-btn' onClick={this.toggleAddBook}><h1 className='Plus'>+</h1></button>
 					</span>
 				</ul>
-				{this.state.addingBook?
+				{this.state.addingBook ?
 					<div>
 						<AddBookUI
-							addBook = {this.addBook}
+							addBook={this.addBook}
 							closePopup={this.toggleAddBook}
-							bks = {this.state.bookshelf}
+							bks={this.state.bookshelf}
 							urlsForLaunch={this.state.urlsForLaunch}
 							urlsForWormhole={this.state.urlsForWormhole}
 						/>
@@ -254,4 +256,5 @@ class BookAppMain extends Component {
 	}
 
 }
+
 export default (BookAppMain);

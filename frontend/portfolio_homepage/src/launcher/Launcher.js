@@ -1,7 +1,8 @@
 /*global chrome*/
-import React, {Component} from 'react'
-import './launcher.css'
-import PropTypes from 'prop-types'
+import React, {Component} from 'react';
+import './launcher.css';
+import PropTypes from 'prop-types';
+import launchButton from '../Images/launchButton.png';
 // import TitleFetcher from '../urlTitleFetcher/TitleFetcher'
 //https://urlmeta.org/
 //import $ from 'jquery'
@@ -29,10 +30,7 @@ class Launcher extends Component {
 		return (
 
 			<div className='launcher' onClick={this.openURLs}>
-				<br/>
-				<br/>
-				<br/>
-				Launcher
+				<img src={launchButton} alt="launch icon" height="20" width="20"/>
 			</div>
 
 		);
@@ -40,25 +38,27 @@ class Launcher extends Component {
 	}
 
 	openURLs = (e) => {
-
+	
 		e.preventDefault();
 
 		if (this.props.urls && !this.props.urls.length) {//there are no urls in prop
 			let newTab = 'chrome://newtab';
+			console.log('If running')
 
-			chrome.runtime.sendMessage({rq: "openWindowOfTabs", urlsToLaunch: newTab}, this._cbWindow.bind(this));
+			//chrome.runtime.sendMessage({rq: "openWindowOfTabs", urlsToLaunch: newTab}, this._cbWindow.bind(this));
 		} else {
-			// alert("Opening "+this.props.urls.toString())
+			 alert("Opening "+this.props.urls.toString())
 			chrome.runtime.sendMessage({
 				rq: "openWindowOfTabs",
 				urlsToLaunch: this.props.urls
 			}, this._cbWindow.bind(this));
-		}
+		}	
 	};
 
 	_cbWindow = (response) => {
+		console.log('cbRunning')
 		//alert("Window "+response.windowId+" was just created");
-		this.props.updateBook(this.props.book, response.windowId, this.props.book.Launch, this.props.book.WormHole, true);
+		//this.props.updateBook(this.props.book, response.windowId, this.props.book.Launch, this.props.book.WormHole, true);
 		// window.close();
 	}
 }

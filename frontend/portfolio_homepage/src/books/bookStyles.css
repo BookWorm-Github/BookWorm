@@ -1,12 +1,7 @@
 /*TODO later combine all css files into one file in App.css
 for optimization*/
 
-.main-container-center {
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    height: 1000px;
-}
+
 
 #bkshlf-h1 {
     color: white;
@@ -16,7 +11,7 @@ for optimization*/
 .book-shelf {
 
     width: 95%;
-    height: 40%;
+    height: 40vh;
     padding: 0px;
     border-radius: 10px;
     border: 3px solid black;
@@ -106,6 +101,11 @@ for optimization*/
     filter: none;
     height: 95%
 }
+#h1Container{
+    height: 14%;
+    width: 100%;
+    margin: 0;
+}
 
 #hamburger {
     display: inline-block;
@@ -113,9 +113,12 @@ for optimization*/
 
 #header {
     width: 100%;
-    height: 10%;
+    height: 100%;
 }
-
+#headerContainer {
+    width: 100%;
+    height: 16vh;
+}
 #headerlogo {
     width: 30%;
     height: 100%;
@@ -147,8 +150,8 @@ for optimization*/
 
 .mybooks {
     background-color: #41416B;
-    margin: 5%;
-    height: 500px;
+    margin: 0;
+    height: 63%;
     width: 23%;
     border: 5px solid #41416B;
     border-radius: 10px;
@@ -166,6 +169,9 @@ for optimization*/
     font-size: 70px;
 }
 
+.resultsList {
+    height: 34%;
+}
 .search {
     width: 60%;
     border: 1px solid black;
@@ -182,7 +188,7 @@ for optimization*/
 }
 
 .scrolled {
-    height: 51%;
+    height: 50%;
     overflow: scroll;
 }
 

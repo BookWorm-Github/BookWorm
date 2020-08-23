@@ -5,6 +5,10 @@ import PropTypes from 'prop-types';
 import Search from '../Images/search.png';
 import hamburger from '../Images/filter.png';
 import './bookStyles.css'
+import SortButton from '../SortButton';
+import SortBooks from '../sortItems/SortBooks';
+import DefaultList from './DefaultList';
+import SortList from './SortList';
 
 // import BookNavbar from '../hamburger_bar/BookNavbar';
 
@@ -14,11 +18,26 @@ class BookShelf extends Component {
 		super(props);
 		this.state = {
 			isShowingWormhole: -1, //isShowingWormhole is the ID of the book from which the wormhole is toggled
-			titles: []
+			sortingBooks: false,
+			titles: [],
+			searchResults: [],
 		};
 	}
 
-	createBook = (_book, _index) => {
+	
+
+
+	
+	
+	componentDidMount = () => {//updating the user's personal books
+		this.setState({
+			searchResults: this.props.bks,
+		});
+		console.log(this.props.bks)
+	};
+
+
+	createBook = (_book, _index) => { 
 
 		// this.printBook(_index,_book);
 		console.log("CurWinID in BookShelf is " + this.props.curWinID);
@@ -41,6 +60,7 @@ class BookShelf extends Component {
 
 		//console.log(_book.title+" Key is "+_book.key);
 		this.props.deleteBook(_book)
+
 	};
 
 	filterBooks = (e) => {
@@ -50,6 +70,39 @@ class BookShelf extends Component {
 		e.preventDefault();
 	};
 
+	toggleSortBooks = (e) => {
+		this.setState({sortingBooks: !this.state.sortingBooks});
+		e.preventDefault();
+	};
+
+	sortBooksAlphabetically = () =>
+	{
+		this.props.sortBooksAlphabetically();
+		this.setState({sortingBooks: !this.state.sortingBooks});
+	};
+	
+
+	sortBooksBackwards = () =>
+	{
+		this.props.sortBooksBackwards();
+		this.setState({sortingBooks: !this.state.sortingBooks});
+	};
+
+	sortBooksNewest = () => 
+	{
+		this.props.sortBooksNewest();
+		this.setState({sortingBooks: !this.state.sortingBooks});
+	};
+
+	sortBooksOldest = () =>
+	{
+		this.props.sortBooksOldest();
+		this.setState({sortingBooks: !this.state.sortingBooks});
+	};
+
+
+
+
 	render() {
 		// this.printBkList(bookList);
 		// var books = bookList.map(this.createBook);
@@ -58,78 +111,38 @@ class BookShelf extends Component {
 		return (
 			<div>
 				<div className='mybooks'>
+					<div className='h1Container'>
 					<h1 id='bkshlf-h1'>My books</h1>
-
+					</div>
 					<form id="searchTerm">
 						<input className="search" type="text" onChange={this.filterBooks} placeholder="Search"/>
 						<img src={Search} alt="search icon" height="20" width="20" className="searchicon"/>
-						<input type='image' src={hamburger} alt="filter button" height="30px" width="30px"
-						       id="hamburger"/>
+						<SortButton toggleSortBooks={this.toggleSortBooks}/>
 					</form>
 
-					<div className='book-shelf'>
-						<div className='scrolled'>
-							<ul>
-								{this.props.results.map((bookListItem) => <li>{bookListItem.title} </li>)}
-							</ul>
+					{this.state.sortingBooks ?
+						<div >
+							<SortList sortBooksAlphabetically={this.sortBooksAlphabetically}
+								sortBooksBackwards={this.sortBooksBackwards}
+								sortBooksNewest={this.sortBooksNewest}
+								sortBooksOldest={this.sortBooksOldest}/>
 						</div>
-						<br/>
-						<br/>
-						<button className='add-bk-btn' onClick={this.props.toggleAddBook}><h1 className='Plus'>+</h1>
-						</button>
-					</div>
+						:
+						<div className='resultsList'>
+						<DefaultList results={this.props.results} toggleAddBook={this.props.toggleAddBook} 
+									updateBook={this.props.updateBook}/>
+						</div>
+							
+					}
 				</div>
 			</div>
 
 		);
 	}
 
-	filterBooks2 = (e) => {
-		let newBookList;
-		let oldBookList;
-		oldBookList = this.props.bks.titles;
-		const searchTerm = e.target.value;
-		console.log("searchTerm: " + {searchTerm});
-		newBookList = oldBookList.filter(item => {
-			const lc = item.toLowerCase();
-			return lc.includes(searchTerm)
-		});
-		console.log("newBookList: " + {newBookList});
-	}
+	
 
-	/*filterBooks = (e) =>{
-		//function borrowed from wormhole.js, see wormhole.js for more information
-		//Variable to hold the original version of the list
-    let currentList = [];
-	// Variable to hold the filtered list before putting into state
-	let newList = [];
-
-    // If the search bar isn't empty
-    if (e.target.value !== "") {
-      // Assign the original list to currentList
-      currentList = this.props.bks.titles;
-      console.log("currentList: " + {currentList});
-      // Use .filter() to determine which items should be displayed
-      // based on the search terms
-      newList = currentList.filter(item => {
-        // change current item to lowercase, took out searh only the part before the regex
-        const lc = item.toLowerCase();
-        // change search term to lowercase
-        const filter = e.target.value.toLowerCase();
-        // check to see if the current list item includes the search term
-        // If it does, it will be added to newList. Using lowercase eliminates
-        // issues with capitalization in search terms and search content
-        return lc.includes(filter);
-      });
-    } else {
-      // If the search bar is empty, set newList to original task list: do we want this effect?
-      newList = currentList
-    }
-    //TODO: Add console message
-
-	return newList;
-  }*/
-
+	
 	//print methods for debug
 	printBkList(bookList) {
 		//console.log("Printing Book List");

@@ -7,6 +7,7 @@ import SortBooks from '../sortItems/SortBooks'
 import Hotkeys from 'react-hot-keys';
 import {deleteBook, deLinkBookfromWindow, storeBook, updateBookLW} from "../firebase/firestore/db_functions";
 import header from '../Images/Header.png';
+import { buildQueries } from '@testing-library/react'
 // import { bw_auth, generateUserDocument } from "../firebase/init.js";
 //added hotkeys: https://github.com/jaywcjlove/react-hotkeys#readme
 
@@ -21,7 +22,7 @@ class BookAppMain extends Component {
 			urlsForLaunch: [],
 			urlsForWormhole: [],
 			curWinID: -2, //negative random number to denote impossible winID
-			searchResults: []
+			searchResults: [], //searchResult needs to be here instead of bookworm in order for the props to be passed to it quickly enough
 		};
 	}
 
@@ -36,7 +37,7 @@ class BookAppMain extends Component {
 	componentDidMount = () => {//updating the user's personal books
 		this.setState({
 			bookshelf: this.props.books,
-			searchResults: this.props.books
+			searchResults: this.props.books,
 		});
 		chrome.runtime.sendMessage({rq: "getCurrWindowId"}, this.setCurWindow);
 		// chrome.runtime.onMessage.addListener(this.handleMessage.bind(this));
@@ -99,6 +100,9 @@ class BookAppMain extends Component {
 		this.setState({addingBook: !this.state.addingBook});
 	};
 
+	//Method for switching between displaying sort list and list of books
+	
+
 	//updates the linkedWindow, launch and wormhole of a book in database
 	updateBook = (bookToBeUpdated, linkedWindowId, launch, wormhole, shouldClosePortal) => {
 		let updatedBooks = this.state.bookshelf.map(function (book, putInDataBase) {//find the linked book and then update the WormHole for the book
@@ -148,7 +152,7 @@ class BookAppMain extends Component {
 
 		const currWindowId = newBook.linkedWindowId;
 
-		let filteredBooks = this.state.bookshelf.map((book, index, array) => {
+		let filteredBooks = this.state.bookshelf.map((book) => {
 			deLinkBookfromWindow(book, currWindowId, this.props.user.uid)
 				.then(() => {//delinks the book from window in the database
 					// book.Launch = null;
@@ -164,9 +168,10 @@ class BookAppMain extends Component {
 			this.setState(prevState => ({
 				linkedBook: newBook.key,
 				bookshelf: [...filteredBooks, newBook],
+				searchResults: [...filteredBooks, newBook],
 				addingBook: false//this clears the addBookUI
 			}));
-			//console.log("Adding book success!")
+			console.log("Adding book success!");
 		});
 	};
 
@@ -186,6 +191,55 @@ class BookAppMain extends Component {
 			bookshelf: books
 		});
 	};
+
+	sortBooksAlphabetically = () => {
+		let unsorted = []; 
+		let sorted = []; //sets up an empty array called unsorted and one called sorted
+        unsorted = this.state.bookshelf //sets unsorted to whatever's in bookshelf
+        sorted = unsorted.sort((a,b) => (a.title.toLowerCase() > b.title.toLowerCase()) ?1: -1); //sorts 'unsorted' alphabetically and sets that equal to sorted
+        console.log(sorted);
+        this.setState({ 
+		  	searchResults: sorted,
+		});
+
+	}
+	
+
+	sortBooksBackwards = () => {
+		let unsorted = []; 
+		let sorted = []; //sets up an empty array called unsorted and one called sorted
+        unsorted = this.state.bookshelf //sets unsorted to whatever's in bookshelf
+        sorted = unsorted.sort((a,b) => (a.title.toLowerCase() > b.title.toLowerCase()) ? -1: 1); //sorts 'unsorted' alphabetically and sets that equal to sorted
+        console.log(sorted);
+        this.setState({ 
+		  	searchResults: sorted,
+		});
+
+	}
+
+	sortBooksNewest = () =>{
+		let unsorted = [];
+		let sorted = [];
+        unsorted=this.state.bookshelf;
+        sorted = unsorted.sort((a,b) => (a.key > b.key) ? -1: 1)
+        console.log(sorted);
+        this.setState({
+			orderedResults: sorted,
+		});
+    }
+
+	sortBooksOldest = () =>{
+		let unsorted = [];
+		let sorted = [];
+        unsorted=this.state.bookshelf;
+        sorted = unsorted.sort((a,b) => (a.key > b.key) ? 1: -1)
+        console.log(sorted);
+        this.setState({
+			orderedResults: sorted,
+		});
+    }
+	
+
 
 
 	filterBooks = (searchTerm) => {
@@ -207,36 +261,38 @@ class BookAppMain extends Component {
 			});
 		} else {
 			// If the search bar is empty, set newList to original task list: do we want this effect?
-			newList = this.state.bookshelf
+			newList = this.state.bookshelf;
 		}
-		//console.log("filtered List in book "+this.props.book.title+" wormhole is "+newList);
 		// Set the filtered state based on what our rules added to newList
 		this.setState({
 			searchResults: newList
 		});
 	}
 
+	
 	render() {
 		return (
 			<div>
 				{/*Hotkey for dev only, when lots of experimental books are added. take away from final product.*/}
 				<Hotkeys keyName="shift+a" onKeyUp={this.toggleAddBook}/>
 				{/*<button onClick = {this.getURLS}>Get Open Windows</button>*/}
+				<div id="headerContainer">
 				<div id='header'>
 					<img src={header} alt="header" id="headerlogo"/>x
 				</div>
+				</div>
 				<div className={this.state.addingBook ? 'blur-bg' : 'clear-bg'}>
 					<BookShelf curWinID={this.state.curWinID} bks={this.state.bookshelf}
-					           results={this.state.searchResults} updateBook={this.updateBook}
-					           deleteBook={this.deleteBook} delinkBook={this.delinkBook}
-					           toggleAddBook={this.toggleAddBook} filterBooks={this.filterBooks}/>
+					           	results={this.state.searchResults} updateBook={this.updateBook}
+								deleteBook={this.deleteBook} delinkBook={this.delinkBook}
+								toggleAddBook={this.toggleAddBook} filterBooks={this.filterBooks}
+								sortBooksAlphabetically={this.sortBooksAlphabetically}
+								sortBooksBackwards={this.sortBooksBackwards}
+								sortBooksNewest={this.sortBooksNewest}
+								sortBooksOldest={this.sortBooksOldest}
+					/>
 				</div>
-				<ul id='topLine'>
-					<SortBooks books={this.state.bookshelf} setBooks={this.setBooks} isBlurred={this.state.addingBook}/>
-					<span className='add-btn-container'>
-						<button className='add-bk-btn' onClick={this.toggleAddBook}><h1 className='Plus'>+</h1></button>
-					</span>
-				</ul>
+				
 				{this.state.addingBook ?
 					<div>
 						<AddBookUI
@@ -258,3 +314,8 @@ class BookAppMain extends Component {
 }
 
 export default (BookAppMain);
+ 
+
+
+
+

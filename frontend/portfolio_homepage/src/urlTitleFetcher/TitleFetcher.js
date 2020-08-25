@@ -1,4 +1,3 @@
-
 //The container that holds the books
 import React, {Component} from 'react'
 
@@ -11,47 +10,45 @@ import $ from 'jquery'
 //import '../experiments/get_external_content.php'
 // import { withStyles } from '@material-ui/core/styles';
 //npm i react-simple-flex-grid
-class TitleFetcher extends Component{
+class TitleFetcher extends Component {
 
-	constructor(props){
-	    super(props);
-	    this.state = {
-	      titles:[]
-	    };
+	constructor(props) {
+		super(props);
+		this.state = {
+			titles: []
+		};
 
-  	}
-  	componentDidUpdate(){
-  		// this.getTitles();
-	    let titles = [];
-	    console.log("Titlefetcher was called with urls "+this.props.urls);
+	}
 
-	    function fetchHTML(externalUrl,state,cb){
+	componentDidUpdate() {
+		// this.getTitles();
+		let titles = [];
+		console.log("Titlefetcher was called with urls " + this.props.urls);
+
+		function fetchHTML(externalUrl, state, cb) {
 			$.ajax({
-			  url: externalUrl,
-			  async: true,
-			  success: function(data) {
-				  const matches = data.match(/<title(.*?)<\/title>/);
-				  //alert(matches[0]);
-			    titles = [...titles,matches[0]];
-			    	//console.log("Titles inside is "+titles.toString());
-			    cb(state,matches[0]);
-			  }   
+				url: externalUrl,
+				async: true,
+				success: function (data) {
+					const matches = data.match(/<title(.*?)<\/title>/);
+					//alert(matches[0]);
+					titles = [...titles, matches[0]];
+					//console.log("Titles inside is "+titles.toString());
+					cb(state, matches[0]);
+				}
 			});
 		}
 
-		if(this.props.urls!=null){
-			for(let i = 0; i<this.props.urls.length; i++){
+		if (this.props.urls != null) {
+			for (let i = 0; i < this.props.urls.length; i++) {
 
-					fetchHTML(this.props.urls[i],this.state.titles,this.callback);
+				fetchHTML(this.props.urls[i], this.state.titles, this.callback);
 			}
 		}
 
 
+		//console.log("Titles outside is "+this.state.titles.toString());
 
-  		
-  		//console.log("Titles outside is "+this.state.titles.toString());
-
-  		
 
 		// for(var i = 0; i<this.props.urls.length; i++){
 		// 	var html = (await (await fetch(this.props.urls[i])).text()); // html as text
@@ -64,43 +61,45 @@ class TitleFetcher extends Component{
 		//       }
 		//     );
 		//     //console.log("State in getHTML is "+this.state.titles.toString());
-			
+
 
 		// }
-  		
-  	}
 
-  	callback = (state,t) => {
-			//console.log("Param in callback is "+t.toString());
-			//state.push(t);
-			function stripHTMLTags(str) {
-				// var s1 = str.replace('<title>', '');
+	}
 
-				// var s2 = s1.replace('</title>', '');
-				const stripedHtml = $("<div>").html(str).text();
-				return stripedHtml;
-			}
-			var title = stripHTMLTags(t);
-			
-			this.setState({titles: [...this.state.titles,title]})
-			//console.log("In callback state is "+this.state.titles.toString());
+	callback = (state, t) => {
+		//console.log("Param in callback is "+t.toString());
+		//state.push(t);
+		function stripHTMLTags(str) {
+			// var s1 = str.replace('<title>', '');
 
+			// var s2 = s1.replace('</title>', '');
+			const stripedHtml = $("<div>").html(str).text();
+			return stripedHtml;
 		}
-	render(){
+
+		var title = stripHTMLTags(t);
+
+		this.setState({titles: [...this.state.titles, title]})
+		//console.log("In callback state is "+this.state.titles.toString());
+
+	}
+
+	render() {
 
 		return (
-				<div>
-					<ul>
-        			{ this.state.titles.map(title => <li>{title}</li>)}
-      				</ul>
-				</div>
+			<div>
+				<ul>
+					{this.state.titles.map(title => <li>{title}</li>)}
+				</ul>
+			</div>
 		);
 	}
 
 	// getTitles = () =>{
 	// 	//console.log("titlefetcher has "+this.props.urls.length+" urls");
 	// 	for(var i = 0; i<this.props.urls.length; i++){
-			
+
 	// 		this.getHTML(this.props.urls[i])
 
 	// 	}
@@ -117,7 +116,7 @@ class TitleFetcher extends Component{
 	//       }
 	//     );
 	//     //console.log("State in getHTML is "+this.state.titles.toString());
-		
+
 	// }
 
 
@@ -125,7 +124,7 @@ class TitleFetcher extends Component{
 	// 	var title = "";
 	// 	var xhr = new XMLHttpRequest();
 	// 	xhr.open("GET", url, true);
-	// 	xhr.onreadystatechange = function() { 
+	// 	xhr.onreadystatechange = function() {
 	// 	  if (xhr.readyState == 4) {
 	// 	    var fetchTitle = (/<title>(.*?)<\/title>/m).exec(xhr.responseText);
 	// 	    if(fetchTitle!=null){ //if the title could be fetched per cors policy
@@ -143,15 +142,11 @@ class TitleFetcher extends Component{
 	// }
 
 
-
-	
-
-
 }
 
 
 TitleFetcher.propTypes = {
-    urls: PropTypes.arrayOf(PropTypes.string).isRequired
-  };
+	urls: PropTypes.arrayOf(PropTypes.string).isRequired
+};
 
 export default TitleFetcher;

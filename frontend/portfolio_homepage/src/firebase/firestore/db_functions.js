@@ -30,16 +30,15 @@ export const updateBookLW = async (book, user_id) => {
 	const bookDataRef = bw_db.collection(`users/${user_id}/bookData`).doc(book.key.toString());
 	// alert("updating bk "+book.title+" in database");
 	await bookDataRef.get().then(async snapshot => {
-		if(snapshot.exists){
+		if (snapshot.exists) {
 			await bookDataRef.update({
-					linkedWindowId: book.linkedWindowId,
-					Launch: book.Launch,
-					WormHole: book.WormHole
+				linkedWindowId: book.linkedWindowId,
+				Launch: book.Launch,
+				WormHole: book.WormHole
 			});
 			//console.log("database updated book"+book.title+" linked window to be "+bookDataRef.linkedWindowId);
 			return true;
-		}
-		else{
+		} else {
 			//console.log("book doesn't exist in database...")
 			return false;
 		}
@@ -82,7 +81,7 @@ export const deLinkBookfromWindow = async (bk, currWindowId, user_id) => {//upda
 	if (bk.linkedWindowId === currWindowId) {
 		let bookDataRef = bw_db.doc(`users/${user_id}/bookData/${bk.key.toString()}`);
 		bookDataRef.get().then(async snapshot => {
-			if(snapshot.exists){
+			if (snapshot.exists) {
 				await bookDataRef.update({
 					// Launch: null,
 					// WormHole: null,

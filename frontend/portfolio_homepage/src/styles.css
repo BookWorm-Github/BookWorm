@@ -22,6 +22,8 @@ html {
 
 body {
     margin: 0;
+    background-color: #22223B;
+
 }
 
 /**
@@ -561,7 +563,6 @@ iframe,
 embed,
 object {
     display: block;
-    vertical-align: middle;
 }
 
 /**
@@ -577,17 +578,16 @@ video {
     height: auto;
 }
 
-.btn{
+.btn {
     padding-left: 2.5rem;
     padding-right: 2.5rem;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
     margin: 1rem;
     border-radius: 0.25rem;
-    @apply px-10 py-2 m-4 rounded;
 }
 
-.btn.btn-primary{
+.btn.btn-primary {
     background-color: #38a169;
     @apply bg-green-600;
 }

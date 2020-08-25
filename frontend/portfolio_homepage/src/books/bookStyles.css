@@ -1,80 +1,82 @@
-/*TODO later combine all css files into one file in App.css 
+/*TODO later combine all css files into one file in App.css
 for optimization*/
 
-.main-container-center{
-  justify-content: center;
-  align-items: center;
 
-  display: flex;
 
-  background :white; /*for allowing users to customzize background color later*/
+#bkshlf-h1 {
+    color: white;
+    size: 20px;
 }
 
+.book-shelf {
 
-.book-shelf{
-
-  width: 95%;
-  padding: 10px;
-  background: white;
+    width: 95%;
+    height: 40vh;
+    padding: 0px;
+    border-radius: 10px;
+    border: 3px solid black;
+    background: white;
 }
 
-.add{
-  font-family: "Font Awesome\ 5 Free",sans-serif;
+.add {
+    font-family: "Font Awesome\ 5 Free", sans-serif;
 }
 
 /*Circular add-book-button*/
-.add-bk-btn{
-  float: left;
-    margin: 10px 10px;
-    height: 55px;
-    width: 55px;  /*The Width must be the same as the height*/
-    border-radius:110px; /*borderRadius must b 2*width*/
-    background-color:rgb(0, 0, 0);
-    color: white;
-    
-}
-.container {
-  margin: auto;
-   overflow: 'hidden';
+.add-bk-btn {
+    float: left;
+    margin: 10px;
+    height: 25px;
+    width: 55px; /*The Width must be the same as the height*/
+    border-radius: 35px; /*borderRadius must b 2*width*/
+    background-color: #FF8D00;
+    color: black;
 
-  }
+}
+
+.container {
+    margin: auto;
+    overflow: 'hidden';
+
+}
+
 .paper {
     /*padding: theme.spacing(1); commented this because it showed up as a problem*/
     margin: auto;
     max-width: 500px;
     background-color: aqua;
-  }
+}
+
 .current-book {
-    border-style:solid;
+    border-style: solid;
     border-color: rgb(38, 54, 92);
-    border-radius:5px;
+    border-radius: 5px;
     border-width: 3px;
 
 
 }
+
 .book {
-    box-shadow: 5px 4px 5px;
-    /*border-right: 5px solid #dddddc;
-    border-bottom: 5px solid #dddddc;*/
-    background-color:#e7cc34;/*#3391AF;*/
-  	border-radius: 15px;
-  	height: 200px;
+    padding: 0px;
     width: 100%;
-  }
+    border-style: solid;
+    border-width: 2px;
+    border-color: #add8e6;
+    background-color: white;
+}
 
-  .booktitle {
+.booktitle {
     margin: 70px auto;
-  }
+}
 
-  .book:hover .add-bk-btn
-  {
+.book:hover .add-bk-btn {
     /*filter: blur(8px);
     -webkit-filter: blur(8px);*/
     background-color: #dddddc;
-  }
+}
 
 /*The title of the user's book*/
-.bk_title{
+.bk_title {
     text-align: center;
     width: 100%;
     height: 100%;
@@ -82,75 +84,140 @@ for optimization*/
     font-size: xx-large;
 }
 
+.blurrable {
+    height: 1000px;
+}
 
 
 /*The blur effect of background when popup occurs*/
 .blur-bg {
 
-  /* Add the blur effect */
-  filter: blur(8px);
-  -webkit-filter: blur(8px);
+    /* Add the blur effect */
+    filter: blur(8px);
+    -webkit-filter: blur(8px);
 }
-.clear-bg{
-  filter:none;
+
+.clear-bg {
+    filter: none;
+    height: 95%
+}
+#h1Container{
+    height: 14%;
+    width: 100%;
+    margin: 0;
+}
+
+#hamburger {
+    display: inline-block;
+}
+
+#header {
+    width: 100%;
+    height: 100%;
+}
+#headerContainer {
+    width: 100%;
+    height: 16vh;
+}
+#headerlogo {
+    width: 30%;
+    height: 100%;
+    margin: 0;
 }
 
 /*The hover menu which contains the launcher and wormhole*/
-.hover-menu{
-  margin-top: 5px;
-  margin-left: 5px;
-   width: 101%;
-   height:102%;
-   border: 5px solid #e7cc34;
-   border-radius: 15px;
-  display: flex;  
-  justify-content: center;
-  align-items: left;
+.hover-menu {
+    margin-top: 5px;
+    margin-left: 5px;
+    width: 101%;
+    height: 102%;
+    border: 5px solid #e7cc34;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: left;
     position: relative;
 }
 
-#inputline {font-size: 500;
-            font-weight: bold;
-          }
-
+#inputline {
+    font-size: 500;
+    font-weight: bold;
+}
 
 .line {
-  border-left: 1px solid black;
+    border-left: 1px solid black;
 }
 
-.Plus{
-  margin-top: 10px;
-  margin-bottom: 20px;
-  font-size: x-large;
-  font-weight: 900;
-  line-height: 1.0;
+.mybooks {
+    background-color: #41416B;
+    margin: 0;
+    height: 63%;
+    width: 23%;
+    border: 5px solid #41416B;
+    border-radius: 10px;
 }
-.ph_title{
+
+.Plus {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-size: x-large;
+    font-weight: 900;
+    line-height: 1.0;
+}
+
+.ph_title {
     font-size: 70px;
 }
 
+.resultsList {
+    height: 34%;
+}
+.search {
+    width: 60%;
+    border: 1px solid black;
+    border-radius: 15px;
+    display: inline-block;
+}
 
+.searchicon {
+    display: inline-block;
+    position: relative;
+    right: 20px;
+
+
+}
+
+.scrolled {
+    height: 50%;
+    overflow: scroll;
+}
 
 .signoutbutton {
-  display: inline-flex;
-  position: fixed;
-  right: 80px;
-  border-radius: 25px;
-  /*border: 1px solid black;*/
-  background-color: #e7cc34;
-  margin: 10px;
-      padding: 3px;
-  align-items: center;
-  width: 100px;
-  height: 40px;
-  box-shadow: 1px 2px 5px;
+    display: inline-flex;
+    position: fixed;
+    right: 80px;
+    border-radius: 25px;
+    /*border: 1px solid black;*/
+    background-color: #e7cc34;
+    margin: 10px;
+    padding: 3px;
+    align-items: center;
+    width: 100px;
+    height: 40px;
+    box-shadow: 1px 2px 5px;
 }
 
 .topbutton {
-  margin: auto;
-  font-family: "Font Awesome\ 5 Free",sans-serif;
+    margin: auto;
+    font-family: "Font Awesome\ 5 Free", sans-serif;
 }
 
 .topline {
-  width: 100%;
+    width: 100%;
+}
+
+li {
+    color: black;
+    size: 20px;
+    border-bottom: thin solid black;
 }

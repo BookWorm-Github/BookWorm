@@ -6,34 +6,38 @@ import './bookStyles.css'
 import SortBooks from '../sortItems/SortBooks'
 import Hotkeys from 'react-hot-keys';
 import {deleteBook, deLinkBookfromWindow, storeBook, updateBookLW} from "../firebase/firestore/db_functions";
+import header from '../Images/Header.png';
+import { buildQueries } from '@testing-library/react'
 // import { bw_auth, generateUserDocument } from "../firebase/init.js";
 //added hotkeys: https://github.com/jaywcjlove/react-hotkeys#readme
 
 class BookAppMain extends Component {
 
-	constructor(props){
+	constructor(props) {
 		super(props);
 		this.state = {
 			bookshelf: [],
 			addingBook: false,
 			linkedBook: "", //the current book that is linked to the window
-			urlsForLaunch:[],
-			urlsForWormhole:[],
-			curWinID: -2 //negative random number to denote impossible winID
+			urlsForLaunch: [],
+			urlsForWormhole: [],
+			curWinID: -2, //negative random number to denote impossible winID
+			searchResults: [], //searchResult needs to be here instead of bookworm in order for the props to be passed to it quickly enough
 		};
 	}
 
-	setCurWindow = async (response) =>{
+	setCurWindow = async (response) => {
 		console.log("BookAppMain setCurWindow received winID:" + response.windowId);
 		await this.setState({
 			curWinID: response.windowId
 		});
-		console.log("CurWinID is set to be "+this.state.curWinID);
+		console.log("CurWinID is set to be " + this.state.curWinID);
 	};
 
 	componentDidMount = () => {//updating the user's personal books
 		this.setState({
-			bookshelf: this.props.books
+			bookshelf: this.props.books,
+			searchResults: this.props.books,
 		});
 		chrome.runtime.sendMessage({rq: "getCurrWindowId"}, this.setCurWindow);
 		// chrome.runtime.onMessage.addListener(this.handleMessage.bind(this));
@@ -91,10 +95,13 @@ class BookAppMain extends Component {
 	// }
 
 	/*Methods for adding and deleting books*/
-	toggleAddBook = () =>{
+	toggleAddBook = () => {
 		//console.log("Adding book");
-		this.setState({addingBook:!this.state.addingBook});
+		this.setState({addingBook: !this.state.addingBook});
 	};
+
+	//Method for switching between displaying sort list and list of books
+	
 
 	//updates the linkedWindow, launch and wormhole of a book in database
 	updateBook = (bookToBeUpdated, linkedWindowId, launch, wormhole, shouldClosePortal) => {
@@ -115,11 +122,11 @@ class BookAppMain extends Component {
 		});
 
 		updateBookLW(bookToBeUpdated, this.props.user.uid).then(e => {
-			if(shouldClosePortal){
+			if (shouldClosePortal) {
 				window.close();
 			}
 		});
-		
+
 
 	};
 
@@ -140,12 +147,12 @@ class BookAppMain extends Component {
 		})
 	};
 
-	addBook = (newBook)=> {//gets the newBook from addBookUI /*Every book has title and key, which is the date and linkedwindowId*/
+	addBook = (newBook) => {//gets the newBook from addBookUI /*Every book has title and key, which is the date and linkedwindowId*/
 		// deLinking books that may have already linked with this window
 
 		const currWindowId = newBook.linkedWindowId;
 
-		let filteredBooks = this.state.bookshelf.map((book, index, array) => {
+		let filteredBooks = this.state.bookshelf.map((book) => {
 			deLinkBookfromWindow(book, currWindowId, this.props.user.uid)
 				.then(() => {//delinks the book from window in the database
 					// book.Launch = null;
@@ -161,67 +168,154 @@ class BookAppMain extends Component {
 			this.setState(prevState => ({
 				linkedBook: newBook.key,
 				bookshelf: [...filteredBooks, newBook],
+				searchResults: [...filteredBooks, newBook],
 				addingBook: false//this clears the addBookUI
 			}));
-			//console.log("Adding book success!")
+			console.log("Adding book success!");
 		});
 	};
 
 	deleteBook = (book) => {
 		deleteBook(book, this.props.user.uid).then(() => {
-		    const filteredBooks = this.state.bookshelf.filter((bk) => {
-				    return (bk.title !== book.title);
-		    });
-		    this.setState({ //This will update the state and trigger a rerender of the components
-			    bookshelf: filteredBooks
-		    });
+			const filteredBooks = this.state.bookshelf.filter((bk) => {
+				return (bk.title !== book.title);
+			});
+			this.setState({ //This will update the state and trigger a rerender of the components
+				bookshelf: filteredBooks
+			});
 		});
 	};
 
 	setBooks = (books) => {
 		this.setState({
-		  bookshelf: books
+			bookshelf: books
 		});
 	};
 
-	render(){
+	sortBooksAlphabetically = () => {
+		let unsorted = []; 
+		let sorted = []; //sets up an empty array called unsorted and one called sorted
+        unsorted = this.state.bookshelf //sets unsorted to whatever's in bookshelf
+        sorted = unsorted.sort((a,b) => (a.title.toLowerCase() > b.title.toLowerCase()) ?1: -1); //sorts 'unsorted' alphabetically and sets that equal to sorted
+        console.log(sorted);
+        this.setState({ 
+		  	searchResults: sorted,
+		});
 
+	}
+	
+
+	sortBooksBackwards = () => {
+		let unsorted = []; 
+		let sorted = []; //sets up an empty array called unsorted and one called sorted
+        unsorted = this.state.bookshelf //sets unsorted to whatever's in bookshelf
+        sorted = unsorted.sort((a,b) => (a.title.toLowerCase() > b.title.toLowerCase()) ? -1: 1); //sorts 'unsorted' alphabetically and sets that equal to sorted
+        console.log(sorted);
+        this.setState({ 
+		  	searchResults: sorted,
+		});
+
+	}
+
+	sortBooksNewest = () =>{
+		let unsorted = [];
+		let sorted = [];
+        unsorted=this.state.bookshelf;
+        sorted = unsorted.sort((a,b) => (a.key > b.key) ? -1: 1)
+        console.log(sorted);
+        this.setState({
+			orderedResults: sorted,
+		});
+    }
+
+	sortBooksOldest = () =>{
+		let unsorted = [];
+		let sorted = [];
+        unsorted=this.state.bookshelf;
+        sorted = unsorted.sort((a,b) => (a.key > b.key) ? 1: -1)
+        console.log(sorted);
+        this.setState({
+			orderedResults: sorted,
+		});
+    }
+	
+
+
+
+	filterBooks = (searchTerm) => {
+		// Variable to hold the original version of the list
+		let currentList = [];
+		// Variable to hold the filtered list before putting into state
+		let newList = [];
+
+		// If the search bar isn't empty
+		if (searchTerm !== "") {
+			// Assign the original list to currentList
+			currentList = this.state.bookshelf;
+			// Use .filter() to determine which items should be displayed
+			// based on the search terms
+			newList = currentList.filter(item => {
+				// change current item to lowercase and searh only the part before the regex
+				const filter = searchTerm;
+				return item.title.includes(filter)
+			});
+		} else {
+			// If the search bar is empty, set newList to original task list: do we want this effect?
+			newList = this.state.bookshelf;
+		}
+		// Set the filtered state based on what our rules added to newList
+		this.setState({
+			searchResults: newList
+		});
+	}
+
+	
+	render() {
 		return (
 			<div>
 				{/*Hotkey for dev only, when lots of experimental books are added. take away from final product.*/}
-				<Hotkeys keyName = "shift+a" onKeyUp = {this.toggleAddBook}/>
+				<Hotkeys keyName="shift+a" onKeyUp={this.toggleAddBook}/>
 				{/*<button onClick = {this.getURLS}>Get Open Windows</button>*/}
-				<div className = 'main-container-center'>
-
-			        <div id = 'blurrable' className = 'book-shelf'>
-						<ul id = 'topLine'>
-							<SortBooks books = {this.state.bookshelf} setBooks = {this.setBooks} isBlurred = {this.state.addingBook}/>
-							<span className = 'add-btn-container'>
-								<h6 id = 'add'>Add book: </h6>
-								<button className = 'add-bk-btn' onClick={this.toggleAddBook}><h1 className='Plus'>+</h1></button>
-							</span>
-						</ul>
-						<div className = {this.state.addingBook?'blur-bg':'clear-bg'}>
-						    <BookShelf curWinID={this.state.curWinID} bks = {this.state.bookshelf} updateBook = {this.updateBook} deleteBook = {this.deleteBook} delinkBook={this.delinkBook}/>
-						</div>
-			        </div>
-					{this.state.addingBook?
-						<div>
-							<AddBookUI
-								addBook = {this.addBook}
-								closePopup={this.toggleAddBook}
-								bks = {this.state.bookshelf}
-								urlsForLaunch={this.state.urlsForLaunch}
-								urlsForWormhole={this.state.urlsForWormhole}
-							/>
-						</div>
-						:
-						<div/>
-					}
+				<div id="headerContainer">
+				<div id='header'>
+					<img src={header} alt="header" id="headerlogo"/>x
 				</div>
+				</div>
+				<div className={this.state.addingBook ? 'blur-bg' : 'clear-bg'}>
+					<BookShelf curWinID={this.state.curWinID} bks={this.state.bookshelf}
+					           	results={this.state.searchResults} updateBook={this.updateBook}
+								deleteBook={this.deleteBook} delinkBook={this.delinkBook}
+								toggleAddBook={this.toggleAddBook} filterBooks={this.filterBooks}
+								sortBooksAlphabetically={this.sortBooksAlphabetically}
+								sortBooksBackwards={this.sortBooksBackwards}
+								sortBooksNewest={this.sortBooksNewest}
+								sortBooksOldest={this.sortBooksOldest}
+					/>
+				</div>
+				
+				{this.state.addingBook ?
+					<div>
+						<AddBookUI
+							addBook={this.addBook}
+							closePopup={this.toggleAddBook}
+							bks={this.state.bookshelf}
+							urlsForLaunch={this.state.urlsForLaunch}
+							urlsForWormhole={this.state.urlsForWormhole}
+						/>
+					</div>
+					:
+					<div/>
+				}
+				<book/>
 			</div>
 		);
 	}
 
 }
+
 export default (BookAppMain);
+ 
+
+
+
+

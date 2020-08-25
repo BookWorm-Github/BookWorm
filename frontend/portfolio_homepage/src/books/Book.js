@@ -13,60 +13,64 @@ import Launcher from '../launcher/Launcher'
 import BookNavbar from "../hamburger_bar/BookNavbar";
 import isEmpty from "validator/es/lib/isEmpty";
 
-class Book extends Component{
+class Book extends Component {
 
-	constructor(props){
+	constructor(props) {
 		super(props);
 		this.state = {
-		    book: null,
-			title:'',
+			book: null,
+			title: '',
 			isHovered: false
 		};
 	}
-	componentDidMount=() =>{
+
+	componentDidMount = () => {
 		this.setState({
 			linkedWindowId: this.props.book.linkedWindowId,
 			book: this.props.book,
 			title: this.props.book.title
 		});
 
-		if(this.props.book.linkedWindowId>=0){
-			chrome.runtime.sendMessage({rq: "LaunchInfo", winId: this.props.book.linkedWindowId}, this._cbForLaunchResponse);
-			chrome.runtime.sendMessage({rq: "WormholeInfo", linkedWindowId: this.props.book.linkedWindowId}, this._cbForWormholeResponse);
+		if (this.props.book.linkedWindowId >= 0) {
+			chrome.runtime.sendMessage({
+				rq: "LaunchInfo",
+				winId: this.props.book.linkedWindowId
+			}, this._cbForLaunchResponse);
+			chrome.runtime.sendMessage({
+				rq: "WormholeInfo",
+				linkedWindowId: this.props.book.linkedWindowId
+			}, this._cbForWormholeResponse);
 		}
 	};
 
 	_cbForLaunchResponse = (response) => {
-		if(response.LaunchInfo&&response.LaunchInfo.length){//if launch urls are not empty
+		if (response.LaunchInfo && response.LaunchInfo.length) {//if launch urls are not empty
 			this.props.updateBook(this.props.book,
 				this.props.book.linkedWindowId,
 				response.LaunchInfo,
 				this.props.book.WormHole,
 				false);
-			console.log("book "+this.props.book.title+" updated launch to be "+response.LaunchInfo);
-		}
-		else{
-			console.log("book "+this.props.book.title+" received empty for launch");
+			console.log("book " + this.props.book.title + " updated launch to be " + response.LaunchInfo);
+		} else {
+			console.log("book " + this.props.book.title + " received empty for launch");
 		}
 	};
 
 	_cbForWormholeResponse = (response) => {
 		console.log("WORMHOLE INFO:");
-		if(this.isEmpty(response.WormholeInfo)){
+		if (this.isEmpty(response.WormholeInfo)) {
 			console.log("no wormhole response");
-		}
-		else{
+		} else {
 			console.log(response.WormholeInfo);
 			let wormUrl = [];
 			response.WormholeInfo.forEach(tabInfo => {//parse the information given to us, taking out the tabs specifically for each urlInfo we get
 				wormUrl.push(tabInfo.url);
 			});
 			console.log(wormUrl);
-			if(!this.isEmpty(response.WormholeInfo)){//checks if the WormholeInfo is empty, if not then we can update the book using prop method below.
-				this.props.updateBook(this.props.book,this.props.book.linkedWindowId,this.props.book.Launch, wormUrl);
+			if (!this.isEmpty(response.WormholeInfo)) {//checks if the WormholeInfo is empty, if not then we can update the book using prop method below.
+				this.props.updateBook(this.props.book, this.props.book.linkedWindowId, this.props.book.Launch, wormUrl);
 				console.log("book " + this.props.book.title + " updated wormhole to be " + wormUrl);
-			}
-			else{
+			} else {
 				console.log("book " + this.props.book.title + " received empty for wormhole");
 			}
 		}
@@ -83,33 +87,33 @@ class Book extends Component{
 
 	createHoverMenu() {
 		return (
-			<div className ='hover-menu'>
-				<Launcher book = {this.props.book} updateBook = {this.props.updateBook} urls = {this.props.book.Launch}/>
-				<div className = 'line'>
+			<div className='hover-menu'>
+				<Launcher book={this.props.book} updateBook={this.props.updateBook} urls={this.props.book.Launch}/>
+				<div className='line'>
 					<p/>
 				</div>
-					<div className = 'wormhole'
-						onClick = {() => this.props.toggleWormhole(this.props.book.key)}>
-							<br/>
-							<br/>
-							<br/>Wormhole
+				<div className='wormhole'
+				     onClick={() => this.props.toggleWormhole(this.props.book.key)}>
+					<br/>
+					<br/>
+					<br/>Wormhole
 				</div>
 			</div>
 		)
 
 	}
 
-	render(){
+	render() {
 
 		const hoverMenu = this.createHoverMenu();
 		return (
 			<div>
 				<div>
-					{this.props.isCurrentWindow?
+					{this.props.isCurrentWindow ?
 						<div>Current Window</div>
-						:<br/>}
+						: <br/>}
 				</div>
-				<div className = {this.props.isCurrentWindow? 'current-book':'nonexistent-class'}>
+				<div className={this.props.isCurrentWindow ? 'current-book' : 'nonexistent-class'}>
 
 				<BookNavbar book = {this.props.book} deleteBook = {this.props.deleteBook} updateBook = {this.props.updateBook} delinkBook={this.props.delinkBook}/>
 				<div className = 'book'
@@ -122,7 +126,7 @@ class Book extends Component{
 						<div className = 'bk_title' ><h1 className = 'booktitle'>{this.state.title}</h1></div>
 					}
 
-				</div>
+					</div>
 
 					{
 						this.props.isShowingWormhole===this.props.book.key?
@@ -145,12 +149,12 @@ Book.propTypes = {
 		Launch: PropTypes.array.isRequired,
 		WormHole: PropTypes.array.isRequired
 	}),
-		toggleWormhole: PropTypes.func.isRequired,
-		isShowingWormhole: PropTypes.number.isRequired,
-		updateBook: PropTypes.func.isRequired,
-		deleteBook: PropTypes.func.isRequired,
-		delinkBook: PropTypes.func.isRequired,
-		isCurrentWindow: PropTypes.bool.isRequired
+	toggleWormhole: PropTypes.func.isRequired,
+	isShowingWormhole: PropTypes.number.isRequired,
+	updateBook: PropTypes.func.isRequired,
+	deleteBook: PropTypes.func.isRequired,
+	delinkBook: PropTypes.func.isRequired,
+	isCurrentWindow: PropTypes.bool.isRequired
 };
 
 

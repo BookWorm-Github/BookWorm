@@ -64,7 +64,6 @@ class BookShelf extends Component {
 	};
 
 	filterBooks = (e) => {
-
 		const searchTerm = e.target.value;
 		this.props.filterBooks(searchTerm);
 		e.preventDefault();
@@ -75,30 +74,26 @@ class BookShelf extends Component {
 		e.preventDefault();
 	};
 
-	sortBooksAlphabetically = () =>
-	{
-		this.props.sortBooksAlphabetically();
-		this.setState({sortingBooks: !this.state.sortingBooks});
-	};
 	
+	sortBooksAlphabetically = () => {
+		this.props.sortBooksAlphabetically();
+		this.toggleSortBooks();
+	}
 
-	sortBooksBackwards = () =>
-	{
+	sortBooksBackwards = () => {
 		this.props.sortBooksBackwards();
-		this.setState({sortingBooks: !this.state.sortingBooks});
-	};
+		this.toggleSortBooks();
+	}
 
-	sortBooksNewest = () => 
-	{
+	sortBooksNewest = () => {
 		this.props.sortBooksNewest();
-		this.setState({sortingBooks: !this.state.sortingBooks});
-	};
+		this.toggleSortBooks();
+	}
 
-	sortBooksOldest = () =>
-	{
+	sortBooksOldest = () => {
 		this.props.sortBooksOldest();
-		this.setState({sortingBooks: !this.state.sortingBooks});
-	};
+		this.toggleSortBooks();
+	}
 
 
 
@@ -112,7 +107,7 @@ class BookShelf extends Component {
 			<div>
 				<div className='mybooks'>
 					<div className='h1Container'>
-					<h1 id='bkshlf-h1'>My books</h1>
+						<h1 id='bkshlf-h1'>My books</h1>
 					</div>
 					<form id="searchTerm">
 						<input className="search" type="text" onChange={this.filterBooks} placeholder="Search"/>
@@ -129,8 +124,8 @@ class BookShelf extends Component {
 						</div>
 						:
 						<div className='resultsList'>
-						<DefaultList results={this.props.results} toggleAddBook={this.props.toggleAddBook} 
-									updateBook={this.props.updateBook}/>
+							<DefaultList results={this.props.results} toggleAddBook={this.props.toggleAddBook} 
+										updateBook={this.props.updateBook}/>
 						</div>
 							
 					}

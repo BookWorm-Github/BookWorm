@@ -11,17 +11,13 @@ class SortList extends Component {
             azDescendingClicked: false
 		};
     }
-sortBooksAlphabetically = (e) =>{
-	this.props.sortBooksAlphabetically();
-	e.preventDefault();
-}
+
     render() {
 
 		return (
 
             <div>
 				<h1>Sort by:</h1>
-				<button onClick={this.sortBooksAlphabetically}>Click!</button>
 				<br></br>
 				<button onClick={this.props.sortBooksNewest}>Most Recent</button>
 				<br></br>
@@ -30,8 +26,7 @@ sortBooksAlphabetically = (e) =>{
 				<button onClick={this.props.sortBooksBackwards}>A-Z Descending</button>
 				<br></br>
 				<button onClick={this.props.sortBooksAlphabetically}>A-Z</button>
-					
-				
+				<br></br>
 				<p>...</p>
 			</div>
         );

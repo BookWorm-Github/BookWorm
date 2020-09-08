@@ -43,9 +43,8 @@ class Launcher extends Component {
 
 		if (this.props.urls && !this.props.urls.length) {//there are no urls in prop
 			let newTab = 'chrome://newtab';
-			console.log('If running')
-
-			//chrome.runtime.sendMessage({rq: "openWindowOfTabs", urlsToLaunch: newTab}, this._cbWindow.bind(this));
+			
+			chrome.runtime.sendMessage({rq: "openWindowOfTabs", urlsToLaunch: newTab}, this._cbWindow.bind(this));
 		} else {
 			 alert("Opening "+this.props.urls.toString())
 			chrome.runtime.sendMessage({

@@ -5,21 +5,23 @@ class SortList extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-            mostRecentClicked: false,
-            mostUsedClicked: false,
-            azAscendingClicked: false,
-            azDescendingClicked: false
+			mostRecentClicked: false,
+			mostUsedClicked: false,
+			azAscendingClicked: false,
+			azDescendingClicked: false
 		};
-    }
-sortBooksAlphabetically = (e) =>{
-	this.props.sortBooksAlphabetically();
-	e.preventDefault();
-}
-    render() {
+	}
+
+	sortBooksAlphabetically = (e) => {
+		this.props.sortBooksAlphabetically();
+		e.preventDefault();
+	}
+
+	render() {
 
 		return (
 
-            <div>
+			<div>
 				<h1>Sort by:</h1>
 				<button onClick={this.sortBooksAlphabetically}>Click!</button>
 				<br></br>
@@ -30,15 +32,13 @@ sortBooksAlphabetically = (e) =>{
 				<button onClick={this.props.sortBooksBackwards}>A-Z Descending</button>
 				<br></br>
 				<button onClick={this.props.sortBooksAlphabetically}>A-Z</button>
-					
-				
+
+
 				<p>...</p>
 			</div>
-        );
-        };
+		);
+	};
 }
-
-
 
 
 export default (SortList);

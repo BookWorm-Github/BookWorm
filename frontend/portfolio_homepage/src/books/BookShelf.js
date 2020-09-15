@@ -24,11 +24,7 @@ class BookShelf extends Component {
 		};
 	}
 
-	
 
-
-	
-	
 	componentDidMount = () => {//updating the user's personal books
 		this.setState({
 			searchResults: this.props.bks,
@@ -37,7 +33,7 @@ class BookShelf extends Component {
 	};
 
 
-	createBook = (_book, _index) => { 
+	createBook = (_book, _index) => {
 
 		// this.printBook(_index,_book);
 		console.log("CurWinID in BookShelf is " + this.props.curWinID);
@@ -75,32 +71,26 @@ class BookShelf extends Component {
 		e.preventDefault();
 	};
 
-	sortBooksAlphabetically = () =>
-	{
+	sortBooksAlphabetically = () => {
 		this.props.sortBooksAlphabetically();
 		this.setState({sortingBooks: !this.state.sortingBooks});
 	};
-	
 
-	sortBooksBackwards = () =>
-	{
+
+	sortBooksBackwards = () => {
 		this.props.sortBooksBackwards();
 		this.setState({sortingBooks: !this.state.sortingBooks});
 	};
 
-	sortBooksNewest = () => 
-	{
+	sortBooksNewest = () => {
 		this.props.sortBooksNewest();
 		this.setState({sortingBooks: !this.state.sortingBooks});
 	};
 
-	sortBooksOldest = () =>
-	{
+	sortBooksOldest = () => {
 		this.props.sortBooksOldest();
 		this.setState({sortingBooks: !this.state.sortingBooks});
 	};
-
-
 
 
 	render() {
@@ -112,7 +102,7 @@ class BookShelf extends Component {
 			<div>
 				<div className='mybooks'>
 					<div className='h1Container'>
-					<h1 id='bkshlf-h1'>My books</h1>
+						<h1 id='bkshlf-h1'>My books</h1>
 					</div>
 					<form id="searchTerm">
 						<input className="search" type="text" onChange={this.filterBooks} placeholder="Search"/>
@@ -121,18 +111,18 @@ class BookShelf extends Component {
 					</form>
 
 					{this.state.sortingBooks ?
-						<div >
+						<div>
 							<SortList sortBooksAlphabetically={this.sortBooksAlphabetically}
-								sortBooksBackwards={this.sortBooksBackwards}
-								sortBooksNewest={this.sortBooksNewest}
-								sortBooksOldest={this.sortBooksOldest}/>
+							          sortBooksBackwards={this.sortBooksBackwards}
+							          sortBooksNewest={this.sortBooksNewest}
+							          sortBooksOldest={this.sortBooksOldest}/>
 						</div>
 						:
 						<div className='resultsList'>
-						<DefaultList results={this.props.results} toggleAddBook={this.props.toggleAddBook} 
-									updateBook={this.props.updateBook}/>
+							<DefaultList results={this.props.results} toggleAddBook={this.props.toggleAddBook}
+							             updateBook={this.props.updateBook}/>
 						</div>
-							
+
 					}
 				</div>
 			</div>
@@ -140,9 +130,7 @@ class BookShelf extends Component {
 		);
 	}
 
-	
 
-	
 	//print methods for debug
 	printBkList(bookList) {
 		//console.log("Printing Book List");

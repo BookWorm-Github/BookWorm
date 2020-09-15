@@ -18,15 +18,6 @@ class User extends Component {
 	componentDidMount = async () => {
 		await bw_auth.onAuthStateChanged(async user => {
 			if (user) {//if it exists, grab user bookData from the database into app
-				// //console.log(userAuth.providerData)
-				// //console.log(userAuth.providerId)
-
-				//TEST FUNCTIONS FOR UPDATING THE DATABASE
-				// await storeBook({
-				// 	key: Date.now(),
-				// 	title: "applesss",
-				// 	time_created: Date.now()
-				// 	}, user.uid)
 
 				await populatePortfolioHomepage(user.uid)
 					.then(async books => {

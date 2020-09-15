@@ -38,7 +38,7 @@ class Launcher extends Component {
 	}
 
 	openURLs = (e) => {
-	
+
 		e.preventDefault();
 
 		if (this.props.urls && !this.props.urls.length) {//there are no urls in prop
@@ -47,12 +47,12 @@ class Launcher extends Component {
 
 			//chrome.runtime.sendMessage({rq: "openWindowOfTabs", urlsToLaunch: newTab}, this._cbWindow.bind(this));
 		} else {
-			 alert("Opening "+this.props.urls.toString())
+			alert("Opening " + this.props.urls.toString())
 			chrome.runtime.sendMessage({
 				rq: "openWindowOfTabs",
 				urlsToLaunch: this.props.urls
 			}, this._cbWindow.bind(this));
-		}	
+		}
 	};
 
 	_cbWindow = (response) => {

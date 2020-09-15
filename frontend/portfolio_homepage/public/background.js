@@ -2,7 +2,8 @@
 //TODO: LEARN TO USE PORT RATHER THAN USING OUR ONE TIME MESSAGING SYSTEM FOR OPTIMIZATION
 //TODO: OPTIMIZATION, SHOULD STORE EVERYTHING USING CHROME.STORAGE AND PUT BACKGROUND SCRIPT TO PERSISTENT == FALSE... LOOK BELOW
 //https://levelup.gitconnected.com/how-to-use-background-script-to-fetch-data-in-chrome-extension-ef9d7f69625d
-const sessionInfo = function() {
+const sessionInfo = function () {
+	let windowScreenShots = {}; //stores the last used tab as a screenshot under the window id
 	let browserWindowsOfTabs = {}; //stores all the opened/existing windows in a key value pair key = windowId and value = tabIds for current windowId
 	let launchOrder = {}; //An array that stores the specific order of a window's Launch. launchOrder[windowId] returns an array that contains the tabId of the tabs inside the specified windowId.
 	function init() {//initialize the browserWindowsOfTabs with the currently opened windows of tabs.
@@ -52,7 +53,7 @@ const sessionInfo = function() {
 		return true;
 	}
 
-	function addWindow(windowId, windowInfo){//adds new window into the object browserWindowsOfTabs. Occurs when user opens a new window,
+	function addWindow(windowId, windowInfo) {//adds new window into the object browserWindowsOfTabs. Occurs when user opens a new window,
 		// console.log("windowInfo is ");
 		// console.log(windowInfo);
 		const newWindowInfo = {
@@ -65,7 +66,7 @@ const sessionInfo = function() {
 		if (!launchOrder.hasOwnProperty(windowId)) {
 			launchOrder[windowId] = [];
 		}
-		if(!windowScreenShots.hasOwnProperty(windowId)){
+		if (!windowScreenShots.hasOwnProperty(windowId)) {
 			windowScreenShots[windowId] = "";
 		}
 		Object.assign(browserWindowsOfTabs[windowId], newWindowInfo);//to use Object.assign, both the parameters (target and source respectively) need to be objects and not undefined/null...
@@ -75,17 +76,16 @@ const sessionInfo = function() {
 		let isDelete = delete browserWindowsOfTabs[windowId];
 		let isLaunchOrderDeleted = delete launchOrder[windowId];
 		let isWindowScreenShotDeleted = delete windowScreenShots[windowId];
-		if(isDelete && isLaunchOrderDeleted && isWindowScreenShotDeleted){
+		if (isDelete && isLaunchOrderDeleted && isWindowScreenShotDeleted) {
 			// console.log("deleting window id: " + windowId + " was successful");
-		}
-		else{
+		} else {
 			console.error("something went wrong with deleting WINDOW id " + windowId);
 		}
 		return isDelete && isLaunchOrderDeleted && isWindowScreenShotDeleted;
 	}
 
-	function addTab(windowId, tabInfo){//adds a new tab into the object browserWindowsOfTabs. Should occur when user opens a new tab
-		if(!browserWindowsOfTabs[windowId].hasOwnProperty([tabInfo.id])){//if tabInfo.id is undefined as a key in browserWindowsOfTabs, create empty object for the tab
+	function addTab(windowId, tabInfo) {//adds a new tab into the object browserWindowsOfTabs. Should occur when user opens a new tab
+		if (!browserWindowsOfTabs[windowId].hasOwnProperty([tabInfo.id])) {//if tabInfo.id is undefined as a key in browserWindowsOfTabs, create empty object for the tab
 			// console.log("initializing tabInfo.id in windOfTabs");
 			browserWindowsOfTabs[windowId][tabInfo.id] = {};
 
@@ -104,11 +104,10 @@ const sessionInfo = function() {
 
 		const removedTabIndex = launchOrder[windowId].indexOf(tabId);
 		let isDelete = delete browserWindowsOfTabs[windowId][tabId];
-		let isDeleteLO = launchOrder[windowId].splice(removedTabIndex,1)
-		if(isDelete && isDeleteLO){
+		let isDeleteLO = launchOrder[windowId].splice(removedTabIndex, 1)
+		if (isDelete && isDeleteLO) {
 			// console.log("deleting tab id: " + tabId + " was successful");
-		}
-		else{
+		} else {
 			console.error("something went wrong with deleting tab id " + tabId);
 		}
 		return isDelete && isDeleteLO;
@@ -126,8 +125,8 @@ const sessionInfo = function() {
 	function updateToWormHole(tabInfo) {//gets called whenever a new url gets inputted or a newtab is found, if its chrome://newtab/ then or anything that starts with chrome:// should not be saved in wormHole.
 		let isAddedToWormHole = false;
 
-		if(tabInfo.status === "complete"){//we only store urls that are completed in the tab...
-			if(tabInfo.url.startsWith("chrome://newtab/")){//if the url contains ANY of these cases of elements inside their url, then we ditch it.
+		if (tabInfo.status === "complete") {//we only store urls that are completed in the tab...
+			if (tabInfo.url.startsWith("chrome://newtab/")) {//if the url contains ANY of these cases of elements inside their url, then we ditch it.
 				console.log("new tab not adding to chrome");
 			} else if (existInWormHole(tabInfo.windowId, tabInfo)) {//if the link already exists in the wormhole, then we ditch it.
 				console.log(tabInfo.url + " already exists in wormhole");
@@ -185,19 +184,19 @@ chrome.runtime.onInstalled.addListener(function (details) {
 });
 
 chrome.runtime.onMessage.addListener(//every time the background script receives a message, this method gets called
-	async function(msg, sender, sendResponse) {
-		switch(msg.rq) {
+	async function (msg, sender, sendResponse) {
+		switch (msg.rq) {
 			// case ("linkToSenderWindow"):
 			// 	sessionInfo.browserWindowsOfTabs[sender.tab.windowId].linkedBook = msg.linkedBookId;//TODO: create the message for this case and specify the message to have linkedBookId
 			// 	break;
 			case ("DesktopInfo"):
 				for (const [windowId, windowObject] of Object.entries(sessionInfo.browserWindowsOfTabs)) {
 					for (const [key, value] of Object.entries(windowObject)) {//looking for [tabId, tabInfo]
-						if(key !== 'wormHole' && key !== 'windowInfo' && value.active){
+						if (key !== 'wormHole' && key !== 'windowInfo' && value.active) {
 							if (value.url === '' || value.url === 'about:blank' || value.url.startsWith('chrome://') || value.url.startsWith('chrome-extension://') || value.url.startsWith('https://chrome.google.com/webstore')) {
 								console.log('tab cannot be captured');
 							} else {
-								 await chrome.tabs.captureVisibleTab(parseInt(windowId), dataUrl => {
+								await chrome.tabs.captureVisibleTab(parseInt(windowId), dataUrl => {
 									sessionInfo.windowScreenShots[windowId] = dataUrl;
 									console.log(dataUrl);
 								})
@@ -210,13 +209,13 @@ chrome.runtime.onMessage.addListener(//every time the background script receives
 				sendResponse({windowScreenShots: sessionInfo.windowScreenShots});
 				break;
 
-		    case ("LaunchInfo"):
+			case ("LaunchInfo"):
 				sendResponse({ID: "LaunchInfo", LaunchInfo: sessionInfo.launchOrder});
 				break;
 
 			case ("WormholeInfo"): //should be called when the content script is linking to currently active window.
-		    	console.log("sending message of wormhole from windowId: " + msg.linkedWindowId);
-		    	if(!sessionInfo.browserWindowsOfTabs[msg.linkedWindowId]){//if the linked windowId given to us doesn't exist in the browsing session, then ignore it.
+				console.log("sending message of wormhole from windowId: " + msg.linkedWindowId);
+				if (!sessionInfo.browserWindowsOfTabs[msg.linkedWindowId]) {//if the linked windowId given to us doesn't exist in the browsing session, then ignore it.
 					console.log(msg.linkedWindowId + " is not currently an active/open window");
 					sendResponse({ID: "WormholeInfo", WormholeInfo: {}});
 				} else {
@@ -229,21 +228,23 @@ chrome.runtime.onMessage.addListener(//every time the background script receives
 
 			case("getCurrWindowId")://getting the window Id that the content script was called in.
 
-                // console.log("Background received request for current window id and is sending back "+sender.tab.windowId);
-                sendResponse({ID: "getCurrWindowId", windowId: sender.tab.windowId});
-		        break;
+				// console.log("Background received request for current window id and is sending back "+sender.tab.windowId);
+				sendResponse({ID: "getCurrWindowId", windowId: sender.tab.windowId});
+				break;
 
 			case("openWindowOfTabs")://getting the current active window
 				let winId = -1;
-			    function retWinId(createdWindow){
-			        if(createdWindow !== undefined){
-			            console.log("retWinId has window "+createdWindow.id);
-			            winId = createdWindow.id;
-			            sendResponse({ID: "openWindowOfTabs", windowId: winId});
-			        }
-			    }
-			    chrome.windows.create({url:msg.urlsToLaunch, state:"maximized"}, retWinId);//opens a maximized windows of tabs
-			    break;
+
+			function retWinId(createdWindow) {
+				if (createdWindow !== undefined) {
+					console.log("retWinId has window " + createdWindow.id);
+					winId = createdWindow.id;
+					sendResponse({ID: "openWindowOfTabs", windowId: winId});
+				}
+			}
+
+				chrome.windows.create({url: msg.urlsToLaunch, state: "maximized"}, retWinId);//opens a maximized windows of tabs
+				break;
 
 			default:
 				console.error("unknown message");
@@ -257,14 +258,14 @@ chrome.tabs.onActivated.addListener(activeInfo => {//checks in browserWindowsOfT
 	chrome.tabs.query({windowId: activeInfo.windowId}, tabs => {
 		tabs.forEach(tab => {
 			const savedTabInfo = sessionInfo.browserWindowsOfTabs[activeInfo.windowId][tab.id].active
-			if (savedTabInfo !== tab.active){
+			if (savedTabInfo !== tab.active) {
 				sessionInfo.browserWindowsOfTabs[activeInfo.windowId][tab.id].active = !savedTabInfo
 			}
 		})
 	})
 })
 
-chrome.tabs.onCreated.addListener(function(tab) {
+chrome.tabs.onCreated.addListener(function (tab) {
 	sessionInfo.storeTab(tab.windowId, tab);
 	sendToContent(tab.windowId);
 });
@@ -275,14 +276,14 @@ chrome.tabs.onAttached.addListener(function (tabId, attachInfo) {
 });
 
 
-chrome.tabs.onRemoved.addListener(function(tabId, removed) {
-	console.log(tabId+" is the removed tab id");
+chrome.tabs.onRemoved.addListener(function (tabId, removed) {
+	console.log(tabId + " is the removed tab id");
 	sendToContent(removed.windowId);
 	sessionInfo.removeTab(removed.windowId, tabId);
 });
 
-chrome.tabs.onDetached.addListener(function(tabId, detachInfo) {
-	console.log(tabId+" from "+ detachInfo.oldWindowID+ " is the removed tab id");
+chrome.tabs.onDetached.addListener(function (tabId, detachInfo) {
+	console.log(tabId + " from " + detachInfo.oldWindowID + " is the removed tab id");
 	sendToContent(detachInfo.oldWindowId);
 	sessionInfo.removeTab(detachInfo.oldWindowId, tabId);
 });
@@ -294,35 +295,27 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {//when a ne
 	sendToContent(tab.windowId);
 });
 
-chrome.tabs.onActivated.addListener(function(activeInfo) {
-
-});
-
 chrome.tabs.onMoved.addListener((tabId, moveInfo) => {
 	// console.log(tabId);
 	// console.log("moved in windowId: " + moveInfo.windowId + " from index: " + moveInfo.fromIndex + " to index: " + moveInfo.toIndex);
 	sessionInfo.updateLaunchOrder(moveInfo.windowId);
 });
 
-chrome.windows.onRemoved.addListener(function(windowId) {
+chrome.windows.onRemoved.addListener(function (windowId) {
 	console.log("window closed");
 	sendToContent(windowId);
 	sessionInfo.removeWindow(windowId);
 });
 
 chrome.windows.onCreated.addListener(function(window) {
-	console.log(window);
-
+	// console.log(window);
 	sendToContent(window.id);
 	sessionInfo.storeWindow(window.id, window);
 });
 
 //TODO: fix sendToContent
-function sendToContent(windowID){//param: window id of the updated content
-	console.log('sending to content from background script about window '+windowID)
+function sendToContent(windowID) {//param: window id of the updated content
+	console.log('sending to content from background script about window ' + windowID)
 	let windowInfo = sessionInfo.queryWindowInfo(windowID);
 }
 
-function openHomePage(){
-   chrome.tabs.create({url: 'index.html'});
-}

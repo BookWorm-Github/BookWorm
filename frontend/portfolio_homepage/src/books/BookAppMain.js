@@ -7,7 +7,7 @@ import SortBooks from '../sortItems/SortBooks'
 import Hotkeys from 'react-hot-keys';
 import {deleteBook, deLinkBookfromWindow, storeBook, updateBookLW} from "../firebase/firestore/db_functions";
 import header from '../Images/Header.png';
-import { buildQueries } from '@testing-library/react'
+import {buildQueries} from '@testing-library/react'
 // import { bw_auth, generateUserDocument } from "../firebase/init.js";
 //added hotkeys: https://github.com/jaywcjlove/react-hotkeys#readme
 
@@ -43,57 +43,6 @@ class BookAppMain extends Component {
 		// chrome.runtime.onMessage.addListener(this.handleMessage.bind(this));
 	};
 
-	// handleMessage(message, sender, sendResponse){
-	// 	let wormUrl = [];
-	// 	let launchUrl = [];
-	// 	switch (message.ID) {
-	// 		case "urlsForWormhole":
-	// 			console.log("message for wormhole: ");
-	// 			console.log(message.WormholeInfo);
-	// 			console.log(this.state.urlsForWormhole);
-	// 			message.WormholeInfo.forEach(tabInfo => {//parse the information given to us, taking out the tabs specifically for each urlInfo we get
-	// 				wormUrl.push(tabInfo.url);
-	// 			});
-	// 			break;
-	// 		case "urlsForLaunch":
-	// 			console.log("message for launch: ");
-	// 			console.log(message.urlsForLaunch);
-	// 			console.log(this.state.urlsForLaunch);
-	// 			break;
-	//
-	// 		default:
-	// 			console.log("unknown message in content");
-	// 			console.log(message);
-	// 			break;
-	// 	}
-	//
-	// 	let currBook = null;
-	// 	// this.setState({curWinID:message.winId})
-	// 	for (let i = 0; i < this.state.bookshelf.length; i++) {
-	// 	  if(message.winId===this.state.bookshelf[i].linkedWindowId){//if message window id matches book window id
-	//
-	// 		currBook = this.state.bookshelf[i];
-	// 		console.log("handled msg for "+currBook.title);
-	// 		}
-	// 	}
-	// 	if(currBook!==null){ //if there is bk to be updated
-	// 		if(message.urlsForLaunch&&message.urlsForLaunch.length){//update launch if launch urls are not empty
-	// 			this.updateBook(currBook,currBook.linkedWindowId,message.urlsForLaunch,currBook.WormHole);
-	// 			console.log("book "+currBook.title+"updated launch to be "+message.urlsForLaunch);
-	// 		}
-	// 		if(message.urlsForWormhole&&message.urlsForWormhole.length){//update wormhole if wormhole urls are not empty
-	// 			this.updateBook(currBook,currBook.linkedWindowId,currBook.Launch,wormUrl);
-	// 			console.log("book "+currBook.title+"updated wormhole to be "+message.urlsForWormhole);
-	// 		}
-	//
-	//
-	//
-	// 	}
-	// 	else{
-	// 		console.log("bkappmain: no linkld book with id "+message.winId+ "found");
-	// 	}
-	// }
-
 	/*Methods for adding and deleting books*/
 	toggleAddBook = () => {
 		//console.log("Adding book");
@@ -101,7 +50,7 @@ class BookAppMain extends Component {
 	};
 
 	//Method for switching between displaying sort list and list of books
-	
+
 
 	//updates the linkedWindow, launch and wormhole of a book in database
 	updateBook = (bookToBeUpdated, linkedWindowId, launch, wormhole, shouldClosePortal) => {
@@ -163,6 +112,7 @@ class BookAppMain extends Component {
 			return book;
 		});
 
+		console.log(newBook);
 		//storing the newBook that is linked to the current window
 		storeBook(newBook, this.props.user.uid).then(e => {
 			this.setState(prevState => ({
@@ -193,53 +143,51 @@ class BookAppMain extends Component {
 	};
 
 	sortBooksAlphabetically = () => {
-		let unsorted = []; 
+		let unsorted = [];
 		let sorted = []; //sets up an empty array called unsorted and one called sorted
-        unsorted = this.state.bookshelf //sets unsorted to whatever's in bookshelf
-        sorted = unsorted.sort((a,b) => (a.title.toLowerCase() > b.title.toLowerCase()) ?1: -1); //sorts 'unsorted' alphabetically and sets that equal to sorted
-        console.log(sorted);
-        this.setState({ 
-		  	searchResults: sorted,
+		unsorted = this.state.bookshelf //sets unsorted to whatever's in bookshelf
+		sorted = unsorted.sort((a, b) => (a.title.toLowerCase() > b.title.toLowerCase()) ? 1 : -1); //sorts 'unsorted' alphabetically and sets that equal to sorted
+		console.log(sorted);
+		this.setState({
+			searchResults: sorted,
 		});
 
 	}
-	
+
 
 	sortBooksBackwards = () => {
-		let unsorted = []; 
+		let unsorted = [];
 		let sorted = []; //sets up an empty array called unsorted and one called sorted
-        unsorted = this.state.bookshelf //sets unsorted to whatever's in bookshelf
-        sorted = unsorted.sort((a,b) => (a.title.toLowerCase() > b.title.toLowerCase()) ? -1: 1); //sorts 'unsorted' alphabetically and sets that equal to sorted
-        console.log(sorted);
-        this.setState({ 
-		  	searchResults: sorted,
+		unsorted = this.state.bookshelf //sets unsorted to whatever's in bookshelf
+		sorted = unsorted.sort((a, b) => (a.title.toLowerCase() > b.title.toLowerCase()) ? -1 : 1); //sorts 'unsorted' alphabetically and sets that equal to sorted
+		console.log(sorted);
+		this.setState({
+			searchResults: sorted,
 		});
 
 	}
 
-	sortBooksNewest = () =>{
+	sortBooksNewest = () => {
 		let unsorted = [];
 		let sorted = [];
-        unsorted=this.state.bookshelf;
-        sorted = unsorted.sort((a,b) => (a.key > b.key) ? -1: 1)
-        console.log(sorted);
-        this.setState({
+		unsorted = this.state.bookshelf;
+		sorted = unsorted.sort((a, b) => (a.key > b.key) ? -1 : 1)
+		console.log(sorted);
+		this.setState({
 			orderedResults: sorted,
 		});
-    }
+	}
 
-	sortBooksOldest = () =>{
+	sortBooksOldest = () => {
 		let unsorted = [];
 		let sorted = [];
-        unsorted=this.state.bookshelf;
-        sorted = unsorted.sort((a,b) => (a.key > b.key) ? 1: -1)
-        console.log(sorted);
-        this.setState({
+		unsorted = this.state.bookshelf;
+		sorted = unsorted.sort((a, b) => (a.key > b.key) ? 1 : -1)
+		console.log(sorted);
+		this.setState({
 			orderedResults: sorted,
 		});
-    }
-	
-
+	}
 
 
 	filterBooks = (searchTerm) => {
@@ -269,7 +217,7 @@ class BookAppMain extends Component {
 		});
 	}
 
-	
+
 	render() {
 		return (
 			<div>
@@ -277,22 +225,22 @@ class BookAppMain extends Component {
 				<Hotkeys keyName="shift+a" onKeyUp={this.toggleAddBook}/>
 				{/*<button onClick = {this.getURLS}>Get Open Windows</button>*/}
 				<div id="headerContainer">
-				<div id='header'>
-					<img src={header} alt="header" id="headerlogo"/>x
-				</div>
+					<div id='header'>
+						<img src={header} alt="header" id="headerlogo"/>x
+					</div>
 				</div>
 				<div className={this.state.addingBook ? 'blur-bg' : 'clear-bg'}>
 					<BookShelf curWinID={this.state.curWinID} bks={this.state.bookshelf}
-					           	results={this.state.searchResults} updateBook={this.updateBook}
-								deleteBook={this.deleteBook} delinkBook={this.delinkBook}
-								toggleAddBook={this.toggleAddBook} filterBooks={this.filterBooks}
-								sortBooksAlphabetically={this.sortBooksAlphabetically}
-								sortBooksBackwards={this.sortBooksBackwards}
-								sortBooksNewest={this.sortBooksNewest}
-								sortBooksOldest={this.sortBooksOldest}
+					           results={this.state.searchResults} updateBook={this.updateBook}
+					           deleteBook={this.deleteBook} delinkBook={this.delinkBook}
+					           toggleAddBook={this.toggleAddBook} filterBooks={this.filterBooks}
+					           sortBooksAlphabetically={this.sortBooksAlphabetically}
+					           sortBooksBackwards={this.sortBooksBackwards}
+					           sortBooksNewest={this.sortBooksNewest}
+					           sortBooksOldest={this.sortBooksOldest}
 					/>
 				</div>
-				
+
 				{this.state.addingBook ?
 					<div>
 						<AddBookUI
@@ -314,7 +262,7 @@ class BookAppMain extends Component {
 }
 
 export default (BookAppMain);
- 
+
 
 
 

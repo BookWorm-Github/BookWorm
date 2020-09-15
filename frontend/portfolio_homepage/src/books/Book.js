@@ -115,25 +115,26 @@ class Book extends Component {
 				</div>
 				<div className={this.props.isCurrentWindow ? 'current-book' : 'nonexistent-class'}>
 
-				<BookNavbar book = {this.props.book} deleteBook = {this.props.deleteBook} updateBook = {this.props.updateBook} delinkBook={this.props.delinkBook}/>
-				<div className = 'book'
-					onMouseEnter = {()=>this.setState({isHovered:true})}
-					onMouseLeave = {()=>this.setState({isHovered:false})}>
-					{
-						this.state.isHovered?
-							hoverMenu
-						:
-						<div className = 'bk_title' ><h1 className = 'booktitle'>{this.state.title}</h1></div>
-					}
+					<BookNavbar book={this.props.book} deleteBook={this.props.deleteBook}
+					            updateBook={this.props.updateBook} delinkBook={this.props.delinkBook}/>
+					<div className='book'
+					     onMouseEnter={() => this.setState({isHovered: true})}
+					     onMouseLeave={() => this.setState({isHovered: false})}>
+						{
+							this.state.isHovered ?
+								hoverMenu
+								:
+								<div className='bk_title'><h1 className='booktitle'>{this.state.title}</h1></div>
+						}
 
 					</div>
 
 					{
-						this.props.isShowingWormhole===this.props.book.key?
-						<div>
+						this.props.isShowingWormhole === this.props.book.key ?
+							<div>
 
-							<Wormhole book = {this.props.book} toggleWormhole = {this.props.toggleWormhole}/>
-						</div> : <div/>
+								<Wormhole book={this.props.book} toggleWormhole={this.props.toggleWormhole}/>
+							</div> : <div/>
 					}
 				</div>
 			</div>

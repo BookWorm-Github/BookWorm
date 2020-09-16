@@ -107,7 +107,6 @@ class BookAppMain extends Component {
 					// book.Launch = null;
 					// book.WormHole = null;
 					// book.linkedWindowId = -1;
-
 				});
 			return book;
 		});

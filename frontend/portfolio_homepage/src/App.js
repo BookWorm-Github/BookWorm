@@ -9,8 +9,7 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			linkedBook: "", //the current book that is linked to the window
-			urlsForLaunch: []
+			linkedBook: "" //the current book that is linked to the window
 		};
 	}
 

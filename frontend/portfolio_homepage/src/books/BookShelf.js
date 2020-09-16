@@ -29,7 +29,7 @@ class BookShelf extends Component {
 		this.setState({
 			searchResults: this.props.bks,
 		});
-		console.log(this.props.bks)
+		// console.log(this.props.bks)
 	};
 
 

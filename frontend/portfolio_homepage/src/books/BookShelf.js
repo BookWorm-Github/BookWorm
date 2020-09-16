@@ -60,7 +60,6 @@ class BookShelf extends Component {
 	};
 
 	filterBooks = (e) => {
-
 		const searchTerm = e.target.value;
 		this.props.filterBooks(searchTerm);
 		e.preventDefault();
@@ -71,26 +70,26 @@ class BookShelf extends Component {
 		e.preventDefault();
 	};
 
+
 	sortBooksAlphabetically = () => {
 		this.props.sortBooksAlphabetically();
-		this.setState({sortingBooks: !this.state.sortingBooks});
-	};
-
+		this.toggleSortBooks();
+	}
 
 	sortBooksBackwards = () => {
 		this.props.sortBooksBackwards();
-		this.setState({sortingBooks: !this.state.sortingBooks});
-	};
+		this.toggleSortBooks();
+	}
 
 	sortBooksNewest = () => {
 		this.props.sortBooksNewest();
-		this.setState({sortingBooks: !this.state.sortingBooks});
-	};
+		this.toggleSortBooks();
+	}
 
 	sortBooksOldest = () => {
 		this.props.sortBooksOldest();
-		this.setState({sortingBooks: !this.state.sortingBooks});
-	};
+		this.toggleSortBooks();
+	}
 
 
 	render() {
@@ -120,7 +119,7 @@ class BookShelf extends Component {
 						:
 						<div className='resultsList'>
 							<DefaultList results={this.props.results} toggleAddBook={this.props.toggleAddBook}
-							             updateBook={this.props.updateBook}/>
+										updateBook={this.props.updateBook}/>
 						</div>
 
 					}

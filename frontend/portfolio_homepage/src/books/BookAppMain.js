@@ -45,7 +45,6 @@ class BookAppMain extends Component {
 
 	/*Methods for adding and deleting books*/
 	toggleAddBook = () => {
-		//console.log("Adding book");
 		this.setState({addingBook: !this.state.addingBook});
 	};
 
@@ -141,6 +140,35 @@ class BookAppMain extends Component {
 		});
 	};
 
+
+
+	filterBooks = (searchTerm) => {
+		// Variable to hold the original version of the list
+		let currentList = [];
+		// Variable to hold the filtered list before putting into state
+		let newList = [];
+
+		// If the search bar isn't empty
+		if (searchTerm !== "") {
+			// Assign the original list to currentList
+			currentList = this.state.bookshelf;
+			// Use .filter() to determine which items should be displayed
+			// based on the search terms
+			newList = currentList.filter(item => {
+				// change current item to lowercase and searh only the part before the regex
+				const filter = searchTerm;
+				return item.title.includes(filter)
+			});
+		} else {
+			// If the search bar is empty, set newList to original task list: do we want this effect?
+			newList = this.state.bookshelf;
+		}
+		// Set the filtered state based on what our rules added to newList
+		this.setState({
+			searchResults: newList
+		});
+	}
+
 	sortBooksAlphabetically = () => {
 		let unsorted = [];
 		let sorted = []; //sets up an empty array called unsorted and one called sorted
@@ -186,35 +214,7 @@ class BookAppMain extends Component {
 		this.setState({
 			orderedResults: sorted,
 		});
-	}
-
-
-	filterBooks = (searchTerm) => {
-		// Variable to hold the original version of the list
-		let currentList = [];
-		// Variable to hold the filtered list before putting into state
-		let newList = [];
-
-		// If the search bar isn't empty
-		if (searchTerm !== "") {
-			// Assign the original list to currentList
-			currentList = this.state.bookshelf;
-			// Use .filter() to determine which items should be displayed
-			// based on the search terms
-			newList = currentList.filter(item => {
-				// change current item to lowercase and searh only the part before the regex
-				const filter = searchTerm;
-				return item.title.includes(filter)
-			});
-		} else {
-			// If the search bar is empty, set newList to original task list: do we want this effect?
-			newList = this.state.bookshelf;
-		}
-		// Set the filtered state based on what our rules added to newList
-		this.setState({
-			searchResults: newList
-		});
-	}
+    }
 
 
 	render() {
@@ -222,13 +222,13 @@ class BookAppMain extends Component {
 			<div>
 				{/*Hotkey for dev only, when lots of experimental books are added. take away from final product.*/}
 				<Hotkeys keyName="shift+a" onKeyUp={this.toggleAddBook}/>
-				{/*<button onClick = {this.getURLS}>Get Open Windows</button>*/}
 				<div id="headerContainer">
 					<div id='header'>
 						<img src={header} alt="header" id="headerlogo"/>x
 					</div>
 				</div>
 				<div className={this.state.addingBook ? 'blur-bg' : 'clear-bg'}>
+
 					<BookShelf curWinID={this.state.curWinID} bks={this.state.bookshelf}
 					           results={this.state.searchResults} updateBook={this.updateBook}
 					           deleteBook={this.deleteBook} delinkBook={this.delinkBook}

@@ -30,10 +30,13 @@ class BookShelf extends Component {
 	
 	
 	componentDidMount = () => {//updating the user's personal books
-		this.setState({
-			searchResults: this.props.bks,
-		});
-		console.log(this.props.bks)
+	//waiting 1 ms before setting state gives time for props to be updated
+	setTimeout(() => {this.setState({
+		searchResults: this.props.bks,
+	});
+	console.log(this.props.bks);
+	console.log(this.state.searchResults);
+	}, 1);	
 	};
 
 
@@ -63,9 +66,34 @@ class BookShelf extends Component {
 
 	};
 
+	
+
 	filterBooks = (e) => {
 		const searchTerm = e.target.value;
-		this.props.filterBooks(searchTerm);
+		// Variable to hold the original version of the list
+		let currentList = [];
+		// Variable to hold the filtered list before putting into state
+		let newList = [];
+
+		// If the search bar isn't empty
+		if (searchTerm !== "") {
+			// Assign the original list to currentList
+			currentList = this.state.bookshelf;
+			// Use .filter() to determine which items should be displayed
+			// based on the search terms
+			newList = currentList.filter(item => {
+				// change current item to lowercase and searh only the part before the regex
+				const filter = searchTerm;
+				return item.title.includes(filter)
+			});
+		} else {
+			// If the search bar is empty, set newList to original task list: do we want this effect?
+			newList = this.state.bookshelf;
+		}
+		// Set the filtered state based on what our rules added to newList
+		this.setState({
+			searchResults: newList
+		});
 		e.preventDefault();
 	};
 
@@ -76,27 +104,130 @@ class BookShelf extends Component {
 
 	
 	sortBooksAlphabetically = () => {
-		this.props.sortBooksAlphabetically();
+		let unsorted = []; 
+		let sorted = []; //sets up an empty array called unsorted and one called sorted
+        unsorted = this.state.bookshelf //sets unsorted to whatever's in bookshelf
+        sorted = unsorted.sort((a,b) => (a.title.toLowerCase() > b.title.toLowerCase()) ?1: -1); //sorts 'unsorted' alphabetically and sets that equal to sorted
+        console.log(sorted);
+        this.setState({ 
+		  	searchResults: sorted,
+		});
 		this.toggleSortBooks();
 	}
 
 	sortBooksBackwards = () => {
-		this.props.sortBooksBackwards();
+		let unsorted = []; 
+		let sorted = []; //sets up an empty array called unsorted and one called sorted
+        unsorted = this.state.bookshelf //sets unsorted to whatever's in bookshelf
+        sorted = unsorted.sort((a,b) => (a.title.toLowerCase() > b.title.toLowerCase()) ? -1: 1); //sorts 'unsorted' alphabetically and sets that equal to sorted
+        console.log(sorted);
+        this.setState({ 
+		  	searchResults: sorted,
+		});
 		this.toggleSortBooks();
 	}
 
 	sortBooksNewest = () => {
-		this.props.sortBooksNewest();
+		let unsorted = [];
+		let sorted = [];
+        unsorted=this.state.bookshelf;
+        sorted = unsorted.sort((a,b) => (a.key > b.key) ? -1: 1)
+        console.log(sorted);
+        this.setState({
+			orderedResults: sorted,
+		});
 		this.toggleSortBooks();
 	}
 
 	sortBooksOldest = () => {
-		this.props.sortBooksOldest();
+		let unsorted = [];
+		let sorted = [];
+        unsorted=this.state.bookshelf;
+        sorted = unsorted.sort((a,b) => (a.key > b.key) ? 1: -1)
+        console.log(sorted);
+        this.setState({
+			orderedResults: sorted,
+		});
 		this.toggleSortBooks();
 	}
 
 
 
+/*	filterBooks = (searchTerm) => {
+		// Variable to hold the original version of the list
+		let currentList = [];
+		// Variable to hold the filtered list before putting into state
+		let newList = [];
+
+		// If the search bar isn't empty
+		if (searchTerm !== "") {
+			// Assign the original list to currentList
+			currentList = this.state.bookshelf;
+			// Use .filter() to determine which items should be displayed
+			// based on the search terms
+			newList = currentList.filter(item => {
+				// change current item to lowercase and searh only the part before the regex
+				const filter = searchTerm;
+				return item.title.includes(filter)
+			});
+		} else {
+			// If the search bar is empty, set newList to original task list: do we want this effect?
+			newList = this.state.bookshelf;
+		}
+		// Set the filtered state based on what our rules added to newList
+		this.setState({
+			searchResults: newList
+		});
+	}
+
+	sortBooksAlphabetically = () => {
+		let unsorted = []; 
+		let sorted = []; //sets up an empty array called unsorted and one called sorted
+        unsorted = this.state.bookshelf //sets unsorted to whatever's in bookshelf
+        sorted = unsorted.sort((a,b) => (a.title.toLowerCase() > b.title.toLowerCase()) ?1: -1); //sorts 'unsorted' alphabetically and sets that equal to sorted
+        console.log(sorted);
+        this.setState({ 
+		  	searchResults: sorted,
+		});
+
+	}
+	
+
+	sortBooksBackwards = () => {
+		let unsorted = []; 
+		let sorted = []; //sets up an empty array called unsorted and one called sorted
+        unsorted = this.state.bookshelf //sets unsorted to whatever's in bookshelf
+        sorted = unsorted.sort((a,b) => (a.title.toLowerCase() > b.title.toLowerCase()) ? -1: 1); //sorts 'unsorted' alphabetically and sets that equal to sorted
+        console.log(sorted);
+        this.setState({ 
+		  	searchResults: sorted,
+		});
+
+	}
+
+	sortBooksNewest = () =>{
+		let unsorted = [];
+		let sorted = [];
+        unsorted=this.state.bookshelf;
+        sorted = unsorted.sort((a,b) => (a.key > b.key) ? -1: 1)
+        console.log(sorted);
+        this.setState({
+			orderedResults: sorted,
+		});
+    }
+
+	sortBooksOldest = () =>{
+		let unsorted = [];
+		let sorted = [];
+        unsorted=this.state.bookshelf;
+        sorted = unsorted.sort((a,b) => (a.key > b.key) ? 1: -1)
+        console.log(sorted);
+        this.setState({
+			orderedResults: sorted,
+		});
+	}
+	
+*/
 
 	render() {
 		// this.printBkList(bookList);
@@ -124,7 +255,7 @@ class BookShelf extends Component {
 						</div>
 						:
 						<div className='resultsList'>
-							<DefaultList results={this.props.results} toggleAddBook={this.props.toggleAddBook} 
+							<DefaultList results={this.state.searchResults} toggleAddBook={this.props.toggleAddBook} 
 										updateBook={this.props.updateBook}/>
 						</div>
 							

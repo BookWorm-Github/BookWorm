@@ -30,7 +30,7 @@ class Launcher extends Component {
 		return (
 
 			<div className='launcher' onClick={this.openURLs}>
-				<img src={launchButton} alt="launch icon" height="20" width="20"/>
+				<input type="image" src={launchButton} alt="launch icon" height="20" width="20"/>
 			</div>
 
 		);
@@ -43,7 +43,7 @@ class Launcher extends Component {
 
 		if (this.props.urls && !this.props.urls.length) {//there are no urls in prop
 			let newTab = 'chrome://newtab';
-			
+
 			chrome.runtime.sendMessage({rq: "openWindowOfTabs", urlsToLaunch: newTab}, this._cbWindow.bind(this));
 		} else {
 			alert("Opening " + this.props.urls.toString())

@@ -1,5 +1,6 @@
 import React from "react";
 import {bw_auth} from "../firebase/init.js";
+import './styles.css';
 
 const ProfilePage = (props) => {
 	const user = props.user;

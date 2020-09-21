@@ -94,8 +94,6 @@ class AddBookUI extends Component {
 	}
 
 	_cbWindowIdResponse(response) {
-		console.log("response is: ");
-		console.log(response);
 		let windowId = response.windowId;//this gets the current windowId
 		if (windowId == null)
 			alert('window id is null');
@@ -112,9 +110,6 @@ class AddBookUI extends Component {
 				}
 			});
 		// alert('Book is linked to window'+linkToWindow);
-
-		console.log('any launch urls in book?');
-		console.log(this.props.urlsForLaunch);
 
 		const nb = {//what a book should contain
 			key: Date.now(),

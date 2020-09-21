@@ -4,7 +4,6 @@ import BookAppMain from "../books/BookAppMain";
 import {Router} from "react-chrome-extension-router";
 import SignIn from "./SignIn";
 import {populatePortfolioHomepage} from "../firebase/firestore/db_functions";
-import './User.css'
 
 class User extends Component {
 	constructor(props) {
@@ -36,9 +35,9 @@ class User extends Component {
 		return (
 			this.state.user ?
 				<div className="users_portfolio_homepage">
+					<BookAppMain user={this.state.user} books={this.state.books}/>
 					<button className='signoutbutton' onClick={() => {
 						bw_auth.signOut().then(() => {
-								//console.log("Logged out successful")
 								this.setState({
 									user: null
 								})
@@ -51,8 +50,6 @@ class User extends Component {
 					}}>
 						<p className="topbutton">Sign Out</p>
 					</button>
-					<BookAppMain user={this.state.user} books={this.state.books}/>
-
 				</div>
 				:
 				<Router>

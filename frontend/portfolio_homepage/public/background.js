@@ -209,8 +209,11 @@ chrome.runtime.onMessage.addListener(//every time the background script receives
 				sendResponse({windowScreenShots: sessionInfo.windowScreenShots});
 				break;
 
-			case ("LaunchInfo"):
-				sendResponse({ID: "LaunchInfo", LaunchInfo: sessionInfo.launchOrder});
+			case ("LaunchInfo"): //grabs the launch information for the specified window id
+				console.log('LaunchInfo for ', msg.winId);
+				console.log(sessionInfo.launchOrder[msg.winId]);
+
+				sendResponse({ID: "LaunchInfo", LaunchInfo: sessionInfo.launchOrder[msg.winId]});
 				break;
 
 			case ("WormholeInfo"): //should be called when the content script is linking to currently active window.
@@ -235,13 +238,13 @@ chrome.runtime.onMessage.addListener(//every time the background script receives
 			case("openWindowOfTabs")://getting the current active window
 				let winId = -1;
 
-			function retWinId(createdWindow) {
-				if (createdWindow !== undefined) {
-					console.log("retWinId has window " + createdWindow.id);
-					winId = createdWindow.id;
-					sendResponse({ID: "openWindowOfTabs", windowId: winId});
+				function retWinId(createdWindow) {
+					if (createdWindow !== undefined) {
+						console.log("retWinId has window " + createdWindow.id);
+						winId = createdWindow.id;
+						sendResponse({ID: "openWindowOfTabs", windowId: winId});
+					}
 				}
-			}
 
 				chrome.windows.create({url: msg.urlsToLaunch, state: "maximized"}, retWinId);//opens a maximized windows of tabs
 				break;

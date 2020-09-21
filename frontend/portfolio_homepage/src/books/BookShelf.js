@@ -105,7 +105,7 @@ class BookShelf extends Component {
 					</div>
 					<form id="searchTerm">
 						<input className="search" type="text" onChange={this.filterBooks} placeholder="Search"/>
-						<img src={Search} alt="search icon" height="20" width="20" className="searchicon"/>
+						<input type="image" src={Search} alt="search icon" height="20" width="20" className="searchicon"/>
 						<SortButton toggleSortBooks={this.toggleSortBooks}/>
 					</form>
 

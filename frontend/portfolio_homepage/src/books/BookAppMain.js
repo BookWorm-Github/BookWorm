@@ -6,8 +6,9 @@ import './bookStyles.css'
 import SortBooks from '../sortItems/SortBooks'
 import Hotkeys from 'react-hot-keys';
 import {deleteBook, deLinkBookfromWindow, storeBook, updateBookLW} from "../firebase/firestore/db_functions";
-import header from '../Images/Header.png';
 import {buildQueries} from '@testing-library/react'
+import header from '../Images/header.png';
+import setting from '../Images/profile-setting.png';
 // import { bw_auth, generateUserDocument } from "../firebase/init.js";
 //added hotkeys: https://github.com/jaywcjlove/react-hotkeys#readme
 
@@ -222,10 +223,11 @@ class BookAppMain extends Component {
 			<div>
 				{/*Hotkey for dev only, when lots of experimental books are added. take away from final product.*/}
 				<Hotkeys keyName="shift+a" onKeyUp={this.toggleAddBook}/>
-				<div id="headerContainer">
-					<div id='header'>
-						<img src={header} alt="header" id="headerlogo"/>x
-					</div>
+				<div className="header">
+					<input type="image" src={header} alt="" id="header-logo"/>
+				</div>
+				<div className="header">
+					<input type="image" src={setting} alt="" onClick={() => console.log('clicked')}/>
 				</div>
 				<div className={this.state.addingBook ? 'blur-bg' : 'clear-bg'}>
 

@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {bw_auth, signInWithGoogle, generateUserDocument} from "../firebase/init.js";
 import SignIn from "./SignIn";
 import {Link} from "react-chrome-extension-router";
+import './styles.css';
 
 const SignUp = () => {
 	const [email, setEmail] = useState("");

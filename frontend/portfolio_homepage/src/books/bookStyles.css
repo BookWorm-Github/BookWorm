@@ -1,6 +1,8 @@
-/*TODO later combine all css files into one file in App.css
-for optimization*/
-
+.users_portfolio_homepage{
+    background-color: #22223B;
+    height:100%;
+    width:auto;
+}
 
 #bkshlf-h1 {
     color: white;
@@ -35,7 +37,6 @@ for optimization*/
 
 .container {
     margin: auto;
-    overflow: 'hidden';
 }
 
 .paper {
@@ -111,10 +112,20 @@ for optimization*/
 }
 
 .header{
-    width: 50%;
-    height: fit-content;
-    margin-left: unset;
-    margin-right: unset;
+    display: flex;
+
+}
+
+.logo{
+    margin-right:70vh;
+}
+
+.setting{
+    margin-left: 70vh;
+    margin-top: 3vh;
+    width: 8%;
+    height: auto;
+    margin-bottom: 4vh;
 }
 
 /*The hover menu which contains the launcher and wormhole*/
@@ -127,12 +138,10 @@ for optimization*/
     border-radius: 15px;
     display: flex;
     justify-content: center;
-    align-items: left;
     position: relative;
 }
 
 #inputline {
-    font-size: 500;
     font-weight: bold;
 }
 
@@ -214,5 +223,3 @@ li {
     size: 20px;
     border-bottom: thin solid black;
 }
-
-

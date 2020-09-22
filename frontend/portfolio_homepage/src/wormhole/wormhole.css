@@ -9,7 +9,6 @@
     right: 0;
     bottom: 0;
     margin: auto;
-    border-radius: 15px;
     border: solid 2px #000000;
     overflow: scroll;
 
@@ -34,10 +33,6 @@
     width: 90%;
     background-color: white;
     height: 30px;
-}
-
-.logo {
-    background-color: white;
 }
 
 .title {

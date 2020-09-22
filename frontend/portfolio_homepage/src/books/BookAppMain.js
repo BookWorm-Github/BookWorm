@@ -224,10 +224,8 @@ class BookAppMain extends Component {
 				{/*Hotkey for dev only, when lots of experimental books are added. take away from final product.*/}
 				<Hotkeys keyName="shift+a" onKeyUp={this.toggleAddBook}/>
 				<div className="header">
-					<input type="image" src={header} alt="" id="header-logo"/>
-				</div>
-				<div className="header">
-					<input type="image" src={setting} alt="" onClick={() => console.log('clicked')}/>
+					<input type="image" src={header} alt="" className="logo"/>
+					<input type="image" src={setting} alt="" className="setting" onClick={() => console.log('clicked')}/>
 				</div>
 				<div className={this.state.addingBook ? 'blur-bg' : 'clear-bg'}>
 

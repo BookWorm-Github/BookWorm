@@ -1,6 +1,8 @@
 .App {
     text-align: center;
     font-family: "Font Awesome\ 5 Free", sans-serif;
+    height:100%;
+    width:auto;
 }
 
 @media (prefers-reduced-motion: no-preference) {

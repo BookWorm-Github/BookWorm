@@ -31,25 +31,17 @@ class User extends Component {
 		})
 	};
 
+	updateUser = (state) => {
+		this.setState({
+			user: state
+		})
+	}
+
 	render() {
 		return (
 			this.state.user ?
 				<div className="users_portfolio_homepage">
-					<BookAppMain user={this.state.user} books={this.state.books}/>
-					<button className='signoutbutton' onClick={() => {
-						bw_auth.signOut().then(() => {
-								this.setState({
-									user: null
-								})
-							},
-							onRejected => {
-								//console.log("log out unsuccessful")
-								//console.log(onRejected)
-							}
-						)
-					}}>
-						<p className="topbutton">Sign Out</p>
-					</button>
+					<BookAppMain user={this.state.user} books={this.state.books} updateUser={this.updateUser}/>
 				</div>
 				:
 				<Router>

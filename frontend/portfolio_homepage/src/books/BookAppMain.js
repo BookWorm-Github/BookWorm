@@ -9,6 +9,7 @@ import {deleteBook, deLinkBookfromWindow, storeBook, updateBookLW} from "../fire
 import {buildQueries} from '@testing-library/react'
 import header from '../Images/header.png';
 import setting from '../Images/profile-setting.png';
+import ProfileSetting from "../ProfileSetting/ProfileSetting";
 // import { bw_auth, generateUserDocument } from "../firebase/init.js";
 //added hotkeys: https://github.com/jaywcjlove/react-hotkeys#readme
 
@@ -217,26 +218,22 @@ class BookAppMain extends Component {
 		});
     }
 
-
 	render() {
 		return (
 			<div>
 				{/*Hotkey for dev only, when lots of experimental books are added. take away from final product.*/}
 				<Hotkeys keyName="shift+a" onKeyUp={this.toggleAddBook}/>
-				<div className="header">
-					<input type="image" src={header} alt="" className="logo"/>
-					<input type="image" src={setting} alt="" className="setting" onClick={() => console.log('clicked')}/>
-				</div>
-				<div className={this.state.addingBook ? 'blur-bg' : 'clear-bg'}>
+				<ProfileSetting updateUser={this.props.updateUser}/>
 
+				<div className={this.state.addingBook ? 'blur-bg' : 'clear-bg'}>
 					<BookShelf curWinID={this.state.curWinID} bks={this.state.bookshelf}
-					           results={this.state.searchResults} updateBook={this.updateBook}
-					           deleteBook={this.deleteBook} delinkBook={this.delinkBook}
-					           toggleAddBook={this.toggleAddBook} filterBooks={this.filterBooks}
-					           sortBooksAlphabetically={this.sortBooksAlphabetically}
-					           sortBooksBackwards={this.sortBooksBackwards}
-					           sortBooksNewest={this.sortBooksNewest}
-					           sortBooksOldest={this.sortBooksOldest}
+			           results={this.state.searchResults} updateBook={this.updateBook}
+			           deleteBook={this.deleteBook} delinkBook={this.delinkBook}
+			           toggleAddBook={this.toggleAddBook} filterBooks={this.filterBooks}
+			           sortBooksAlphabetically={this.sortBooksAlphabetically}
+			           sortBooksBackwards={this.sortBooksBackwards}
+			           sortBooksNewest={this.sortBooksNewest}
+			           sortBooksOldest={this.sortBooksOldest}
 					/>
 				</div>
 
@@ -249,9 +246,8 @@ class BookAppMain extends Component {
 							urlsForLaunch={this.state.urlsForLaunch}
 							urlsForWormhole={this.state.urlsForWormhole}
 						/>
-					</div>
-					:
-					<div/>
+					</div> :
+					null
 				}
 				<book/>
 			</div>

@@ -1,0 +1,16 @@
+.header{
+    display: flex;
+}
+
+.setting{
+    margin-left: 70vh;
+    margin-top: 3vh;
+    width: 8%;
+    height: auto;
+    margin-bottom: 4vh;
+}
+
+.profile-setting {
+    color: white;
+    /*position: absolute;*/
+}
